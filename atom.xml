@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2023-10-30T13:52:49.178Z</updated>
+  <updated>2023-10-30T13:50:04.001Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,27 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>測試文章第二篇</title>
-    <link href="http://yoursite.com/2023/10/30/%E6%B8%AC%E8%A9%A6%E6%96%87%E7%AB%A0%E7%AC%AC%E4%BA%8C%E7%AF%87/"/>
-    <id>http://yoursite.com/2023/10/30/%E6%B8%AC%E8%A9%A6%E6%96%87%E7%AB%A0%E7%AC%AC%E4%BA%8C%E7%AF%87/</id>
-    <published>2023-10-30T13:50:42.000Z</published>
-    <updated>2023-10-30T13:52:49.178Z</updated>
-    
-    <content type="html"><![CDATA[<p>![測試圖片]](dom)</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;![測試圖片]](dom)&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>測試發文</title>
