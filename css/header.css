@@ -58,9 +58,6 @@
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #search button {
     background-image: url("img/icon-search@2x.png");
-    -webkit-background-size: 24px 24px;
-    -moz-background-size: 24px 24px;
-    -o-background-size: 24px 24px;
     background-size: 24px 24px;
   }
 }
