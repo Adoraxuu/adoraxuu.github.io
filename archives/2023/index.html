@@ -1,124 +1,263 @@
 <!DOCTYPE html>
-<html lang=>
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  
-    <link rel="icon" href="/favicon.ico">
-  
+<html lang="">
+    <head>
+    <meta charset="utf-8">
+
     
-  <title>Archives | Adora&#39;s Blog</title>
-  
-<link rel="stylesheet" href="/style.css">
 
-  
-<link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>归档：2023 | Adora&#39;s Blog</title>
+
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Adora&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/archives/2023/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:locale">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
 <meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
 </head>
 
-<body>
-  <header>
-  <div class="header-container">
-    <a class='logo' href="/">
-      <span>Adora's Blog</span>
-    </a>
-    <ul class="right-header">
-      
-        <li class="nav-item">
-          
-            <a href="/" class="item-link">Home</a>
-          
-        </li>
-      
-        <li class="nav-item">
-          
-            <a href="/about" class="item-link">About</a>
-          
-        </li>
-      
-        <li class="nav-item">
-          
-            <a href="/archives" class="item-link">Archives</a>
-          
-        </li>
-      
-        <li class="nav-item">
-          
-            <a href="/tags" class="item-link">Tags</a>
-          
-        </li>
-      
-    </ul>
-  </div>
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tages</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tages</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
 </header>
 
-  <main id="archive">
-  <div class="content">
+
+    <div class="cover">
+        <div class="cover__logo">
+            
+                <h1>Adora</h1>
+            
+        </div>
         
+        
+            <div class="cover__intro">
+                <p>Hi, nice to meet you!</p>
+ 
+            </div>
+        
+    </div>
+
+            
+<main class='main'>
     
-      <div class="year-list">
-        <h3>2023</h3>
-        <ul>
-          
-            <li >
-              <time>2023/10/30</time>
-              <a href="/2023/10/30/img-test/">
-                <span>
-                    img test
-                </span>
-              </a>
-            </li>
-          
-            <li >
-              <time>2023/10/30</time>
-              <a href="/2023/10/30/測試發文/">
-                <span>
-                    測試發文
-                </span>
-              </a>
-            </li>
-          
-            <li >
-              <time>2023/10/30</time>
-              <a href="/2023/10/30/hello/">
-                <span>
-                    hello
-                </span>
-              </a>
-            </li>
-          
-            <li >
-              <time>2023/10/30</time>
-              <a href="/2023/10/30/hello-world/">
-                <span>
-                    Hello World
-                </span>
-              </a>
-            </li>
-          
-        </ul>
-      </div>
+		
+    <div class="post-list">
         
-  </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        img test
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2023/10/" class="post-meta__date button">2023-10-30</a>
+    
+ 
+</div>
+<div class="post-entry__tags"></div> 
+<a href="/2023/10/30/img-test/" class="post-entry__link">img test</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        測試發文
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2023/10/" class="post-meta__date button">2023-10-30</a>
+    
+ 
+</div>
+<div class="post-entry__tags"></div> 
+<a href="/2023/10/30/%E6%B8%AC%E8%A9%A6%E7%99%BC%E6%96%87/" class="post-entry__link">測試發文</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        hello
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2023/10/" class="post-meta__date button">2023-10-30</a>
+    
+ 
+</div>
+<div class="post-entry__tags"></div> 
+<a href="/2023/10/30/hello/" class="post-entry__link">hello</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        Hello World
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2023/10/" class="post-meta__date button">2023-10-30</a>
+    
+ 
+</div>
+<div class="post-entry__tags"></div> 
+<a href="/2023/10/30/hello-world/" class="post-entry__link">Hello World</a>
+                </div>
+            
+        
+    </div>
+    
+
+
+	
 </main>
 
-  <footer>
-  <div class="copyright">
-    <div>
-      &copy; 2023 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
-    </div>
-    <div>
-      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
-    </div>
-  </div>
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
 </footer>
 
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
 
 
-</body>
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
 </html>
