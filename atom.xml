@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2023-11-01T07:55:37.515Z</updated>
+  <updated>2023-11-01T09:02:10.190Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2023/11/01/CORS/"/>
     <id>http://yoursite.com/2023/11/01/CORS/</id>
     <published>2023-11-01T07:54:35.000Z</published>
-    <updated>2023-11-01T07:55:37.515Z</updated>
+    <updated>2023-11-01T09:02:10.190Z</updated>
     
     <content type="html"><![CDATA[<h1 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h1><blockquote><p>跨來源資源共用（Cross-Origin Resource Sharing，簡稱CORS）</p></blockquote><p>當利用JavaScript抓取別人資料時可能發生狀況，CORS主要擋瀏覽器內的JS<br>錯誤訊息如下：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">has been blocked by <span class="hljs-variable constant_">CORS</span> policy<br></code></pre></td></tr></table></figure><h2 id="如何解決CORS"><a href="#如何解決CORS" class="headerlink" title="如何解決CORS?"></a>如何解決CORS?</h2><ul><li>和對方說請對方開</li><li>自己寫一個API網站，API網站透過後端去抓資料，再抓自己寫的API<br>雖然這樣比較麻煩，但因為CORS只擋瀏覽器裡的JS，如果是用Node js,Ruby,Python等其他程式語言，透過後端去抓資料的話，基本上不會被CORS擋下</li></ul>]]></content>
     
