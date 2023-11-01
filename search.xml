@@ -4,50 +4,11 @@
   
     
     <entry>
-      <title>img test</title>
-      <link href="/2023/10/30/img-test/"/>
-      <url>/2023/10/30/img-test/</url>
+      <title>CORS</title>
+      <link href="/2023/11/01/CORS/"/>
+      <url>/2023/11/01/CORS/</url>
       
-        <content type="html"><![CDATA[<p><img src="/2023/10/30/img-test/dom.png" alt="test"></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>測試發文</title>
-      <link href="/2023/10/30/%E6%B8%AC%E8%A9%A6%E7%99%BC%E6%96%87/"/>
-      <url>/2023/10/30/%E6%B8%AC%E8%A9%A6%E7%99%BC%E6%96%87/</url>
-      
-        <content type="html"><![CDATA[<h1 id="JavaScript-二"><a href="#JavaScript-二" class="headerlink" title="JavaScript(二)"></a>JavaScript(二)</h1><blockquote><p>2023&#x2F;10&#x2F;23-</p></blockquote><h1 id="JS-Runtime-執行環境"><a href="#JS-Runtime-執行環境" class="headerlink" title="JS Runtime 執行環境"></a>JS Runtime 執行環境</h1><ul><li>瀏覽器</li><li>Node</li><li>Deno</li><li>能夠正常執行</li></ul><h1 id="DOM-Document-Object-Model"><a href="#DOM-Document-Object-Model" class="headerlink" title="DOM (Document Object Model)"></a>DOM (Document Object Model)</h1><blockquote><p>HTML、XML 和 SVG 文件的程式介面。它提供了一個文件（樹）的結構化表示法，並定義讓程式可以存取並改變文件架構、風格和內容的方法。</p></blockquote><blockquote><p>JavaScript 透過方法取得 DOM，進而操作 HTML</p></blockquote><blockquote><p>瀏覽器讀完 HTML 後，建立一個樹狀的 DOM 結構</p></blockquote>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>hello</title>
-      <link href="/2023/10/30/hello/"/>
-      <url>/2023/10/30/hello/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2023/10/30/hello-world/"/>
-      <url>/2023/10/30/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h1><blockquote><p>跨來源資源共用（Cross-Origin Resource Sharing，簡稱CORS）</p></blockquote><p>當利用JavaScript抓取別人資料時可能發生狀況，CORS主要擋瀏覽器內的JS<br>錯誤訊息如下：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">has been blocked by <span class="hljs-variable constant_">CORS</span> policy<br></code></pre></td></tr></table></figure><h2 id="如何解決CORS"><a href="#如何解決CORS" class="headerlink" title="如何解決CORS?"></a>如何解決CORS?</h2><ul><li>和對方說請對方開</li><li>自己寫一個API網站，API網站透過後端去抓資料，再抓自己寫的API<br>雖然這樣比較麻煩，但因為CORS只擋瀏覽器裡的JS，如果是用Node js,Ruby,Python等其他程式語言，透過後端去抓資料的話，基本上不會被CORS擋下</li></ul>]]></content>
       
       
       
