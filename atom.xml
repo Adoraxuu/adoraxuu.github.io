@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2023-11-01T09:02:10.190Z</updated>
+  <updated>2023-11-03T09:40:03.359Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Event Post</title>
+    <link href="http://yoursite.com/2023/11/03/Event-Post/"/>
+    <id>http://yoursite.com/2023/11/03/Event-Post/</id>
+    <published>2023-11-03T09:37:00.000Z</published>
+    <updated>2023-11-03T09:40:03.359Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Event-Post"><a href="#Event-Post" class="headerlink" title="Event Post"></a>Event Post</h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Event-Post&quot;&gt;&lt;a href=&quot;#Event-Post&quot; class=&quot;headerlink&quot; title=&quot;Event Post&quot;&gt;&lt;/a&gt;Event Post&lt;/h1&gt;</summary>
+      
+    
+    
+    
+    <category term="Web Development &amp; Internet Technologies" scheme="http://yoursite.com/categories/Web-Development-Internet-Technologies/"/>
+    
+    
+    <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+    
+    <category term="Event Post" scheme="http://yoursite.com/tags/Event-Post/"/>
+    
+  </entry>
   
   <entry>
     <title>CORS</title>
