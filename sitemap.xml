@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/archive.css</loc>
+    <loc>http://yoursite.com/css/common.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -65,25 +65,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/custom.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/common.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/extend.css</loc>
+    <loc>http://yoursite.com/css/archive.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -93,6 +75,33 @@
   
   <url>
     <loc>http://yoursite.com/css/friends.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/header.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/custom.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/extend.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -137,7 +146,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/layout.css</loc>
+    <loc>http://yoursite.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -146,7 +155,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/paginator.css</loc>
+    <loc>http://yoursite.com/css/layout.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -163,15 +172,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>http://yoursite.com/css/header.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
     <loc>http://yoursite.com/</loc>
@@ -181,27 +181,6 @@
   </url>
 
   
-  <url>
-    <loc>http://yoursite.com/tags/javascript/</loc>
-    <lastmod>2023-11-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/event-loop/</loc>
-    <lastmod>2023-11-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
-  
-  <url>
-    <loc>http://yoursite.com/categories/javascript/</loc>
-    <lastmod>2023-11-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
   
 </urlset>
