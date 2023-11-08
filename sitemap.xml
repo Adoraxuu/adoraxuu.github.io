@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2023/11/07/JavaScript-Event-Loop/</loc>
+    <loc>http://yoursite.com/2023/11/08/JavaScript-Event-Loop/</loc>
     
     <lastmod>2023-11-08</lastmod>
     
@@ -47,6 +47,15 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/css/archive.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/css/comment.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -57,33 +66,6 @@
   
   <url>
     <loc>http://yoursite.com/css/custom.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/archive.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/friends.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/header.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -110,7 +92,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/layout.css</loc>
+    <loc>http://yoursite.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -120,6 +102,15 @@
   
   <url>
     <loc>http://yoursite.com/css/grid.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/index.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -146,6 +137,15 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/css/layout.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -164,7 +164,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/index.css</loc>
+    <loc>http://yoursite.com/css/header.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -189,14 +189,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/Queue/</loc>
-    <lastmod>2023-11-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/eventloop/</loc>
+    <loc>http://yoursite.com/tags/event-loop/</loc>
     <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
