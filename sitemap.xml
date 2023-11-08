@@ -65,6 +65,33 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/css/common.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/extend.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/grid.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/css/custom.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -83,16 +110,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/common.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/grid.css</loc>
+    <loc>http://yoursite.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -119,7 +137,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/layout.css</loc>
+    <loc>http://yoursite.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -128,7 +146,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/paginator.css</loc>
+    <loc>http://yoursite.com/css/layout.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -147,24 +165,6 @@
   
   <url>
     <loc>http://yoursite.com/css/search.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/extend.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
