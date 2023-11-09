@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/comment.css</loc>
+    <loc>http://yoursite.com/css/custom.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/friends.css</loc>
+    <loc>http://yoursite.com/css/grid.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/grid.css</loc>
+    <loc>http://yoursite.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/custom.css</loc>
+    <loc>http://yoursite.com/css/index.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -155,7 +155,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/index.css</loc>
+    <loc>http://yoursite.com/css/search.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -164,7 +164,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/search.css</loc>
+    <loc>http://yoursite.com/css/comment.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
