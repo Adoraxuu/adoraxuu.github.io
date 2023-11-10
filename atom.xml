@@ -3,11 +3,11 @@
   <title>Adora&#39;s Blog</title>
   
   
-  <link href="http://yoursite.com/atom.xml" rel="self"/>
+  <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://adora-xu.com/"/>
   <updated>2023-11-09T07:38:46.407Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://adora-xu.com/</id>
   
   <author>
     <name>Adora Xu</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>JavaScript 究竟什麼是 Event Loop </title>
-    <link href="http://yoursite.com/2023/11/08/JavaScript-Event-Loop/"/>
-    <id>http://yoursite.com/2023/11/08/JavaScript-Event-Loop/</id>
+    <link href="http://adora-xu.com/2023/11/08/JavaScript-Event-Loop/"/>
+    <id>http://adora-xu.com/2023/11/08/JavaScript-Event-Loop/</id>
     <published>2023-11-08T03:22:00.000Z</published>
     <updated>2023-11-09T07:38:46.407Z</updated>
     
