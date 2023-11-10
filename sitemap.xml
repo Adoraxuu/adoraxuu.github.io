@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://adora-xu.com/about/index.html</loc>
+    <loc>http://adora-xu.com/2023/11/08/javascript-event-loop/</loc>
     
     <lastmod>2023-11-10</lastmod>
     
@@ -11,9 +11,9 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/2023/11/08/javascript-event-loop/</loc>
+    <loc>http://adora-xu.com/about/index.html</loc>
     
-    <lastmod>2023-11-09</lastmod>
+    <lastmod>2023-11-10</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -83,15 +83,6 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/friends.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://adora-xu.com/css/extend.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -101,7 +92,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/header.css</loc>
+    <loc>http://adora-xu.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -111,6 +102,15 @@
   
   <url>
     <loc>http://adora-xu.com/css/grid.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/css/header.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -137,15 +137,6 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/ringo.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://adora-xu.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -155,7 +146,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/search.css</loc>
+    <loc>http://adora-xu.com/css/post.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -164,7 +155,16 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/post.css</loc>
+    <loc>http://adora-xu.com/css/ringo.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/css/search.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
