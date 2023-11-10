@@ -92,15 +92,6 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/extend.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://adora-xu.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -147,6 +138,15 @@
   
   <url>
     <loc>http://adora-xu.com/css/paginator.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/css/extend.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
