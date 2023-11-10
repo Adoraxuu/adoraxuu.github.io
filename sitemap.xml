@@ -47,15 +47,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/archive.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/css/comment.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -83,24 +74,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/friends.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/css/header.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/css/extend.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -110,7 +83,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/layout.css</loc>
+    <loc>http://yoursite.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -128,6 +101,15 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/css/header.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/css/index.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -137,7 +119,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/paginator.css</loc>
+    <loc>http://yoursite.com/css/layout.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -146,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/css/post.css</loc>
+    <loc>http://yoursite.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -172,10 +154,28 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>http://yoursite.com/css/post.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/css/archive.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   <url>
     <loc>http://yoursite.com/</loc>
-    <lastmod>2023-11-09</lastmod>
+    <lastmod>2023-11-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
