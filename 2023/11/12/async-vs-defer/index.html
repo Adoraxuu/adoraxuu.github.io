@@ -36,70 +36,6 @@
 
 
     <!-- OpenGraph -->
- 
-    <meta name="description" content=".em-div{   background-color: #d4a373;   color: white;   padding: 10px;   margin: 10px;   border-radius: 5px;   }      .em-div{   background-color: #d4a373;   color: white;   padding: 10px;   margin">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript的載入：defer vs async">
-<meta property="og:url" content="http://adora-xu.com/2023/11/12/async-vs-defer/index.html">
-<meta property="og:site_name" content="Adora&#39;s Blog">
-<meta property="og:description" content=".em-div{   background-color: #d4a373;   color: white;   padding: 10px;   margin: 10px;   border-radius: 5px;   }      .em-div{   background-color: #d4a373;   color: white;   padding: 10px;   margin">
-<meta property="og:locale">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/1webdev.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/2rendering-time.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/3rendering-time-endofbody.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/4rendering-time-async.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/5rendering-time-defer.png">
-<meta property="og:image" content="http://adora-xu.com/images/async_vs_defer/6differ-table.png">
-<meta property="article:published_time" content="2023-11-11T17:32:24.077Z">
-<meta property="article:modified_time" content="2023-11-11T17:49:24.625Z">
-<meta property="article:author" content="Adora Xu">
-<meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="Event Loop">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://adora-xu.com/images/async_vs_defer/title.png">
 
 
     
@@ -199,32 +135,9 @@
 </div>
 
 
-<aside class="post-side">
-  <div class="post-side__toc">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E5%99%A8%E6%98%AF%E6%80%8E%E9%BA%BC%E7%B9%AA%E8%BD%89%E8%AD%AF%E9%A0%81%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="toc-text">瀏覽器是怎麼繪轉譯頁的呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E9%A0%81%E7%9A%84%E8%BD%89%E8%AD%AF%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-text">網頁的轉譯流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E8%A7%A3%E9%87%8B%EF%BC%9A"><span class="toc-text">流程解釋：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-%E6%98%AF%E6%80%8E%E9%BA%BC%E8%A2%AB%E5%BC%95%E5%85%A5%E5%88%B0%E7%B6%B2%E9%A0%81%E5%91%A2%EF%BC%9F"><span class="toc-text">JavaScript 是怎麼被引入到網頁呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%87%E6%94%BE%E5%9C%A8%E5%89%8D%E4%B8%80%E8%A1%8C"><span class="toc-text">將&lt;script&gt;放在&lt;&#x2F;body&gt;前一行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async"><span class="toc-text">async</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-defer"><span class="toc-text">什麼是 defer?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BE%E5%9C%A8%E5%89%8D-v-s-Async-v-s-Defer"><span class="toc-text">放在&lt;&#x2F;body&gt;前 v.s. Async v.s. Defer</span></a>
-  </div>
-</aside>
-<a class="btn-toc button" id="btn-toc" tabindex="0">
-  <svg
-    viewBox="0 0 1024 1024"
-    width="32"
-    height="32"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z"
-      fill="currentColor"
-    ></path>
-  </svg>
-</a>
-<div class="toc-menus" id="toc-menus">
-  <div class="toc-title">Article Directory</div>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E5%99%A8%E6%98%AF%E6%80%8E%E9%BA%BC%E7%B9%AA%E8%BD%89%E8%AD%AF%E9%A0%81%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="toc-text">瀏覽器是怎麼繪轉譯頁的呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E9%A0%81%E7%9A%84%E8%BD%89%E8%AD%AF%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-text">網頁的轉譯流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E8%A7%A3%E9%87%8B%EF%BC%9A"><span class="toc-text">流程解釋：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-%E6%98%AF%E6%80%8E%E9%BA%BC%E8%A2%AB%E5%BC%95%E5%85%A5%E5%88%B0%E7%B6%B2%E9%A0%81%E5%91%A2%EF%BC%9F"><span class="toc-text">JavaScript 是怎麼被引入到網頁呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%87%E6%94%BE%E5%9C%A8%E5%89%8D%E4%B8%80%E8%A1%8C"><span class="toc-text">將&lt;script&gt;放在&lt;&#x2F;body&gt;前一行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async"><span class="toc-text">async</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-defer"><span class="toc-text">什麼是 defer?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BE%E5%9C%A8%E5%89%8D-v-s-Async-v-s-Defer"><span class="toc-text">放在&lt;&#x2F;body&gt;前 v.s. Async v.s. Defer</span></a>
-</div>
-
 
 <article
-  class="post post__with-toc content-card"
+  class="post content-card"
 >
   <div class="post__header">
     
@@ -891,7 +804,7 @@
 <!--
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-12</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/Event-Loop/" class="post-tags__link button"># Event Loop</a></div>
+   <div class="post-footer__meta"><p>更新于 2023-11-12</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/Event-Loop/" class="post-tags__link button"># Event Loop</a></div>
 </article>
 
 
@@ -903,7 +816,7 @@
     
     <a href="/2023/11/08/javascript-event-loop/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">JavaScript 究竟什麼是 Event Loop？</div>
       </div>
       <div>
