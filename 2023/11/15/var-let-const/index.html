@@ -312,7 +312,7 @@ output: Cannot access 'a' before initialization
 <div class="em-div"> output: TypeError: Assignment to constant variable.</div>
 
 <ul>
-<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在{block}外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
+<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在<code>&#123;block&#125;</code>外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> a = <span class="hljs-number">9</span>;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
 
@@ -340,7 +340,7 @@ output:
 output: TypeError: Assignment to constant variable.
 </div>
 
-<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再宣告說工具箱是醫藥箱。</p>
+<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再說工具箱是醫藥箱，乖寶寶<code>const</code>宣告了醫藥箱就是醫藥箱！(除非被{…}包住了)</p>
 <p>我自己是這樣記憶的，會比較好懂 ٩(ˊᗜˋ )و</p>
 <hr>
 <p>看了上面這麼多範例，感覺就缺少一個東西，那就是比較表格！我特別整理了一個表格給大家參考 o(^▽^)o</p>
@@ -512,7 +512,7 @@ output: Cannot access 'a' before initialization
 <div class="em-div"> output: TypeError: Assignment to constant variable.</div>
 
 <ul>
-<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在{block}外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
+<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在<code>&#123;block&#125;</code>外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> a = <span class="hljs-number">9</span>;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
 
@@ -540,7 +540,7 @@ output:
 output: TypeError: Assignment to constant variable.
 </div>
 
-<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再宣告說工具箱是醫藥箱。</p>
+<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再說工具箱是醫藥箱，乖寶寶<code>const</code>宣告了醫藥箱就是醫藥箱！(除非被{…}包住了)</p>
 <p>我自己是這樣記憶的，會比較好懂 ٩(ˊᗜˋ )و</p>
 <hr>
 <p>看了上面這麼多範例，感覺就缺少一個東西，那就是比較表格！我特別整理了一個表格給大家參考 o(^▽^)o</p>
@@ -696,7 +696,7 @@ output: Cannot access 'a' before initialization
 <div class="em-div"> output: TypeError: Assignment to constant variable.</div>
 
 <ul>
-<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在{block}外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
+<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在<code>&#123;block&#125;</code>外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> a = <span class="hljs-number">9</span>;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
 
@@ -724,7 +724,7 @@ output:
 output: TypeError: Assignment to constant variable.
 </div>
 
-<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再宣告說工具箱是醫藥箱。</p>
+<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再說工具箱是醫藥箱，乖寶寶<code>const</code>宣告了醫藥箱就是醫藥箱！(除非被{…}包住了)</p>
 <p>我自己是這樣記憶的，會比較好懂 ٩(ˊᗜˋ )و</p>
 <hr>
 <p>看了上面這麼多範例，感覺就缺少一個東西，那就是比較表格！我特別整理了一個表格給大家參考 o(^▽^)o</p>
@@ -778,7 +778,7 @@ output: TypeError: Assignment to constant variable.
 <!--
 </div>
 
-   <div class="post-footer__meta"><p>更新於 2023-11-15</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
+   <div class="post-footer__meta"><p>更新于 2023-11-15</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
 </article>
 
 
