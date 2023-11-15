@@ -257,16 +257,25 @@ ReferenceError: b is not defined
 </div>
 
 <ul>
-<li>範例 3: <code>let</code>宣告的變數不能重複宣告(但可以改變其值)</li>
+<li>範例 3: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br>a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
 <div class="em-div">
 output:Identifier 'a' has already been declared
 </div>
 
 <ul>
-<li>範例 4:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
+<li>範例 4: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br>a = <span class="hljs-number">2</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:2
+</div>
+
+<ul>
+<li>範例 5:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) &#123;<br>  <span class="hljs-keyword">let</span> a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
 
@@ -276,7 +285,7 @@ output:9</br>
 </div>
 
 <ul>
-<li>範例 5: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
+<li>範例 6: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
@@ -448,16 +457,25 @@ ReferenceError: b is not defined
 </div>
 
 <ul>
-<li>範例 3: <code>let</code>宣告的變數不能重複宣告(但可以改變其值)</li>
+<li>範例 3: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br>a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
 <div class="em-div">
 output:Identifier 'a' has already been declared
 </div>
 
 <ul>
-<li>範例 4:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
+<li>範例 4: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br>a = <span class="hljs-number">2</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:2
+</div>
+
+<ul>
+<li>範例 5:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) &#123;<br>  <span class="hljs-keyword">let</span> a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
 
@@ -467,7 +485,7 @@ output:9</br>
 </div>
 
 <ul>
-<li>範例 5: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
+<li>範例 6: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
@@ -623,16 +641,25 @@ ReferenceError: b is not defined
 </div>
 
 <ul>
-<li>範例 3: <code>let</code>宣告的變數不能重複宣告(但可以改變其值)</li>
+<li>範例 3: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br>a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
 <div class="em-div">
 output:Identifier 'a' has already been declared
 </div>
 
 <ul>
-<li>範例 4:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
+<li>範例 4: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br>a = <span class="hljs-number">2</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:2
+</div>
+
+<ul>
+<li>範例 5:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) &#123;<br>  <span class="hljs-keyword">let</span> a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
 
@@ -642,7 +669,7 @@ output:9</br>
 </div>
 
 <ul>
-<li>範例 5: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
+<li>範例 6: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
@@ -751,7 +778,7 @@ output: TypeError: Assignment to constant variable.
 <!--
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-15</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
+   <div class="post-footer__meta"><p>更新於 2023-11-15</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
 </article>
 
 
@@ -763,7 +790,7 @@ output: TypeError: Assignment to constant variable.
     
     <a href="/2023/11/12/async-vs-defer/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">JavaScript的載入：defer vs async</div>
       </div>
       <div>
