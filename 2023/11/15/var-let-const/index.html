@@ -790,7 +790,7 @@ output: TypeError: Assignment to constant variable.
 <!--
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-15</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
+   <div class="post-footer__meta"><p>更新于 2023-11-15</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
 </article>
 
 
@@ -802,7 +802,7 @@ output: TypeError: Assignment to constant variable.
     
     <a href="/2023/11/12/async-vs-defer/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">JavaScript的載入：defer vs async</div>
       </div>
       <div>
@@ -823,6 +823,30 @@ output: TypeError: Assignment to constant variable.
   </div>
 </div>
  
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>评论</h4>
+    
+    <div id="disqus_thread">您所在的地区可能无法访问 Disqus 评论系统，请切换网络环境再尝试。</div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
 
 </main>
 
@@ -879,6 +903,63 @@ output: TypeError: Assignment to constant variable.
 
  
 
+
+    
+    <script>
+        function loadComment() {
+            window.disqus_config = function () {
+                this.page.url = 'http://adora-xu.com/2023/11/15/var-let-const/';
+                this.page.identifier = '2023/11/15/var-let-const/';
+            };
+            (function(){
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + 'adoraxu' + '.disqus.com/embed.js';
+                (document.head || document.body).appendChild(dsq);
+            })();
+        }
+    
+        var runningOnBrowser = typeof window !== "undefined";
+        var isBot = runningOnBrowser && !("onscroll" in window) || typeof navigator !== "undefined" && /(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator.userAgent);
+        var supportsIntersectionObserver = runningOnBrowser && "IntersectionObserver" in window;
+    
+        setTimeout(function () {
+            if (!isBot && supportsIntersectionObserver) {
+                var comment_observer = new IntersectionObserver(function(entries) {
+                    if (entries[0].isIntersecting) {
+                        loadComment();
+                        comment_observer.disconnect();
+                    }
+                }, { threshold: [0] });
+                comment_observer.observe(document.getElementById('comment'));
+            } else {
+                loadComment();
+            }
+        }, 1);
+    </script>
+
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
 
 
 
