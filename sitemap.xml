@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/extend.css</loc>
+    <loc>http://adora-xu.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/friends.css</loc>
+    <loc>http://adora-xu.com/css/extend.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -137,7 +137,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/layout.css</loc>
+    <loc>http://adora-xu.com/css/index.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -155,7 +155,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/paginator.css</loc>
+    <loc>http://adora-xu.com/css/layout.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/post.css</loc>
+    <loc>http://adora-xu.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -182,7 +182,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/index.css</loc>
+    <loc>http://adora-xu.com/css/post.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -211,7 +211,7 @@
 
   <url>
     <loc>http://adora-xu.com/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -219,63 +219,63 @@
   
   <url>
     <loc>http://adora-xu.com/tags/JavaScript/</loc>
-    <lastmod>2023-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/Event-Loop/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/defer/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/async/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Web/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/rendering/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/var/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/let/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/const/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/Event-Loop/</loc>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -284,7 +284,7 @@
   
   <url>
     <loc>http://adora-xu.com/categories/JavaScript/</loc>
-    <lastmod>2023-11-17</lastmod>
+    <lastmod>2023-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
