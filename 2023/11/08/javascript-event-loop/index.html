@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>JavaScript 究竟什麼是 Event Loop？ | Adora&#39;s Blog</title>
+<title>JavaScript | 究竟什麼是 Event Loop？ | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="JavaScript, Event Loop">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">JavaScript 究竟什麼是 Event Loop？</h1>
+  <h1 class="post-title__text">JavaScript | 究竟什麼是 Event Loop？</h1>
   <div class="post-title__meta">
     <a href="/archives/2023/11/" class="post-meta__date button">2023-11-08</a> 
     <span class="separate-dot"></span><a href="/categories/JavaScript/" class="button">JavaScript</a>
@@ -195,7 +195,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
   <li>如果不為空：處理 Call Stack 內的函數。</li>
 </ul>
 
-<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，<br>這班準備了幾個程式碼及搭配<a target="_blank" rel="noopener" href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
+<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a target="_blank" rel="noopener" href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
 <p>可以按此<a target="_blank" rel="noopener" href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
 <h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
 
@@ -207,27 +207,27 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
 <p>會得到以下結果：</p>
 <img src="/images/eventLoop/pasted-0.png">
 
-<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。<br>是瀏覽器在哀嚎的聲音 😂😂</p>
+<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
 <p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p>What the heck is the event loop anyway? | Philip Roberts<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
+<p>What the heck is the event loop anyway? | Philip Roberts <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
 </blockquote>
 <blockquote>
-<p>請說明瀏覽器中的事件循環 (Event Loop)<br><a target="_blank" rel="noopener" href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
+<p>請說明瀏覽器中的事件循環 (Event Loop) <a target="_blank" rel="noopener" href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
 </blockquote>
 <blockquote>
-<p>What is an event loop in JavaScript?<br><a target="_blank" rel="noopener" href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
+<p>What is an event loop in JavaScript? <a target="_blank" rel="noopener" href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-16</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/Event-Loop/" class="post-tags__link button"># Event Loop</a></div>
+   <div class="post-footer__meta"><p>updated at 2023-11-18</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/Event-Loop/" class="post-tags__link button"># Event Loop</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2023/11/12/async-vs-defer/" class="nav__link">
+    <a href="/2023/11/15/var-let-const/" class="nav__link">
       <div>
         <svg
           viewBox="0 0 1024 1024"
@@ -243,7 +243,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </div>
       <div>
         <div class="nav__label">Previous Post</div>
-        <div class="nav__title">JavaScript的載入：defer vs async</div>
+        <div class="nav__title">JavaScript | 使用var, let, const宣告究竟差在哪呢？</div>
       </div>
     </a>
     

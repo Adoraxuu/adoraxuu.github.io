@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>JavaScript的載入：defer vs async | Adora&#39;s Blog</title>
+<title>JavaScript | defer vs async | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="JavaScript, defer, async, Web, rendering">
@@ -121,9 +121,9 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">JavaScript的載入：defer vs async</h1>
+  <h1 class="post-title__text">JavaScript | defer vs async</h1>
   <div class="post-title__meta">
-    <a href="/archives/2023/11/" class="post-meta__date button">2023-11-12</a> 
+    <a href="/archives/2023/11/" class="post-meta__date button">2023-11-18</a> 
     <span class="separate-dot"></span><a href="/categories/JavaScript/" class="button">JavaScript</a>
 
  
@@ -184,16 +184,16 @@
 <blockquote>
 <p>要了解更多請參考：<a target="_blank" rel="noopener" href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
 </blockquote>
-<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」<br>而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
-<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？<br>大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
+<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
+<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
 <p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
 <p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
 
-<p>這時建構的時間圖如下：<br><img src="/images/async_vs_defer/2rendering-time.png"></p>
-<p>這會造成什麼樣的問題？<br>因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。<br>（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
+<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
+<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
 <p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
-<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ<br>這裡就要提到在開頭說的第一個方法</p>
+<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
 <h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
 
 <ul>
@@ -203,10 +203,10 @@
 </ul>
 <p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
 <p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
-<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong><br>使用的範例如下：</p>
+<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
 
-<p>可以用圖片理解：<br><img src="/images/async_vs_defer/4rendering-time-async.png"></p>
+<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
 <ul>
 <li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
 <li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
@@ -227,7 +227,7 @@
 <li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
 <li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
 </ul>
-<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清：<br><img src="/images/async_vs_defer/6differ-table.png"></p>
+<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
 <p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
@@ -243,40 +243,20 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-16</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/defer/" class="post-tags__link button"># defer</a><a href="/tags/async/" class="post-tags__link button"># async</a><a href="/tags/Web/" class="post-tags__link button"># Web</a><a href="/tags/rendering/" class="post-tags__link button"># rendering</a></div>
+   <div class="post-footer__meta"><p>updated at 2023-11-18</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/defer/" class="post-tags__link button"># defer</a><a href="/tags/async/" class="post-tags__link button"># async</a><a href="/tags/Web/" class="post-tags__link button"># Web</a><a href="/tags/rendering/" class="post-tags__link button"># rendering</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2023/11/15/var-let-const/" class="nav__link">
-      <div>
-        <svg
-          viewBox="0 0 1024 1024"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
-            fill="#808080"
-          ></path>
-        </svg>
-      </div>
-      <div>
-        <div class="nav__label">Previous Post</div>
-        <div class="nav__title">JavaScript: 使用var, let, const宣告究竟差在哪呢？</div>
-      </div>
-    </a>
-    
   </div>
   <div class="nav__next">
     
-    <a href="/2023/11/08/javascript-event-loop/" class="nav__link">
+    <a href="/2023/11/15/var-let-const/" class="nav__link">
       <div>
         <div class="nav__label">Next Post</div>
-        <div class="nav__title">JavaScript 究竟什麼是 Event Loop？</div>
+        <div class="nav__title">JavaScript | 使用var, let, const宣告究竟差在哪呢？</div>
       </div>
       <div>
         <svg
