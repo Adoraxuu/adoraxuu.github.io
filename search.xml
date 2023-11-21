@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JavaScript | defer vs async</title>
+    <title>JavaScript: defer vs async</title>
     <url>/2023/11/18/async-vs-defer/</url>
     <content><![CDATA[<style>
   .em-div{
@@ -111,7 +111,7 @@
       </tags>
   </entry>
   <entry>
-    <title>JavaScript | 使用var, let, const宣告究竟差在哪呢？</title>
+    <title>JavaScript: 使用var, let, const宣告究竟差在哪呢？</title>
     <url>/2023/11/15/var-let-const/</url>
     <content><![CDATA[<style>
   .em-div{
@@ -334,7 +334,7 @@ output: TypeError: Assignment to constant variable.
       </tags>
   </entry>
   <entry>
-    <title>JavaScript | 究竟什麼是 Event Loop？</title>
+    <title>JavaScript: 究竟什麼是 Event Loop？</title>
     <url>/2023/11/08/javascript-event-loop/</url>
     <content><![CDATA[<style>
   .em-div{

@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://adora-xu.com/2023/11/15/var-let-const/</loc>
+    <loc>http://adora-xu.com/2023/11/08/javascript-event-loop/</loc>
     
-    <lastmod>2023-11-20</lastmod>
+    <lastmod>2023-11-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://adora-xu.com/2023/11/08/javascript-event-loop/</loc>
+    <loc>http://adora-xu.com/2023/11/15/var-let-const/</loc>
     
-    <lastmod>2023-11-18</lastmod>
+    <lastmod>2023-11-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -22,7 +22,7 @@
   <url>
     <loc>http://adora-xu.com/2023/11/18/async-vs-defer/</loc>
     
-    <lastmod>2023-11-18</lastmod>
+    <lastmod>2023-11-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -74,15 +74,6 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/archive.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://adora-xu.com/css/comment.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -110,7 +101,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/friends.css</loc>
+    <loc>http://adora-xu.com/css/custom.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -119,7 +110,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/custom.css</loc>
+    <loc>http://adora-xu.com/css/archive.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -137,25 +128,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/header.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/css/index.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/css/layout.css</loc>
+    <loc>http://adora-xu.com/css/ringo.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -173,7 +146,25 @@
   </url>
   
   <url>
+    <loc>http://adora-xu.com/css/index.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://adora-xu.com/css/search.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/css/tags.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -191,7 +182,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/ringo.css</loc>
+    <loc>http://adora-xu.com/css/friends.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -200,7 +191,16 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/tags.css</loc>
+    <loc>http://adora-xu.com/css/header.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/css/layout.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
