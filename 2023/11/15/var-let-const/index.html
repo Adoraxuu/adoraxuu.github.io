@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>JavaScript: 使用var, let, const宣告究竟差在哪呢？ | Adora&#39;s Blog</title>
+<title>JavaScript: 使用 var, let, const 宣告究竟差在哪呢？ | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="JavaScript, var, let, const">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">JavaScript: 使用var, let, const宣告究竟差在哪呢？</h1>
+  <h1 class="post-title__text">JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</h1>
   <div class="post-title__meta">
     <a href="/archives/2023/11/" class="post-meta__date button">2023-11-15</a> 
     <span class="separate-dot"></span><a href="/categories/JavaScript/" class="button">JavaScript</a>
@@ -179,7 +179,7 @@
 <li><code>var</code>為<strong>函數作用域(function scope)<strong>，若在函數外宣告則為</strong>全作用域(global scope)</strong></li>
 <li>僅有 function scope 能夠關住 var（容易污染）</li>
 <li>var 宣告的變數，可以重新被宣告 &amp; 賦值</li>
-<li>有變數提升，若先提取變數，再使用 var 宣告，會出現 undefined</div></li>
+<li>有<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升</a>，若先提取變數，再使用 var 宣告，會出現 undefined</div></li>
 </ul>
 <p>接著會用四個範例題目，來幫助解釋這四個重點 ٩(ˊᗜˋ )و</p>
 <h3 id="var-為全作用域"><a href="#var-為全作用域" class="headerlink" title="var 為全作用域"></a>var 為全作用域</h3><p><code>var</code>可以為<strong>全作用域（global scope）</strong>或<strong>函數作用域（function scope）</strong>。這代表在函式<strong>外面</strong>定義的變數可以<strong>全域訪問</strong>，在特定函數內部定義的變數可以在函數內部存取。(補充：未宣告的變數也會放在全域變數)</p>
@@ -215,7 +215,7 @@ output: 7
 </div>
 
 <ul>
-<li>範例 4：如果使用者在宣告之前使用 var 變數，因為變數提升（Hosting）的關係。在執行函數之前，會優先將 var 變數放入記憶體。要注意的是：這只是在記憶體有這變數的空間，但<strong>尚未初始化</strong>。這也是為何會拿到 undefined 的原因。</li>
+<li>範例 4：如果使用者在宣告之前使用 var 變數，因為<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升（Hosting）</a>的關係。在執行函數之前，會優先將 var 變數放入記憶體。要注意的是：這只是在記憶體有這變數的空間，但<strong>尚未初始化</strong>。這也是為何會拿到 undefined 的原因。</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 
@@ -227,7 +227,7 @@ output: undefined
 
 <ul>
 <li><code>let</code>為<b>區塊作用域(block scoped)</b>，無法在<code>&#123;block&#125;</code>之外存取它</li>
-<li>有變數提升(Hosting)，但因為 let 不會幫忙初始化，而是存在<strong>暫時執行死區（TDZ）</strong>，因此<code>let</code>不能在宣告前使用，不能多次宣告。</div></li>
+<li>有<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升（Hosting）</a>，但因為 let 不會幫忙初始化，而是存在<strong>暫時執行死區（TDZ）</strong>，因此<code>let</code>不能在宣告前使用，不能多次宣告。</div></li>
 <li>範例 1：正常運行的樣子</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> b = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">f</span>();<br></code></pre></td></tr></table></figure>
@@ -344,6 +344,7 @@ output: TypeError: Assignment to constant variable.
 <li>var</li>
 </ol>
 <p>當然實際還是依照需求而定，希望今天的文章有幫助到您！</p>
+<p>另外在文章內提到的變數提升，也歡迎參考我另外一篇文章的解釋：<a href="https://adora-xu.com/2023/11/18/hoisting/">JavaScript: 變數提升 hoisting 到底是什麼？</a></p>
 <p>文章內容是根據以下參考資料整理＋自己繪圖而得，如果有任何建議都歡迎提供唷 (´･∀･｀)</p>
 <p>參考資料：</p>
 <blockquote>
@@ -357,7 +358,7 @@ output: TypeError: Assignment to constant variable.
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-21</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
+   <div class="post-footer__meta"><p>updated at 2023-11-22</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/var/" class="post-tags__link button"># var</a><a href="/tags/let/" class="post-tags__link button"># let</a><a href="/tags/const/" class="post-tags__link button"># const</a></div>
 </article>
 
 
