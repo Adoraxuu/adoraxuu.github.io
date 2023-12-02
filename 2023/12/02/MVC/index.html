@@ -43,8 +43,10 @@
  <!-- meta -->
 
 
-<title>About me | Adora&#39;s Blog</title>
+<title>Ruby on Rails: MVC是什麼? | Adora&#39;s Blog</title>
 
+
+    <meta name="keywords" content="Ruby, Rails, MVC">
 
 
  <!-- OpenGraph -->
@@ -119,9 +121,11 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">About me</h1>
+  <h1 class="post-title__text">Ruby on Rails: MVC是什麼?</h1>
   <div class="post-title__meta">
-    <a href="/archives/2023/11/" class="post-meta__date button">2023-11-01</a> 
+    <a href="/archives/2023/12/" class="post-meta__date button">2023-12-02</a> 
+    <span class="separate-dot"></span><a href="/categories/Ruby-on-Rails/" class="button">Ruby on Rails</a>
+
  
     
     
@@ -143,38 +147,104 @@
   </div>
 
   <div class="post__content"><style>
-.ava-block{
-    text-align: center;
-}
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
 
-.avatar{
-    height: 45%;
-    width: 45%;
-}
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
 </style>
-<div class="ava-block">
-<img class="avatar" src="/img/avatar2.jpg" alt="">
+
+<img src="/images/MVC/banner.png" alt="">
+
+<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
+<div class="em-div2">
+MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
+把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
 </div>
 
-<h2 id="關於我"><a href="#關於我" class="headerlink" title="關於我"></a>關於我</h2><ul>
-<li>💛 我是 <strong>Adora</strong></li>
-<li>💡 熱愛學習新技術，永不停歇</li>
-<li>🌈 分享學習的技術知識，一起成長</li>
-<li>🌟 喜歡將生活分享變成有趣的故事</li>
-<li>🚀 希望能夠成為 full stack developer</li>
-<li>📝 這個 Blog 是使用 Hexo 架設而成，採用主題 [Cards] © <a target="_blank" rel="noopener" href="https://github.com/ChrAlpha">ChrAlpha</a>，也歡迎多交流！</li>
+<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
+<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
+<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
+<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
+<ul>
+<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
+<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
+<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
 </ul>
-<h2 id="你可以找到我"><a href="#你可以找到我" class="headerlink" title="你可以找到我"></a>你可以找到我</h2><ul>
-<li>📧 Email: <a href="mailto:&#x61;&#x64;&#111;&#x72;&#97;&#x78;&#x75;&#48;&#x31;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#x61;&#x64;&#111;&#x72;&#97;&#x78;&#x75;&#48;&#x31;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></li>
-<li>🐈 GitHub: <a target="_blank" rel="noopener" href="https://github.com/Adoraxuu">Adoraxuu</a></li>
-<li>📸 Instagram: <a target="_blank" rel="noopener" href="https://www.instagram.com/yin.001/">yin.001</a></li>
-<li>如果你對技術、生活、或是任何其他有趣的話題感興趣，歡迎隨時與我聯繫！🌸<!--</li>
-</ul>
+<p>參考資料：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
+<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframkwork.png" alt=""></p>
+<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
+<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
+<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <img src="/images/MVC/02.png" alt="">
+當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。
+
+<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><img src="/images/MVC/03.png" alt="">
+可以想像成控制處理中心 or 指揮官，
+Controller會和model要資料、View要畫面，最後提供給routes，再讓使用者看到網頁畫面。
+Controller通常會有一個以上的 Action，這些 Action 就是Ruby 裡的方法（method）。
+
+<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><img src="/images/MVC/04.png" alt="">
+Model本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。
+
+<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><img src="/images/MVC/05.png" alt="">
+View為使用者最後看到的畫面，雖然 Controller/Action 拿到資料了，但目前這包東西還沒美化、整理過，
+還不適合給使用者看，所以 Controller/Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。
+
+<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
+<p>詳細內容可以參考龍哥的<a target="_blank" rel="noopener" href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<hr>
+<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
+<div class="em-div2">
+參考資料：
+
+<p><a target="_blank" rel="noopener" href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
+</div>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2023-11-10</p></div> <div class="post-entry__tags"></div>
+   <div class="post-footer__meta"><p>updated at 2023-12-02</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Rails/" class="post-tags__link button"># Rails</a><a href="/tags/MVC/" class="post-tags__link button"># MVC</a></div>
 </article>
 
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2023/11/18/async-vs-defer/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">JavaScript: defer vs async</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
  
 <div
   class="post__comments content-card"
