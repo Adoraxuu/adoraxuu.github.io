@@ -65,6 +65,7 @@ match會回傳符合內容的物件，看起來像這個樣子
       <tags>
         <tag>AOC</tag>
         <tag>Advent of code</tag>
+        <tag>Ruby</tag>
       </tags>
   </entry>
   <entry>
