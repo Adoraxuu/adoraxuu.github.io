@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Advent of code 2023 —Day 01 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="AOC, Advent of code">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Advent of code 2023 —Day 01</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2023/12/" class="post-meta__date button">2023-12-17</a> 
+    <span class="separate-dot"></span><a href="/categories/Ruby/" class="button">Ruby</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
+</blockquote>
+<p>來源：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
+<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
+<p>這是第一天 Part 1的題目：</p>
+<img src="/images/AOC/01.png">
+
+<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
+<img src="/images/AOC/02.png">
+
+<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
+<p>最後上網找了<a target="_blank" rel="noopener" href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
+<p>關於match，<a target="_blank" rel="noopener" href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a target="_blank" rel="noopener" href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
+<div class="em-div2">
+Returns a MatchData object (or `nil`) based on `self` and the given `pattern`.
+Note: also updates [Special global variables at `Regexp`](https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables).
+ Computes `regexp` by converting `pattern` (if not already a Regexp).
+</div>
+match會回傳符合內容的物件，看起來像這個樣子
+```'foo'.match('f') # => #<MatchData "f">```
+
+<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
+
+<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
+<img src="/images/AOC/03.png">
+
+<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
+<p>最後真的很感謝<a target="_blank" rel="noopener" href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
+<p>如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2023-12-17</p></div> <div class="post-entry__tags"><a href="/tags/AOC/" class="post-tags__link button"># AOC</a><a href="/tags/Advent-of-code/" class="post-tags__link button"># Advent of code</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2023/12/02/MVC/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Ruby on Rails: MVC是什麼?</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2023 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
