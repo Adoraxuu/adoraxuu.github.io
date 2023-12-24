@@ -161,9 +161,22 @@ margin:5px;
 padding:10px 2px 2px 2px;
 border-style:dashed;
 }
+
+.image-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+  border-radius: 10px; /* 圓角效果 */
+  overflow: hidden; /* 超出部分隱藏 */
+  margin: 5px; /* 留白效果 */
+}
 </style>
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
+
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
+<img src="/images/rails_admin_layout_devise/banner.png">
+</div>
+
+<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
 <p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
@@ -194,8 +207,9 @@ border-style:dashed;
 </ul>
 <p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-
+<div class="image-container">
 <img src="/images/rails_admin_layout_devise/01.png">
+</div>
 
 <ul>
 <li>設定routes</li>
@@ -210,7 +224,9 @@ border-style:dashed;
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
 
 <p>devise會自動幫你增加檔案，真的很方便</p>
+<div class="image-container">
 <img src="/images/rails_admin_layout_devise/02.png">
+</div>
 
 <ul>
 <li>生一個migration，增加role欄位到User資料表</li>
@@ -243,11 +259,13 @@ border-style:dashed;
 <p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
 <p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
 <p>接著就大功告成了！！</p>
-<p>這是剛剛步驟做出的首頁</p>
-<img src="/images/rails_admin_layout_devise/03.png">
+<p>這是剛剛步驟做出的首頁<br>&lt;<div class="image-container"><br><img src="/images/rails_admin_layout_devise/03.png"></p>
+</div>
 
 <p>登入頁面</p>
+<div class="image-container">
 <img src="/images/rails_admin_layout_devise/04.png">
+</div>
 
 <p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
 <p>搭配指令，來快速指定某使用者的role</p>
@@ -256,7 +274,9 @@ border-style:dashed;
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
 
 <p>登入成功後，就有管理者的介面了！！</p>
+<div class="image-container">
 <img src="/images/rails_admin_layout_devise/06.png">
+</div>
 
 <p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
 <p>讓他的介面看起來和一班使用者有區隔</p>
