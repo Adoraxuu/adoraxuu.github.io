@@ -259,7 +259,9 @@ border-style:dashed;
 <p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
 <p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
 <p>接著就大功告成了！！</p>
-<p>這是剛剛步驟做出的首頁<br>&lt;<div class="image-container"><br><img src="/images/rails_admin_layout_devise/03.png"></p>
+<p>這是剛剛步驟做出的首頁</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/03.png">
 </div>
 
 <p>登入頁面</p>
@@ -269,8 +271,9 @@ border-style:dashed;
 
 <p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
 <p>搭配指令，來快速指定某使用者的role</p>
+<div class="image-container">
 <img src="/images/rails_admin_layout_devise/05.png">
-
+</div>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
 
 <p>登入成功後，就有管理者的介面了！！</p>
