@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="devise, rails7, rails, layout">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Ruby on Rails: 用Devise10分鐘製作管理者後台版面</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2023/12/" class="post-meta__date button">2023-12-24</a> 
+    <span class="separate-dot"></span><a href="/categories/Ruby-on-Rails/" class="button">Ruby on Rails</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
+<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+<p>今天使用Rails來的<a target="_blank" rel="noopener" href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
+<p>以下為實作步驟：</p>
+<ul>
+<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新增pages_controller＆home.html.erb</li>
+</ul>
+<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，</p>
+<p>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>利用scaffold做CRUD的流程</li>
+</ul>
+<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
+
+<img src="/images/rails_admin_layout_devise/01.png">
+
+<ul>
+<li>設定routes</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安裝Devise &amp; 生成使用者</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
+
+<p>devise會自動幫你增加檔案，真的很方便</p>
+<img src="/images/rails_admin_layout_devise/02.png">
+
+<ul>
+<li>生一個migration，增加role欄位到User資料表</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><code>current_user&amp;.admin?</code></p>
+<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
+<p>可以用 &amp;. 簡化</p>
+<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
+<p>如果不是的話， layout就使用預設導入application</p>
+<ul>
+<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
+<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
+<p>接著就大功告成了！！</p>
+<p>這是剛剛步驟做出的首頁</p>
+<img src="/images/rails_admin_layout_devise/03.png">
+
+<p>登入頁面</p>
+<img src="/images/rails_admin_layout_devise/04.png">
+
+<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
+<p>搭配指令，來快速指定某使用者的role</p>
+<img src="/images/rails_admin_layout_devise/05.png">
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
+
+<p>登入成功後，就有管理者的介面了！！</p>
+<img src="/images/rails_admin_layout_devise/06.png">
+
+<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
+<p>讓他的介面看起來和一班使用者有區隔</p>
+<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
+<p>這整個步驟大約10分鐘就可以完成了！！</p>
+<p>有興趣也可以試看看～～</p>
+<hr>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2023-12-24</p></div> <div class="post-entry__tags"><a href="/tags/devise/" class="post-tags__link button"># devise</a><a href="/tags/rails7/" class="post-tags__link button"># rails7</a><a href="/tags/rails/" class="post-tags__link button"># rails</a><a href="/tags/layout/" class="post-tags__link button"># layout</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2023/12/17/AOC-day01/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Advent of code 2023 —Day 01</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2023 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
