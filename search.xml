@@ -531,7 +531,7 @@ border-style:dashed;
 <ul>
 <li>生一個migration，增加role欄位到User資料表</li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
