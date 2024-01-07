@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2023-12-24T04:22:27.735Z</updated>
+  <updated>2024-01-07T07:30:08.232Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
+    <link href="http://adora-xu.com/2024/01/07/active-storage-amazon-s3/"/>
+    <id>http://adora-xu.com/2024/01/07/active-storage-amazon-s3/</id>
+    <published>2024-01-07T07:12:39.000Z</published>
+    <updated>2024-01-07T07:30:08.232Z</updated>
+    
+    <content type="html"><![CDATA[<img src="/images/active_storage_amazon_s3/01.avif"><blockquote><p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p></blockquote><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p><p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p><p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p><p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p><iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p><ul><li>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</li><li>接著到S3 創建存放資料的地方，點選Create Bucket<img src="/images/active_storage_amazon_s3/03.png"></li><li>選擇Bucket的所在地＆Bucket Name<img src="/images/active_storage_amazon_s3/04.png">依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪<img src="/images/active_storage_amazon_s3/05.png"></li><li>ACLs enabled</li></ul><p>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p><ul><li>存取權限 Access Settings</li></ul><img src="/images/active_storage_amazon_s3/06.png"><p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，所以我只勾選了下面兩項。</p><ul><li>設定CORS</li></ul><p>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡</p><img src="/images/active_storage_amazon_s3/07.png"><p>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰</p><img src="/images/active_storage_amazon_s3/08.png"><p>選擇S3，並在下面勾選</p><ul><li>List : ListBucket</li><li>Read: GetObj</li><li>Write: PutObj,DeleteObj</li><li>Permission management: PutObjAcl</li></ul><p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p><img src="/images/active_storage_amazon_s3/09.png"><p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure><p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p><ul><li>創建使用者，並選擇剛剛選好的Policy</li></ul><img src="/images/active_storage_amazon_s3/10.png"><ul><li>創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li></ul><img src="/images/active_storage_amazon_s3/11.png"><ul><li>選擇可以在AWS以外使用</li></ul><img src="/images/active_storage_amazon_s3/12.png"><ul><li>進入金鑰頁面</li></ul><p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p><ul><li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure></li><li><p>接著在終端機輸入</p></li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure><p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure><ul><li>#development.rb設定將active_storage從:local改為:amazon</li></ul><p>(如果要在正式環境使用，則需要更改production.rb)</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure><p>下載AWS S3的Gem</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure><p>執行bundle i</p><p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p><img src="/images/active_storage_amazon_s3/13.png"><p>看s3的後台也看到圖片檔案</p><img src="/images/active_storage_amazon_s3/14.png"><p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇<br>昨天晚上還因為AWS的介面太多而眼花撩亂，今天做了兩三次後也駕輕就熟了٩(^ᴗ^)۶</p><hr><p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p></blockquote><blockquote><p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;img src=&quot;/images/active_storage_amazon_s3/01.avif&quot;&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;圖片來源&lt;a href=&quot;https://unsplash.com/photos/black-samsung-galaxy-smartpho</summary>
+      
+    
+    
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
+    
+    
+    <category term="AWS" scheme="http://adora-xu.com/tags/AWS/"/>
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
+    
+    <category term="active stroage" scheme="http://adora-xu.com/tags/active-stroage/"/>
+    
+    <category term="amazon" scheme="http://adora-xu.com/tags/amazon/"/>
+    
+    <category term="s3" scheme="http://adora-xu.com/tags/s3/"/>
+    
+  </entry>
   
   <entry>
     <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
@@ -86,11 +121,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby" scheme="http://adora-xu.com/categories/Ruby/"/>
     
     
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
     <category term="AOC" scheme="http://adora-xu.com/tags/AOC/"/>
     
     <category term="Advent of code" scheme="http://adora-xu.com/tags/Advent-of-code/"/>
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
   </entry>
   
@@ -129,48 +164,6 @@ border:2px #d4a373 s</summary>
     <category term="Rails" scheme="http://adora-xu.com/tags/Rails/"/>
     
     <category term="MVC" scheme="http://adora-xu.com/tags/MVC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript: defer vs async</title>
-    <link href="http://adora-xu.com/2023/11/18/async-vs-defer/"/>
-    <id>http://adora-xu.com/2023/11/18/async-vs-defer/</id>
-    <published>2023-11-18T14:00:00.000Z</published>
-    <updated>2023-11-22T04:10:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<style>  .em-div{  background-color: #d4a373;  color: white;  padding: 10px;  margin: 10px;  border-radius: 5px;  }</style><h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png"><p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p><ol><li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li><li><code>async</code></li><li><code>defer</code></li></ol><p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p><p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p><h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png"><blockquote><p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p></blockquote><h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul><li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li></ul><h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol><li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li><li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li><li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li><li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li></ol><p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p><blockquote><p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p></blockquote><p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p><h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p><p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p><p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure><p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p><p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p><p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p><p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p><h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png"><ul><li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li><li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li><li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li></ul><p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p><p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p><h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure><p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p><ul><li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li><li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li><li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li><li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li><li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li><li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li></ul><p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p><p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p><h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure><img src="/images/async_vs_defer/5rendering-time-defer.png"><ul><li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li><li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li><li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li><li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li></ul><h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p><p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p></blockquote><blockquote><p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p></blockquote><blockquote><p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p></blockquote><blockquote><p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;style&gt;
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-&lt;/style&gt;
-
-&lt;h3 id=</summary>
-      
-    
-    
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/categories/JavaScript/"/>
-    
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="defer" scheme="http://adora-xu.com/tags/defer/"/>
-    
-    <category term="async" scheme="http://adora-xu.com/tags/async/"/>
-    
-    <category term="Web" scheme="http://adora-xu.com/tags/Web/"/>
-    
-    <category term="rendering" scheme="http://adora-xu.com/tags/rendering/"/>
     
   </entry>
   

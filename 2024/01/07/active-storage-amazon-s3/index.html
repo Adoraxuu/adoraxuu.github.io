@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Ruby on Rails : ActiveStorage連線Amazon S3 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="AWS, Ruby on Rails, active stroage, amazon, s3">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Ruby on Rails : ActiveStorage連線Amazon S3</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/01/" class="post-meta__date button">2024-01-07</a> 
+    <span class="separate-dot"></span><a href="/categories/Ruby-on-Rails/" class="button">Ruby on Rails</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><img src="/images/active_storage_amazon_s3/01.avif">
+
+<blockquote>
+<p>圖片來源<a target="_blank" rel="noopener" href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
+</blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a target="_blank" rel="noopener" href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a target="_blank" rel="noopener" href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
+<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
+<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
+<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
+<ul>
+<li>先到<a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</li>
+<li>接著到S3 創建存放資料的地方，點選Create Bucket<img src="/images/active_storage_amazon_s3/03.png"></li>
+<li>選擇Bucket的所在地＆Bucket Name<img src="/images/active_storage_amazon_s3/04.png">
+依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪
+<img src="/images/active_storage_amazon_s3/05.png"></li>
+<li>ACLs enabled</li>
+</ul>
+<p>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
+<ul>
+<li>存取權限 Access Settings</li>
+</ul>
+<img src="/images/active_storage_amazon_s3/06.png">
+
+<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，所以我只勾選了下面兩項。</p>
+<ul>
+<li>設定CORS</li>
+</ul>
+<p>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡</p>
+<img src="/images/active_storage_amazon_s3/07.png">
+
+<p>接著到<a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰</p>
+<img src="/images/active_storage_amazon_s3/08.png">
+
+<p>選擇S3，並在下面勾選</p>
+<ul>
+<li>List : ListBucket</li>
+<li>Read: GetObj</li>
+<li>Write: PutObj,DeleteObj</li>
+<li>Permission management: PutObjAcl</li>
+</ul>
+<p>這部分是參考<a target="_blank" rel="noopener" href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
+<img src="/images/active_storage_amazon_s3/09.png">
+
+<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
+
+<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
+<ul>
+<li>創建使用者，並選擇剛剛選好的Policy</li>
+</ul>
+<img src="/images/active_storage_amazon_s3/10.png">
+
+<ul>
+<li>創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
+</ul>
+<img src="/images/active_storage_amazon_s3/11.png">
+
+<ul>
+<li>選擇可以在AWS以外使用</li>
+</ul>
+<img src="/images/active_storage_amazon_s3/12.png">
+
+<ul>
+<li>進入金鑰頁面</li>
+</ul>
+<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
+<ul>
+<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>接著在終端機輸入</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
+
+<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>#development.rb設定將active_storage從:local改為:amazon</li>
+</ul>
+<p>(如果要在正式環境使用，則需要更改production.rb)</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
+
+<p>下載AWS S3的Gem</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>執行bundle i</p>
+<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
+<img src="/images/active_storage_amazon_s3/13.png">
+
+<p>看s3的後台也看到圖片檔案</p>
+<img src="/images/active_storage_amazon_s3/14.png">
+
+<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇<br>昨天晚上還因為AWS的介面太多而眼花撩亂，今天做了兩三次後也駕輕就熟了٩(^ᴗ^)۶</p>
+<hr>
+<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>更新于 2024-01-07</p></div> <div class="post-entry__tags"><a href="/tags/AWS/" class="post-tags__link button"># AWS</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/active-stroage/" class="post-tags__link button"># active stroage</a><a href="/tags/amazon/" class="post-tags__link button"># amazon</a><a href="/tags/s3/" class="post-tags__link button"># s3</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2023/12/24/rails-admin-layout-devise/" class="nav__link">
+      <div>
+        <div class="nav__label">下一篇</div>
+        <div class="nav__title">Ruby on Rails: 用Devise10分鐘製作管理者後台版面</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
