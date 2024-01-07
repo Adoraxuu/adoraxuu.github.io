@@ -144,6 +144,117 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
+    <url>/2024/01/07/active-storage-amazon-s3/</url>
+    <content><![CDATA[<img src="/images/active-storage-amazon-s3/01.avif">
+
+<blockquote>
+<p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
+</blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
+<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
+<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
+<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
+<ul>
+<li><p>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
+</li>
+<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
+<img src="/images/active-storage-amazon-s3/03.png">
+</li>
+<li><p>選擇Bucket的所在地＆Bucket Name</p>
+<img src="/images/active-storage-amazon-s3/04.png"></li>
+</ul>
+<p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
+<ul>
+<li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
+</li>
+<li><p>存取權限 Access Settings</p>
+</li>
+</ul>
+<img src="/images/active-storage-amazon-s3/05.png">
+
+<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
+<ul>
+<li>設定CORS<img src="/images/active-storage-amazon-s3/CORS.png">
+在Bucket的頁面點選Permission拉到最下面
+可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，
+如果你有正式發佈的網址，也能講網址填寫在這裡</li>
+</ul>
+<img src="/images/active-storage-amazon-s3/07.png">
+
+<p>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰</p>
+<p>選擇S3，並在下面勾選</p>
+<ul>
+<li>List : ListBucket</li>
+<li>Read: GetObj</li>
+<li>Write: PutObj,DeleteObj</li>
+<li>Permission management: PutObjAcl</li>
+</ul>
+<p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
+<img src="/images/active-storage-amazon-s3/08.png">
+
+<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
+
+<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
+<ul>
+<li>創建使用者，並選擇剛剛選好的Policy</li>
+<li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
+<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
+<li>進入金鑰頁面</li>
+</ul>
+<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
+<ul>
+<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>接著在終端機輸入</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
+
+<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>#development.rb設定將active_storage從:local改為:amazon</li>
+</ul>
+<p>(如果要在正式環境使用，則需要更改production.rb)</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
+
+<p>下載AWS S3的Gem</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>執行bundle i</p>
+<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
+<img src="/images/active-storage-amazon-s3/10.png">
+
+<p>看s3的後台也看到圖片檔案<br><img src="/images/active-storage-amazon-s3/11.png"></p>
+<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇，<br>結果在上傳之後14張照片就消失了( ͒˃⌂˂ ͒)，<br>原來我不小心放在Public資料夾，而且下了Hexo cl指令  ◴_◶<br>可能老天爺想要我多熟練一點點，只好認命重新截圖…也刪除了一些不必要的圖片</p>
+<p>最後希望這篇文章有幫助到你！有任何問題歡迎回覆，<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>AWS</tag>
+        <tag>Ruby on Rails</tag>
+        <tag>active stroage</tag>
+        <tag>amazon</tag>
+        <tag>s3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
     <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
@@ -247,198 +358,6 @@ ReferenceError: Cannot access 'a' before initialization
         <tag>JavaScript</tag>
         <tag>hoisting</tag>
         <tag>變數提升</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
-    <url>/2024/01/07/active-storage-amazon-s3/</url>
-    <content><![CDATA[<img src="/images/active-storage-amazon-s3/01.avif">
-
-<blockquote>
-<p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
-</blockquote>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
-<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
-<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
-<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
-<ul>
-<li><p>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
-</li>
-<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
-<img src="/images/active-storage-amazon-s3/03.png">
-</li>
-<li><p>選擇Bucket的所在地＆Bucket Name</p>
-<img src="/images/active-storage-amazon-s3/04.png"></li>
-</ul>
-<p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
-<ul>
-<li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
-</li>
-<li><p>存取權限 Access Settings</p>
-</li>
-</ul>
-<img src="/images/active-storage-amazon-s3/05.png">
-
-<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
-<ul>
-<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡</li>
-</ul>
-<img src="/images/active-storage-amazon-s3/07.png">
-
-<p>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰</p>
-<p>選擇S3，並在下面勾選</p>
-<ul>
-<li>List : ListBucket</li>
-<li>Read: GetObj</li>
-<li>Write: PutObj,DeleteObj</li>
-<li>Permission management: PutObjAcl</li>
-</ul>
-<p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
-<img src="/images/active-storage-amazon-s3/08.png">
-
-<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
-<figure class="highlight asciidoc"><table><tr><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
-
-<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
-<ul>
-<li>創建使用者，並選擇剛剛選好的Policy</li>
-<li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
-<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
-<li>進入金鑰頁面</li>
-</ul>
-<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
-<ul>
-<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>接著在終端機輸入</p>
-</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
-
-<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>#development.rb設定將active_storage從:local改為:amazon</li>
-</ul>
-<p>(如果要在正式環境使用，則需要更改production.rb)</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
-
-<p>下載AWS S3的Gem</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
-
-<p>執行bundle i</p>
-<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
-<img src="/images/active-storage-amazon-s3/10.png">
-
-<p>看s3的後台也看到圖片檔案<br><img src="/images/active-storage-amazon-s3/11.png"></p>
-<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇，<br>結果在上傳之後14張照片就消失了( ͒˃⌂˂ ͒)，<br>原來我不小心放在Public資料夾，而且下了Hexo cl指令  ◴_◶<br>可能老天爺想要我多熟練一點點，只好認命重新截圖…也刪除了一些不必要的圖片</p>
-<p>最後希望這篇文章有幫助到你！有任何問題歡迎回覆，<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>AWS</tag>
-        <tag>Ruby on Rails</tag>
-        <tag>active stroage</tag>
-        <tag>amazon</tag>
-        <tag>s3</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript: 究竟什麼是 Event Loop？</title>
-    <url>/2023/11/08/javascript-event-loop/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
-JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
-
-<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
-<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
-
-<ul>
-  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
-  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
-  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
-</ul>
-<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
-
-<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
-
-<ul>
-  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
-  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
-
-<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
-
-<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
-
-<ul>
-  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
-  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
-</ul>
-
-<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
-
-<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
-
-<ul>
-  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
-  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
-  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
-  <li>如果不為空：處理 Call Stack 內的函數。</li>
-</ul>
-
-<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
-<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
-<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
-
-<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<img src="/images/eventLoop/pasted-0.png">
-
-<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
-<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
-</blockquote>
-<blockquote>
-<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
-</blockquote>
-<blockquote>
-<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>Event Loop</tag>
       </tags>
   </entry>
   <entry>
@@ -598,6 +517,90 @@ border-style:dashed;
         <tag>rails7</tag>
         <tag>rails</tag>
         <tag>layout</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 究竟什麼是 Event Loop？</title>
+    <url>/2023/11/08/javascript-event-loop/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
+JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
+
+<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
+<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
+
+<ul>
+  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
+  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
+  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
+</ul>
+<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
+
+<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
+
+<ul>
+  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
+  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
+
+<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
+
+<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
+
+<ul>
+  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
+  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
+</ul>
+
+<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
+
+<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
+
+<ul>
+  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
+  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
+  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
+  <li>如果不為空：處理 Call Stack 內的函數。</li>
+</ul>
+
+<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
+<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
+<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>會得到以下結果：</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
+
+<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
+
+<p>會得到以下結果：</p>
+<img src="/images/eventLoop/pasted-0.png">
+
+<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
+<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
+</blockquote>
+<blockquote>
+<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
+</blockquote>
+<blockquote>
+<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Event Loop</tag>
       </tags>
   </entry>
   <entry>
