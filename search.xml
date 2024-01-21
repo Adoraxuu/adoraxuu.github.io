@@ -188,7 +188,7 @@ border-style:dashed;
 <p>寫在credential的資料有幾個好處：</p>
 <ol>
 <li>高機密性：必須要有對應的key才能夠打開，此key不會跟著上傳GitHub</li>
-<li>修改方便：金流的版號會不段更新（這次是接v3），如果之後更新從crediential改就好</li>
+<li>修改方便：金流的版號會不斷更新（這次是接v3），如果之後更新從crediential改就好</li>
 <li>確保正確性：串接金流只要有一個東西錯誤就會失敗，將資料集中寫在這裡，確認正確性時會比較方便</li>
 </ol>
 <p>我使用gem <a href="https://rubygems.org/gems/faraday/versions/2.7.11?locale=zh-TW">faraday</a>向LINE Pay 發送請求，所以這邊先安裝</p>
@@ -298,6 +298,112 @@ border-style:dashed;
         <tag>v3</tag>
         <tag>faraday</tag>
         <tag>金流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
+    <url>/2023/11/18/hoisting/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+
+</style>
+
+<img src="/images/hoisting/banner.png">
+之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
+
+<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
+<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
+<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
+<p>這段話裡面有幾個重點：</p>
+<div class="em-div2">
+
+<ol>
+<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
+</li>
+<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
+</li>
+<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
+</div></li>
+</ol>
+<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
+<img src="/images/hoisting/01.png">
+
+<div class="em-div2">
+
+<ul>
+<li><p>Creation Phase</p>
+<ul>
+<li>註冊名稱(Declaration)</li>
+<li>初始化（Initialisation）</li>
+</ul>
+</li>
+<li><p>Execution Phase</p>
+<ul>
+<li>賦值(Assignment) &amp; 執行</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<hr>
+<p>這樣就能夠很清楚解釋以下例子：</p>
+<img src="/images/hoisting/02.png">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+undefined
+</div>
+
+<p>解釋：</p>
+<ul>
+<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
+<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
+</ul>
+<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+ReferenceError: Cannot access 'a' before initialization
+</div>
+備註：const宣告的結果和let一樣
+
+<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
+<p>解釋：</p>
+<ul>
+<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
+<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
+</ul>
+<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
+<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
+<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
+</div>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>hoisting</tag>
+        <tag>變數提升</tag>
       </tags>
   </entry>
   <entry>
@@ -598,112 +704,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       <tags>
         <tag>JavaScript</tag>
         <tag>Event Loop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
-    <url>/2023/11/18/hoisting/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-
-</style>
-
-<img src="/images/hoisting/banner.png">
-之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
-
-<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
-<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
-<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
-<p>這段話裡面有幾個重點：</p>
-<div class="em-div2">
-
-<ol>
-<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
-</li>
-<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
-</li>
-<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
-</div></li>
-</ol>
-<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
-<img src="/images/hoisting/01.png">
-
-<div class="em-div2">
-
-<ul>
-<li><p>Creation Phase</p>
-<ul>
-<li>註冊名稱(Declaration)</li>
-<li>初始化（Initialisation）</li>
-</ul>
-</li>
-<li><p>Execution Phase</p>
-<ul>
-<li>賦值(Assignment) &amp; 執行</li>
-</ul>
-</li>
-</ul>
-</div>
-
-<hr>
-<p>這樣就能夠很清楚解釋以下例子：</p>
-<img src="/images/hoisting/02.png">
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-undefined
-</div>
-
-<p>解釋：</p>
-<ul>
-<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
-<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
-</ul>
-<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-ReferenceError: Cannot access 'a' before initialization
-</div>
-備註：const宣告的結果和let一樣
-
-<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
-<p>解釋：</p>
-<ul>
-<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
-<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
-</ul>
-<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
-<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
-<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
-</div>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>hoisting</tag>
-        <tag>變數提升</tag>
       </tags>
   </entry>
   <entry>
