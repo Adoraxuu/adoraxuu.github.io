@@ -240,8 +240,8 @@ border-style:dashed;
 <p>另外LINE Pay  v3因為要防止惡意攻擊，所以要求每次送header要有一個唯一的 nonce，我使用 <code>SecureRandom.uuid</code> 生成。</p>
 <p>加密的部分：</p>
 <ul>
-<li>透過OpenSSL ，使用 HMAC和 SHA-256 加密算法，得到 **<code>hash</code>**。</li>
-<li>使用 Base64 加密方式將 <strong><code>hash</code></strong> 轉換成字符串，得到 **<code>@signature</code>**。</li>
+<li>透過OpenSSL ，使用 HMAC和 SHA-256 加密算法，得到 <code>hash</code>。</li>
+<li>使用 Base64 加密方式將 <code>hash</code> 轉換成字符串，得到 <code>@signature</code>。</li>
 </ul>
 <p>上面兩步做完，就可以成功跳轉到LINE PAY頁面</p>
 <img src="/images/LINE-Pay/6.png">
@@ -273,7 +273,7 @@ border-style:dashed;
 <p>如果有需要更正的地方歡迎指教！</p>
 <p>如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a target="_blank" rel="noopener" href="https://pay.line.me/th/developers/apis/onlineApis?locale=zh_TW">LINE PAY Developers</a></p>
+<p><a target="_blank" rel="noopener" href="https://pay.line.me/th/developers/apis/onlineApis?locale=zh_TW">LINE Pay Developers APIs</a></p>
 </blockquote>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/lostisland/faraday">faraday</a></p>
