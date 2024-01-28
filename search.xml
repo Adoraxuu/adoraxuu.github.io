@@ -69,81 +69,6 @@ match會回傳符合內容的物件，看起來像這個樣子：
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: MVC是什麼?</title>
-    <url>/2023/12/02/MVC/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-</style>
-
-<img src="/images/MVC/banner.png" alt="">
-
-<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
-<div class="em-div2">
-MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
-把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
-</div>
-
-<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
-<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
-<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
-<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
-<ul>
-<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
-<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
-<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
-</ul>
-<p>參考資料：<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
-<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
-<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframwork2.png" alt=""></p>
-<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
-<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
-<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <!-- <img src="/images/MVC/02.png" alt=""> -->
-
-<p>當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。</p>
-<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><!-- <img src="/images/MVC/03.png" alt=""> -->
-
-<p>可以想像成控制處理中心 or 指揮官， Controller 會和 model 要資料、View 要畫面，最後提供給 routes，再讓使用者看到網頁畫面。 Controller 通常會有一個以上的 Action，這些 Action 就是 Ruby 裡的方法（method）。</p>
-<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><!-- <img src="/images/MVC/04.png" alt=""> -->
-
-<p>Model 本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。</p>
-<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><!-- <img src="/images/MVC/05.png" alt=""> -->
-
-<p>View 為使用者最後看到的畫面，雖然 Controller&#x2F;Action 拿到資料了，但目前這包東西還沒美化、整理過，還不適合給使用者看，所以 Controller&#x2F;Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。</p>
-<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
-<p>詳細內容可以參考龍哥的<a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
-<hr>
-<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
-<p><a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
-<p><a href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
-</div>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Rails</tag>
-        <tag>MVC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: 串接LINE Pay API v3</title>
     <url>/2024/01/21/LINE-Pay/</url>
     <content><![CDATA[<style>
@@ -298,6 +223,157 @@ border-style:dashed;
         <tag>v3</tag>
         <tag>faraday</tag>
         <tag>金流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: MVC是什麼?</title>
+    <url>/2023/12/02/MVC/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+</style>
+
+<img src="/images/MVC/banner.png" alt="">
+
+<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
+<div class="em-div2">
+MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
+把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
+</div>
+
+<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
+<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
+<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
+<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
+<ul>
+<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
+<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
+<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
+</ul>
+<p>參考資料：<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
+<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframwork2.png" alt=""></p>
+<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
+<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
+<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <!-- <img src="/images/MVC/02.png" alt=""> -->
+
+<p>當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。</p>
+<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><!-- <img src="/images/MVC/03.png" alt=""> -->
+
+<p>可以想像成控制處理中心 or 指揮官， Controller 會和 model 要資料、View 要畫面，最後提供給 routes，再讓使用者看到網頁畫面。 Controller 通常會有一個以上的 Action，這些 Action 就是 Ruby 裡的方法（method）。</p>
+<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><!-- <img src="/images/MVC/04.png" alt=""> -->
+
+<p>Model 本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。</p>
+<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><!-- <img src="/images/MVC/05.png" alt=""> -->
+
+<p>View 為使用者最後看到的畫面，雖然 Controller&#x2F;Action 拿到資料了，但目前這包東西還沒美化、整理過，還不適合給使用者看，所以 Controller&#x2F;Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。</p>
+<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
+<p>詳細內容可以參考龍哥的<a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<hr>
+<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<p><a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<p><a href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
+</div>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Rails</tag>
+        <tag>MVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>職涯: 為什麼要轉職工程師?</title>
+    <url>/2024/01/28/Transition/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+<img src="/images/Transition/banner.png">
+
+<p><a href="https://unsplash.com/photos/person-using-macbook-pro-on-brown-wooden-table-h329GHs_lC8">圖片來源</a></p>
+<p>「要不要當工程師？」其實這這問題在我心中出現了很多次，<br>第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，<br>中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
+<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><img src="/images/Transition/1.avif">
+
+<p><a href="https://unsplash.com/photos/group-of-people-wearing-white-and-orange-backpacks-walking-on-gray-concrete-pavement-during-daytime-CYlPykF-qAM">圖片來源</a></p>
+<p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，<br>那時候智慧型手機、youtube不普及、沒有社群網站，<br>也沒有現在隨處可見的教學。</p>
+<img src="/images/Transition/2.jpeg">
+
+<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
+<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。<br>記得同學傳給我一個留言板的網址，<br>可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
+<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，<br>我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、<br>學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，<br>學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。<br>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，<br>上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
+<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，<br>只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
+<p>後來升上國中因為要唸書，因此也沒有再繼續。<br>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，<br>不過這段時間是我一段很美好的回憶，<br>我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
+<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
+
+<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
+<p>第一次接觸正式的程式是高中時，當時唸資料處理科，<br>每週都有6堂的計算機概論課、會到電腦教室上課。<br>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。<br>當時只覺得，程式真的好方便，過程好有趣！</p>
+<p>我很喜歡計算機概論這門課，<br>記得當時有很多同學選擇資管系作爲大學升學的科系，</p>
+<p>但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，<br>也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，<br>因此當時也沒有把工程師當作就業的選項</p>
+<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
+
+<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
+<p>大學畢業後先後到了電商、新媒體、金融業工作，<br>轉職前的工作是外商銀行的客戶關係經理，<br>當初因為善於和人溝通、想要領到更多的薪水，<br>所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
+<p>感謝金融業的經歷讓我對於財經市場有更多的認識，<br>也在此時因為每日面對變化多端的金融市場和業績目標的要求，<br>大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、<br>說服客戶調整帳上資產、如何找到新的目標客戶、<br>如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
+<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，<br>沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，<br>只能夠根據當下的市場環境判斷並隨時調整，<br>我發現自己沒有辦法對賣「不確定」的東西產生熱情，</p>
+<p>但這個時候該放棄嗎？換到其他的產業又能確定自己能一輩子有熱情嗎?<br>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」<br>這時候我想起國小時做的第一個網頁，<br>想起自己花了許多時間自已拼湊、實作到忘記時間，<br>最後成功完成成品的時刻。</p>
+<div class="em-div">
+「想了這麼多年，要不這次就給自己一個機會呢？」
+</div>
+
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，<br>這次我不想要再中途放棄，因為轉職要花費的成本很大，<br>也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。<br>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
+<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，<br>報名了某平台的「程式設計入門」新手村萬元挑戰，<br>這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，<br>最後也順利完成了，每天學習的時候都很快樂。</p>
+<p>不過線上課程並不完全適合我，<br>我還是希望能有同伴能夠一起討論、製作專題。<br>諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
+
+<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails, Vue, React,Git 等課程，<br>五倍的師資很優秀，能夠從原理講解，<br>能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，<br>而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，<br>因此這三個月的過程很精實。</p>
+<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，<br>再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，<br>透過寫文章搜集資料的過程也能學習很多，<br>這個部落格也是因此而產生出來的～</p>
+<p>另外五倍還有許軟軟性課程，<br>透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，<br>了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，<br>昨天剛剛Demo Day結束。</p>
+<p>學習的過程中也發現自己很喜歡和電腦溝通，<br>因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，<br>一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。<br>解決後還能夠再多想想，能有其他更好的作法嗎？<br>也許是過往的工作經驗已經讓我習慣面對挫折、解決挫折了，<br>途中一定有遇到困難，但只要找出解決辦法就好，<br>也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，<br>但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，<br>目前還有很多的不足，但就像學習程式的過程一樣，<br>知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>最想，如果能用一句話概括我轉職的原因：</p>
+<div class="em-div2">
+因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式，<br>
+因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
+</div>
+
+]]></content>
+      <categories>
+        <category>職涯</category>
+      </categories>
+      <tags>
+        <tag>轉職</tag>
+        <tag>職涯</tag>
       </tags>
   </entry>
   <entry>
@@ -517,79 +593,193 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>職涯: 為什麼要轉職工程師?</title>
-    <url>/2024/01/28/Transition/</url>
+    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
+    <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
 
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+
 </style>
-<img src="/images/Transition/banner.png">
 
-<p><a href="https://unsplash.com/photos/person-using-macbook-pro-on-brown-wooden-table-h329GHs_lC8">圖片來源</a></p>
-<p>「要不要當工程師？」其實這這問題在我心中出現了很多次，<br>第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，<br>中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
-<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><img src="/images/Transition/1.avif">
+<img src="/images/hoisting/banner.png">
+之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
 
-<p><a href="https://unsplash.com/photos/group-of-people-wearing-white-and-orange-backpacks-walking-on-gray-concrete-pavement-during-daytime-CYlPykF-qAM">圖片來源</a></p>
-<p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，<br>那時候智慧型手機、youtube不普及、沒有社群網站，<br>也沒有現在隨處可見的教學。</p>
-<img src="/images/Transition/2.jpeg">
-
-<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
-<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。<br>記得同學傳給我一個留言板的網址，<br>可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
-<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，<br>我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、<br>學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，<br>學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。<br>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，<br>上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
-<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，<br>只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
-<p>後來升上國中因為要唸書，因此也沒有再繼續。<br>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，<br>不過這段時間是我一段很美好的回憶，<br>我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
-<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
-
-<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
-<p>第一次接觸正式的程式是高中時，當時唸資料處理科，<br>每週都有6堂的計算機概論課、會到電腦教室上課。<br>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。<br>當時只覺得，程式真的好方便，過程好有趣！</p>
-<p>我很喜歡計算機概論這門課，<br>記得當時有很多同學選擇資管系作爲大學升學的科系，</p>
-<p>但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，<br>也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，<br>因此當時也沒有把工程師當作就業的選項</p>
-<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
-
-<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
-<p>大學畢業後先後到了電商、新媒體、金融業工作，<br>轉職前的工作是外商銀行的客戶關係經理，<br>當初因為善於和人溝通、想要領到更多的薪水，<br>所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
-<p>感謝金融業的經歷讓我對於財經市場有更多的認識，<br>也在此時因為每日面對變化劇大的和業績目標的要求，<br>大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、<br>說服客戶調整帳上資產、如何找到新的目標客戶、<br>如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
-<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，<br>沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，<br>只能夠根據當下的市場環境判斷並隨時調整，<br>我發現自己沒有辦法對賣「不確定」的東西產生熱情，</p>
-<p>但這個時候該放棄嗎？換到其他的產業又能確定自己能一輩子有熱情嗎?<br>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」<br>這時候我想起國小時做的第一個網頁，<br>想起自己花了許多時間自已拼湊、實作到忘記時間，<br>最後成功完成成品的時刻。</p>
-<div class="em-div">
-「想了這麼多年，要不這次就給自己一個機會呢？」
-</div>
-
-<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，<br>這次我不想要再中途放棄，因為轉職要花費的成本很大，<br>也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。<br>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
-<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，<br>報名了某平台的「程式設計入門」新手村萬元挑戰，<br>這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，<br>最後也順利完成了，每天學習的時候都很快樂。</p>
-<p>不過線上課程並不完全適合我，<br>我還是希望能有同伴能夠一起討論、製作專題。<br>諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課</p>
-<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
-
-<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails, Vue, React,Git 等課程，<br>五倍的師資很優秀，能夠從原理講解，<br>能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，<br>而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，<br>因此這三個月的過程很精實。</p>
-<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，<br>再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，<br>透過寫文章搜集資料的過程也能學習很多，<br>這個部落格也是因此而產生出來的～</p>
-<p>另外五倍還有許軟軟性課程，<br>透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，<br>了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，<br>昨天剛剛Demo Day結束。</p>
-<p>學習的過程中也發現自己很喜歡和電腦溝通，<br>因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，<br>一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。<br>解決後還能夠再多想想，能有其他更好的作法嗎？<br>也許是過往的工作經驗已經讓我習慣面對挫折、解決挫折了，<br>途中一定有遇到困難，但只要找出解決辦法就好，<br>也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
-<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，<br>但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，<br>目前還有很多的不足，但就像學習程式的過程一樣，<br>知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
-<p>最想，如果能用一句話概括我轉職的原因：</p>
+<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
+<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
+<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
+<p>這段話裡面有幾個重點：</p>
 <div class="em-div2">
-因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式，<br>
-因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
+
+<ol>
+<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
+</li>
+<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
+</li>
+<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
+</div></li>
+</ol>
+<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
+<img src="/images/hoisting/01.png">
+
+<div class="em-div2">
+
+<ul>
+<li><p>Creation Phase</p>
+<ul>
+<li>註冊名稱(Declaration)</li>
+<li>初始化（Initialisation）</li>
+</ul>
+</li>
+<li><p>Execution Phase</p>
+<ul>
+<li>賦值(Assignment) &amp; 執行</li>
+</ul>
+</li>
+</ul>
 </div>
 
+<hr>
+<p>這樣就能夠很清楚解釋以下例子：</p>
+<img src="/images/hoisting/02.png">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+undefined
+</div>
+
+<p>解釋：</p>
+<ul>
+<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
+<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
+</ul>
+<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+ReferenceError: Cannot access 'a' before initialization
+</div>
+備註：const宣告的結果和let一樣
+
+<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
+<p>解釋：</p>
+<ul>
+<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
+<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
+</ul>
+<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
+<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
+<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
+</div>
 ]]></content>
       <categories>
-        <category>職涯</category>
+        <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>轉職</tag>
-        <tag>職涯</tag>
+        <tag>JavaScript</tag>
+        <tag>hoisting</tag>
+        <tag>變數提升</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 究竟什麼是 Event Loop？</title>
+    <url>/2023/11/08/javascript-event-loop/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
+JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
+
+<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
+<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
+
+<ul>
+  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
+  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
+  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
+</ul>
+<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
+
+<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
+
+<ul>
+  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
+  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
+
+<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
+
+<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
+
+<ul>
+  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
+  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
+</ul>
+
+<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
+
+<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
+
+<ul>
+  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
+  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
+  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
+  <li>如果不為空：處理 Call Stack 內的函數。</li>
+</ul>
+
+<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
+<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
+<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>會得到以下結果：</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
+
+<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
+
+<p>會得到以下結果：</p>
+<img src="/images/eventLoop/pasted-0.png">
+
+<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
+<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
+</blockquote>
+<blockquote>
+<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
+</blockquote>
+<blockquote>
+<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Event Loop</tag>
       </tags>
   </entry>
   <entry>
@@ -868,112 +1058,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
-    <url>/2023/11/18/hoisting/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-
-</style>
-
-<img src="/images/hoisting/banner.png">
-之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
-
-<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
-<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
-<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
-<p>這段話裡面有幾個重點：</p>
-<div class="em-div2">
-
-<ol>
-<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
-</li>
-<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
-</li>
-<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
-</div></li>
-</ol>
-<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
-<img src="/images/hoisting/01.png">
-
-<div class="em-div2">
-
-<ul>
-<li><p>Creation Phase</p>
-<ul>
-<li>註冊名稱(Declaration)</li>
-<li>初始化（Initialisation）</li>
-</ul>
-</li>
-<li><p>Execution Phase</p>
-<ul>
-<li>賦值(Assignment) &amp; 執行</li>
-</ul>
-</li>
-</ul>
-</div>
-
-<hr>
-<p>這樣就能夠很清楚解釋以下例子：</p>
-<img src="/images/hoisting/02.png">
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-undefined
-</div>
-
-<p>解釋：</p>
-<ul>
-<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
-<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
-</ul>
-<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-ReferenceError: Cannot access 'a' before initialization
-</div>
-備註：const宣告的結果和let一樣
-
-<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
-<p>解釋：</p>
-<ul>
-<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
-<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
-</ul>
-<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
-<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
-<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
-</div>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>hoisting</tag>
-        <tag>變數提升</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</title>
     <url>/2023/11/15/var-let-const/</url>
     <content><![CDATA[<style>
@@ -1195,90 +1279,6 @@ output: TypeError: Assignment to constant variable.
         <tag>var</tag>
         <tag>let</tag>
         <tag>const</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript: 究竟什麼是 Event Loop？</title>
-    <url>/2023/11/08/javascript-event-loop/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
-JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
-
-<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
-<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
-
-<ul>
-  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
-  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
-  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
-</ul>
-<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
-
-<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
-
-<ul>
-  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
-  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
-
-<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
-
-<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
-
-<ul>
-  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
-  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
-</ul>
-
-<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
-
-<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
-
-<ul>
-  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
-  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
-  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
-  <li>如果不為空：處理 Call Stack 內的函數。</li>
-</ul>
-
-<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
-<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
-<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
-
-<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<img src="/images/eventLoop/pasted-0.png">
-
-<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
-<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
-</blockquote>
-<blockquote>
-<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
-</blockquote>
-<blockquote>
-<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>Event Loop</tag>
       </tags>
   </entry>
 </search>
