@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Advent of code 2023 —Day 01</title>
-    <url>/2023/12/17/AOC-day01/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
-<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
-</blockquote>
-<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
-<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
-<p>這是第一天 Part 1的題目：</p>
-<img src="/images/AOC/01.png">
-
-<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
-<img src="/images/AOC/02.png">
-
-<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
-<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
-<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
-<div class="em-div2">
-
-<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
-</div>
-match會回傳符合內容的物件，看起來像這個樣子：
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
-
-<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
-<img src="/images/AOC/03.png">
-
-<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
-<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
-<p>如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby</category>
-      </categories>
-      <tags>
-        <tag>AOC</tag>
-        <tag>Advent of code</tag>
-        <tag>Ruby</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: 串接LINE Pay API v3</title>
     <url>/2024/01/21/LINE-Pay/</url>
     <content><![CDATA[<style>
@@ -226,6 +158,81 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
+    <title>Ruby on Rails: MVC是什麼?</title>
+    <url>/2023/12/02/MVC/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+</style>
+
+<img src="/images/MVC/banner.png" alt="">
+
+<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
+<div class="em-div2">
+MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
+把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
+</div>
+
+<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
+<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
+<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
+<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
+<ul>
+<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
+<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
+<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
+</ul>
+<p>參考資料：<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
+<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframwork2.png" alt=""></p>
+<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
+<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
+<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <!-- <img src="/images/MVC/02.png" alt=""> -->
+
+<p>當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。</p>
+<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><!-- <img src="/images/MVC/03.png" alt=""> -->
+
+<p>可以想像成控制處理中心 or 指揮官， Controller 會和 model 要資料、View 要畫面，最後提供給 routes，再讓使用者看到網頁畫面。 Controller 通常會有一個以上的 Action，這些 Action 就是 Ruby 裡的方法（method）。</p>
+<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><!-- <img src="/images/MVC/04.png" alt=""> -->
+
+<p>Model 本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。</p>
+<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><!-- <img src="/images/MVC/05.png" alt=""> -->
+
+<p>View 為使用者最後看到的畫面，雖然 Controller&#x2F;Action 拿到資料了，但目前這包東西還沒美化、整理過，還不適合給使用者看，所以 Controller&#x2F;Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。</p>
+<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
+<p>詳細內容可以參考龍哥的<a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<hr>
+<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<p><a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<p><a href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
+</div>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Rails</tag>
+        <tag>MVC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>職涯: 為什麼要轉職工程師?</title>
     <url>/2024/01/28/Transition/</url>
     <content><![CDATA[<style>
@@ -268,7 +275,7 @@ border-style:dashed;
 <h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
 
 <p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
-<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，<br>當初因為善於和人溝通、想要領到更多的薪水，<br>所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
+<p>大學畢業後先後到了電商、新媒體、金融業工作，<br>轉職前的工作是外商銀行的客戶關係經理，<br>當初因為善於和人溝通、想要領到更多的薪水，<br>所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
 <p>感謝金融業的經歷讓我對於財經市場有更多的認識，<br>也在此時因為每日面對變化劇大的和業績目標的要求，<br>大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、<br>說服客戶調整帳上資產、如何找到新的目標客戶、<br>如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
 <p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，<br>沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，<br>只能夠根據當下的市場環境判斷並隨時調整，<br>我發現自己沒有辦法對賣「不確定」的東西產生熱情，</p>
 <p>但這個時候該放棄嗎？換到其他的產業又能確定自己能一輩子有熱情嗎?<br>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」<br>這時候我想起國小時做的第一個網頁，<br>想起自己花了許多時間自已拼湊、實作到忘記時間，<br>最後成功完成成品的時刻。</p>
@@ -518,81 +525,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: MVC是什麼?</title>
-    <url>/2023/12/02/MVC/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-</style>
-
-<img src="/images/MVC/banner.png" alt="">
-
-<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
-<div class="em-div2">
-MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
-把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
-</div>
-
-<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
-<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
-<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
-<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
-<ul>
-<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
-<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
-<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
-</ul>
-<p>參考資料：<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
-<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
-<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframwork2.png" alt=""></p>
-<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
-<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
-<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <!-- <img src="/images/MVC/02.png" alt=""> -->
-
-<p>當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。</p>
-<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><!-- <img src="/images/MVC/03.png" alt=""> -->
-
-<p>可以想像成控制處理中心 or 指揮官， Controller 會和 model 要資料、View 要畫面，最後提供給 routes，再讓使用者看到網頁畫面。 Controller 通常會有一個以上的 Action，這些 Action 就是 Ruby 裡的方法（method）。</p>
-<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><!-- <img src="/images/MVC/04.png" alt=""> -->
-
-<p>Model 本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。</p>
-<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><!-- <img src="/images/MVC/05.png" alt=""> -->
-
-<p>View 為使用者最後看到的畫面，雖然 Controller&#x2F;Action 拿到資料了，但目前這包東西還沒美化、整理過，還不適合給使用者看，所以 Controller&#x2F;Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。</p>
-<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
-<p>詳細內容可以參考龍哥的<a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
-<hr>
-<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
-<p><a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
-<p><a href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
-</div>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Rails</tag>
-        <tag>MVC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
     <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
@@ -783,8 +715,8 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
-    <url>/2023/12/24/rails-admin-layout-devise/</url>
+    <title>Advent of code 2023 —Day 01</title>
+    <url>/2023/12/17/AOC-day01/</url>
     <content><![CDATA[<style>
 .em-div{
 background-color: #d4a373;
@@ -800,140 +732,54 @@ margin:5px;
 padding:10px 2px 2px 2px;
 border-style:dashed;
 }
-
-.image-container {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
-  border-radius: 10px; /* 圓角效果 */
-  overflow: hidden; /* 超出部分隱藏 */
-  margin: 5px; /* 留白效果 */
-}
 </style>
 
-
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
-<img src="/images/rails_admin_layout_devise/banner.png">
-</div>
-
-<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
-<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
-<blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
+<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
 </blockquote>
-<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
-<p>以下為實作步驟：</p>
-<ul>
-<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
+<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
+<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
+<p>這是第一天 Part 1的題目：</p>
+<img src="/images/AOC/01.png">
 
-<ul>
-<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
+<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
+<img src="/images/AOC/02.png">
 
-<ul>
-<li>新增pages_controller＆home.html.erb</li>
-</ul>
-<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
+<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
+<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
+<div class="em-div2">
 
-<ul>
-<li>利用scaffold做CRUD的流程</li>
-</ul>
-<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/01.png">
+<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
 </div>
+match會回傳符合內容的物件，看起來像這個樣子：
 
-<ul>
-<li>設定routes</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>安裝Devise &amp; 生成使用者</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
+<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
+<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
+<img src="/images/AOC/03.png">
 
-<p>devise會自動幫你增加檔案，真的很方便</p>
-<ul>
-<li>生一個migration，增加role欄位到User資料表</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p><code>current_user&amp;.admin?</code></p>
-<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
-<p>可以用 &amp;. 簡化</p>
-<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
-<p>如果不是的話， layout就使用預設導入application</p>
-<ul>
-<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
-<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
-<p>接著就大功告成了！！</p>
-<p>這是剛剛步驟做出的首頁</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/03.png">
-</div>
-
-<p>登入頁面</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/04.png">
-</div>
-
-<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
-<p>搭配指令，來快速指定某使用者的role</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/05.png">
-</div>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
-
-<p>登入成功後，就有管理者的介面了！！</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/06.png">
-</div>
-
-<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
-<p>讓他的介面看起來和一般使用者有區隔</p>
-<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
-<p>這整個步驟大約10分鐘就可以完成了！！</p>
-<p>有興趣也可以試看看～～</p>
-<hr>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
+<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
+<p>如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
 </blockquote>
 ]]></content>
       <categories>
-        <category>Ruby on Rails</category>
+        <category>Ruby</category>
       </categories>
       <tags>
-        <tag>devise</tag>
-        <tag>rails7</tag>
-        <tag>rails</tag>
-        <tag>layout</tag>
+        <tag>Ruby</tag>
+        <tag>AOC</tag>
+        <tag>Advent of code</tag>
       </tags>
   </entry>
   <entry>
@@ -1051,8 +897,8 @@ border-style:dashed;
       </categories>
       <tags>
         <tag>Ruby on Rails</tag>
-        <tag>rails</tag>
         <tag>ruby</tag>
+        <tag>rails</tag>
         <tag>simple calendar</tag>
         <tag>gem</tag>
       </tags>
@@ -1279,6 +1125,160 @@ output: TypeError: Assignment to constant variable.
         <tag>var</tag>
         <tag>let</tag>
         <tag>const</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
+    <url>/2023/12/24/rails-admin-layout-devise/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+
+.image-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+  border-radius: 10px; /* 圓角效果 */
+  overflow: hidden; /* 超出部分隱藏 */
+  margin: 5px; /* 留白效果 */
+}
+</style>
+
+
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
+<img src="/images/rails_admin_layout_devise/banner.png">
+</div>
+
+<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
+<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
+<blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
+<p>以下為實作步驟：</p>
+<ul>
+<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新增pages_controller＆home.html.erb</li>
+</ul>
+<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>利用scaffold做CRUD的流程</li>
+</ul>
+<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/01.png">
+</div>
+
+<ul>
+<li>設定routes</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安裝Devise &amp; 生成使用者</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
+
+<p>devise會自動幫你增加檔案，真的很方便</p>
+<ul>
+<li>生一個migration，增加role欄位到User資料表</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><code>current_user&amp;.admin?</code></p>
+<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
+<p>可以用 &amp;. 簡化</p>
+<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
+<p>如果不是的話， layout就使用預設導入application</p>
+<ul>
+<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
+<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
+<p>接著就大功告成了！！</p>
+<p>這是剛剛步驟做出的首頁</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/03.png">
+</div>
+
+<p>登入頁面</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/04.png">
+</div>
+
+<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
+<p>搭配指令，來快速指定某使用者的role</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/05.png">
+</div>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
+
+<p>登入成功後，就有管理者的介面了！！</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/06.png">
+</div>
+
+<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
+<p>讓他的介面看起來和一般使用者有區隔</p>
+<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
+<p>這整個步驟大約10分鐘就可以完成了！！</p>
+<p>有興趣也可以試看看～～</p>
+<hr>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>rails</tag>
+        <tag>devise</tag>
+        <tag>rails7</tag>
+        <tag>layout</tag>
       </tags>
   </entry>
 </search>
