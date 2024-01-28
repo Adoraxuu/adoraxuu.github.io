@@ -1,6 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Ruby on Rails: MVC是什麼?</title>
+    <url>/2023/12/02/MVC/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+</style>
+
+<img src="/images/MVC/banner.png" alt="">
+
+<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
+<div class="em-div2">
+MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
+把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
+</div>
+
+<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
+<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
+<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
+<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
+<ul>
+<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
+<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
+<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
+</ul>
+<p>參考資料：<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
+<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframwork2.png" alt=""></p>
+<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
+<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
+<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <!-- <img src="/images/MVC/02.png" alt=""> -->
+
+<p>當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。</p>
+<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><!-- <img src="/images/MVC/03.png" alt=""> -->
+
+<p>可以想像成控制處理中心 or 指揮官， Controller 會和 model 要資料、View 要畫面，最後提供給 routes，再讓使用者看到網頁畫面。 Controller 通常會有一個以上的 Action，這些 Action 就是 Ruby 裡的方法（method）。</p>
+<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><!-- <img src="/images/MVC/04.png" alt=""> -->
+
+<p>Model 本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。</p>
+<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><!-- <img src="/images/MVC/05.png" alt=""> -->
+
+<p>View 為使用者最後看到的畫面，雖然 Controller&#x2F;Action 拿到資料了，但目前這包東西還沒美化、整理過，還不適合給使用者看，所以 Controller&#x2F;Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。</p>
+<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
+<p>詳細內容可以參考龍哥的<a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<hr>
+<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
+<p><a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
+<p><a href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
+</div>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Rails</tag>
+        <tag>MVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>為什麼要轉職工程師?</title>
+    <url>/2024/01/28/Transition/</url>
+    <content><![CDATA[<img src="/images/Transition/banner.png">
+
+<blockquote>
+<p>圖片來源: <a href="https://unsplash.com/photos/person-using-macbook-pro-on-brown-wooden-table-h329GHs_lC8">https://unsplash.com/photos/person-using-macbook-pro-on-brown-wooden-table-h329GHs_lC8</a></p>
+</blockquote>
+<p>「要不要當工程師？」其實這這問題在我心中出現了很多次，</p>
+<p>第一次是高中升大學的時候、第二次是大學畢業的時候、</p>
+<p>第三四五六次是我畢業後工作時，</p>
+<p>中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
+<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，</p>
+<p>那時候智慧型手機、youtube不普及、沒有社群網站，</p>
+<p>也沒有現在隨處可見的教學。</p>
+<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。</p>
+<p>記得同學傳給我一個留言板的網址，</p>
+<p>可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
+<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，</p>
+<p>我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、</p>
+<p>學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，</p>
+<p>學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
+<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，</p>
+<p>上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
+<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，</p>
+<p>只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
+<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
+<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，</p>
+<p>不過這段時間是我一段很美好的回憶，</p>
+<p>我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
+<h3 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h3><p>第一次接觸正式的程式是高中時，當時唸資料處理科，</p>
+<p>每週都有6堂的計算機概論課、會到電腦教室上課。</p>
+<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。</p>
+<p>當時只覺得，程式真的好方便，過程好有趣！</p>
+<p>我很喜歡計算機概論這門課，在升大學的統測考試時計算機概論這科也考了不錯的成績。</p>
+<p>記得當時有很多同學選擇資管系作爲大學升學的科系，</p>
+<p>但我卻選擇了企管系😂 ，大學有參加台大資訊系統訓練班的前端入門實戰班，</p>
+<p>也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，</p>
+<p>因此當時也沒有把工程師當作就業的選項</p>
+<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><p>大學畢業後先後到了電商、新媒體、金融業工作，</p>
+<p>轉職前的工作是外商銀行的客戶關係經理，</p>
+<p>當初因為善於和人溝通、想要領到更多的薪水，</p>
+<p>所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
+<p>感謝金融業的經歷讓我對於財經市場有更多的認識，</p>
+<p>也在此時因為每日面對變化劇大的和業績目標的要求，</p>
+<p>大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、</p>
+<p>說服客戶調整帳上資產、如何找到新的目標客戶、</p>
+<p>如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
+<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，</p>
+<p>沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，</p>
+<p>只能夠根據當下的市場環境判斷並隨時調整，</p>
+<p>我發現自己沒有辦法對賣「不確定」的東西產生熱情，</p>
+<p>但這個時候該放棄嗎？換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
+<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」</p>
+<p>這時候我想起國小時做的第一個網頁，</p>
+<p>想起自己花了許多時間自已拼湊、實作到忘記時間，</p>
+<p>最後成功完成成品的時刻。</p>
+<p>「想了這麼多年，要不這次就給自己一個機會呢？」</p>
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，</p>
+<p>這次我不想要再中途放棄，因為轉職要花費的成本很大，</p>
+<p>也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
+<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
+<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，</p>
+<p>報名了某平台的「程式設計入門」新手村萬元挑戰，</p>
+<p>這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，</p>
+<p>最後也順利完成了，每天學習的時候都很快樂。</p>
+<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。</p>
+<p>諮詢過多個機構後，</p>
+<p>我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><p>直到在五倍上課後，學了HTML, CSS, JS, Ruby on Rails, Vue, React,Git 等課程，</p>
+<p>我才終於全面的明白「原來網頁是這樣做出來的！」、</p>
+<p>「原來前端和後端分別是做這些事」，</p>
+<p>五倍的師資很優秀，能夠從原理講解，</p>
+<p>能更清楚地講解為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？，</p>
+<p>而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，</p>
+<p>因此這三個月的過程很精實。</p>
+<p>也透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，</p>
+<p>了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，</p>
+<p>昨天剛剛Demo Day結束。</p>
+<p>學習的過程中也發現自己很喜歡和電腦溝通，</p>
+<p>因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，</p>
+<p>一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
+<p>解決後還能夠再多想想，能有其他更好的作法嗎？</p>
+<p>也許是過往的工作經驗已經讓我習慣面對挫折、解決挫折了，</p>
+<p>途中一定有遇到困難，但只要找出解決辦法就好，</p>
+<p>也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，</p>
+<p>但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，</p>
+<p>目前還有很多的不足，但就像學習程式的過程一樣，</p>
+<p>知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>最想，如果能用一句話概括我轉職的原因，</p>
+<p>是因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式，</p>
+<p>因此想透過程式提供更多人解決方案，也想透過程式替創造自己更好的職涯。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Advent of code 2023 —Day 01</title>
     <url>/2023/12/17/AOC-day01/</url>
     <content><![CDATA[<style>
@@ -63,9 +233,221 @@ match會回傳符合內容的物件，看起來像這個樣子：
         <category>Ruby</category>
       </categories>
       <tags>
+        <tag>Ruby</tag>
         <tag>AOC</tag>
         <tag>Advent of code</tag>
-        <tag>Ruby</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
+    <url>/2024/01/07/active-storage-amazon-s3/</url>
+    <content><![CDATA[<img src="/images/active-storage-amazon-s3/01.avif">
+
+<blockquote>
+<p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
+</blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
+<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
+<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
+<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
+<ul>
+<li><p>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
+</li>
+<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
+<img src="/images/active-storage-amazon-s3/03.png">
+</li>
+<li><p>選擇Bucket的所在地＆Bucket Name</p>
+<img src="/images/active-storage-amazon-s3/04.png"></li>
+</ul>
+<p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
+<ul>
+<li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
+</li>
+<li><p>存取權限 Access Settings</p>
+</li>
+</ul>
+<img src="/images/active-storage-amazon-s3/05.png">
+
+<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
+<ul>
+<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡<img src="/images/active-storage-amazon-s3/CORS.png"></li>
+<li>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰<img src="/images/active-storage-amazon-s3/07.png"></li>
+</ul>
+<p>選擇S3，並在下面勾選</p>
+<ul>
+<li>List : ListBucket</li>
+<li>Read: GetObj</li>
+<li>Write: PutObj,DeleteObj</li>
+<li>Permission management: PutObjAcl</li>
+</ul>
+<p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
+<img src="/images/active-storage-amazon-s3/08.png">
+
+<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
+
+<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
+<ul>
+<li>創建使用者，並選擇剛剛選好的Policy</li>
+<li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
+<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
+<li>進入金鑰頁面</li>
+</ul>
+<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
+<ul>
+<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>接著在終端機輸入</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
+
+<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>#development.rb設定將active_storage從:local改為:amazon</li>
+</ul>
+<p>(如果要在正式環境使用，則需要更改production.rb)</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
+
+<p>下載AWS S3的Gem</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>執行bundle i</p>
+<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
+<img src="/images/active-storage-amazon-s3/12.png">
+
+<p>看s3的後台也看到圖片檔案<br><img src="/images/active-storage-amazon-s3/11.png"></p>
+<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇，<br>結果在上傳之後14張照片就消失了( ͒˃⌂˂ ͒)，<br>原來我不小心放在Public資料夾，而且下了Hexo cl指令  ◴_◶<br>可能老天爺想要我多熟練一點點，只好認命重新截圖…也刪除了一些不必要的圖片</p>
+<p>最後希望這篇文章有幫助到你！有任何問題歡迎回覆，<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>AWS</tag>
+        <tag>Ruby on Rails</tag>
+        <tag>active stroage</tag>
+        <tag>amazon</tag>
+        <tag>s3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
+    <url>/2023/11/18/hoisting/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+
+</style>
+
+<img src="/images/hoisting/banner.png">
+之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
+
+<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
+<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
+<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
+<p>這段話裡面有幾個重點：</p>
+<div class="em-div2">
+
+<ol>
+<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
+</li>
+<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
+</li>
+<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
+</div></li>
+</ol>
+<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
+<img src="/images/hoisting/01.png">
+
+<div class="em-div2">
+
+<ul>
+<li><p>Creation Phase</p>
+<ul>
+<li>註冊名稱(Declaration)</li>
+<li>初始化（Initialisation）</li>
+</ul>
+</li>
+<li><p>Execution Phase</p>
+<ul>
+<li>賦值(Assignment) &amp; 執行</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<hr>
+<p>這樣就能夠很清楚解釋以下例子：</p>
+<img src="/images/hoisting/02.png">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+undefined
+</div>
+
+<p>解釋：</p>
+<ul>
+<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
+<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
+</ul>
+<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+ReferenceError: Cannot access 'a' before initialization
+</div>
+備註：const宣告的結果和let一樣
+
+<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
+<p>解釋：</p>
+<ul>
+<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
+<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
+</ul>
+<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
+<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
+<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
+</div>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>hoisting</tag>
+        <tag>變數提升</tag>
       </tags>
   </entry>
   <entry>
@@ -226,187 +608,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: MVC是什麼?</title>
-    <url>/2023/12/02/MVC/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-</style>
-
-<img src="/images/MVC/banner.png" alt="">
-
-<h3 id="MVC-定義："><a href="#MVC-定義：" class="headerlink" title="MVC 定義："></a>MVC 定義：</h3><p>依據<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科</a>的介紹：</p>
-<div class="em-div2">
-MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，
-把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。
-</div>
-
-<p>MVC 模式最早由 Trygve Reenskaug 在 1978 年提出，是全錄帕羅奧多研究中心（Xerox PARC）在 20 世紀 80 年代為程式語言 Smalltalk 發明的一種軟體架構。</p>
-<p>我們今天使用的網站是很複雜的應用程序( ˘•ω•˘ )，為了簡化程式碼並使其更方便使用，許多工程師選擇使用<strong>MVC</strong>來佈局他們的專案。</p>
-<p>將大型應用程式分解為較小的部分，再各自負責專門的事 o(<em>^▽^</em>)o</p>
-<h2 id="MVC-各自負責什麼？"><a href="#MVC-各自負責什麼？" class="headerlink" title="MVC 各自負責什麼？"></a>MVC 各自負責什麼？</h2><p>理解完 MVC 的背景了，接下來看看，MVC 各自負責什麼工作內容：</p>
-<ul>
-<li>模型（Model） - 程式設計師編寫程式應有的功能（實現演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實現具體的功能)。</li>
-<li>視圖（View） - 介面設計人員進行圖形介面設計。</li>
-<li>控制器（Controller）- 負責轉發請求，對請求進行處理。</li>
-</ul>
-<p>參考資料：<a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
-<h2 id="MVC-當前趨勢"><a href="#MVC-當前趨勢" class="headerlink" title="MVC 當前趨勢"></a>MVC 當前趨勢</h2><p>MVC 架構已經變得如此流行，以至於現在大多數流行的框架都遵循 MVC 設計模式來開發應用程式。</p>
-<p>目前 MVC 設計模式的流行框架有： <img src="/images/MVC/mvcframwork2.png" alt=""></p>
-<h2 id="Ruby-on-Rails-的-MVC-架構"><a href="#Ruby-on-Rails-的-MVC-架構" class="headerlink" title="Ruby on Rails 的 MVC 架構"></a>Ruby on Rails 的 MVC 架構</h2><p>看完了以上三項解釋，應該還是很難明白到底 MVC 的實際應用，以下將用 Ruby on Rails 裡的Ｍ運作流程，搭配圖片來講解 d(&#96;･∀･)b</p>
-<p>可以透過以下圖片來理解： <img src="/images/MVC/01.png" alt=""></p>
-<h3 id="1-Routes"><a href="#1-Routes" class="headerlink" title="1. Routes"></a>1. Routes</h3> <!-- <img src="/images/MVC/02.png" alt=""> -->
-
-<p>當有使用者輸入網址，連到網站的時候，第一關會遇到的是 routes Rails 會根據使用者輸入的網址及參數，去尋找相對應 Controller 上的 Action。</p>
-<h3 id="2-Controller"><a href="#2-Controller" class="headerlink" title="2. Controller"></a>2. Controller</h3><!-- <img src="/images/MVC/03.png" alt=""> -->
-
-<p>可以想像成控制處理中心 or 指揮官， Controller 會和 model 要資料、View 要畫面，最後提供給 routes，再讓使用者看到網頁畫面。 Controller 通常會有一個以上的 Action，這些 Action 就是 Ruby 裡的方法（method）。</p>
-<h3 id="3-Model"><a href="#3-Model" class="headerlink" title="3. Model"></a>3. Model</h3><!-- <img src="/images/MVC/04.png" alt=""> -->
-
-<p>Model 本身並不是資料庫，你可以把它想像成翻譯官，它可以幫你把你跟 Model 說的「人話」轉成資料庫看得懂的資料庫查詢語言（Structured Query Language，簡稱 SQL），透過 SQL，Model 可以跟資料庫取得你想要的資料。</p>
-<h3 id="4-View"><a href="#4-View" class="headerlink" title="4. View"></a>4. View</h3><!-- <img src="/images/MVC/05.png" alt=""> -->
-
-<p>View 為使用者最後看到的畫面，雖然 Controller&#x2F;Action 拿到資料了，但目前這包東西還沒美化、整理過，還不適合給使用者看，所以 Controller&#x2F;Action 還需要跟 View 借一下畫面，讓資料更適合使用者閱讀。</p>
-<p>通常畫面的呈現會寫在這裡，使用的是<code>.html.erb</code>檔案。</p>
-<p>詳細內容可以參考龍哥的<a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
-<hr>
-<p>本篇文章是參考以下資料，透過自己繪圖+整理而成，如果有什麼問題歡迎與我討論！(<em>^▽^</em>)</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://railsbook.tw/chapters/10-mvc#mvc-flow">為你自己學 Ruby on Rails</a></p>
-<p><a href="https://zh.wikipedia.org/zh-tw/MVC">維基百科 MVC</a></p>
-<p><a href="https://www.interviewbit.com/blog/mvc-architecture/">MVC Architecture – Detailed Explanation</a></p>
-</div>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Rails</tag>
-        <tag>MVC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
-    <url>/2024/01/07/active-storage-amazon-s3/</url>
-    <content><![CDATA[<img src="/images/active-storage-amazon-s3/01.avif">
-
-<blockquote>
-<p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
-</blockquote>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
-<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
-<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
-<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
-<ul>
-<li><p>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
-</li>
-<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
-<img src="/images/active-storage-amazon-s3/03.png">
-</li>
-<li><p>選擇Bucket的所在地＆Bucket Name</p>
-<img src="/images/active-storage-amazon-s3/04.png"></li>
-</ul>
-<p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
-<ul>
-<li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
-</li>
-<li><p>存取權限 Access Settings</p>
-</li>
-</ul>
-<img src="/images/active-storage-amazon-s3/05.png">
-
-<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
-<ul>
-<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡<img src="/images/active-storage-amazon-s3/CORS.png"></li>
-<li>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰<img src="/images/active-storage-amazon-s3/07.png"></li>
-</ul>
-<p>選擇S3，並在下面勾選</p>
-<ul>
-<li>List : ListBucket</li>
-<li>Read: GetObj</li>
-<li>Write: PutObj,DeleteObj</li>
-<li>Permission management: PutObjAcl</li>
-</ul>
-<p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
-<img src="/images/active-storage-amazon-s3/08.png">
-
-<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
-<figure class="highlight asciidoc"><table><tr><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
-
-<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
-<ul>
-<li>創建使用者，並選擇剛剛選好的Policy</li>
-<li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
-<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
-<li>進入金鑰頁面</li>
-</ul>
-<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
-<ul>
-<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>接著在終端機輸入</p>
-</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
-
-<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>#development.rb設定將active_storage從:local改為:amazon</li>
-</ul>
-<p>(如果要在正式環境使用，則需要更改production.rb)</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
-
-<p>下載AWS S3的Gem</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
-
-<p>執行bundle i</p>
-<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
-<img src="/images/active-storage-amazon-s3/12.png">
-
-<p>看s3的後台也看到圖片檔案<br><img src="/images/active-storage-amazon-s3/11.png"></p>
-<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇，<br>結果在上傳之後14張照片就消失了( ͒˃⌂˂ ͒)，<br>原來我不小心放在Public資料夾，而且下了Hexo cl指令  ◴_◶<br>可能老天爺想要我多熟練一點點，只好認命重新截圖…也刪除了一些不必要的圖片</p>
-<p>最後希望這篇文章有幫助到你！有任何問題歡迎回覆，<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>AWS</tag>
-        <tag>active stroage</tag>
-        <tag>amazon</tag>
-        <tag>s3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: defer vs async</title>
     <url>/2023/11/18/async-vs-defer/</url>
     <content><![CDATA[<style>
@@ -517,112 +718,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
-    <url>/2023/11/18/hoisting/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-
-</style>
-
-<img src="/images/hoisting/banner.png">
-之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
-
-<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
-<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
-<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
-<p>這段話裡面有幾個重點：</p>
-<div class="em-div2">
-
-<ol>
-<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
-</li>
-<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
-</li>
-<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
-</div></li>
-</ol>
-<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
-<img src="/images/hoisting/01.png">
-
-<div class="em-div2">
-
-<ul>
-<li><p>Creation Phase</p>
-<ul>
-<li>註冊名稱(Declaration)</li>
-<li>初始化（Initialisation）</li>
-</ul>
-</li>
-<li><p>Execution Phase</p>
-<ul>
-<li>賦值(Assignment) &amp; 執行</li>
-</ul>
-</li>
-</ul>
-</div>
-
-<hr>
-<p>這樣就能夠很清楚解釋以下例子：</p>
-<img src="/images/hoisting/02.png">
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-undefined
-</div>
-
-<p>解釋：</p>
-<ul>
-<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
-<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
-</ul>
-<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-ReferenceError: Cannot access 'a' before initialization
-</div>
-備註：const宣告的結果和let一樣
-
-<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
-<p>解釋：</p>
-<ul>
-<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
-<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
-</ul>
-<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
-<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
-<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
-</div>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>hoisting</tag>
-        <tag>變數提升</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: 究竟什麼是 Event Loop？</title>
     <url>/2023/11/08/javascript-event-loop/</url>
     <content><![CDATA[<style>
@@ -704,6 +799,230 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       <tags>
         <tag>JavaScript</tag>
         <tag>Event Loop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</title>
+    <url>/2023/11/15/var-let-const/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/var-let-const/banner.png">
+
+<p>在 JavaScript 中，經常使用<code>var</code>, <code>let</code>, <code>const</code>這三個數來宣告，究竟這三個有什麼不同呢？下面來詳細說明(^_^)</p>
+<div class="em-div2">
+註：此篇文章有多個程式碼輔助解釋，篇幅較長，您也可以拉到最底部看比較表格。
+</div>
+
+<h2 id="由來"><a href="#由來" class="headerlink" title="由來"></a>由來</h2><blockquote>
+<p><code>var</code>, <code>let</code>, 以及 <code>const</code> 都是在 JavaScript 用來做變數宣告的保留字，在 JavaScript 早期只有 <code>var</code>，直到 ES2015 (ES6) 時才加入了 <code>let</code> 與 <code>const</code> 。</p>
+</blockquote>
+<h2 id="關於-var"><a href="#關於-var" class="headerlink" title="關於 var"></a>關於 var</h2><h3 id="重點"><a href="#重點" class="headerlink" title="重點"></a>重點</h3><div class="em-div2">
+
+<ul>
+<li><code>var</code>為<strong>函數作用域(function scope)<strong>，若在函數外宣告則為</strong>全作用域(global scope)</strong></li>
+<li>僅有 function scope 能夠關住 var（容易污染）</li>
+<li>var 宣告的變數，可以重新被宣告 &amp; 賦值</li>
+<li>有<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升</a>，若先提取變數，再使用 var 宣告，會出現 undefined</div></li>
+</ul>
+<p>接著會用四個範例題目，來幫助解釋這四個重點 ٩(ˊᗜˋ )و</p>
+<h3 id="var-為全作用域"><a href="#var-為全作用域" class="headerlink" title="var 為全作用域"></a>var 為全作用域</h3><p><code>var</code>可以為<strong>全作用域（global scope）</strong>或<strong>函數作用域（function scope）</strong>。這代表在函式<strong>外面</strong>定義的變數可以<strong>全域訪問</strong>，在特定函數內部定義的變數可以在函數內部存取。(補充：未宣告的變數也會放在全域變數)</p>
+<ul>
+<li>範例 1：全域宣告變數<code>a</code>，我們可以在程式的<strong>任何地方</strong>抓到<code>a</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">100</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:
+10
+10
+</div>
+
+<ul>
+<li>範例 2：僅有 function scope 能夠關住 var，變數“a”在函數內使用 var 宣告。如果使用者在函數之外存取，則會顯示<code>ReferenceError: a is not defined</code>。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//var無法在function外被存取;</span><br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output：
+10 <br>
+ReferenceError: a is not defined
+</div>
+
+<ul>
+<li>範例 3：var 宣告的變數，可以重新被宣告&amp;賦值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">8</span>;<br>a = <span class="hljs-number">7</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output: 7
+</div>
+
+<ul>
+<li>範例 4：如果使用者在宣告之前使用 var 變數，因為<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升（Hosting）</a>的關係。在執行函數之前，會優先將 var 變數放入記憶體。要注意的是：這只是在記憶體有這變數的空間，但<strong>尚未初始化</strong>。這也是為何會拿到 undefined 的原因。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output: undefined
+</div>
+
+<h2 id="關於-let"><a href="#關於-let" class="headerlink" title="關於 let"></a>關於 let</h2><h3 id="重點-1"><a href="#重點-1" class="headerlink" title="重點"></a>重點</h3><div class="em-div2">
+
+<ul>
+<li><code>let</code>為<b>區塊作用域(block scoped)</b>，無法在<code>&#123;block&#125;</code>之外存取它</li>
+<li>有<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升（Hosting）</a>，但因為 let 不會幫忙初始化，而是存在<strong>暫時執行死區（TDZ）</strong>，因此<code>let</code>不能在宣告前使用，不能多次宣告。</div></li>
+<li>範例 1：正常運行的樣子</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> b = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">f</span>();<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:9</br>
+10
+</div>
+
+<ul>
+<li>範例 2: <code>let</code>宣告無法在<code>&#123;block&#125;</code>之外存取變數<code>b</code>，因此會出現<code>ReferenceError: b is not defined</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> b = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:9</br>
+ReferenceError: b is not defined
+</div>
+
+<ul>
+<li>範例 3: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:Identifier 'a' has already been declared
+</div>
+
+<ul>
+<li>範例 4: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br>a = <span class="hljs-number">2</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:2
+</div>
+
+<ul>
+<li>範例 5:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) &#123;<br>  <span class="hljs-keyword">let</span> a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:9</br>
+10
+</div>
+
+<ul>
+<li>範例 6: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output: Cannot access 'a' before initialization
+</div>
+
+<h2 id="關於-const"><a href="#關於-const" class="headerlink" title="關於 const"></a>關於 const</h2><blockquote>
+<p>常數（constant）又稱定數，是指一個數值固定不變的數，例如圓周率，與之相反的是變數。</p>
+</blockquote>
+<h3 id="重點-2"><a href="#重點-2" class="headerlink" title="重點"></a>重點</h3><div class="em-div2">
+
+<ul>
+<li><code>const</code>為<b>區塊作用域(block scoped)</b>，無法在<code>&#123;block&#125;</code>之外存取它</li>
+<li>使用<code>const</code>宣告的變數不能改變，亦不能重複宣告。</li>
+<li>若使用 <code>const</code> 宣告，不能改變其屬性，但能夠改變內含的東西。</div></li>
+</ul>
+<p>相對其他的宣告方式，<code>const</code>規定相對嚴格，所以不像<code>var</code>會有很多花裡胡哨的例外行為，是個很乖巧的好孩子呢(๑¯◡¯๑)。</p>
+<ul>
+<li>範例 1: 使用<code>const</code>宣告的<code>a</code>，不能夠重新賦值，會出現<code>TypeError</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br></code></pre></td></tr></table></figure>
+
+<div class="em-div"> output: TypeError: Assignment to constant variable.</div>
+
+<ul>
+<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在<code>&#123;block&#125;</code>外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> a = <span class="hljs-number">9</span>;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:
+ReferenceError: a is not defined
+</div>
+
+<ul>
+<li>範例 3:使用 <code>const</code> 宣告，不能改變物件，但能夠替換物件內的東西。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> a = &#123;<br>  <span class="hljs-attr">prop1</span>: <span class="hljs-number">10</span>,<br>  <span class="hljs-attr">prop2</span>: <span class="hljs-number">9</span>,<br>&#125;;<br>a.<span class="hljs-property">prop1</span> = <span class="hljs-number">3</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output:
+{ prop1: 3, prop2: 9 }
+</div>
+
+<ul>
+<li>範例 4:<code>const</code>宣告不能改變物件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> a = &#123;<br>  <span class="hljs-attr">prop1</span>: <span class="hljs-number">10</span>,<br>  <span class="hljs-attr">prop2</span>: <span class="hljs-number">9</span>,<br>&#125;;<br><br>a = &#123;<br>  <span class="hljs-attr">prop1</span>: <span class="hljs-number">20</span>,<br>&#125;;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+output: TypeError: Assignment to constant variable.
+</div>
+
+<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再說工具箱是醫藥箱，乖寶寶<code>const</code>宣告了醫藥箱就是醫藥箱！(除非被{…}包住了)</p>
+<p>我自己是這樣記憶的，會比較好懂 ٩(ˊᗜˋ )و</p>
+<hr>
+<p>看了上面這麼多範例，感覺就缺少一個東西，那就是比較表格！我特別整理了一個表格給大家參考 o(^▽^)o</p>
+<h3 id="var-let-const-比較表格"><a href="#var-let-const-比較表格" class="headerlink" title="var, let, const 比較表格"></a>var, let, const 比較表格</h3><img src="/images/var-let-const/table2.png">
+
+<h3 id="宣告準則（建議）"><a href="#宣告準則（建議）" class="headerlink" title="宣告準則（建議）"></a>宣告準則（建議）</h3><p>為了防其他的程式碼被宣告所污染到處都拿得到 var 宣告的變數，就像任何人都可以把警察局說成是教堂，把板手說成是棒棒糖，想起來有點可怕 ╰(°▽°)╯，所以建議的宣告順序如下：</p>
+<ol>
+<li>const</li>
+<li>let</li>
+<li>var</li>
+</ol>
+<p>當然實際還是依照需求而定，希望今天的文章有幫助到您！</p>
+<p>另外在文章內提到的變數提升，也歡迎參考我另外一篇文章的解釋：<a href="https://adora-xu.com/2023/11/18/hoisting/">JavaScript: 變數提升 hoisting 到底是什麼？</a></p>
+<p>文章內容是根據以下參考資料整理＋自己繪圖而得，如果有任何建議都歡迎提供唷 (´･∀･｀)</p>
+<p>參考資料：</p>
+<blockquote>
+<p><a href="https://5xcampus.com/courses/js101">五倍學院 - 為你自己學 JavaScript 課程內容</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.explainthis.io/zh-hant/swe/js-var-let-const-in-javascript">ExplainThis：在 JavaScript 中用 var, let, 以及 const 有什麼差別？什麼時候該用哪個？</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.geeksforgeeks.org/difference-between-var-let-and-const-keywords-in-javascript/">Difference between var, let and const keywords in JavaScript</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>var</tag>
+        <tag>let</tag>
+        <tag>const</tag>
       </tags>
   </entry>
   <entry>
@@ -979,230 +1298,6 @@ border-style:dashed;
         <tag>ruby</tag>
         <tag>simple calendar</tag>
         <tag>gem</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</title>
-    <url>/2023/11/15/var-let-const/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/var-let-const/banner.png">
-
-<p>在 JavaScript 中，經常使用<code>var</code>, <code>let</code>, <code>const</code>這三個數來宣告，究竟這三個有什麼不同呢？下面來詳細說明(^_^)</p>
-<div class="em-div2">
-註：此篇文章有多個程式碼輔助解釋，篇幅較長，您也可以拉到最底部看比較表格。
-</div>
-
-<h2 id="由來"><a href="#由來" class="headerlink" title="由來"></a>由來</h2><blockquote>
-<p><code>var</code>, <code>let</code>, 以及 <code>const</code> 都是在 JavaScript 用來做變數宣告的保留字，在 JavaScript 早期只有 <code>var</code>，直到 ES2015 (ES6) 時才加入了 <code>let</code> 與 <code>const</code> 。</p>
-</blockquote>
-<h2 id="關於-var"><a href="#關於-var" class="headerlink" title="關於 var"></a>關於 var</h2><h3 id="重點"><a href="#重點" class="headerlink" title="重點"></a>重點</h3><div class="em-div2">
-
-<ul>
-<li><code>var</code>為<strong>函數作用域(function scope)<strong>，若在函數外宣告則為</strong>全作用域(global scope)</strong></li>
-<li>僅有 function scope 能夠關住 var（容易污染）</li>
-<li>var 宣告的變數，可以重新被宣告 &amp; 賦值</li>
-<li>有<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升</a>，若先提取變數，再使用 var 宣告，會出現 undefined</div></li>
-</ul>
-<p>接著會用四個範例題目，來幫助解釋這四個重點 ٩(ˊᗜˋ )و</p>
-<h3 id="var-為全作用域"><a href="#var-為全作用域" class="headerlink" title="var 為全作用域"></a>var 為全作用域</h3><p><code>var</code>可以為<strong>全作用域（global scope）</strong>或<strong>函數作用域（function scope）</strong>。這代表在函式<strong>外面</strong>定義的變數可以<strong>全域訪問</strong>，在特定函數內部定義的變數可以在函數內部存取。(補充：未宣告的變數也會放在全域變數)</p>
-<ul>
-<li>範例 1：全域宣告變數<code>a</code>，我們可以在程式的<strong>任何地方</strong>抓到<code>a</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">100</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:
-10
-10
-</div>
-
-<ul>
-<li>範例 2：僅有 function scope 能夠關住 var，變數“a”在函數內使用 var 宣告。如果使用者在函數之外存取，則會顯示<code>ReferenceError: a is not defined</code>。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a); <span class="hljs-comment">//var無法在function外被存取;</span><br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output：
-10 <br>
-ReferenceError: a is not defined
-</div>
-
-<ul>
-<li>範例 3：var 宣告的變數，可以重新被宣告&amp;賦值</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">8</span>;<br>a = <span class="hljs-number">7</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output: 7
-</div>
-
-<ul>
-<li>範例 4：如果使用者在宣告之前使用 var 變數，因為<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升（Hosting）</a>的關係。在執行函數之前，會優先將 var 變數放入記憶體。要注意的是：這只是在記憶體有這變數的空間，但<strong>尚未初始化</strong>。這也是為何會拿到 undefined 的原因。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output: undefined
-</div>
-
-<h2 id="關於-let"><a href="#關於-let" class="headerlink" title="關於 let"></a>關於 let</h2><h3 id="重點-1"><a href="#重點-1" class="headerlink" title="重點"></a>重點</h3><div class="em-div2">
-
-<ul>
-<li><code>let</code>為<b>區塊作用域(block scoped)</b>，無法在<code>&#123;block&#125;</code>之外存取它</li>
-<li>有<a href="https://adora-xu.com/2023/11/18/hoisting/">變數提升（Hosting）</a>，但因為 let 不會幫忙初始化，而是存在<strong>暫時執行死區（TDZ）</strong>，因此<code>let</code>不能在宣告前使用，不能多次宣告。</div></li>
-<li>範例 1：正常運行的樣子</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> b = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">f</span>();<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:9</br>
-10
-</div>
-
-<ul>
-<li>範例 2: <code>let</code>宣告無法在<code>&#123;block&#125;</code>之外存取變數<code>b</code>，因此會出現<code>ReferenceError: b is not defined</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> b = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:9</br>
-ReferenceError: b is not defined
-</div>
-
-<ul>
-<li>範例 3: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:Identifier 'a' has already been declared
-</div>
-
-<ul>
-<li>範例 4: <code>let</code>宣告的變數不能重複宣告，但可以改變其值</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br>a = <span class="hljs-number">2</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:2
-</div>
-
-<ul>
-<li>範例 5:<code>let</code>作用域僅在<code>&#123;block&#125;</code>內，因此在<code>&#123;block&#125;</code>外可以使用同個變數名稱宣告</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) &#123;<br>  <span class="hljs-keyword">let</span> a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:9</br>
-10
-</div>
-
-<ul>
-<li>範例 6: 在<code>let</code>宣告前先提取變數<code>a</code>，但因為<code>let</code>不會幫忙初始化，而是<strong>存在 TDZ</strong>，因此會出現<code>Cannot access &#39;a&#39; before initialization</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output: Cannot access 'a' before initialization
-</div>
-
-<h2 id="關於-const"><a href="#關於-const" class="headerlink" title="關於 const"></a>關於 const</h2><blockquote>
-<p>常數（constant）又稱定數，是指一個數值固定不變的數，例如圓周率，與之相反的是變數。</p>
-</blockquote>
-<h3 id="重點-2"><a href="#重點-2" class="headerlink" title="重點"></a>重點</h3><div class="em-div2">
-
-<ul>
-<li><code>const</code>為<b>區塊作用域(block scoped)</b>，無法在<code>&#123;block&#125;</code>之外存取它</li>
-<li>使用<code>const</code>宣告的變數不能改變，亦不能重複宣告。</li>
-<li>若使用 <code>const</code> 宣告，不能改變其屬性，但能夠改變內含的東西。</div></li>
-</ul>
-<p>相對其他的宣告方式，<code>const</code>規定相對嚴格，所以不像<code>var</code>會有很多花裡胡哨的例外行為，是個很乖巧的好孩子呢(๑¯◡¯๑)。</p>
-<ul>
-<li>範例 1: 使用<code>const</code>宣告的<code>a</code>，不能夠重新賦值，會出現<code>TypeError</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  a = <span class="hljs-number">9</span>;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br>&#125;<br><span class="hljs-title function_">fn</span>();<br></code></pre></td></tr></table></figure>
-
-<div class="em-div"> output: TypeError: Assignment to constant variable.</div>
-
-<ul>
-<li>範例 2: <code>const</code>同樣為<b>區塊作用域(block scoped)</b>，在<code>&#123;block&#125;</code>外不能存取，會出現 <code>ReferenceError: a is not defined</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> a = <span class="hljs-number">9</span>;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:
-ReferenceError: a is not defined
-</div>
-
-<ul>
-<li>範例 3:使用 <code>const</code> 宣告，不能改變物件，但能夠替換物件內的東西。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> a = &#123;<br>  <span class="hljs-attr">prop1</span>: <span class="hljs-number">10</span>,<br>  <span class="hljs-attr">prop2</span>: <span class="hljs-number">9</span>,<br>&#125;;<br>a.<span class="hljs-property">prop1</span> = <span class="hljs-number">3</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output:
-{ prop1: 3, prop2: 9 }
-</div>
-
-<ul>
-<li>範例 4:<code>const</code>宣告不能改變物件</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> a = &#123;<br>  <span class="hljs-attr">prop1</span>: <span class="hljs-number">10</span>,<br>  <span class="hljs-attr">prop2</span>: <span class="hljs-number">9</span>,<br>&#125;;<br><br>a = &#123;<br>  <span class="hljs-attr">prop1</span>: <span class="hljs-number">20</span>,<br>&#125;;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-output: TypeError: Assignment to constant variable.
-</div>
-
-<p>範例 3 和 4 可以想像成，乖寶寶<code>const</code>宣告了 a 是一盒工具箱，你可以往裡面加把手、螺絲起子等等工具，也可以拿走裡面的工具，但你不能再說工具箱是醫藥箱，乖寶寶<code>const</code>宣告了醫藥箱就是醫藥箱！(除非被{…}包住了)</p>
-<p>我自己是這樣記憶的，會比較好懂 ٩(ˊᗜˋ )و</p>
-<hr>
-<p>看了上面這麼多範例，感覺就缺少一個東西，那就是比較表格！我特別整理了一個表格給大家參考 o(^▽^)o</p>
-<h3 id="var-let-const-比較表格"><a href="#var-let-const-比較表格" class="headerlink" title="var, let, const 比較表格"></a>var, let, const 比較表格</h3><img src="/images/var-let-const/table2.png">
-
-<h3 id="宣告準則（建議）"><a href="#宣告準則（建議）" class="headerlink" title="宣告準則（建議）"></a>宣告準則（建議）</h3><p>為了防其他的程式碼被宣告所污染到處都拿得到 var 宣告的變數，就像任何人都可以把警察局說成是教堂，把板手說成是棒棒糖，想起來有點可怕 ╰(°▽°)╯，所以建議的宣告順序如下：</p>
-<ol>
-<li>const</li>
-<li>let</li>
-<li>var</li>
-</ol>
-<p>當然實際還是依照需求而定，希望今天的文章有幫助到您！</p>
-<p>另外在文章內提到的變數提升，也歡迎參考我另外一篇文章的解釋：<a href="https://adora-xu.com/2023/11/18/hoisting/">JavaScript: 變數提升 hoisting 到底是什麼？</a></p>
-<p>文章內容是根據以下參考資料整理＋自己繪圖而得，如果有任何建議都歡迎提供唷 (´･∀･｀)</p>
-<p>參考資料：</p>
-<blockquote>
-<p><a href="https://5xcampus.com/courses/js101">五倍學院 - 為你自己學 JavaScript 課程內容</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/js-var-let-const-in-javascript">ExplainThis：在 JavaScript 中用 var, let, 以及 const 有什麼差別？什麼時候該用哪個？</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.geeksforgeeks.org/difference-between-var-let-and-const-keywords-in-javascript/">Difference between var, let and const keywords in JavaScript</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>var</tag>
-        <tag>let</tag>
-        <tag>const</tag>
       </tags>
   </entry>
 </search>
