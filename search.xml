@@ -144,112 +144,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
-    <url>/2024/01/07/active-storage-amazon-s3/</url>
-    <content><![CDATA[<img src="/images/active-storage-amazon-s3/01.avif">
-
-<blockquote>
-<p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
-</blockquote>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
-<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
-<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
-<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
-<ul>
-<li><p>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
-</li>
-<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
-<img src="/images/active-storage-amazon-s3/03.png">
-</li>
-<li><p>選擇Bucket的所在地＆Bucket Name</p>
-<img src="/images/active-storage-amazon-s3/04.png"></li>
-</ul>
-<p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
-<ul>
-<li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
-</li>
-<li><p>存取權限 Access Settings</p>
-</li>
-</ul>
-<img src="/images/active-storage-amazon-s3/05.png">
-
-<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
-<ul>
-<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡<img src="/images/active-storage-amazon-s3/CORS.png"></li>
-<li>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰<img src="/images/active-storage-amazon-s3/07.png"></li>
-</ul>
-<p>選擇S3，並在下面勾選</p>
-<ul>
-<li>List : ListBucket</li>
-<li>Read: GetObj</li>
-<li>Write: PutObj,DeleteObj</li>
-<li>Permission management: PutObjAcl</li>
-</ul>
-<p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
-<img src="/images/active-storage-amazon-s3/08.png">
-
-<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
-<figure class="highlight asciidoc"><table><tr><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
-
-<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
-<ul>
-<li>創建使用者，並選擇剛剛選好的Policy</li>
-<li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
-<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
-<li>進入金鑰頁面</li>
-</ul>
-<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
-<ul>
-<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>接著在終端機輸入</p>
-</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
-
-<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>#development.rb設定將active_storage從:local改為:amazon</li>
-</ul>
-<p>(如果要在正式環境使用，則需要更改production.rb)</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
-
-<p>下載AWS S3的Gem</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
-
-<p>執行bundle i</p>
-<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
-<img src="/images/active-storage-amazon-s3/12.png">
-
-<p>看s3的後台也看到圖片檔案<br><img src="/images/active-storage-amazon-s3/11.png"></p>
-<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇，<br>結果在上傳之後14張照片就消失了( ͒˃⌂˂ ͒)，<br>原來我不小心放在Public資料夾，而且下了Hexo cl指令  ◴_◶<br>可能老天爺想要我多熟練一點點，只好認命重新截圖…也刪除了一些不必要的圖片</p>
-<p>最後希望這篇文章有幫助到你！有任何問題歡迎回覆，<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>AWS</tag>
-        <tag>Ruby on Rails</tag>
-        <tag>active stroage</tag>
-        <tag>amazon</tag>
-        <tag>s3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: defer vs async</title>
     <url>/2023/11/18/async-vs-defer/</url>
     <content><![CDATA[<style>
@@ -360,109 +254,109 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
-    <url>/2023/11/18/hoisting/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
+    <title>Ruby on Rails : ActiveStorage連線Amazon S3</title>
+    <url>/2024/01/07/active-storage-amazon-s3/</url>
+    <content><![CDATA[<img src="/images/active-storage-amazon-s3/01.avif">
 
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
+<blockquote>
+<p>圖片來源<a href="https://unsplash.com/photos/black-samsung-galaxy-smartphone-displaying-amazon-logo-rymh7EZPqRs">Usplash</a></p>
+</blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Active Storage</a>來儲存圖片，<br>讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 <a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide</a>的介紹</p>
+<p>本篇主要介紹如何把Active Storage的資料儲存在Amazon S3，</p>
+<p>因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。<br>因為檔案很多很複雜，要處理這些檔案是一大難題。<br>我們可以利用上傳檔案到S3，來輕鬆的處理～<br>也能夠降低資料保存的風險（雞蛋不要放在同一個籃子的概念）</p>
+<p>在找關於連接Amazon S3的資料時，其實花了一段時間，<br>這是目前覺得教學最詳細的是這個影片：<br><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UOLpv2f8mz8?si=eEjG_z97PKTQvtWR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-</style>
 
-<img src="/images/hoisting/banner.png">
-之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
-
-<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
-<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
-<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
-<p>這段話裡面有幾個重點：</p>
-<div class="em-div2">
-
-<ol>
-<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
-</li>
-<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
-</li>
-<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
-</div></li>
-</ol>
-<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
-<img src="/images/hoisting/01.png">
-
-<div class="em-div2">
-
+<p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
 <ul>
-<li><p>Creation Phase</p>
-<ul>
-<li>註冊名稱(Declaration)</li>
-<li>初始化（Initialisation）</li>
+<li><p>先到<a href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
+</li>
+<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
+<img src="/images/active-storage-amazon-s3/03.png">
+</li>
+<li><p>選擇Bucket的所在地＆Bucket Name</p>
+<img src="/images/active-storage-amazon-s3/04.png"></li>
 </ul>
-</li>
-<li><p>Execution Phase</p>
+<p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
 <ul>
-<li>賦值(Assignment) &amp; 執行</li>
-</ul>
+<li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
+</li>
+<li><p>存取權限 Access Settings</p>
 </li>
 </ul>
-</div>
+<img src="/images/active-storage-amazon-s3/05.png">
 
-<hr>
-<p>這樣就能夠很清楚解釋以下例子：</p>
-<img src="/images/hoisting/02.png">
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-undefined
-</div>
-
-<p>解釋：</p>
+<p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
 <ul>
-<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
-<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
+<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡<img src="/images/active-storage-amazon-s3/CORS.png"></li>
+<li>接著到<a href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰<img src="/images/active-storage-amazon-s3/07.png"></li>
 </ul>
-<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-ReferenceError: Cannot access 'a' before initialization
-</div>
-備註：const宣告的結果和let一樣
-
-<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
-<p>解釋：</p>
+<p>選擇S3，並在下面勾選</p>
 <ul>
-<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
-<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
+<li>List : ListBucket</li>
+<li>Read: GetObj</li>
+<li>Write: PutObj,DeleteObj</li>
+<li>Permission management: PutObjAcl</li>
 </ul>
-<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
-<div class="em-div2">
-參考資料：
+<p>這部分是參考<a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a>的建議</p>
+<img src="/images/active-storage-amazon-s3/08.png">
 
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
-<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
-<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
-</div>
+<p>Resource &gt; Bucket 點選Add ARNs，填寫你剛剛創建的Bucket Name，讓Policy發揮效用<br>這邊我填寫兩個，除了這個bucket還有這個bucket之下的檔案都發揮效用</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><code class="hljs asciidoc">adora-bucket<br><span class="hljs-strong">*adora-bucket/*</span><br></code></pre></td></tr></table></figure>
+
+<p>接著下一頁填寫完policy名稱，按create policy，Policy就設定完成了！！🤩</p>
+<ul>
+<li>創建使用者，並選擇剛剛選好的Policy</li>
+<li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
+<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
+<li>進入金鑰頁面</li>
+</ul>
+<p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
+<ul>
+<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>接著在終端機輸入</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
+
+<p>會開啟一個檔案檔名為crendentials.yml，可以將密鑰寫在這裡，必須要有相對應的master.key才能開啟這個檔案，github設定不會將master.key上傳～如果這個更動要分享給組員，將master.key私下傳給團隊成員，請他放在config資料夾底下即可</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">aws:</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;你的key_id&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;你的密鑰&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>#development.rb設定將active_storage從:local改為:amazon</li>
+</ul>
+<p>(如果要在正式環境使用，則需要更改production.rb)</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#development.rb</span><br>config.active_storage.service = <span class="hljs-symbol">:amazon</span><br></code></pre></td></tr></table></figure>
+
+<p>下載AWS S3的Gem</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#gemfile</span><br>gem <span class="hljs-string">&quot;aws-sdk-s3&quot;</span>, <span class="hljs-symbol">require:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>執行bundle i</p>
+<p>這樣就大功告成了！！！<br>試著上傳圖片，可以看到後台顯示照片傳到s3</p>
+<img src="/images/active-storage-amazon-s3/12.png">
+
+<p>看s3的後台也看到圖片檔案<br><img src="/images/active-storage-amazon-s3/11.png"></p>
+<p>終於完成這篇了⸍⚙̥ꇴ⚙̥⸌應該是我史上圖片最多的一篇，<br>結果在上傳之後14張照片就消失了( ͒˃⌂˂ ͒)，<br>原來我不小心放在Public資料夾，而且下了Hexo cl指令  ◴_◶<br>可能老天爺想要我多熟練一點點，只好認命重新截圖…也刪除了一些不必要的圖片</p>
+<p>最後希望這篇文章有幫助到你！有任何問題歡迎回覆，<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=UOLpv2f8mz8">Build a Blog with Rails Part 17: Handling File Uploads with ActiveStorage &amp; Amazon S3</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis">Rails Guide- Active Storage Overview</a></p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>JavaScript</category>
+        <category>Ruby on Rails</category>
       </categories>
       <tags>
-        <tag>JavaScript</tag>
-        <tag>hoisting</tag>
-        <tag>變數提升</tag>
+        <tag>AWS</tag>
+        <tag>Ruby on Rails</tag>
+        <tag>active stroage</tag>
+        <tag>amazon</tag>
+        <tag>s3</tag>
       </tags>
   </entry>
   <entry>
@@ -547,6 +441,281 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       <tags>
         <tag>JavaScript</tag>
         <tag>Event Loop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
+    <url>/2023/12/24/rails-admin-layout-devise/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+
+.image-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+  border-radius: 10px; /* 圓角效果 */
+  overflow: hidden; /* 超出部分隱藏 */
+  margin: 5px; /* 留白效果 */
+}
+</style>
+
+
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
+<img src="/images/rails_admin_layout_devise/banner.png">
+</div>
+
+<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
+<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
+<blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
+<p>以下為實作步驟：</p>
+<ul>
+<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新增pages_controller＆home.html.erb</li>
+</ul>
+<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>利用scaffold做CRUD的流程</li>
+</ul>
+<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/01.png">
+</div>
+
+<ul>
+<li>設定routes</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安裝Devise &amp; 生成使用者</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
+
+<p>devise會自動幫你增加檔案，真的很方便</p>
+<ul>
+<li>生一個migration，增加role欄位到User資料表</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><code>current_user&amp;.admin?</code></p>
+<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
+<p>可以用 &amp;. 簡化</p>
+<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
+<p>如果不是的話， layout就使用預設導入application</p>
+<ul>
+<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
+<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
+<p>接著就大功告成了！！</p>
+<p>這是剛剛步驟做出的首頁</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/03.png">
+</div>
+
+<p>登入頁面</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/04.png">
+</div>
+
+<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
+<p>搭配指令，來快速指定某使用者的role</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/05.png">
+</div>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
+
+<p>登入成功後，就有管理者的介面了！！</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/06.png">
+</div>
+
+<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
+<p>讓他的介面看起來和一般使用者有區隔</p>
+<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
+<p>這整個步驟大約10分鐘就可以完成了！！</p>
+<p>有興趣也可以試看看～～</p>
+<hr>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>devise</tag>
+        <tag>rails7</tag>
+        <tag>rails</tag>
+        <tag>layout</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
+    <url>/2024/01/14/simple-calendar/</url>
+    <content><![CDATA[<style>
+
+
+.em-div{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+
+<img src="/images/simple-calendar/banner.avif">
+
+<p>圖片來源：<a href="https://unsplash.com/photos/black-marker-on-notebook-zni0zgb3bkQ">Unsplash-Estée Janssens</a><br>在製作專案的時候發現寶藏gem套件<a href="https://github.com/excid3/simple_calendar">simple_calendar</a>(ﾉ&gt;ω&lt;)ﾉ，<br>可以輕鬆地製作月曆，而且客製化程度高，可以自定義CSS樣式，<br>這是我這次做出來的月曆：<br><img src="/images/simple-calendar/5.png"></p>
+<ul>
+<li>本次選擇使用<a href="%5Bhttps://tailwindcss.com/%5D(https://tailwindcss.com/)">tailwind</a> CSS框架，安裝方法可以參考<a href="https://tailwindcss.com/docs/installation">tailwind installaion</a></li>
+<li>亦可以使用bootstrap，安裝請參考：<a href="%5Bhttps://getbootstrap.com/%5D(https://getbootstrap.com/)">bootstrap</a></li>
+</ul>
+<hr>
+<h3 id="安裝simple-calendar"><a href="#安裝simple-calendar" class="headerlink" title="安裝simple_calendar"></a>安裝<a href="https://github.com/excid3/simple_calendar">simple_calendar</a></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle add simple_calendar<br></code></pre></td></tr></table></figure>
+
+<p>貼上後執行bundle i即可</p>
+<h3 id="製作新增會議的CRUD"><a href="#製作新增會議的CRUD" class="headerlink" title="製作新增會議的CRUD"></a>製作新增會議的CRUD</h3><p>因為demo所以使用meeting，可以自由選擇名稱，meeting會有開始時間＆結束時間，所以也增加<code>start_time</code> &amp; <code>end_time</code>的column</p>
+<p>因為新增會議不是本次demo的重點🤣使用scaffold會幫忙製作CRUD</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#terminal</span><br>rails g scaffold <span class="hljs-title class_">Consultation</span> title <span class="hljs-symbol">description:</span>text <span class="hljs-symbol">start_time:</span>datetime e<br><span class="hljs-symbol">nd_time:</span>datetime<br></code></pre></td></tr></table></figure>
+
+<p>完成後執行<code>rails db:migrate</code></p>
+<h3 id="建立主頁"><a href="#建立主頁" class="headerlink" title="建立主頁"></a>建立主頁</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<h3 id="在主頁自定義方法"><a href="#在主頁自定義方法" class="headerlink" title="在主頁自定義方法"></a>在主頁自定義方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+<p>除了Month Calendar，另外還有Week Calendar、Custom Length Calendar<br>客製化程度很高，可以依自己需要選擇</p>
+<p>開啟 <code>rails s</code>就會出現月曆</p>
+<img src="/images/simple-calendar/2.png">
+
+<div class="em-div">
+補充：simple_calendar 預設開始時間的Model column是start_time，結束時間是end_time，
+如果是別的column名稱，有兩個方法可以改變：
+</div>
+
+<ol>
+<li><p>在程式碼中加入attribute：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>到model定義</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="定義-meetings"><a href="#定義-meetings" class="headerlink" title="定義@meetings"></a>定義<code>@meetings</code></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#pages_controller.rb</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">home</span><br>    <span class="hljs-variable">@meetings</span> = <span class="hljs-title class_">Meeting</span>.where(<br>      <span class="hljs-symbol">star_time:</span> <span class="hljs-title class_">Time</span>.now.beginning_of_month.beginning_of_week..<span class="hljs-title class_">Time</span>.now.end_of_month.end_of_week<br>    )<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>來說明一下這段程式碼的意思：</p>
+<div class="em-div">
+
+
+<p>使用<code>where</code>方法來檢索符合特定條件對象，<br>條件為：指定會議的開始時間應該在本月的開始到結束之間，<br>並且是在一周的開始到結束之間，這樣就可以得到當前月份內的會議。</p>
+<p>簡單來說，我們使用<code>where</code>方法，獲取當前月份內的會議，並將這些會議存儲在 <code>@meetings</code> 變數中，以便在<code>view</code>中顯示。</p>
+</div>
+
+
+<div class="em-div">
+
+<p>如果使用SQL語法，，其實更好理解</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> meetings<br><span class="hljs-keyword">WHERE</span> start_time <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;開始時間&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;結束時間&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>「開始時間」：<code>Time.now.beginning_of_month.beginning_of_week</code> 生成的日期時間，<br>「結束時間」  <code>Time.now.end_of_month.end_of_week</code> 生成的日期時間，<br>這個查詢找會檢索所有在當前月份的第一週的開始時間到當前月份的最後一週的結束時間之間的會議。</p>
+</div>
+
+
+<p>這時候網頁的畫面會像這樣：<br><img src="/images/simple-calendar/2.png"></p>
+<p>為什麼還是一樣？因為Meeting沒有任何資料d(&#96;･∀･)b</p>
+<h3 id="在Meeting裡增加一些資料"><a href="#在Meeting裡增加一些資料" class="headerlink" title="在Meeting裡增加一些資料"></a>在Meeting裡增加一些資料</h3><p>到<code>http://127.0.0.1:3000/meetings</code>，點選create新增<br>新增文完畢之後，回到<code>home.html.erb</code>，使用each do方法，將meetings顯示</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date, meetings</span>| %&gt;<br>  &lt;%= date %&gt;<br>  &lt;% meetings.each <span class="hljs-keyword">do</span> |<span class="hljs-params">meeting</span>| %&gt;<br>    &lt;%= link_to meeting.title, meeting %&gt;<br>    &lt;%= meeting.description %&gt;<br>  &lt;% <span class="hljs-keyword">end</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+
+<p>補充：這裡需要輸入兩個資料，<br><code>&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</code><br>simple_calendar已經幫忙寫好方法，meetings會塞到相對應的時間內，<br>如果沒有寫的話meeting會重複印到每一天的表格內</p>
+</div>
+
+<p>這時畫面就會像這樣：<br><img src="/images/simple-calendar/3.png"></p>
+<p>做到這裡，基本上沒有樣式🤣，除了可以在<code>home.html.erb</code>內編輯樣式外，<br>另外可以使用 <a href="https://github.com/excid3/simple_calendar">simple_calendar</a>內的客製化樣式</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">simple_calendar:</span>views<br></code></pre></td></tr></table></figure>
+
+<p>這會在 app&#x2F;views 中產生一個名為 simple_calendar 的資料夾，<br>可以根據自己的意願進行編輯。<br>執行之後可以看到他幫忙長出了這些資料：</p>
+<img src="/images/simple-calendar/4.png">
+
+<p>可以到application.css做一些自定義的編輯</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#application.css</span><br>.simple-calendar &#123;<br>  .day &#123;&#125;<br><br>  .wday-<span class="hljs-number">0</span> &#123;&#125;<br>  .wday-<span class="hljs-number">1</span> &#123;&#125;<br>  .wday-<span class="hljs-number">2</span> &#123;&#125;<br>  .wday-<span class="hljs-number">3</span> &#123;&#125;<br>  .wday-<span class="hljs-number">4</span> &#123;&#125;<br>  .wday-<span class="hljs-number">5</span> &#123;&#125;<br>  .wday-<span class="hljs-number">6</span> &#123;&#125;<br><br>  .today &#123;&#125;<br>  .past &#123;&#125;<br>  .future &#123;&#125;<br><br>  .start-date &#123;&#125;<br><br>  .prev-month &#123;&#125;<br>  .<span class="hljs-keyword">next</span>-month &#123; &#125;<br>  .current-month &#123;&#125;<br><br>  .has-events &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>也可以到simple_calendar幫忙長出來app&#x2F;views&#x2F;simple_calendar內調整預設的樣式<br>我是選擇直接到<code>_month_calendar.html.erb</code>修改，最後成果如下，應該有變得好看許多🤣<br><img src="/images/simple-calendar/5.png"><br>我做了這些修改：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#_month_calendar.html.erb</span><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;container mx-auto mt-10&quot;</span>&gt;<br>  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;wrapper bg-white rounded shadow w-full&quot;</span>&gt;<br>    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;simple-calendar&quot;</span>&gt;<br>      &lt;nav&gt;<br>        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;header flex justify-between border-b p-2&quot;</span>&gt;<br>          &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-lg font-bold&quot;</span>&gt;<br>            &lt;time datetime=<span class="hljs-string">&quot;&lt;%= start_date.strftime(&#x27;%Y-%m&#x27;) %&gt;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;calendar-title&quot;</span>&gt;&lt;%= t(<span class="hljs-string">&#x27;date.month_names&#x27;</span>)[start_date.month] %&gt; &lt;%= start_date.year %&gt;&lt;<span class="hljs-regexp">/time&gt;</span><br><span class="hljs-regexp">          &lt;/span</span>&gt;<br><br>          &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;<br>            &lt;%= link_to t(<span class="hljs-string">&#x27;simple_calendar.today&#x27;</span>, <span class="hljs-symbol">default:</span> <span class="hljs-string">&#x27;Today&#x27;</span>), calendar.url_for_today_view %&gt;<br><br>            &lt;%= link_to calendar.url_for_previous_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-left-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br><br>            &lt;%= link_to calendar.url_for_next_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-right-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br>          &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">        &lt;/div</span>&gt;<br>      &lt;<span class="hljs-regexp">/nav&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">      &lt;table class=&quot;table table-striped w-full&quot;&gt;</span><br><span class="hljs-regexp">        &lt;thead&gt;</span><br><span class="hljs-regexp">          &lt;tr&gt;</span><br><span class="hljs-regexp">            &lt;% date_range.slice(0, 7).each do |day| %&gt;</span><br><span class="hljs-regexp">              &lt;th class=&quot;p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs&quot;&gt;</span><br><span class="hljs-regexp">                &lt;span class=&quot;xl:block lg:block md:block sm:block hidden&quot;&gt;</span><br><span class="hljs-regexp">                  &lt;%= t(&#x27;date.abbr_day_names&#x27;)[day.wday] %&gt;</span><br><span class="hljs-regexp">                &lt;/span</span>&gt;<br>              &lt;<span class="hljs-regexp">/th&gt;</span><br><span class="hljs-regexp">            &lt;% end %&gt;</span><br><span class="hljs-regexp">          &lt;/tr</span>&gt;<br>        &lt;<span class="hljs-regexp">/thead&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">        &lt;tbody&gt;</span><br><span class="hljs-regexp">          &lt;% date_range.each_slice(7) do |week| %&gt;</span><br><span class="hljs-regexp">            &lt;tr class=&quot;text-center h-20&quot;&gt;</span><br><span class="hljs-regexp">                &lt;% week.each do |day| %&gt;</span><br><span class="hljs-regexp">                  &lt;%= content_tag :td, class: &quot;border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300&quot; do %&gt;</span><br><span class="hljs-regexp">                    &lt;% instance_exec(day, calendar.sorted_events_for(day), &amp;passed_block) %&gt;</span><br><span class="hljs-regexp">                  &lt;% end %&gt;</span><br><span class="hljs-regexp">                &lt;% end %&gt;</span><br><span class="hljs-regexp">            &lt;/tr</span>&gt;<br>          &lt;% <span class="hljs-keyword">end</span> %&gt;<br>        &lt;<span class="hljs-regexp">/tbody&gt;</span><br><span class="hljs-regexp">      &lt;/table</span>&gt;<br>    &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">  &lt;/div</span>&gt;<br>&lt;<span class="hljs-regexp">/div&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-center m-5 text-xl&quot;</span>&gt;<span class="hljs-title class_">My</span> calendar&lt;<span class="hljs-regexp">/h1&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</span><br><span class="hljs-regexp">  &lt;div class=&quot;flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden&quot;&gt;</span><br><span class="hljs-regexp">    &lt;div class=&quot;top h-5 w-full&quot;&gt;</span><br><span class="hljs-regexp">      &lt;span class=&quot;text-gray-500&quot;&gt;</span><br><span class="hljs-regexp">        &lt;%= date.strftime(&#x27;%m/</span>%d<span class="hljs-string">&#x27;) %&gt;</span><br><span class="hljs-string">      &lt;/span&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;% meetings.each do |meeting| %&gt;</span><br><span class="hljs-string">      &lt;div class=&quot;bottom flex-grow py-1 w-full cursor-pointer&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;event bg-blue-400 text-white rounded p-1 text-sm mb-1&quot;&gt;</span><br><span class="hljs-string">          &lt;%= link_to &quot;<span class="hljs-subst">#&#123;meeting.start_time.strftime(<span class="hljs-string">&#x27;%k:%M&#x27;</span>)&#125;</span> <span class="hljs-subst">#&#123;meeting.title&#125;</span>&quot;, meeting %&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">      &lt;/div&gt;</span><br><span class="hljs-string">    &lt;% end %&gt;</span><br><span class="hljs-string">  &lt;/div&gt;</span><br><span class="hljs-string">&lt;% end %&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>simple_calendar其實也有把每個部份都定義了class名稱，<br>所以也可以到application.css檔案去更改套用，<br>但因為我使用tailwind，可以直接編輯html碼上的css，<br>後續優化可以再將重複的css樣式再放到application.css<br>或其他自定義的css即可，看個人習慣！</p>
+<p>這樣就完成啦！是不是客製化程度非常高呢！<br>本篇文章是我由以下參考資料整理+自己製作而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://github.com/excid3/simple_calendar">simple_calendar</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://youtu.be/NhAGTL4ARfw?feature=shared">Create A Simple Calendar In Ruby On Rails 7</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://tailwindcomponents.com/component/calendar-table">Calendar Table Template</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>rails</tag>
+        <tag>ruby</tag>
+        <tag>simple calendar</tag>
+        <tag>gem</tag>
       </tags>
   </entry>
   <entry>
@@ -707,124 +876,109 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
-    <url>/2024/01/14/simple-calendar/</url>
+    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
+    <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
 
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
 
-.em-div{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
 </style>
 
+<img src="/images/hoisting/banner.png">
+之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
 
-<img src="/images/simple-calendar/banner.avif">
-
-<p>圖片來源：<a href="https://unsplash.com/photos/black-marker-on-notebook-zni0zgb3bkQ">Unsplash-Estée Janssens</a><br>在製作專案的時候發現寶藏gem套件<a href="https://github.com/excid3/simple_calendar">simple_calendar</a>(ﾉ&gt;ω&lt;)ﾉ，<br>可以輕鬆地製作月曆，而且客製化程度高，可以自定義CSS樣式，<br>這是我這次做出來的月曆：<br><img src="/images/simple-calendar/5.png"></p>
-<ul>
-<li>本次選擇使用<a href="%5Bhttps://tailwindcss.com/%5D(https://tailwindcss.com/)">tailwind</a> CSS框架，安裝方法可以參考<a href="https://tailwindcss.com/docs/installation">tailwind installaion</a></li>
-<li>亦可以使用bootstrap，安裝請參考：<a href="%5Bhttps://getbootstrap.com/%5D(https://getbootstrap.com/)">bootstrap</a></li>
-</ul>
-<hr>
-<h3 id="安裝simple-calendar"><a href="#安裝simple-calendar" class="headerlink" title="安裝simple_calendar"></a>安裝<a href="https://github.com/excid3/simple_calendar">simple_calendar</a></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle add simple_calendar<br></code></pre></td></tr></table></figure>
-
-<p>貼上後執行bundle i即可</p>
-<h3 id="製作新增會議的CRUD"><a href="#製作新增會議的CRUD" class="headerlink" title="製作新增會議的CRUD"></a>製作新增會議的CRUD</h3><p>因為demo所以使用meeting，可以自由選擇名稱，meeting會有開始時間＆結束時間，所以也增加<code>start_time</code> &amp; <code>end_time</code>的column</p>
-<p>因為新增會議不是本次demo的重點🤣使用scaffold會幫忙製作CRUD</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#terminal</span><br>rails g scaffold <span class="hljs-title class_">Consultation</span> title <span class="hljs-symbol">description:</span>text <span class="hljs-symbol">start_time:</span>datetime e<br><span class="hljs-symbol">nd_time:</span>datetime<br></code></pre></td></tr></table></figure>
-
-<p>完成後執行<code>rails db:migrate</code></p>
-<h3 id="建立主頁"><a href="#建立主頁" class="headerlink" title="建立主頁"></a>建立主頁</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
-
-<h3 id="在主頁自定義方法"><a href="#在主頁自定義方法" class="headerlink" title="在主頁自定義方法"></a>在主頁自定義方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-<p>除了Month Calendar，另外還有Week Calendar、Custom Length Calendar<br>客製化程度很高，可以依自己需要選擇</p>
-<p>開啟 <code>rails s</code>就會出現月曆</p>
-<img src="/images/simple-calendar/2.png">
-
-<div class="em-div">
-補充：simple_calendar 預設開始時間的Model column是start_time，結束時間是end_time，
-如果是別的column名稱，有兩個方法可以改變：
-</div>
+<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
+<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
+<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
+<p>這段話裡面有幾個重點：</p>
+<div class="em-div2">
 
 <ol>
-<li><p>在程式碼中加入attribute：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
 </li>
-<li><p>到model定義</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
+<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
+</li>
+<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
+</div></li>
 </ol>
-<h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
+<img src="/images/hoisting/01.png">
 
-<h3 id="定義-meetings"><a href="#定義-meetings" class="headerlink" title="定義@meetings"></a>定義<code>@meetings</code></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#pages_controller.rb</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">home</span><br>    <span class="hljs-variable">@meetings</span> = <span class="hljs-title class_">Meeting</span>.where(<br>      <span class="hljs-symbol">star_time:</span> <span class="hljs-title class_">Time</span>.now.beginning_of_month.beginning_of_week..<span class="hljs-title class_">Time</span>.now.end_of_month.end_of_week<br>    )<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<div class="em-div2">
 
-<p>來說明一下這段程式碼的意思：</p>
-<div class="em-div">
-
-
-<p>使用<code>where</code>方法來檢索符合特定條件對象，<br>條件為：指定會議的開始時間應該在本月的開始到結束之間，<br>並且是在一周的開始到結束之間，這樣就可以得到當前月份內的會議。</p>
-<p>簡單來說，我們使用<code>where</code>方法，獲取當前月份內的會議，並將這些會議存儲在 <code>@meetings</code> 變數中，以便在<code>view</code>中顯示。</p>
+<ul>
+<li><p>Creation Phase</p>
+<ul>
+<li>註冊名稱(Declaration)</li>
+<li>初始化（Initialisation）</li>
+</ul>
+</li>
+<li><p>Execution Phase</p>
+<ul>
+<li>賦值(Assignment) &amp; 執行</li>
+</ul>
+</li>
+</ul>
 </div>
 
+<hr>
+<p>這樣就能夠很清楚解釋以下例子：</p>
+<img src="/images/hoisting/02.png">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
 
 <div class="em-div">
-
-<p>如果使用SQL語法，，其實更好理解</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> meetings<br><span class="hljs-keyword">WHERE</span> start_time <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;開始時間&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;結束時間&#x27;</span>;<br></code></pre></td></tr></table></figure>
-
-<p>「開始時間」：<code>Time.now.beginning_of_month.beginning_of_week</code> 生成的日期時間，<br>「結束時間」  <code>Time.now.end_of_month.end_of_week</code> 生成的日期時間，<br>這個查詢找會檢索所有在當前月份的第一週的開始時間到當前月份的最後一週的結束時間之間的會議。</p>
+undefined
 </div>
 
-
-<p>這時候網頁的畫面會像這樣：<br><img src="/images/simple-calendar/2.png"></p>
-<p>為什麼還是一樣？因為Meeting沒有任何資料d(&#96;･∀･)b</p>
-<h3 id="在Meeting裡增加一些資料"><a href="#在Meeting裡增加一些資料" class="headerlink" title="在Meeting裡增加一些資料"></a>在Meeting裡增加一些資料</h3><p>到<code>http://127.0.0.1:3000/meetings</code>，點選create新增<br>新增文完畢之後，回到<code>home.html.erb</code>，使用each do方法，將meetings顯示</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date, meetings</span>| %&gt;<br>  &lt;%= date %&gt;<br>  &lt;% meetings.each <span class="hljs-keyword">do</span> |<span class="hljs-params">meeting</span>| %&gt;<br>    &lt;%= link_to meeting.title, meeting %&gt;<br>    &lt;%= meeting.description %&gt;<br>  &lt;% <span class="hljs-keyword">end</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+<p>解釋：</p>
+<ul>
+<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
+<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
+</ul>
+<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
 
 <div class="em-div">
-
-<p>補充：這裡需要輸入兩個資料，<br><code>&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</code><br>simple_calendar已經幫忙寫好方法，meetings會塞到相對應的時間內，<br>如果沒有寫的話meeting會重複印到每一天的表格內</p>
+ReferenceError: Cannot access 'a' before initialization
 </div>
+備註：const宣告的結果和let一樣
 
-<p>這時畫面就會像這樣：<br><img src="/images/simple-calendar/3.png"></p>
-<p>做到這裡，基本上沒有樣式🤣，除了可以在<code>home.html.erb</code>內編輯樣式外，<br>另外可以使用 <a href="https://github.com/excid3/simple_calendar">simple_calendar</a>內的客製化樣式</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">simple_calendar:</span>views<br></code></pre></td></tr></table></figure>
+<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
+<p>解釋：</p>
+<ul>
+<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
+<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
+</ul>
+<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
+<div class="em-div2">
+參考資料：
 
-<p>這會在 app&#x2F;views 中產生一個名為 simple_calendar 的資料夾，<br>可以根據自己的意願進行編輯。<br>執行之後可以看到他幫忙長出了這些資料：</p>
-<img src="/images/simple-calendar/4.png">
-
-<p>可以到application.css做一些自定義的編輯</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#application.css</span><br>.simple-calendar &#123;<br>  .day &#123;&#125;<br><br>  .wday-<span class="hljs-number">0</span> &#123;&#125;<br>  .wday-<span class="hljs-number">1</span> &#123;&#125;<br>  .wday-<span class="hljs-number">2</span> &#123;&#125;<br>  .wday-<span class="hljs-number">3</span> &#123;&#125;<br>  .wday-<span class="hljs-number">4</span> &#123;&#125;<br>  .wday-<span class="hljs-number">5</span> &#123;&#125;<br>  .wday-<span class="hljs-number">6</span> &#123;&#125;<br><br>  .today &#123;&#125;<br>  .past &#123;&#125;<br>  .future &#123;&#125;<br><br>  .start-date &#123;&#125;<br><br>  .prev-month &#123;&#125;<br>  .<span class="hljs-keyword">next</span>-month &#123; &#125;<br>  .current-month &#123;&#125;<br><br>  .has-events &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>也可以到simple_calendar幫忙長出來app&#x2F;views&#x2F;simple_calendar內調整預設的樣式<br>我是選擇直接到<code>_month_calendar.html.erb</code>修改，最後成果如下，應該有變得好看許多🤣<br><img src="/images/simple-calendar/5.png"><br>我做了這些修改：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#_month_calendar.html.erb</span><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;container mx-auto mt-10&quot;</span>&gt;<br>  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;wrapper bg-white rounded shadow w-full&quot;</span>&gt;<br>    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;simple-calendar&quot;</span>&gt;<br>      &lt;nav&gt;<br>        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;header flex justify-between border-b p-2&quot;</span>&gt;<br>          &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-lg font-bold&quot;</span>&gt;<br>            &lt;time datetime=<span class="hljs-string">&quot;&lt;%= start_date.strftime(&#x27;%Y-%m&#x27;) %&gt;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;calendar-title&quot;</span>&gt;&lt;%= t(<span class="hljs-string">&#x27;date.month_names&#x27;</span>)[start_date.month] %&gt; &lt;%= start_date.year %&gt;&lt;<span class="hljs-regexp">/time&gt;</span><br><span class="hljs-regexp">          &lt;/span</span>&gt;<br><br>          &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;<br>            &lt;%= link_to t(<span class="hljs-string">&#x27;simple_calendar.today&#x27;</span>, <span class="hljs-symbol">default:</span> <span class="hljs-string">&#x27;Today&#x27;</span>), calendar.url_for_today_view %&gt;<br><br>            &lt;%= link_to calendar.url_for_previous_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-left-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br><br>            &lt;%= link_to calendar.url_for_next_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-right-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br>          &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">        &lt;/div</span>&gt;<br>      &lt;<span class="hljs-regexp">/nav&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">      &lt;table class=&quot;table table-striped w-full&quot;&gt;</span><br><span class="hljs-regexp">        &lt;thead&gt;</span><br><span class="hljs-regexp">          &lt;tr&gt;</span><br><span class="hljs-regexp">            &lt;% date_range.slice(0, 7).each do |day| %&gt;</span><br><span class="hljs-regexp">              &lt;th class=&quot;p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs&quot;&gt;</span><br><span class="hljs-regexp">                &lt;span class=&quot;xl:block lg:block md:block sm:block hidden&quot;&gt;</span><br><span class="hljs-regexp">                  &lt;%= t(&#x27;date.abbr_day_names&#x27;)[day.wday] %&gt;</span><br><span class="hljs-regexp">                &lt;/span</span>&gt;<br>              &lt;<span class="hljs-regexp">/th&gt;</span><br><span class="hljs-regexp">            &lt;% end %&gt;</span><br><span class="hljs-regexp">          &lt;/tr</span>&gt;<br>        &lt;<span class="hljs-regexp">/thead&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">        &lt;tbody&gt;</span><br><span class="hljs-regexp">          &lt;% date_range.each_slice(7) do |week| %&gt;</span><br><span class="hljs-regexp">            &lt;tr class=&quot;text-center h-20&quot;&gt;</span><br><span class="hljs-regexp">                &lt;% week.each do |day| %&gt;</span><br><span class="hljs-regexp">                  &lt;%= content_tag :td, class: &quot;border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300&quot; do %&gt;</span><br><span class="hljs-regexp">                    &lt;% instance_exec(day, calendar.sorted_events_for(day), &amp;passed_block) %&gt;</span><br><span class="hljs-regexp">                  &lt;% end %&gt;</span><br><span class="hljs-regexp">                &lt;% end %&gt;</span><br><span class="hljs-regexp">            &lt;/tr</span>&gt;<br>          &lt;% <span class="hljs-keyword">end</span> %&gt;<br>        &lt;<span class="hljs-regexp">/tbody&gt;</span><br><span class="hljs-regexp">      &lt;/table</span>&gt;<br>    &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">  &lt;/div</span>&gt;<br>&lt;<span class="hljs-regexp">/div&gt;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-center m-5 text-xl&quot;</span>&gt;<span class="hljs-title class_">My</span> calendar&lt;<span class="hljs-regexp">/h1&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</span><br><span class="hljs-regexp">  &lt;div class=&quot;flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden&quot;&gt;</span><br><span class="hljs-regexp">    &lt;div class=&quot;top h-5 w-full&quot;&gt;</span><br><span class="hljs-regexp">      &lt;span class=&quot;text-gray-500&quot;&gt;</span><br><span class="hljs-regexp">        &lt;%= date.strftime(&#x27;%m/</span>%d<span class="hljs-string">&#x27;) %&gt;</span><br><span class="hljs-string">      &lt;/span&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;% meetings.each do |meeting| %&gt;</span><br><span class="hljs-string">      &lt;div class=&quot;bottom flex-grow py-1 w-full cursor-pointer&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;event bg-blue-400 text-white rounded p-1 text-sm mb-1&quot;&gt;</span><br><span class="hljs-string">          &lt;%= link_to &quot;<span class="hljs-subst">#&#123;meeting.start_time.strftime(<span class="hljs-string">&#x27;%k:%M&#x27;</span>)&#125;</span> <span class="hljs-subst">#&#123;meeting.title&#125;</span>&quot;, meeting %&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">      &lt;/div&gt;</span><br><span class="hljs-string">    &lt;% end %&gt;</span><br><span class="hljs-string">  &lt;/div&gt;</span><br><span class="hljs-string">&lt;% end %&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>simple_calendar其實也有把每個部份都定義了class名稱，<br>所以也可以到application.css檔案去更改套用，<br>但因為我使用tailwind，可以直接編輯html碼上的css，<br>後續優化可以再將重複的css樣式再放到application.css<br>或其他自定義的css即可，看個人習慣！</p>
-<p>這樣就完成啦！是不是客製化程度非常高呢！<br>本篇文章是我由以下參考資料整理+自己製作而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://github.com/excid3/simple_calendar">simple_calendar</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://youtu.be/NhAGTL4ARfw?feature=shared">Create A Simple Calendar In Ruby On Rails 7</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://tailwindcomponents.com/component/calendar-table">Calendar Table Template</a></p>
-</blockquote>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
+<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
+<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
+</div>
 ]]></content>
       <categories>
-        <category>Ruby on Rails</category>
+        <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>ruby</tag>
-        <tag>rails</tag>
-        <tag>simple calendar</tag>
-        <tag>gem</tag>
+        <tag>JavaScript</tag>
+        <tag>hoisting</tag>
+        <tag>變數提升</tag>
       </tags>
   </entry>
   <entry>
@@ -1133,160 +1287,6 @@ output: TypeError: Assignment to constant variable.
         <tag>var</tag>
         <tag>let</tag>
         <tag>const</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
-    <url>/2023/12/24/rails-admin-layout-devise/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-
-.image-container {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
-  border-radius: 10px; /* 圓角效果 */
-  overflow: hidden; /* 超出部分隱藏 */
-  margin: 5px; /* 留白效果 */
-}
-</style>
-
-
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
-<img src="/images/rails_admin_layout_devise/banner.png">
-</div>
-
-<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
-<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
-<blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
-</blockquote>
-<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
-<p>以下為實作步驟：</p>
-<ul>
-<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>新增pages_controller＆home.html.erb</li>
-</ul>
-<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>利用scaffold做CRUD的流程</li>
-</ul>
-<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/01.png">
-</div>
-
-<ul>
-<li>設定routes</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>安裝Devise &amp; 生成使用者</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
-
-<p>devise會自動幫你增加檔案，真的很方便</p>
-<ul>
-<li>生一個migration，增加role欄位到User資料表</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p><code>current_user&amp;.admin?</code></p>
-<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
-<p>可以用 &amp;. 簡化</p>
-<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
-<p>如果不是的話， layout就使用預設導入application</p>
-<ul>
-<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
-<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
-<p>接著就大功告成了！！</p>
-<p>這是剛剛步驟做出的首頁</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/03.png">
-</div>
-
-<p>登入頁面</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/04.png">
-</div>
-
-<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
-<p>搭配指令，來快速指定某使用者的role</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/05.png">
-</div>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
-
-<p>登入成功後，就有管理者的介面了！！</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/06.png">
-</div>
-
-<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
-<p>讓他的介面看起來和一般使用者有區隔</p>
-<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
-<p>這整個步驟大約10分鐘就可以完成了！！</p>
-<p>有興趣也可以試看看～～</p>
-<hr>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>rails</tag>
-        <tag>devise</tag>
-        <tag>rails7</tag>
-        <tag>layout</tag>
       </tags>
   </entry>
 </search>
