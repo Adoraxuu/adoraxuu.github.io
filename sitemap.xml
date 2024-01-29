@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://adora-xu.com/2024/01/28/transition/</loc>
+    <loc>http://adora-xu.com/2024/01/21/LINE-Pay/</loc>
     
     <lastmod>2024-01-29</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/2024/01/21/linepay/</loc>
+    <loc>http://adora-xu.com/2024/01/28/transition/</loc>
     
     <lastmod>2024-01-29</lastmod>
     
@@ -155,6 +155,15 @@
   </url>
   
   <url>
+    <loc>http://adora-xu.com/css/common.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://adora-xu.com/css/comment.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -164,7 +173,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/common.css</loc>
+    <loc>http://adora-xu.com/css/custom.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -191,15 +200,6 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/grid.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://adora-xu.com/css/header.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -218,7 +218,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/layout.css</loc>
+    <loc>http://adora-xu.com/css/paginator.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -227,7 +227,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/paginator.css</loc>
+    <loc>http://adora-xu.com/css/layout.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -254,6 +254,15 @@
   </url>
   
   <url>
+    <loc>http://adora-xu.com/css/grid.css</loc>
+    
+    <lastmod>2023-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://adora-xu.com/css/search.css</loc>
     
     <lastmod>2023-10-30</lastmod>
@@ -264,15 +273,6 @@
   
   <url>
     <loc>http://adora-xu.com/css/tags.css</loc>
-    
-    <lastmod>2023-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/css/custom.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -297,14 +297,56 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/tags/Rails/</loc>
+    <loc>http://adora-xu.com/tags/Ruby-on-Rails/</loc>
     <lastmod>2024-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://adora-xu.com/tags/MVC/</loc>
+    <loc>http://adora-xu.com/tags/line-pay/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/API/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/line-pay-API/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/line-pay-v3/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/v3/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/faraday/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/%E9%87%91%E6%B5%81/</loc>
     <lastmod>2024-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -325,14 +367,21 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/tags/AWS/</loc>
+    <loc>http://adora-xu.com/tags/Rails/</loc>
     <lastmod>2024-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://adora-xu.com/tags/Ruby-on-Rails/</loc>
+    <loc>http://adora-xu.com/tags/MVC/</loc>
+    <lastmod>2024-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/AWS/</loc>
     <lastmod>2024-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -403,55 +452,6 @@
   
   <url>
     <loc>http://adora-xu.com/tags/%E8%AE%8A%E6%95%B8%E6%8F%90%E5%8D%87/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/line-pay/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/API/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/line-pay-API/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/line-pay-v3/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/v3/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/faraday/</loc>
-    <lastmod>2024-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/%E9%87%91%E6%B5%81/</loc>
     <lastmod>2024-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
