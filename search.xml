@@ -250,8 +250,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: 究竟什麼是 Event Loop？</title>
-    <url>/2023/11/08/javascript-event-loop/</url>
+    <title>JavaScript: defer vs async</title>
+    <url>/2023/11/18/async-vs-defer/</url>
     <content><![CDATA[<style>
   .em-div{
   background-color: #d4a373;
@@ -262,67 +262,90 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
   }
 </style>
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
-JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png">
 
-<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
-<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
+<p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p>
+<ol>
+<li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li>
+<li><code>async</code></li>
+<li><code>defer</code></li>
+</ol>
+<p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p>
+<p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p>
+<h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png">
 
-<ul>
-  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
-  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
-  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
+<blockquote>
+<p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p>
+</blockquote>
+<h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul>
+<li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li>
 </ul>
-<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
+<h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol>
+<li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li>
+<li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li>
+<li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li>
+<li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li>
+</ol>
+<p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p>
+<blockquote>
+<p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
+</blockquote>
+<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
+<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
+<p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
+<p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
 
-<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
+<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
+<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
+<p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
+<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
+<h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
 
 <ul>
-  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
-  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
-
-<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
-
-<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
-
-<ul>
-  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
-  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
+<li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li>
+<li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li>
+<li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li>
 </ul>
+<p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
+<p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
+<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
 
-<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
+<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
+<ul>
+<li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
+<li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
+<li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li>
+<li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li>
+<li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li>
+<li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li>
+</ul>
+<p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p>
+<p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p>
+<h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
 
-<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
+<img src="/images/async_vs_defer/5rendering-time-defer.png">
 
 <ul>
-  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
-  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
-  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
-  <li>如果不為空：處理 Call Stack 內的函數。</li>
+<li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li>
+<li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li>
+<li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
+<li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
 </ul>
-
-<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
-<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
-<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
-
-<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<img src="/images/eventLoop/pasted-0.png">
-
-<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
-<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
+<p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
 </blockquote>
 <blockquote>
-<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
+<p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p>
 </blockquote>
 <blockquote>
-<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
+<p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p>
 </blockquote>
 ]]></content>
       <categories>
@@ -330,7 +353,10 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </categories>
       <tags>
         <tag>JavaScript</tag>
-        <tag>Event Loop</tag>
+        <tag>defer</tag>
+        <tag>async</tag>
+        <tag>Web</tag>
+        <tag>rendering</tag>
       </tags>
   </entry>
   <entry>
@@ -440,160 +466,87 @@ ReferenceError: Cannot access 'a' before initialization
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 串接LINE Pay API v3</title>
-    <url>/2024/01/21/linepay/</url>
+    <title>JavaScript: 究竟什麼是 Event Loop？</title>
+    <url>/2023/11/08/javascript-event-loop/</url>
     <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
 </style>
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/banner.jpeg">
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
+JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
 
-<blockquote>
-<p>圖片來源: <a href="https://pay.line.me/portal/tw/customer/press/98766?categoryId=">LINE Pay新聞</a></p>
-</blockquote>
-<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><p>今天來使用Ruby on Rails串接LINE Pay ฅ^•ﻌ•^ฅ</p>
-<p>首先需要到<a href="https://pay.line.me/th/developers/techsupport/sandbox/creation?locale=zh_TW">LINE Pay  SandBox</a>申請一個測試帳號</p>
-<img src="/images/LINE-Pay/2.png">
+<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
+<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
 
-<p>接著到信箱收LINE Pay 發的帳號密碼，登入可以從這裡登入：<a href="https://pay.line.me/tw/developers/techsupport/sandbox/testflow?locale=zh_TW">LINE Pay測試流程</a></p>
-<p>接著可以到<a href="https://sandbox-pay.line.me/zh_TW/payment/interlockKey">LINE Pay 測試環境</a>，拿所需的Channel ID ＆ Channel Secret Key</p>
-<img src="/images/LINE-Pay/3.png">
-
-<p>然後把<a href="https://pay.line.me/tw/developers/apis/onlineApis?locale=zh_TW">LINE Pay API</a>技術手冊拿緊緊，因為接下來會很需要他(ㆆᴗㆆ)</p>
-<p>我先使用credientail將所需要的資料&amp;機密資料放進去</p>
-<p><code>EDITOR=&quot;code --wait&quot; rails credentials:edit</code></p>
 <ul>
-<li>ENV</li>
+  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
+  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
+  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">line:</span><br>  <span class="hljs-variable constant_">CHANNEL_ID</span>: &lt;your channel id&gt;<br>  <span class="hljs-variable constant_">SECRET_KEY</span>: &lt;your secret key&gt;<br>  <span class="hljs-variable constant_">LINEPAY_SITE</span>: <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/sandbox-api-pay.line.me</span><br><span class="hljs-regexp">  CONFIRM_URL: /orders</span><span class="hljs-regexp">/confirm</span><br><span class="hljs-regexp">  CANCEL_URL: /orders</span><span class="hljs-regexp">/cancel</span><br><span class="hljs-regexp">  DOMAIN_NAME: http:/</span><span class="hljs-regexp">/127.0.0.1:3000</span><br><span class="hljs-regexp">  VERSION: v3</span><br></code></pre></td></tr></table></figure>
+<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
 
-<p>CHANNEL_ID ＆ SECRET_KEY 要替換成剛剛從LINE Pay SANBOX查到的ID和KEY</p>
-<p>寫在credential的資料有幾個好處：</p>
-<ol>
-<li>高機密性：必須要有對應的key才能夠打開，此key不會跟著上傳GitHub</li>
-<li>修改方便：金流的版號會不斷更新（這次是接v3），如果之後更新從crediential改就好</li>
-<li>確保正確性：串接金流只要有一個東西錯誤就會失敗，將資料集中寫在這裡，確認正確性時會比較方便</li>
-</ol>
-<p>我使用gem <a href="https://rubygems.org/gems/faraday/versions/2.7.11?locale=zh-TW">faraday</a>向LINE Pay 發送請求，所以這邊先安裝</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">bundle add <span class="hljs-string">&quot;faraday&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
 
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">bundle i<br></code></pre></td></tr></table></figure>
-
-<p>建一個專案來做LINE Pay 串接٩(●˙▿˙●)۶…⋆ฺ</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new project_name<br><span class="hljs-variable">$ </span>rails g scaffold product name <span class="hljs-symbol">price:</span>integer<br><span class="hljs-variable">$ </span>rails g model order<br><span class="hljs-variable">$ </span>rails g controller orders<br><span class="hljs-comment">#seed</span><br><span class="hljs-title class_">Product</span>.create(<br>  <span class="hljs-symbol">name:</span> <span class="hljs-string">&quot;測試商品&quot;</span>,<br>  <span class="hljs-symbol">price:</span> <span class="hljs-number">500</span><br>)<br><br><span class="hljs-variable">$ </span>rails <span class="hljs-symbol">db:</span>create <span class="hljs-symbol">db:</span>migrate <span class="hljs-symbol">db:</span>seed<br></code></pre></td></tr></table></figure>
-
-<p>本次要做：LINE Pay 的付款(create) ＆ LINE Pay 回覆的付款結果(confirm)</p>
-<p>預計會寫在orders裡面，所以routes可以這樣寫：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&quot;products#index&quot;</span><br><br>  resources <span class="hljs-symbol">:products</span><br><br>  resources <span class="hljs-symbol">:orders</span> <span class="hljs-keyword">do</span><br>    collection <span class="hljs-keyword">do</span><br>      get <span class="hljs-symbol">:confirm</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>首頁建立一個送出資料的表單</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#index.html.erb</span><br>&lt;%= form_tag orders_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:post</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo:</span> <span class="hljs-literal">false</span> &#125; <span class="hljs-keyword">do</span> %&gt;<br>    &lt;%= hidden_field_tag(<span class="hljs-symbol">:name</span>, <span class="hljs-variable">@product</span>.name) %&gt;<br>    &lt;%= hidden_field_tag(<span class="hljs-symbol">:price</span>, <span class="hljs-variable">@product</span>.price) %&gt;<br>    &lt;%= select_tag(<span class="hljs-symbol">:quantity</span>, options_for_select([<span class="hljs-number">1</span>])) %&gt;<br>    &lt;%= submit_tag <span class="hljs-string">&quot;送出&quot;</span>, <span class="hljs-symbol">name:</span> <span class="hljs-literal">nil</span>, <span class="hljs-symbol">class:</span> <span class="hljs-string">&quot;btn btn-primary&quot;</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<p>前置作業都做好了，可以開始串啦！</p>
-<p>想要串接LINE Pay 前，要先了解LINE Pay 那邊會需要什麼資料</p>
-<p>可以先看到手冊裡LINE Pay request的部分，Requirement Y的部分都是LINE Pay 需要的</p>
-<p>簡單來說，會需要head &amp; body（好像廢話），但裡面的內容格式定義不同</p>
-<p>這是Head:</p>
-<img src="/images/line-pay/4-2.jpg">
-
-<p>這個是Body:</p>
-<img src="/images/LINE-Pay/5.png">
-
-
-<p>看完這麼多東西一定頭昏眼花，沒關係我們直接動手做ʕ •̀ o •́ ʔ</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#orders_controller</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span><br>    <span class="hljs-comment"># body</span><br>    order_id = <span class="hljs-string">&quot;order<span class="hljs-subst">#&#123;<span class="hljs-title class_">Time</span>.now.strftime(<span class="hljs-string">&#x27;%Y%m%d%H%M%S&#x27;</span>)&#125;</span>&quot;</span><br>    packages_id = <span class="hljs-string">&quot;package<span class="hljs-subst">#&#123;<span class="hljs-title class_">SecureRandom</span>.uuid&#125;</span>&quot;</span><br>    amount = params[<span class="hljs-symbol">:quantity</span>].to_i * params[<span class="hljs-symbol">:price</span>].to_i<br><br>    body = &#123; <span class="hljs-symbol">amount:</span>,<br>             <span class="hljs-symbol">currency:</span> <span class="hljs-string">&#x27;TWD&#x27;</span>,<br>             <span class="hljs-symbol">orderId:</span> order_id,<br>             <span class="hljs-symbol">packages:</span> [&#123; <span class="hljs-symbol">id:</span> packages_id,<br>                          <span class="hljs-symbol">amount:</span>,<br>                          <span class="hljs-symbol">products:</span> [&#123;<br>                            <span class="hljs-symbol">name:</span> params[<span class="hljs-symbol">:name</span>],<br>                            <span class="hljs-symbol">quantity:</span> params[<span class="hljs-symbol">:quantity</span>].to_i,<br>                            <span class="hljs-symbol">price:</span> params[<span class="hljs-symbol">:price</span>].to_i,<br>                          &#125;] &#125;],<br>             <span class="hljs-symbol">redirectUrls:</span> &#123; <span class="hljs-symbol">confirmUrl:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">DOMAIN_NAME</span>&#125;</span><span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">CONFIRM_URL</span>&#125;</span>&quot;</span>,<br>                             <span class="hljs-symbol">cancelUrl:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">DOMAIN_NAME</span>&#125;</span><span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">CANCEL_URL</span>&#125;</span>&quot;</span>&#125; &#125;<br>    <span class="hljs-comment"># header</span><br>    signature_uri = <span class="hljs-string">&quot;/<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">VERSION</span>&#125;</span>/payments/request&quot;</span><br>    create_header(signature_uri, body)<br>    conn = <span class="hljs-title class_">Faraday</span>.new(<br>      <span class="hljs-symbol">url:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">LINEPAY_SITE</span>&#125;</span>/<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">VERSION</span>&#125;</span>/payments/request&quot;</span>,<br>      <span class="hljs-symbol">headers:</span> <span class="hljs-variable">@header</span><br>    )<br><br>    response = conn.post <span class="hljs-keyword">do</span> |<span class="hljs-params">req</span>|<br>      req.body = body.to_json<br>    <span class="hljs-keyword">end</span><br>    parsed_response = <span class="hljs-variable constant_">JSON</span>.parse(response.body)<br>    <span class="hljs-keyword">if</span> parsed_response[<span class="hljs-string">&#x27;returnCode&#x27;</span>] == <span class="hljs-string">&#x27;0000&#x27;</span><br>      redirect_to parsed_response[<span class="hljs-string">&#x27;info&#x27;</span>][<span class="hljs-string">&#x27;paymentUrl&#x27;</span>][<span class="hljs-string">&#x27;web&#x27;</span>], <span class="hljs-symbol">allow_other_host:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-keyword">else</span><br>      redirect_to order_path(<span class="hljs-variable">@order</span>), <span class="hljs-symbol">notice:</span> t(<span class="hljs-symbol">:payment_failed</span>, <span class="hljs-symbol">scope:</span> %i[message])<br>      puts parsed_response<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span> <br></code></pre></td></tr></table></figure>
-
-<p>最一開始做body，其實就是把LINE Pay 技術文件裡，body有打勾為必需的項目，</p>
-<p>使用他指定的格式組合，如果在一般專案order model的話，也能夠從order裡面撈資料</p>
-<p>因為request和confirm的<code>signature_uri</code> 和 <code>body</code>  不同，</p>
-<p>所以我沒有特別拉出去做一個方法，而是在create, confirm內個別組合，</p>
-<p>然後傳出給create_header</p>
-<h2 id="creat-header"><a href="#creat-header" class="headerlink" title="creat_header"></a>creat_header</h2><p>建立一個 HTTP 請求的標頭（header），以便進行身份驗證和授權。</p>
-<p>因為confirm也會需要再製作一次，所以我特地拉出來另一個方法：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#orders_controller</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_header</span>(<span class="hljs-params">signature_uri, body</span>)<br>    nonce = <span class="hljs-title class_">SecureRandom</span>.uuid<br>    secret = <span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">SECRET_KEY</span><br>    message = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;secret&#125;</span><span class="hljs-subst">#&#123;signature_uri&#125;</span><span class="hljs-subst">#&#123;body.to_json&#125;</span><span class="hljs-subst">#&#123;nonce&#125;</span>&quot;</span><br>    hash = <span class="hljs-title class_">Open</span>SSL::<span class="hljs-variable constant_">HMAC</span>.digest(<span class="hljs-title class_">OpenSSL::Digest</span>.new(<span class="hljs-string">&#x27;sha256&#x27;</span>), secret, message)<br>    <span class="hljs-variable">@signature</span> = <span class="hljs-title class_">Base64</span>.strict_encode64(hash)<br>    <span class="hljs-variable">@header</span> = &#123; <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,<br>                <span class="hljs-string">&#x27;X-LINE-ChannelId&#x27;</span>: <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line[<span class="hljs-symbol">:CHANNEL_ID</span>]&#125;</span>&quot;</span>, <span class="hljs-comment"># rubocop:disable Style/RedundantInterpolation</span><br>                <span class="hljs-string">&#x27;X-LINE-Authorization-Nonce&#x27;</span>: nonce,<br>                <span class="hljs-string">&#x27;X-LINE-Authorization&#x27;</span>: <span class="hljs-variable">@signature</span> &#125;<br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>其實這段做的就是手冊裡的這個步驟：</p>
-<div class="em-div2">
-
-<p><strong>HTTP Method : POST</strong></p>
-<p>Signature &#x3D; Base64(HMAC-SHA256(Your ChannelSecret, (Your ChannelSecret + URI + RequestBody + nonce)))</p>
-</div>
-
-<p>這邊不用另外匯入加密套件，使用Ruby on Rails內建的即可</p>
-<p>另外LINE Pay  v3因為要防止惡意攻擊，所以要求每次送header要有一個唯一的 nonce，我使用 <code>SecureRandom.uuid</code> 生成。</p>
-<p>加密的部分：</p>
 <ul>
-<li>透過OpenSSL ，使用 HMAC和 SHA-256 加密算法，得到 <code>hash</code>。</li>
-<li>使用 Base64 加密方式將 <code>hash</code> 轉換成字符串，得到 <code>@signature</code>。</li>
+  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
+  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
+
+<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
+
+<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
+
+<ul>
+  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
+  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
 </ul>
-<p>上面兩步做完，就可以成功跳轉到LINE PAY頁面</p>
-<img src="/images/LINE-Pay/6.png">
 
+<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
 
-<p>使用LINE Pay 掃描完成就會跳轉到確認頁面</p>
-<p>確認頁面同時也要使用POST方法，串接confirmAPI，</p>
-<p>confirm要求的body會比較少，但header的要求是一樣的，</p>
-<p>所以在這裡一樣呼叫create_header，</p>
-<p>因為本次是demo，所以金額固定為500，</p>
-<p>如果是在專案可以利用上一步request成功後</p>
-<p>LINE Pay 回傳的<code>transactionId</code> ,<code>orderId</code>來找該筆訂單</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">confirm</span> <span class="hljs-comment"># rubocop:disable Metrics/MethodLength</span><br>    transaction_id = params[<span class="hljs-symbol">:transactionId</span>]<br>    amount = <span class="hljs-number">500</span>.to_i<br><br>    body = &#123;<br>      <span class="hljs-symbol">amount:</span>,<br>      <span class="hljs-symbol">currency:</span> <span class="hljs-string">&#x27;TWD&#x27;</span><br>    &#125;<br>    signature_uri = <span class="hljs-string">&quot;/<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">VERSION</span>&#125;</span>/payments/<span class="hljs-subst">#&#123;transaction_id&#125;</span>/confirm&quot;</span><br>    create_header(signature_uri, body)<br><br>    conn = <span class="hljs-title class_">Faraday</span>.new(<br>      <span class="hljs-symbol">url:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">LINEPAY_SITE</span>&#125;</span>/v3/payments/<span class="hljs-subst">#&#123;transaction_id&#125;</span>/confirm&quot;</span>,<br>      <span class="hljs-symbol">headers:</span> <span class="hljs-variable">@header</span><br>    )<br><br>    response = conn.post <span class="hljs-keyword">do</span> |<span class="hljs-params">req</span>|<br>      req.body = body.to_json<br>    <span class="hljs-keyword">end</span><br>    parsed_response = <span class="hljs-variable constant_">JSON</span>.parse(response.body)<br>    puts <span class="hljs-string">&quot;Confirm Response: <span class="hljs-subst">#&#123;response.body&#125;</span>&quot;</span><br><br>    <span class="hljs-keyword">if</span> parsed_response[<span class="hljs-string">&#x27;returnCode&#x27;</span>] == <span class="hljs-string">&#x27;0000&#x27;</span><br>      redirect_to root_path, <span class="hljs-symbol">notice:</span> <span class="hljs-string">&#x27;付款成功&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      redirect_to root_path, <span class="hljs-symbol">notice:</span> <span class="hljs-string">&#x27;付款失敗&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
 
-<p>接著再重新測試，按送出後，會到LINE Pay 付款頁</p>
-<img src="/images/LINE-Pay/7.png">
+<ul>
+  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
+  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
+  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
+  <li>如果不為空：處理 Call Stack 內的函數。</li>
+</ul>
 
-<p>掃描成功案付款後，就會到付款結果頁：</p>
-<img src="/images/LINE-Pay/8.png">
+<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
+<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
+<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
 
-<p>LINE Pay 測試後台也會出現資料</p>
-<img src="/images/LINE-Pay/9.png">
+<p>會得到以下結果：</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
 
+<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
 
-<p>完成啦٩(●˙▿˙●)۶ 因為是第一次串LINE Pay ，</p>
-<p>所以來來回回確認了好幾次資料，</p>
-<p>因為只要有一個地方錯誤就會失敗，找得眼睛都花了(✖﹏✖)</p>
-<p>這篇內容主要以LINE Pay 官方技術文件還有以下參考資料生出來的٩(๑❛ᴗ❛๑)۶</p>
-<p>如果有需要更正的地方歡迎指教！</p>
-<p>如果您有興趣了解更多，請參考：</p>
+<p>會得到以下結果：</p>
+<img src="/images/eventLoop/pasted-0.png">
+
+<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
+<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://pay.line.me/th/developers/apis/onlineApis?locale=zh_TW">LINE Pay Developers APIs</a></p>
+<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
 </blockquote>
 <blockquote>
-<p><a href="https://github.com/lostisland/faraday">faraday</a></p>
+<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
 </blockquote>
 <blockquote>
-<p><a href="https://www.youtube.com/watch?v=nEjVIeDE-Ro">金流自己串，使用 Node.js 串接 LINE Pay</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://ithelp.ithome.com.tw/articles/10273803">D-2.Line_pay_api 串接(三) Rails 串接</a></p>
+<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
 </blockquote>
 ]]></content>
       <categories>
-        <category>Ruby on Rails</category>
+        <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>Ruby</tag>
-        <tag>Ruby on Rails</tag>
-        <tag>line pay</tag>
-        <tag>API</tag>
-        <tag>line pay API</tag>
-        <tag>line pay v3</tag>
-        <tag>v3</tag>
-        <tag>faraday</tag>
-        <tag>金流</tag>
+        <tag>JavaScript</tag>
+        <tag>Event Loop</tag>
       </tags>
   </entry>
   <entry>
@@ -872,113 +825,160 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: defer vs async</title>
-    <url>/2023/11/18/async-vs-defer/</url>
+    <title>Ruby on Rails: 串接LINE Pay API v3</title>
+    <url>/2024/01/21/linepay/</url>
     <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
 </style>
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png">
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/banner.jpeg">
 
-<p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p>
+<blockquote>
+<p>圖片來源: <a href="https://pay.line.me/portal/tw/customer/press/98766?categoryId=">LINE Pay新聞</a></p>
+</blockquote>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><p>今天來使用Ruby on Rails串接LINE Pay ฅ^•ﻌ•^ฅ</p>
+<p>首先需要到<a href="https://pay.line.me/th/developers/techsupport/sandbox/creation?locale=zh_TW">LINE Pay  SandBox</a>申請一個測試帳號</p>
+<img src="/images/LINE-Pay/2.png">
+
+<p>接著到信箱收LINE Pay 發的帳號密碼，登入可以從這裡登入：<a href="https://pay.line.me/tw/developers/techsupport/sandbox/testflow?locale=zh_TW">LINE Pay測試流程</a></p>
+<p>接著可以到<a href="https://sandbox-pay.line.me/zh_TW/payment/interlockKey">LINE Pay 測試環境</a>，拿所需的Channel ID ＆ Channel Secret Key</p>
+<img src="/images/LINE-Pay/3.png">
+
+<p>然後把<a href="https://pay.line.me/tw/developers/apis/onlineApis?locale=zh_TW">LINE Pay API</a>技術手冊拿緊緊，因為接下來會很需要他(ㆆᴗㆆ)</p>
+<p>我先使用credientail將所需要的資料&amp;機密資料放進去</p>
+<p><code>EDITOR=&quot;code --wait&quot; rails credentials:edit</code></p>
+<ul>
+<li>ENV</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">line:</span><br>  <span class="hljs-variable constant_">CHANNEL_ID</span>: &lt;your channel id&gt;<br>  <span class="hljs-variable constant_">SECRET_KEY</span>: &lt;your secret key&gt;<br>  <span class="hljs-variable constant_">LINEPAY_SITE</span>: <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/sandbox-api-pay.line.me</span><br><span class="hljs-regexp">  CONFIRM_URL: /orders</span><span class="hljs-regexp">/confirm</span><br><span class="hljs-regexp">  CANCEL_URL: /orders</span><span class="hljs-regexp">/cancel</span><br><span class="hljs-regexp">  DOMAIN_NAME: http:/</span><span class="hljs-regexp">/127.0.0.1:3000</span><br><span class="hljs-regexp">  VERSION: v3</span><br></code></pre></td></tr></table></figure>
+
+<p>CHANNEL_ID ＆ SECRET_KEY 要替換成剛剛從LINE Pay SANBOX查到的ID和KEY</p>
+<p>寫在credential的資料有幾個好處：</p>
 <ol>
-<li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li>
-<li><code>async</code></li>
-<li><code>defer</code></li>
+<li>高機密性：必須要有對應的key才能夠打開，此key不會跟著上傳GitHub</li>
+<li>修改方便：金流的版號會不斷更新（這次是接v3），如果之後更新從crediential改就好</li>
+<li>確保正確性：串接金流只要有一個東西錯誤就會失敗，將資料集中寫在這裡，確認正確性時會比較方便</li>
 </ol>
-<p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p>
-<p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p>
-<h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png">
+<p>我使用gem <a href="https://rubygems.org/gems/faraday/versions/2.7.11?locale=zh-TW">faraday</a>向LINE Pay 發送請求，所以這邊先安裝</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">bundle add <span class="hljs-string">&quot;faraday&quot;</span><br></code></pre></td></tr></table></figure>
 
-<blockquote>
-<p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p>
-</blockquote>
-<h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul>
-<li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li>
-</ul>
-<h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol>
-<li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li>
-<li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li>
-<li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li>
-<li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li>
-</ol>
-<p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p>
-<blockquote>
-<p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
-</blockquote>
-<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
-<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
-<p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
-<p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">bundle i<br></code></pre></td></tr></table></figure>
 
-<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
-<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
-<p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
-<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
-<h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
+<p>建一個專案來做LINE Pay 串接٩(●˙▿˙●)۶…⋆ฺ</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new project_name<br><span class="hljs-variable">$ </span>rails g scaffold product name <span class="hljs-symbol">price:</span>integer<br><span class="hljs-variable">$ </span>rails g model order<br><span class="hljs-variable">$ </span>rails g controller orders<br><span class="hljs-comment">#seed</span><br><span class="hljs-title class_">Product</span>.create(<br>  <span class="hljs-symbol">name:</span> <span class="hljs-string">&quot;測試商品&quot;</span>,<br>  <span class="hljs-symbol">price:</span> <span class="hljs-number">500</span><br>)<br><br><span class="hljs-variable">$ </span>rails <span class="hljs-symbol">db:</span>create <span class="hljs-symbol">db:</span>migrate <span class="hljs-symbol">db:</span>seed<br></code></pre></td></tr></table></figure>
 
+<p>本次要做：LINE Pay 的付款(create) ＆ LINE Pay 回覆的付款結果(confirm)</p>
+<p>預計會寫在orders裡面，所以routes可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&quot;products#index&quot;</span><br><br>  resources <span class="hljs-symbol">:products</span><br><br>  resources <span class="hljs-symbol">:orders</span> <span class="hljs-keyword">do</span><br>    collection <span class="hljs-keyword">do</span><br>      get <span class="hljs-symbol">:confirm</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>首頁建立一個送出資料的表單</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#index.html.erb</span><br>&lt;%= form_tag orders_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:post</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo:</span> <span class="hljs-literal">false</span> &#125; <span class="hljs-keyword">do</span> %&gt;<br>    &lt;%= hidden_field_tag(<span class="hljs-symbol">:name</span>, <span class="hljs-variable">@product</span>.name) %&gt;<br>    &lt;%= hidden_field_tag(<span class="hljs-symbol">:price</span>, <span class="hljs-variable">@product</span>.price) %&gt;<br>    &lt;%= select_tag(<span class="hljs-symbol">:quantity</span>, options_for_select([<span class="hljs-number">1</span>])) %&gt;<br>    &lt;%= submit_tag <span class="hljs-string">&quot;送出&quot;</span>, <span class="hljs-symbol">name:</span> <span class="hljs-literal">nil</span>, <span class="hljs-symbol">class:</span> <span class="hljs-string">&quot;btn btn-primary&quot;</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<p>前置作業都做好了，可以開始串啦！</p>
+<p>想要串接LINE Pay 前，要先了解LINE Pay 那邊會需要什麼資料</p>
+<p>可以先看到手冊裡LINE Pay request的部分，Requirement Y的部分都是LINE Pay 需要的</p>
+<p>簡單來說，會需要head &amp; body（好像廢話），但裡面的內容格式定義不同</p>
+<p>這是Head:</p>
+<img src="/images/header.jpg">
+
+<p>這個是Body:</p>
+<img src="/images/LINE-Pay/5.png">
+
+
+<p>看完這麼多東西一定頭昏眼花，沒關係我們直接動手做ʕ •̀ o •́ ʔ</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#orders_controller</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span><br>    <span class="hljs-comment"># body</span><br>    order_id = <span class="hljs-string">&quot;order<span class="hljs-subst">#&#123;<span class="hljs-title class_">Time</span>.now.strftime(<span class="hljs-string">&#x27;%Y%m%d%H%M%S&#x27;</span>)&#125;</span>&quot;</span><br>    packages_id = <span class="hljs-string">&quot;package<span class="hljs-subst">#&#123;<span class="hljs-title class_">SecureRandom</span>.uuid&#125;</span>&quot;</span><br>    amount = params[<span class="hljs-symbol">:quantity</span>].to_i * params[<span class="hljs-symbol">:price</span>].to_i<br><br>    body = &#123; <span class="hljs-symbol">amount:</span>,<br>             <span class="hljs-symbol">currency:</span> <span class="hljs-string">&#x27;TWD&#x27;</span>,<br>             <span class="hljs-symbol">orderId:</span> order_id,<br>             <span class="hljs-symbol">packages:</span> [&#123; <span class="hljs-symbol">id:</span> packages_id,<br>                          <span class="hljs-symbol">amount:</span>,<br>                          <span class="hljs-symbol">products:</span> [&#123;<br>                            <span class="hljs-symbol">name:</span> params[<span class="hljs-symbol">:name</span>],<br>                            <span class="hljs-symbol">quantity:</span> params[<span class="hljs-symbol">:quantity</span>].to_i,<br>                            <span class="hljs-symbol">price:</span> params[<span class="hljs-symbol">:price</span>].to_i,<br>                          &#125;] &#125;],<br>             <span class="hljs-symbol">redirectUrls:</span> &#123; <span class="hljs-symbol">confirmUrl:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">DOMAIN_NAME</span>&#125;</span><span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">CONFIRM_URL</span>&#125;</span>&quot;</span>,<br>                             <span class="hljs-symbol">cancelUrl:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">DOMAIN_NAME</span>&#125;</span><span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">CANCEL_URL</span>&#125;</span>&quot;</span>&#125; &#125;<br>    <span class="hljs-comment"># header</span><br>    signature_uri = <span class="hljs-string">&quot;/<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">VERSION</span>&#125;</span>/payments/request&quot;</span><br>    create_header(signature_uri, body)<br>    conn = <span class="hljs-title class_">Faraday</span>.new(<br>      <span class="hljs-symbol">url:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">LINEPAY_SITE</span>&#125;</span>/<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">VERSION</span>&#125;</span>/payments/request&quot;</span>,<br>      <span class="hljs-symbol">headers:</span> <span class="hljs-variable">@header</span><br>    )<br><br>    response = conn.post <span class="hljs-keyword">do</span> |<span class="hljs-params">req</span>|<br>      req.body = body.to_json<br>    <span class="hljs-keyword">end</span><br>    parsed_response = <span class="hljs-variable constant_">JSON</span>.parse(response.body)<br>    <span class="hljs-keyword">if</span> parsed_response[<span class="hljs-string">&#x27;returnCode&#x27;</span>] == <span class="hljs-string">&#x27;0000&#x27;</span><br>      redirect_to parsed_response[<span class="hljs-string">&#x27;info&#x27;</span>][<span class="hljs-string">&#x27;paymentUrl&#x27;</span>][<span class="hljs-string">&#x27;web&#x27;</span>], <span class="hljs-symbol">allow_other_host:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-keyword">else</span><br>      redirect_to order_path(<span class="hljs-variable">@order</span>), <span class="hljs-symbol">notice:</span> t(<span class="hljs-symbol">:payment_failed</span>, <span class="hljs-symbol">scope:</span> %i[message])<br>      puts parsed_response<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span> <br></code></pre></td></tr></table></figure>
+
+<p>最一開始做body，其實就是把LINE Pay 技術文件裡，body有打勾為必需的項目，</p>
+<p>使用他指定的格式組合，如果在一般專案order model的話，也能夠從order裡面撈資料</p>
+<p>因為request和confirm的<code>signature_uri</code> 和 <code>body</code>  不同，</p>
+<p>所以我沒有特別拉出去做一個方法，而是在create, confirm內個別組合，</p>
+<p>然後傳出給create_header</p>
+<h2 id="creat-header"><a href="#creat-header" class="headerlink" title="creat_header"></a>creat_header</h2><p>建立一個 HTTP 請求的標頭（header），以便進行身份驗證和授權。</p>
+<p>因為confirm也會需要再製作一次，所以我特地拉出來另一個方法：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#orders_controller</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_header</span>(<span class="hljs-params">signature_uri, body</span>)<br>    nonce = <span class="hljs-title class_">SecureRandom</span>.uuid<br>    secret = <span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">SECRET_KEY</span><br>    message = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;secret&#125;</span><span class="hljs-subst">#&#123;signature_uri&#125;</span><span class="hljs-subst">#&#123;body.to_json&#125;</span><span class="hljs-subst">#&#123;nonce&#125;</span>&quot;</span><br>    hash = <span class="hljs-title class_">Open</span>SSL::<span class="hljs-variable constant_">HMAC</span>.digest(<span class="hljs-title class_">OpenSSL::Digest</span>.new(<span class="hljs-string">&#x27;sha256&#x27;</span>), secret, message)<br>    <span class="hljs-variable">@signature</span> = <span class="hljs-title class_">Base64</span>.strict_encode64(hash)<br>    <span class="hljs-variable">@header</span> = &#123; <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,<br>                <span class="hljs-string">&#x27;X-LINE-ChannelId&#x27;</span>: <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line[<span class="hljs-symbol">:CHANNEL_ID</span>]&#125;</span>&quot;</span>, <span class="hljs-comment"># rubocop:disable Style/RedundantInterpolation</span><br>                <span class="hljs-string">&#x27;X-LINE-Authorization-Nonce&#x27;</span>: nonce,<br>                <span class="hljs-string">&#x27;X-LINE-Authorization&#x27;</span>: <span class="hljs-variable">@signature</span> &#125;<br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>其實這段做的就是手冊裡的這個步驟：</p>
+<div class="em-div2">
+
+<p><strong>HTTP Method : POST</strong></p>
+<p>Signature &#x3D; Base64(HMAC-SHA256(Your ChannelSecret, (Your ChannelSecret + URI + RequestBody + nonce)))</p>
+</div>
+
+<p>這邊不用另外匯入加密套件，使用Ruby on Rails內建的即可</p>
+<p>另外LINE Pay  v3因為要防止惡意攻擊，所以要求每次送header要有一個唯一的 nonce，我使用 <code>SecureRandom.uuid</code> 生成。</p>
+<p>加密的部分：</p>
 <ul>
-<li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li>
-<li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li>
-<li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li>
+<li>透過OpenSSL ，使用 HMAC和 SHA-256 加密算法，得到 <code>hash</code>。</li>
+<li>使用 Base64 加密方式將 <code>hash</code> 轉換成字符串，得到 <code>@signature</code>。</li>
 </ul>
-<p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
-<p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
-<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+<p>上面兩步做完，就可以成功跳轉到LINE PAY頁面</p>
+<img src="/images/LINE-Pay/6.png">
 
-<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
-<ul>
-<li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
-<li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
-<li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li>
-<li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li>
-<li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li>
-<li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li>
-</ul>
-<p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p>
-<p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p>
-<h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
 
-<img src="/images/async_vs_defer/5rendering-time-defer.png">
+<p>使用LINE Pay 掃描完成就會跳轉到確認頁面</p>
+<p>確認頁面同時也要使用POST方法，串接confirmAPI，</p>
+<p>confirm要求的body會比較少，但header的要求是一樣的，</p>
+<p>所以在這裡一樣呼叫create_header，</p>
+<p>因為本次是demo，所以金額固定為500，</p>
+<p>如果是在專案可以利用上一步request成功後</p>
+<p>LINE Pay 回傳的<code>transactionId</code> ,<code>orderId</code>來找該筆訂單</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">confirm</span> <span class="hljs-comment"># rubocop:disable Metrics/MethodLength</span><br>    transaction_id = params[<span class="hljs-symbol">:transactionId</span>]<br>    amount = <span class="hljs-number">500</span>.to_i<br><br>    body = &#123;<br>      <span class="hljs-symbol">amount:</span>,<br>      <span class="hljs-symbol">currency:</span> <span class="hljs-string">&#x27;TWD&#x27;</span><br>    &#125;<br>    signature_uri = <span class="hljs-string">&quot;/<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">VERSION</span>&#125;</span>/payments/<span class="hljs-subst">#&#123;transaction_id&#125;</span>/confirm&quot;</span><br>    create_header(signature_uri, body)<br><br>    conn = <span class="hljs-title class_">Faraday</span>.new(<br>      <span class="hljs-symbol">url:</span> <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;<span class="hljs-title class_">Rails</span>.application.credentials.line.<span class="hljs-variable constant_">LINEPAY_SITE</span>&#125;</span>/v3/payments/<span class="hljs-subst">#&#123;transaction_id&#125;</span>/confirm&quot;</span>,<br>      <span class="hljs-symbol">headers:</span> <span class="hljs-variable">@header</span><br>    )<br><br>    response = conn.post <span class="hljs-keyword">do</span> |<span class="hljs-params">req</span>|<br>      req.body = body.to_json<br>    <span class="hljs-keyword">end</span><br>    parsed_response = <span class="hljs-variable constant_">JSON</span>.parse(response.body)<br>    puts <span class="hljs-string">&quot;Confirm Response: <span class="hljs-subst">#&#123;response.body&#125;</span>&quot;</span><br><br>    <span class="hljs-keyword">if</span> parsed_response[<span class="hljs-string">&#x27;returnCode&#x27;</span>] == <span class="hljs-string">&#x27;0000&#x27;</span><br>      redirect_to root_path, <span class="hljs-symbol">notice:</span> <span class="hljs-string">&#x27;付款成功&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      redirect_to root_path, <span class="hljs-symbol">notice:</span> <span class="hljs-string">&#x27;付款失敗&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li>
-<li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li>
-<li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
-<li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
-</ul>
-<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<p>接著再重新測試，按送出後，會到LINE Pay 付款頁</p>
+<img src="/images/LINE-Pay/7.png">
+
+<p>掃描成功案付款後，就會到付款結果頁：</p>
+<img src="/images/LINE-Pay/8.png">
+
+<p>LINE Pay 測試後台也會出現資料</p>
+<img src="/images/LINE-Pay/9.png">
+
+
+<p>完成啦٩(●˙▿˙●)۶ 因為是第一次串LINE Pay ，</p>
+<p>所以來來回回確認了好幾次資料，</p>
+<p>因為只要有一個地方錯誤就會失敗，找得眼睛都花了(✖﹏✖)</p>
+<p>這篇內容主要以LINE Pay 官方技術文件還有以下參考資料生出來的٩(๑❛ᴗ❛๑)۶</p>
+<p>如果有需要更正的地方歡迎指教！</p>
+<p>如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
+<p><a href="https://pay.line.me/th/developers/apis/onlineApis?locale=zh_TW">LINE Pay Developers APIs</a></p>
 </blockquote>
 <blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p>
+<p><a href="https://github.com/lostisland/faraday">faraday</a></p>
 </blockquote>
 <blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p>
+<p><a href="https://www.youtube.com/watch?v=nEjVIeDE-Ro">金流自己串，使用 Node.js 串接 LINE Pay</a></p>
 </blockquote>
 <blockquote>
-<p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p>
+<p><a href="https://ithelp.ithome.com.tw/articles/10273803">D-2.Line_pay_api 串接(三) Rails 串接</a></p>
 </blockquote>
 ]]></content>
       <categories>
-        <category>JavaScript</category>
+        <category>Ruby on Rails</category>
       </categories>
       <tags>
-        <tag>JavaScript</tag>
-        <tag>defer</tag>
-        <tag>async</tag>
-        <tag>Web</tag>
-        <tag>rendering</tag>
+        <tag>Ruby</tag>
+        <tag>Ruby on Rails</tag>
+        <tag>line pay</tag>
+        <tag>API</tag>
+        <tag>line pay API</tag>
+        <tag>line pay v3</tag>
+        <tag>v3</tag>
+        <tag>faraday</tag>
+        <tag>金流</tag>
       </tags>
   </entry>
   <entry>
