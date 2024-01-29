@@ -54,8 +54,8 @@ border:2px #d4a373 s</summary>
   
   <entry>
     <title>Ruby on Rails: 串接LINE Pay API v3</title>
-    <link href="http://adora-xu.com/2024/01/21/LINE-Pay/"/>
-    <id>http://adora-xu.com/2024/01/21/LINE-Pay/</id>
+    <link href="http://adora-xu.com/2024/01/21/linepay/"/>
+    <id>http://adora-xu.com/2024/01/21/linepay/</id>
     <published>2024-01-21T04:47:26.000Z</published>
     <updated>2024-01-29T04:53:40.913Z</updated>
     
@@ -136,9 +136,9 @@ border-style:dashed;
     
     <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
-    
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
+    
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="simple calendar" scheme="http://adora-xu.com/tags/simple-calendar/"/>
     
@@ -169,9 +169,9 @@ border-style:dashed;
     <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
     
     
-    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
-    
     <category term="AWS" scheme="http://adora-xu.com/tags/AWS/"/>
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
     <category term="active stroage" scheme="http://adora-xu.com/tags/active-stroage/"/>
     
@@ -211,11 +211,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
     
     
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
+    
     <category term="devise" scheme="http://adora-xu.com/tags/devise/"/>
     
     <category term="rails7" scheme="http://adora-xu.com/tags/rails7/"/>
-    
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="layout" scheme="http://adora-xu.com/tags/layout/"/>
     
