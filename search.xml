@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Advent of code 2023 —Day 01</title>
-    <url>/2023/12/17/AOC-day01/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
-<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
-</blockquote>
-<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
-<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
-<p>這是第一天 Part 1的題目：</p>
-<img src="/images/AOC/01.png">
-
-<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
-<img src="/images/AOC/02.png">
-
-<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
-<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
-<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
-<div class="em-div2">
-
-<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
-</div>
-match會回傳符合內容的物件，看起來像這個樣子：
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
-
-<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
-<img src="/images/AOC/03.png">
-
-<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
-<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
-<p>如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby</category>
-      </categories>
-      <tags>
-        <tag>AOC</tag>
-        <tag>Advent of code</tag>
-        <tag>Ruby</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: MVC是什麼?</title>
     <url>/2023/12/02/MVC/</url>
     <content><![CDATA[<style>
@@ -141,6 +73,74 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>Ruby</tag>
         <tag>Rails</tag>
         <tag>MVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Advent of code 2023 —Day 01</title>
+    <url>/2023/12/17/AOC-day01/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
+<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
+</blockquote>
+<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
+<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
+<p>這是第一天 Part 1的題目：</p>
+<img src="/images/AOC/01.png">
+
+<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
+<img src="/images/AOC/02.png">
+
+<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
+<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
+<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
+<div class="em-div2">
+
+<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
+</div>
+match會回傳符合內容的物件，看起來像這個樣子：
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
+
+<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
+<img src="/images/AOC/03.png">
+
+<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
+<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
+<p>如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>AOC</tag>
+        <tag>Advent of code</tag>
       </tags>
   </entry>
   <entry>
@@ -360,112 +360,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
-    <url>/2023/11/18/hoisting/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-
-  .em-div2{
-    border:2px #d4a373 solid;
-    margin:5px;
-    padding:10px 2px 2px 2px;
-    border-style:dashed;
-  }
-
-</style>
-
-<img src="/images/hoisting/banner.png">
-之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
-
-<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
-<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
-<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
-<p>這段話裡面有幾個重點：</p>
-<div class="em-div2">
-
-<ol>
-<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
-</li>
-<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
-</li>
-<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
-</div></li>
-</ol>
-<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
-<img src="/images/hoisting/01.png">
-
-<div class="em-div2">
-
-<ul>
-<li><p>Creation Phase</p>
-<ul>
-<li>註冊名稱(Declaration)</li>
-<li>初始化（Initialisation）</li>
-</ul>
-</li>
-<li><p>Execution Phase</p>
-<ul>
-<li>賦值(Assignment) &amp; 執行</li>
-</ul>
-</li>
-</ul>
-</div>
-
-<hr>
-<p>這樣就能夠很清楚解釋以下例子：</p>
-<img src="/images/hoisting/02.png">
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-undefined
-</div>
-
-<p>解釋：</p>
-<ul>
-<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
-<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
-</ul>
-<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-ReferenceError: Cannot access 'a' before initialization
-</div>
-備註：const宣告的結果和let一樣
-
-<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
-<p>解釋：</p>
-<ul>
-<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
-<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
-</ul>
-<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
-<div class="em-div2">
-參考資料：
-
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
-<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
-<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
-</div>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>hoisting</tag>
-        <tag>變數提升</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: 究竟什麼是 Event Loop？</title>
     <url>/2023/11/08/javascript-event-loop/</url>
     <content><![CDATA[<style>
@@ -590,6 +484,112 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </categories>
       <tags>
         <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
+    <url>/2023/11/18/hoisting/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+
+  .em-div2{
+    border:2px #d4a373 solid;
+    margin:5px;
+    padding:10px 2px 2px 2px;
+    border-style:dashed;
+  }
+
+</style>
+
+<img src="/images/hoisting/banner.png">
+之前在<a href="https://adora-xu.com/2023/11/15/var-let-const/">使用var, let, const宣告究竟差在哪呢？</a>，裡面有談到變數提升(Hoisting)。
+
+<p>變數提升(hoisting)是在 ECMAScript® 2015 Language Specification 裡面找不到的專有名詞，<br>它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。</p>
+<p>究竟hoisting 是什麼呢？讓我們來一探究竟 ٩(๑❛ᴗ❛๑)۶</p>
+<p>首先先來看看<a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN</a>解釋<strong>hoisting</strong>的重點</p>
+<p>這段話裡面有幾個重點：</p>
+<div class="em-div2">
+
+<ol>
+<li><p>hosting 是一種釐清 JaveScript 在執行階段內文<code>如何運行的思路</code>（尤其是在創建和執行階段）。</p>
+</li>
+<li><p><code>並非</code>單純地將變數和函式宣告，移動到程式的區塊頂端</p>
+</li>
+<li><p>變數和函數的宣告會在<code>編譯階段就被放入記憶體</code>，但實際位置和程式碼中完全一樣。</p>
+</div></li>
+</ol>
+<h2 id="JavaScript-執行過程的兩大階段"><a href="#JavaScript-執行過程的兩大階段" class="headerlink" title="JavaScript 執行過程的兩大階段"></a>JavaScript 執行過程的兩大階段</h2><p>要理解 Hoisting，首先先知道 JavaScript 執行兩大階段：</p>
+<img src="/images/hoisting/01.png">
+
+<div class="em-div2">
+
+<ul>
+<li><p>Creation Phase</p>
+<ul>
+<li>註冊名稱(Declaration)</li>
+<li>初始化（Initialisation）</li>
+</ul>
+</li>
+<li><p>Execution Phase</p>
+<ul>
+<li>賦值(Assignment) &amp; 執行</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<hr>
+<p>這樣就能夠很清楚解釋以下例子：</p>
+<img src="/images/hoisting/02.png">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+undefined
+</div>
+
+<p>解釋：</p>
+<ul>
+<li>在 Creation Phase，會進行變數的註冊名稱和 undefined 的初始化。</li>
+<li>在 Execution Phase，當程式碼逐行執行時，undefined 被印出。然後賦值 a &#x3D; 1 。</li>
+</ul>
+<h2 id="let-const-的變數提升"><a href="#let-const-的變數提升" class="headerlink" title="let &amp; const 的變數提升"></a>let &amp; const 的變數提升</h2><p>但這個情況在 let 宣告和 const 宣告時，卻變得不一樣：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+ReferenceError: Cannot access 'a' before initialization
+</div>
+備註：const宣告的結果和let一樣
+
+<p>這時我們來看看 let &amp; const 宣告時，JS 的兩階段圖釋： <img src="/images/hoisting/03.png"></p>
+<p>解釋：</p>
+<ul>
+<li>在使用 let &amp; const 宣告的變數直到初始化前，都會將變數存在 TDZ 暫時死區中</li>
+<li>如果在初始化＆賦值前取得此變數時，便會收到錯誤</li>
+</ul>
+<p>透過以上圖片解釋，應該更好地理解之前提到的狀況 ٩(●˙▿˙●)۶，本篇文章都是參考以下資料整理+自己繪圖而成，如果有任何想法，歡迎留言給我！</p>
+<div class="em-div2">
+參考資料：
+
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Glossary/Hoisting">MDN - Hoisting</a></p>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/let">MDN - let</a></p>
+<p><a href="https://www.scaler.com/topics/hoisting-in-javascript/">Hoisting in Javascript</a></p>
+<p><a href="https://www.youtube.com/watch?v=EvfRXyKa_GI">JavaScript Tutorial #20 | Variable &amp; Function Hoisting in JavaScript </a></p>
+</div>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>hoisting</tag>
+        <tag>變數提升</tag>
       </tags>
   </entry>
   <entry>
