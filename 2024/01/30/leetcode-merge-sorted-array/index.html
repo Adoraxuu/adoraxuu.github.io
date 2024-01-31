@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Leetcode挑戰: Day01 | Adora&#39;s Blog</title>
+<title>Leetcode挑戰: Day01 merge sorted array | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Ruby, JavaScript, leetcode, Python">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Leetcode挑戰: Day01</h1>
+  <h1 class="post-title__text">Leetcode挑戰: Day01 merge sorted array</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/01/" class="post-meta__date button">2024-01-30</a> 
     <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
@@ -146,7 +146,7 @@
     
   </div>
 
-  <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>兩個語言來解題，今天是第一天，讓我們開始吧！</p>
+  <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p>
 <img src="/images/leet-code-day-1/1.png">
 
 <p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
@@ -155,8 +155,8 @@
 <p>使用<code>replace</code>取代，</p>
 <p><code>nums1[0..m]</code>為取位置0..m的陣列內容，再使用 <code>+nums2</code>，將兩個陣列內容組合起來，最後使用sort完成遞增排序。</p>
 <p>Ruby蠻簡潔的！</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">nums1, m, nums2, n</span>):<br>  nums1[:m] = <span class="hljs-built_in">sorted</span>(nums1[:m] + nums2)<br><br><br><span class="hljs-comment"># 測試</span><br>nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>m = <span class="hljs-number">3</span><br>nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>n = <span class="hljs-number">3</span><br><br>merge(nums1, m, nums2, n)<br>result_array = nums1[:m + n]<br><span class="hljs-built_in">print</span>(result_array)<br></code></pre></td></tr></table></figure>
-<p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[:m] + nums2</code>:將切片後的nums1和nums2兩個陣列組合<br>最後再使用<code>sorted</code>排序，最後重新賦值給<code>nums1[:m]</code></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Do not return anything, modify nums1 in-place instead.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        nums1[m:] = nums2<br>        nums1.sort()<br></code></pre></td></tr></table></figure>
+<p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[m:] = nums2</code>:將nums2添加到切片後的nums1內<br>最後再使用<code>sort</code>排序<code>nums1[:m]</code></p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ruby">var merge = function(nums1, m, nums2, n) &#123;<br>  nums1.splice(<span class="hljs-number">0</span>, m + n, ...nums1.slice(<span class="hljs-number">0</span>, m).concat(nums2).sort((a, b) =&gt; a - b));<br>&#125;;<br><br><span class="hljs-regexp">//</span> 測試<br>var nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>var m = <span class="hljs-number">3</span>;<br>var nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br>var n = <span class="hljs-number">3</span>;<br><br>merge(nums1, m, nums2, n);<br>console.log(nums1);<br></code></pre></td></tr></table></figure>
 
 <p><code>slice</code></p>
@@ -188,6 +188,26 @@
 
 <div class="nav">
   <div class="nav__prev">
+    
+    <a href="/2024/01/31/leetcode-two-sum/" class="nav__link">
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+      <div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Leetcode挑戰: Day02 two sum</div>
+      </div>
+    </a>
     
   </div>
   <div class="nav__next">

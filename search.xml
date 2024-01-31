@@ -550,9 +550,9 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day01</title>
+    <title>Leetcode挑戰: Day01 merge sorted array</title>
     <url>/2024/01/30/leetcode-merge-sorted-array/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>兩個語言來解題，今天是第一天，讓我們開始吧！</p>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p>
 <img src="/images/leet-code-day-1/1.png">
 
 <p>題目來源：<a href="https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
@@ -561,8 +561,8 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
 <p>使用<code>replace</code>取代，</p>
 <p><code>nums1[0..m]</code>為取位置0..m的陣列內容，再使用 <code>+nums2</code>，將兩個陣列內容組合起來，最後使用sort完成遞增排序。</p>
 <p>Ruby蠻簡潔的！</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">nums1, m, nums2, n</span>):<br>  nums1[:m] = <span class="hljs-built_in">sorted</span>(nums1[:m] + nums2)<br><br><br><span class="hljs-comment"># 測試</span><br>nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>m = <span class="hljs-number">3</span><br>nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>n = <span class="hljs-number">3</span><br><br>merge(nums1, m, nums2, n)<br>result_array = nums1[:m + n]<br><span class="hljs-built_in">print</span>(result_array)<br></code></pre></td></tr></table></figure>
-<p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[:m] + nums2</code>:將切片後的nums1和nums2兩個陣列組合<br>最後再使用<code>sorted</code>排序，最後重新賦值給<code>nums1[:m]</code></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Do not return anything, modify nums1 in-place instead.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        nums1[m:] = nums2<br>        nums1.sort()<br></code></pre></td></tr></table></figure>
+<p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[m:] = nums2</code>:將nums2添加到切片後的nums1內<br>最後再使用<code>sort</code>排序<code>nums1[:m]</code></p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">var merge = function(nums1, m, nums2, n) &#123;<br>  nums1.splice(<span class="hljs-number">0</span>, m + n, ...nums1.slice(<span class="hljs-number">0</span>, m).concat(nums2).sort((a, b) =&gt; a - b));<br>&#125;;<br><br><span class="hljs-regexp">//</span> 測試<br>var nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>var m = <span class="hljs-number">3</span>;<br>var nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br>var n = <span class="hljs-number">3</span>;<br><br>merge(nums1, m, nums2, n);<br>console.log(nums1);<br></code></pre></td></tr></table></figure>
 
 <p><code>slice</code></p>
@@ -586,6 +586,35 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
 </ul>
 <hr>
 <p>參考：<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">MDN</a></p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day02 two sum</title>
+    <url>/2024/01/31/leetcode-two-sum/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
+<img src="/images/leetcode-two-sum/1.png">
+
+<p>來源: (Leetcode)[<a href="https://leetcode.com/problems/two-sum/]">https://leetcode.com/problems/two-sum/]</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
+<li><code>nums</code>: 傳入的陣列</li>
+<li><code>target</code>:目標之和</li>
+<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
+<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
+<li><code>seen[target - num]</code>: 目標數字的索引值</li>
+<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
+</ul>
+<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
 ]]></content>
       <categories>
         <category>leetcode</category>
