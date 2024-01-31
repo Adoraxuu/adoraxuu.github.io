@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-01-31T11:48:06.350Z</updated>
+  <updated>2024-01-31T11:49:15.149Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://adora-xu.com/2024/01/31/leetcode-two-sum/"/>
     <id>http://adora-xu.com/2024/01/31/leetcode-two-sum/</id>
     <published>2024-01-31T09:28:12.000Z</published>
-    <updated>2024-01-31T11:48:06.350Z</updated>
+    <updated>2024-01-31T11:49:15.149Z</updated>
     
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p><img src="/images/leetcode-two-sum/1.png"><p>來源: (Leetcode)[<a href="https://leetcode.com/problems/two-sum/]">https://leetcode.com/problems/two-sum/]</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure><ul><li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li><li><code>nums</code>: 傳入的陣列</li><li><code>target</code>:目標之和</li><li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li><li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li><li><code>seen[target - num]</code>: 目標數字的索引值</li><li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li></ul><p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>]]></content>
+    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p><img src="/images/leetcode-two-sum/1.png"><p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure><ul><li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li><li><code>nums</code>: 傳入的陣列</li><li><code>target</code>:目標之和</li><li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li><li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li><li><code>seen[target - num]</code>: 目標數字的索引值</li><li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li></ul><p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>]]></content>
     
     
       
@@ -31,7 +31,7 @@
     <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;來解題，今天來到第二天，讓我們繼續吧！&lt;/p&gt;
 &lt;img src=&quot;/images/leetcode-two-sum/1.png&quot;&gt;
 
-&lt;p&gt;來源: (Leetcode</summary>
+&lt;p&gt;來源:&lt;a href=&quot;h</summary>
       
     
     
