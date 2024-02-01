@@ -43,10 +43,10 @@
  <!-- meta -->
 
 
-<title>Leetcode挑戰: Day02 two sum | Adora&#39;s Blog</title>
+<title>Leetcode挑戰: Day03 palindrome number | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, leetcode, two sum">
+    <meta name="keywords" content="Ruby, JavaScript, leetcode, Python, palindrome number">
 
 
  <!-- OpenGraph -->
@@ -121,9 +121,9 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Leetcode挑戰: Day02 two sum</h1>
+  <h1 class="post-title__text">Leetcode挑戰: Day03 palindrome number</h1>
   <div class="post-title__meta">
-    <a href="/archives/2024/01/" class="post-meta__date button">2024-01-31</a> 
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-01</a> 
     <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
 
  
@@ -146,57 +146,35 @@
     
   </div>
 
-  <div class="post__content"><p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
-<img src="/images/leetcode-two-sum/1.png">
+  <div class="post__content"><p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p>
+<img src="/images/leetcode-palindrome-number/01.png">
 
-<p>來源:<a target="_blank" rel="noopener" href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
-<ul>
-<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
-<li><code>nums</code>: 傳入的陣列</li>
-<li><code>target</code>:目標之和</li>
-<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
-<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
-<li><code>seen[target - num]</code>: 目標數字的索引值</li>
-<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
-</ul>
-<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
+<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/palindrome-number/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">x</span>)<br>  x.to_s == x.to_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>我第一個想到使用<code>reverse</code>，不過<code>reverse</code>必須要字串才行，<br>因此山不轉路轉，把一開始給的x值使用<code>.to_s</code>轉為字串即可！</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x) == <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+<p>python的reverse寫法很特別！<br>不過一樣是要先轉成字串所以使用<code>str(x)</code></p>
+<p>其中<code>[::-1]</code>是反轉讀取的意思，如果是array的話也會反轉讀取<br>倘若是<code>[3::-1]</code>則會從索引值<code>3</code>開始反轉讀取</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> isPalindrome = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">return</span> x == [...x.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>我使用<code>...</code>的<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展開符號</a>將字串轉為陣列，再使用<code>reverse</code>的功能，將陣列反轉，最後使用<code>join(&#39;&#39;)</code>組起來，如果反轉完等於<code>x</code>也回傳<code>true</code>!</p>
+<p>今天的題目稍微簡單一點，我們明天繼續٩(๑❛ᴗ❛๑)۶</p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-02-01</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/two-sum/" class="post-tags__link button"># two sum</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-01</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/palindrome-number/" class="post-tags__link button"># palindrome number</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2024/02/01/leetcode-palindrome-number/" class="nav__link">
-      <div>
-        <svg
-          viewBox="0 0 1024 1024"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
-            fill="#808080"
-          ></path>
-        </svg>
-      </div>
-      <div>
-        <div class="nav__label">Previous Post</div>
-        <div class="nav__title">Leetcode挑戰: Day03 palindrome number</div>
-      </div>
-    </a>
-    
   </div>
   <div class="nav__next">
     
-    <a href="/2024/01/30/leetcode-merge-sorted-array/" class="nav__link">
+    <a href="/2024/01/31/leetcode-two-sum/" class="nav__link">
       <div>
         <div class="nav__label">Next Post</div>
-        <div class="nav__title">Leetcode挑戰: Day01 merge sorted array</div>
+        <div class="nav__title">Leetcode挑戰: Day02 two sum</div>
       </div>
       <div>
         <svg

@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-01-31T11:49:15.149Z</updated>
+  <updated>2024-02-01T13:54:46.213Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -17,11 +17,44 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Leetcode挑戰: Day03 palindrome number</title>
+    <link href="http://adora-xu.com/2024/02/01/leetcode-palindrome-number/"/>
+    <id>http://adora-xu.com/2024/02/01/leetcode-palindrome-number/</id>
+    <published>2024-02-01T13:47:24.000Z</published>
+    <updated>2024-02-01T13:54:46.213Z</updated>
+    
+    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p><img src="/images/leetcode-palindrome-number/01.png"><p>題目來源：<a href="https://leetcode.com/problems/palindrome-number/">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">x</span>)<br>  x.to_s == x.to_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>我第一個想到使用<code>reverse</code>，不過<code>reverse</code>必須要字串才行，<br>因此山不轉路轉，把一開始給的x值使用<code>.to_s</code>轉為字串即可！</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x) == <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure><p>python的reverse寫法很特別！<br>不過一樣是要先轉成字串所以使用<code>str(x)</code></p><p>其中<code>[::-1]</code>是反轉讀取的意思，如果是array的話也會反轉讀取<br>倘若是<code>[3::-1]</code>則會從索引值<code>3</code>開始反轉讀取</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> isPalindrome = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">return</span> x == [...x.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure><p>我使用<code>...</code>的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展開符號</a>將字串轉為陣列，再使用<code>reverse</code>的功能，將陣列反轉，最後使用<code>join(&#39;&#39;)</code>組起來，如果反轉完等於<code>x</code>也回傳<code>true</code>!</p><p>今天的題目稍微簡單一點，我們明天繼續٩(๑❛ᴗ❛๑)۶</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;Python&lt;/code&gt;、&lt;code&gt;JavaScript&lt;/code&gt;來解題，今天來到第三天，讓我們繼續吧！&lt;/p&gt;
+&lt;img src=&quot;/ima</summary>
+      
+    
+    
+    
+    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
+    
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="palindrome number" scheme="http://adora-xu.com/tags/palindrome-number/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Leetcode挑戰: Day02 two sum</title>
     <link href="http://adora-xu.com/2024/01/31/leetcode-two-sum/"/>
     <id>http://adora-xu.com/2024/01/31/leetcode-two-sum/</id>
     <published>2024-01-31T09:28:12.000Z</published>
-    <updated>2024-01-31T11:49:15.149Z</updated>
+    <updated>2024-02-01T13:48:32.345Z</updated>
     
     <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p><img src="/images/leetcode-two-sum/1.png"><p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure><ul><li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li><li><code>nums</code>: 傳入的陣列</li><li><code>target</code>:目標之和</li><li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li><li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li><li><code>seen[target - num]</code>: 目標數字的索引值</li><li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li></ul><p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>]]></content>
     
@@ -41,11 +74,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    <category term="two sum" scheme="http://adora-xu.com/tags/two-sum/"/>
     
   </entry>
   
@@ -54,7 +85,7 @@
     <link href="http://adora-xu.com/2024/01/30/leetcode-merge-sorted-array/"/>
     <id>http://adora-xu.com/2024/01/30/leetcode-merge-sorted-array/</id>
     <published>2024-01-30T13:59:31.000Z</published>
-    <updated>2024-01-31T11:09:49.773Z</updated>
+    <updated>2024-02-01T13:48:44.607Z</updated>
     
     <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p><img src="/images/leet-code-day-1/1.png"><p>題目來源：<a href="https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">nums1, m, nums2, n</span>)<br>  nums1.replace((nums1[<span class="hljs-number">0</span>...m] + nums2).sort)<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># 測試</span><br>nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>m = <span class="hljs-number">3</span><br>nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>n = <span class="hljs-number">3</span><br><br>merge(nums1, m, nums2, n)<br>result_array = nums1.take(m + n)<br>puts result_array<br></code></pre></td></tr></table></figure><p>使用<code>replace</code>取代，</p><p><code>nums1[0..m]</code>為取位置0..m的陣列內容，再使用 <code>+nums2</code>，將兩個陣列內容組合起來，最後使用sort完成遞增排序。</p><p>Ruby蠻簡潔的！</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Do not return anything, modify nums1 in-place instead.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        nums1[m:] = nums2<br>        nums1.sort()<br></code></pre></td></tr></table></figure><p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[m:] = nums2</code>:將nums2添加到切片後的nums1內<br>最後再使用<code>sort</code>排序<code>nums1[:m]</code></p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ruby">var merge = function(nums1, m, nums2, n) &#123;<br>  nums1.splice(<span class="hljs-number">0</span>, m + n, ...nums1.slice(<span class="hljs-number">0</span>, m).concat(nums2).sort((a, b) =&gt; a - b));<br>&#125;;<br><br><span class="hljs-regexp">//</span> 測試<br>var nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>var m = <span class="hljs-number">3</span>;<br>var nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br>var n = <span class="hljs-number">3</span>;<br><br>merge(nums1, m, nums2, n);<br>console.log(nums1);<br></code></pre></td></tr></table></figure><p><code>slice</code></p><ul><li><code>arr.slice([begin[, end]])</code></li><li>slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分。而原本的陣列將不會被修改。</li><li>使用在這裡是要刪掉num1重複的部分，插入num2</li></ul><p><code>splice</code></p><ul><li><code>array.splice(start[, deleteCount[, item1[, item2[, ...]]]])</code></li><li>splice() 方法可以藉由刪除既有元素並／或加入新元素來改變一個陣列的內容。</li><li>在這裡是要加入num1+num2組合的內容</li><li>範例：</li></ul><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> months = [<span class="hljs-string">&#x27;Jan&#x27;</span>, <span class="hljs-string">&#x27;March&#x27;</span>, <span class="hljs-string">&#x27;April&#x27;</span>, <span class="hljs-string">&#x27;June&#x27;</span>];<br>months.<span class="hljs-title function_">splice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Feb&#x27;</span>);<br><span class="hljs-comment">// Inserts at index 1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(months);<br><span class="hljs-comment">// Expected output: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;, &quot;April&quot;, &quot;June&quot;]</span><br></code></pre></td></tr></table></figure><ul><li><code>nums1.splice(0, m + n, ...)</code>將合併且排序的數組插入到nums1的開始位置，取代原有的元素，其中0是開始位置，m + n是要刪除的元素數量，…是展開運算符，用於將排序後的數組展開成單獨的元素。</li><li>這個函數的目的是將兩個已排序的數組 nums1 和 nums2 合併，並將結果存儲在 nums1 中，同時保持排序狀態。</li></ul><hr><p>參考：<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">MDN</a></p>]]></content>
     
@@ -77,6 +108,8 @@
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="merge sorted array" scheme="http://adora-xu.com/tags/merge-sorted-array/"/>
     
   </entry>
   
@@ -315,11 +348,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby" scheme="http://adora-xu.com/categories/Ruby/"/>
     
     
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
     <category term="AOC" scheme="http://adora-xu.com/tags/AOC/"/>
     
     <category term="Advent of code" scheme="http://adora-xu.com/tags/Advent-of-code/"/>
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
   </entry>
   
