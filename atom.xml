@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-02-02T15:43:36.818Z</updated>
+  <updated>2024-02-03T13:07:08.698Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode挑戰: Day05 longest common prefix</title>
+    <link href="http://adora-xu.com/2024/02/03/leetcode-longest-common-prefix/"/>
+    <id>http://adora-xu.com/2024/02/03/leetcode-longest-common-prefix/</id>
+    <published>2024-02-03T12:58:13.000Z</published>
+    <updated>2024-02-03T13:07:08.698Z</updated>
+    
+    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p><img src="/images/leetcode-longest-common-prefix/1.png"><p>題目來源：<a href="https://leetcode.com/problems/longest-common-prefix/">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longest_common_prefix</span>(<span class="hljs-params">strs</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">if</span> strs.empty?<br><br>  common_prefix = <span class="hljs-string">&quot;&quot;</span><br>  first_str = strs.first<br><br>  first_str.chars.each_with_index <span class="hljs-keyword">do</span> |<span class="hljs-params">char, i</span>|<br>    <span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> strs.all? &#123; |<span class="hljs-params">str</span>| str[i] == char &#125;<br>    common_prefix += char<br>  <span class="hljs-keyword">end</span><br><br>  common_prefix<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>先從陣列中取出第一個數為<code>first_str</code>，作為比較的基準，接著使用<code>.chars.each_with_index</code>對第一個詞每個字母做迭代，並返回索引值<code>i</code>。</p><p><code>.all</code>是來檢查<code>array</code>中的所有元素是否都符合给定的條件，這裡的條件就是<code>str[i] == char</code>，如果有不同即停止。</p><p><code>common_prefix</code>即記錄<code>array</code>中相同的字</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> strs:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br><br>        common_prefix = <span class="hljs-string">&quot;&quot;</span><br>        first_str = strs[<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i, char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(first_str):<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(i &gt;= <span class="hljs-built_in">len</span>(s) <span class="hljs-keyword">or</span> s[i] != char <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs):<br>                <span class="hljs-keyword">break</span><br>            common_prefix += char<br><br>        <span class="hljs-keyword">return</span> common_prefix<br></code></pre></td></tr></table></figure><p><code>enumerate</code>會回傳字串的<code>index</code>，以下是範例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br>[(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Spring&#x27;</span>), (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>)]<br></code></pre></td></tr></table></figure><p><code>s[i]</code>則是代表<code>str</code>內的<code>i</code>位置的字母，基本上和ruby邏輯一樣，只是寫法不同而已！</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">strs</span>) &#123;<br>    <span class="hljs-keyword">if</span> (strs.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">let</span> commonPrefix = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">const</span> firstStr = strs[<span class="hljs-number">0</span>];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; firstStr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">const</span> char = firstStr[i];<br>        <span class="hljs-keyword">if</span> (!strs.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> str[i] === char)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        commonPrefix += char;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> commonPrefix;<br>&#125;<br></code></pre></td></tr></table></figure><p><code>JS</code>的寫法和<code>Ruby</code>差不多，可以使用<code>.every</code>來確保是否為相同字母，其他解法就和<code>Ruby</code>和<code>Python</code>類似，差別在使用<code>for (let i = 0; i &lt; firstStr.length; i++)</code>迴圈，並使用<code>str[i]</code>來比對文字是否相符，最後也完成解答！</p><p>這幾天寫下來Ruby看起來還是最簡潔優雅٩(●˙▿˙●)۶，看起來好舒服</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;Python&lt;/code&gt;、&lt;code&gt;JavaScript&lt;/code&gt;來解題，今天來到第五天，讓我們繼續吧！&lt;/p&gt;
+&lt;img src=&quot;/ima</summary>
+      
+    
+    
+    
+    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
+    
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="longest common prefix" scheme="http://adora-xu.com/tags/longest-common-prefix/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode挑戰: Day04 roman to integer</title>
@@ -381,11 +414,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby" scheme="http://adora-xu.com/categories/Ruby/"/>
     
     
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
     <category term="AOC" scheme="http://adora-xu.com/tags/AOC/"/>
     
     <category term="Advent of code" scheme="http://adora-xu.com/tags/Advent-of-code/"/>
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
   </entry>
   

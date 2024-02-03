@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Leetcode挑戰: Day05 longest common prefix | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Ruby, JavaScript, leetcode, Python, longest common prefix">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Leetcode挑戰: Day05 longest common prefix</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-03</a> 
+    <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
+<img src="/images/leetcode-longest-common-prefix/1.png">
+
+<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-common-prefix/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longest_common_prefix</span>(<span class="hljs-params">strs</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">if</span> strs.empty?<br><br>  common_prefix = <span class="hljs-string">&quot;&quot;</span><br>  first_str = strs.first<br><br>  first_str.chars.each_with_index <span class="hljs-keyword">do</span> |<span class="hljs-params">char, i</span>|<br>    <span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> strs.all? &#123; |<span class="hljs-params">str</span>| str[i] == char &#125;<br>    common_prefix += char<br>  <span class="hljs-keyword">end</span><br><br>  common_prefix<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先從陣列中取出第一個數為<code>first_str</code>，作為比較的基準，接著使用<code>.chars.each_with_index</code>對第一個詞每個字母做迭代，並返回索引值<code>i</code>。</p>
+<p><code>.all</code>是來檢查<code>array</code>中的所有元素是否都符合给定的條件，這裡的條件就是<code>str[i] == char</code>，如果有不同即停止。</p>
+<p><code>common_prefix</code>即記錄<code>array</code>中相同的字</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> strs:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br><br>        common_prefix = <span class="hljs-string">&quot;&quot;</span><br>        first_str = strs[<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i, char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(first_str):<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(i &gt;= <span class="hljs-built_in">len</span>(s) <span class="hljs-keyword">or</span> s[i] != char <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs):<br>                <span class="hljs-keyword">break</span><br>            common_prefix += char<br><br>        <span class="hljs-keyword">return</span> common_prefix<br></code></pre></td></tr></table></figure>
+<p><code>enumerate</code>會回傳字串的<code>index</code>，以下是範例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br>[(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Spring&#x27;</span>), (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>)]<br></code></pre></td></tr></table></figure>
+<p><code>s[i]</code>則是代表<code>str</code>內的<code>i</code>位置的字母，基本上和ruby邏輯一樣，只是寫法不同而已！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">strs</span>) &#123;<br>    <span class="hljs-keyword">if</span> (strs.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">let</span> commonPrefix = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">const</span> firstStr = strs[<span class="hljs-number">0</span>];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; firstStr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">const</span> char = firstStr[i];<br>        <span class="hljs-keyword">if</span> (!strs.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> str[i] === char)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        commonPrefix += char;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> commonPrefix;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>JS</code>的寫法和<code>Ruby</code>差不多，可以使用<code>.every</code>來確保是否為相同字母，其他解法就和<code>Ruby</code>和<code>Python</code>類似，差別在使用<code>for (let i = 0; i &lt; firstStr.length; i++)</code>迴圈，並使用<code>str[i]</code>來比對文字是否相符，最後也完成解答！</p>
+<p>這幾天寫下來Ruby看起來還是最簡潔優雅٩(●˙▿˙●)۶，看起來好舒服</p>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2024-02-03</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/longest-common-prefix/" class="post-tags__link button"># longest common prefix</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/02/02/leetcode-roman-to-integer/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Leetcode挑戰: Day04 roman to integer</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
