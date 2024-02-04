@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-02-03T13:07:08.698Z</updated>
+  <updated>2024-02-04T14:33:29.962Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode挑戰: Day06 valid parentheses</title>
+    <link href="http://adora-xu.com/2024/02/04/leetcode-valid-parentheses/"/>
+    <id>http://adora-xu.com/2024/02/04/leetcode-valid-parentheses/</id>
+    <published>2024-02-04T14:28:52.000Z</published>
+    <updated>2024-02-04T14:33:29.962Z</updated>
+    
+    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p><img src="/images/leetcode-valid-parentheses/0204.png"><p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>這次使用到Ruby的<code>stack</code>，Ruby的<code>stack</code>有點像是<a href="https://adora-xu.com/2023/11/08/javascript-event-loop/">Event Loop</a>內的<code>Call Stack</code>，採用 LIFO (Last in First out)，將目標物件加入 Stack 最頂端使用<code>stack.push</code>，移除並取回 Stack 最頂端的值使用<code>stack.pop</code>，取得但不移除 Stack 最頂端的值使用<code>stack.top</code>，判斷Stack是否為空，使用<code>stack.empty</code>，像本次需要成對使用的題目就很適合使用～</p><p>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p><p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure><p><code>python</code>一樣用<code>stack</code>，不過因為<code>python</code>的添加stack比較常使用<code>append</code>這裡我改用<code>stack.append(char)</code> </p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure><p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://icook.engineering/%E8%BA%AB%E7%82%BA%E4%B8%80%E5%80%8B-rubyist-%E9%9C%80%E8%A6%81%E6%87%82%E7%9A%84%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B-stack-9d11c2fd4746">身為一個 Rubyist 需要懂的資料結構 — Stack</a></p><p><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p><p><a href="https://lovedrinkcafe.com/python-stack-data-structure/">【Python】Stack(堆疊) 資料結構實作</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;Python&lt;/code&gt;、&lt;code&gt;JavaScript&lt;/code&gt;來解題，今天來到第六天，讓我們繼續吧！&lt;/p&gt;
+&lt;img src=&quot;/ima</summary>
+      
+    
+    
+    
+    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
+    
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="longest common prefix" scheme="http://adora-xu.com/tags/longest-common-prefix/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode挑戰: Day05 longest common prefix</title>
@@ -299,9 +332,9 @@ border-style:dashed;
     
     <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
-    
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
+    
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="simple calendar" scheme="http://adora-xu.com/tags/simple-calendar/"/>
     
@@ -374,11 +407,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
     
     
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
+    
     <category term="devise" scheme="http://adora-xu.com/tags/devise/"/>
     
     <category term="rails7" scheme="http://adora-xu.com/tags/rails7/"/>
-    
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="layout" scheme="http://adora-xu.com/tags/layout/"/>
     
