@@ -250,6 +250,116 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>JavaScript: defer vs async</title>
+    <url>/2023/11/18/async-vs-defer/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png">
+
+<p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p>
+<ol>
+<li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li>
+<li><code>async</code></li>
+<li><code>defer</code></li>
+</ol>
+<p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p>
+<p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p>
+<h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png">
+
+<blockquote>
+<p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p>
+</blockquote>
+<h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul>
+<li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li>
+</ul>
+<h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol>
+<li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li>
+<li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li>
+<li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li>
+<li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li>
+</ol>
+<p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p>
+<blockquote>
+<p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
+</blockquote>
+<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
+<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
+<p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
+<p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
+<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
+<p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
+<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
+<h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
+
+<ul>
+<li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li>
+<li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li>
+<li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li>
+</ul>
+<p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
+<p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
+<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
+<ul>
+<li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
+<li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
+<li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li>
+<li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li>
+<li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li>
+<li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li>
+</ul>
+<p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p>
+<p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p>
+<h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<img src="/images/async_vs_defer/5rendering-time-defer.png">
+
+<ul>
+<li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li>
+<li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li>
+<li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
+<li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
+</ul>
+<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>defer</tag>
+        <tag>async</tag>
+        <tag>Web</tag>
+        <tag>rendering</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
     <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
@@ -440,116 +550,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: defer vs async</title>
-    <url>/2023/11/18/async-vs-defer/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png">
-
-<p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p>
-<ol>
-<li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li>
-<li><code>async</code></li>
-<li><code>defer</code></li>
-</ol>
-<p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p>
-<p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p>
-<h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png">
-
-<blockquote>
-<p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p>
-</blockquote>
-<h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul>
-<li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li>
-</ul>
-<h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol>
-<li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li>
-<li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li>
-<li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li>
-<li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li>
-</ol>
-<p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p>
-<blockquote>
-<p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
-</blockquote>
-<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
-<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
-<p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
-<p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
-<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
-<p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
-<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
-<h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
-
-<ul>
-<li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li>
-<li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li>
-<li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li>
-</ul>
-<p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
-<p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
-<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
-
-<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
-<ul>
-<li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
-<li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
-<li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li>
-<li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li>
-<li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li>
-<li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li>
-</ul>
-<p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p>
-<p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p>
-<h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
-
-<img src="/images/async_vs_defer/5rendering-time-defer.png">
-
-<ul>
-<li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li>
-<li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li>
-<li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
-<li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
-</ul>
-<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>defer</tag>
-        <tag>async</tag>
-        <tag>Web</tag>
-        <tag>rendering</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day05 longest common prefix</title>
     <url>/2024/02/03/leetcode-longest-common-prefix/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
@@ -694,37 +694,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day06 valid parentheses</title>
-    <url>/2024/02/04/leetcode-valid-parentheses/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
-<img src="/images/leetcode-valid-parentheses/0204.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>這次使用到Ruby的<code>stack</code>，Ruby的<code>stack</code>有點像是<a href="https://adora-xu.com/2023/11/08/javascript-event-loop/">Event Loop</a>內的<code>Call Stack</code>，採用 LIFO (Last in First out)，將目標物件加入 Stack 最頂端使用<code>stack.push</code>，移除並取回 Stack 最頂端的值使用<code>stack.pop</code>，取得但不移除 Stack 最頂端的值使用<code>stack.top</code>，判斷Stack是否為空，使用<code>stack.empty</code>，像本次需要成對使用的題目就很適合使用～</p>
-<p>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p>
-<p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure>
-<p><code>python</code>一樣用<code>stack</code>，不過因為<code>python</code>的添加stack比較常使用<code>append</code>這裡我改用<code>stack.append(char)</code> </p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://icook.engineering/%E8%BA%AB%E7%82%BA%E4%B8%80%E5%80%8B-rubyist-%E9%9C%80%E8%A6%81%E6%87%82%E7%9A%84%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B-stack-9d11c2fd4746">身為一個 Rubyist 需要懂的資料結構 — Stack</a></p>
-<p><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>
-<p><a href="https://lovedrinkcafe.com/python-stack-data-structure/">【Python】Stack(堆疊) 資料結構實作</a></p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>Python</tag>
-        <tag>longest common prefix</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day02 two sum</title>
     <url>/2024/01/31/leetcode-two-sum/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
@@ -750,6 +719,34 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Ruby</tag>
         <tag>leetcode</tag>
         <tag>two sum</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day06 valid parentheses</title>
+    <url>/2024/02/04/leetcode-valid-parentheses/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
+<img src="/images/leetcode-valid-parentheses/0204.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先設定一個名為<code>stack</code>的空陣列，還有左括號的hash，<br>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p>
+<p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure>
+<p><code>python</code>使用一樣的方式，不過因為<code>python</code>的添加<code>list</code>使用的是<code>append</code>，所以這裡我改用<code>stack.append(char)</code> </p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>Python</tag>
+        <tag>longest common prefix</tag>
       </tags>
   </entry>
   <entry>
@@ -910,127 +907,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
-    <url>/2024/01/14/simple-calendar/</url>
-    <content><![CDATA[<style>
-
-
-.em-div{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-
-<img src="/images/simple-calendar/banner.avif">
-
-<p>圖片來源：<a href="https://unsplash.com/photos/black-marker-on-notebook-zni0zgb3bkQ">Unsplash-Estée Janssens</a><br>在製作專案的時候發現寶藏gem套件<a href="https://github.com/excid3/simple_calendar">simple_calendar</a>(ﾉ&gt;ω&lt;)ﾉ，<br>可以輕鬆地製作月曆，而且客製化程度高，可以自定義CSS樣式，<br>這是我這次做出來的月曆：<br><img src="/images/simple-calendar/5.png"></p>
-<ul>
-<li>本次選擇使用<a href="%5Bhttps://tailwindcss.com/%5D(https://tailwindcss.com/)">tailwind</a> CSS框架，安裝方法可以參考<a href="https://tailwindcss.com/docs/installation">tailwind installaion</a></li>
-<li>亦可以使用bootstrap，安裝請參考：<a href="%5Bhttps://getbootstrap.com/%5D(https://getbootstrap.com/)">bootstrap</a></li>
-</ul>
-<hr>
-<h3 id="安裝simple-calendar"><a href="#安裝simple-calendar" class="headerlink" title="安裝simple_calendar"></a>安裝<a href="https://github.com/excid3/simple_calendar">simple_calendar</a></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle add simple_calendar<br></code></pre></td></tr></table></figure>
-
-<p>貼上後執行bundle i即可</p>
-<h3 id="製作新增會議的CRUD"><a href="#製作新增會議的CRUD" class="headerlink" title="製作新增會議的CRUD"></a>製作新增會議的CRUD</h3><p>因為demo所以使用meeting，可以自由選擇名稱，meeting會有開始時間＆結束時間，所以也增加<code>start_time</code> &amp; <code>end_time</code>的column</p>
-<p>因為新增會議不是本次demo的重點🤣使用scaffold會幫忙製作CRUD</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#terminal</span><br>rails g scaffold <span class="hljs-title class_">Consultation</span> title <span class="hljs-symbol">description:</span>text <span class="hljs-symbol">start_time:</span>datetime e<br><span class="hljs-symbol">nd_time:</span>datetime<br></code></pre></td></tr></table></figure>
-
-<p>完成後執行<code>rails db:migrate</code></p>
-<h3 id="建立主頁"><a href="#建立主頁" class="headerlink" title="建立主頁"></a>建立主頁</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
-
-<h3 id="在主頁自定義方法"><a href="#在主頁自定義方法" class="headerlink" title="在主頁自定義方法"></a>在主頁自定義方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-<p>除了Month Calendar，另外還有Week Calendar、Custom Length Calendar<br>客製化程度很高，可以依自己需要選擇</p>
-<p>開啟 <code>rails s</code>就會出現月曆</p>
-<img src="/images/simple-calendar/2.png">
-
-<div class="em-div">
-補充：simple_calendar 預設開始時間的Model column是start_time，結束時間是end_time，
-如果是別的column名稱，有兩個方法可以改變：
-</div>
-
-<ol>
-<li><p>在程式碼中加入attribute：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>到model定義</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<h3 id="定義-meetings"><a href="#定義-meetings" class="headerlink" title="定義@meetings"></a>定義<code>@meetings</code></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#pages_controller.rb</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">home</span><br>    <span class="hljs-variable">@meetings</span> = <span class="hljs-title class_">Meeting</span>.where(<br>      <span class="hljs-symbol">star_time:</span> <span class="hljs-title class_">Time</span>.now.beginning_of_month.beginning_of_week..<span class="hljs-title class_">Time</span>.now.end_of_month.end_of_week<br>    )<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>來說明一下這段程式碼的意思：</p>
-<div class="em-div">
-
-
-<p>使用<code>where</code>方法來檢索符合特定條件對象，<br>條件為：指定會議的開始時間應該在本月的開始到結束之間，<br>並且是在一周的開始到結束之間，這樣就可以得到當前月份內的會議。</p>
-<p>簡單來說，我們使用<code>where</code>方法，獲取當前月份內的會議，並將這些會議存儲在 <code>@meetings</code> 變數中，以便在<code>view</code>中顯示。</p>
-</div>
-
-
-<div class="em-div">
-
-<p>如果使用SQL語法，，其實更好理解</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> meetings<br><span class="hljs-keyword">WHERE</span> start_time <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;開始時間&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;結束時間&#x27;</span>;<br></code></pre></td></tr></table></figure>
-
-<p>「開始時間」：<code>Time.now.beginning_of_month.beginning_of_week</code> 生成的日期時間，<br>「結束時間」  <code>Time.now.end_of_month.end_of_week</code> 生成的日期時間，<br>這個查詢找會檢索所有在當前月份的第一週的開始時間到當前月份的最後一週的結束時間之間的會議。</p>
-</div>
-
-
-<p>這時候網頁的畫面會像這樣：<br><img src="/images/simple-calendar/2.png"></p>
-<p>為什麼還是一樣？因為Meeting沒有任何資料d(&#96;･∀･)b</p>
-<h3 id="在Meeting裡增加一些資料"><a href="#在Meeting裡增加一些資料" class="headerlink" title="在Meeting裡增加一些資料"></a>在Meeting裡增加一些資料</h3><p>到<code>http://127.0.0.1:3000/meetings</code>，點選create新增<br>新增文完畢之後，回到<code>home.html.erb</code>，使用each do方法，將meetings顯示</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date, meetings</span>| %&gt;<br>  &lt;%= date %&gt;<br>  &lt;% meetings.each <span class="hljs-keyword">do</span> |<span class="hljs-params">meeting</span>| %&gt;<br>    &lt;%= link_to meeting.title, meeting %&gt;<br>    &lt;%= meeting.description %&gt;<br>  &lt;% <span class="hljs-keyword">end</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-
-<p>補充：這裡需要輸入兩個資料，<br><code>&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</code><br>simple_calendar已經幫忙寫好方法，meetings會塞到相對應的時間內，<br>如果沒有寫的話meeting會重複印到每一天的表格內</p>
-</div>
-
-<p>這時畫面就會像這樣：<br><img src="/images/simple-calendar/3.png"></p>
-<p>做到這裡，基本上沒有樣式🤣，除了可以在<code>home.html.erb</code>內編輯樣式外，<br>另外可以使用 <a href="https://github.com/excid3/simple_calendar">simple_calendar</a>內的客製化樣式</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">simple_calendar:</span>views<br></code></pre></td></tr></table></figure>
-
-<p>這會在 app&#x2F;views 中產生一個名為 simple_calendar 的資料夾，<br>可以根據自己的意願進行編輯。<br>執行之後可以看到他幫忙長出了這些資料：</p>
-<img src="/images/simple-calendar/4.png">
-
-<p>可以到application.css做一些自定義的編輯</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#application.css</span><br>.simple-calendar &#123;<br>  .day &#123;&#125;<br><br>  .wday-<span class="hljs-number">0</span> &#123;&#125;<br>  .wday-<span class="hljs-number">1</span> &#123;&#125;<br>  .wday-<span class="hljs-number">2</span> &#123;&#125;<br>  .wday-<span class="hljs-number">3</span> &#123;&#125;<br>  .wday-<span class="hljs-number">4</span> &#123;&#125;<br>  .wday-<span class="hljs-number">5</span> &#123;&#125;<br>  .wday-<span class="hljs-number">6</span> &#123;&#125;<br><br>  .today &#123;&#125;<br>  .past &#123;&#125;<br>  .future &#123;&#125;<br><br>  .start-date &#123;&#125;<br><br>  .prev-month &#123;&#125;<br>  .<span class="hljs-keyword">next</span>-month &#123; &#125;<br>  .current-month &#123;&#125;<br><br>  .has-events &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>也可以到simple_calendar幫忙長出來app&#x2F;views&#x2F;simple_calendar內調整預設的樣式<br>我是選擇直接到<code>_month_calendar.html.erb</code>修改，最後成果如下，應該有變得好看許多🤣<br><img src="/images/simple-calendar/5.png"><br>我做了這些修改：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#_month_calendar.html.erb</span><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;container mx-auto mt-10&quot;</span>&gt;<br>  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;wrapper bg-white rounded shadow w-full&quot;</span>&gt;<br>    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;simple-calendar&quot;</span>&gt;<br>      &lt;nav&gt;<br>        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;header flex justify-between border-b p-2&quot;</span>&gt;<br>          &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-lg font-bold&quot;</span>&gt;<br>            &lt;time datetime=<span class="hljs-string">&quot;&lt;%= start_date.strftime(&#x27;%Y-%m&#x27;) %&gt;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;calendar-title&quot;</span>&gt;&lt;%= t(<span class="hljs-string">&#x27;date.month_names&#x27;</span>)[start_date.month] %&gt; &lt;%= start_date.year %&gt;&lt;<span class="hljs-regexp">/time&gt;</span><br><span class="hljs-regexp">          &lt;/span</span>&gt;<br><br>          &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;<br>            &lt;%= link_to t(<span class="hljs-string">&#x27;simple_calendar.today&#x27;</span>, <span class="hljs-symbol">default:</span> <span class="hljs-string">&#x27;Today&#x27;</span>), calendar.url_for_today_view %&gt;<br><br>            &lt;%= link_to calendar.url_for_previous_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-left-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br><br>            &lt;%= link_to calendar.url_for_next_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-right-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br>          &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">        &lt;/div</span>&gt;<br>      &lt;<span class="hljs-regexp">/nav&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">      &lt;table class=&quot;table table-striped w-full&quot;&gt;</span><br><span class="hljs-regexp">        &lt;thead&gt;</span><br><span class="hljs-regexp">          &lt;tr&gt;</span><br><span class="hljs-regexp">            &lt;% date_range.slice(0, 7).each do |day| %&gt;</span><br><span class="hljs-regexp">              &lt;th class=&quot;p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs&quot;&gt;</span><br><span class="hljs-regexp">                &lt;span class=&quot;xl:block lg:block md:block sm:block hidden&quot;&gt;</span><br><span class="hljs-regexp">                  &lt;%= t(&#x27;date.abbr_day_names&#x27;)[day.wday] %&gt;</span><br><span class="hljs-regexp">                &lt;/span</span>&gt;<br>              &lt;<span class="hljs-regexp">/th&gt;</span><br><span class="hljs-regexp">            &lt;% end %&gt;</span><br><span class="hljs-regexp">          &lt;/tr</span>&gt;<br>        &lt;<span class="hljs-regexp">/thead&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">        &lt;tbody&gt;</span><br><span class="hljs-regexp">          &lt;% date_range.each_slice(7) do |week| %&gt;</span><br><span class="hljs-regexp">            &lt;tr class=&quot;text-center h-20&quot;&gt;</span><br><span class="hljs-regexp">                &lt;% week.each do |day| %&gt;</span><br><span class="hljs-regexp">                  &lt;%= content_tag :td, class: &quot;border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300&quot; do %&gt;</span><br><span class="hljs-regexp">                    &lt;% instance_exec(day, calendar.sorted_events_for(day), &amp;passed_block) %&gt;</span><br><span class="hljs-regexp">                  &lt;% end %&gt;</span><br><span class="hljs-regexp">                &lt;% end %&gt;</span><br><span class="hljs-regexp">            &lt;/tr</span>&gt;<br>          &lt;% <span class="hljs-keyword">end</span> %&gt;<br>        &lt;<span class="hljs-regexp">/tbody&gt;</span><br><span class="hljs-regexp">      &lt;/table</span>&gt;<br>    &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">  &lt;/div</span>&gt;<br>&lt;<span class="hljs-regexp">/div&gt;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-center m-5 text-xl&quot;</span>&gt;<span class="hljs-title class_">My</span> calendar&lt;<span class="hljs-regexp">/h1&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</span><br><span class="hljs-regexp">  &lt;div class=&quot;flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden&quot;&gt;</span><br><span class="hljs-regexp">    &lt;div class=&quot;top h-5 w-full&quot;&gt;</span><br><span class="hljs-regexp">      &lt;span class=&quot;text-gray-500&quot;&gt;</span><br><span class="hljs-regexp">        &lt;%= date.strftime(&#x27;%m/</span>%d<span class="hljs-string">&#x27;) %&gt;</span><br><span class="hljs-string">      &lt;/span&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;% meetings.each do |meeting| %&gt;</span><br><span class="hljs-string">      &lt;div class=&quot;bottom flex-grow py-1 w-full cursor-pointer&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;event bg-blue-400 text-white rounded p-1 text-sm mb-1&quot;&gt;</span><br><span class="hljs-string">          &lt;%= link_to &quot;<span class="hljs-subst">#&#123;meeting.start_time.strftime(<span class="hljs-string">&#x27;%k:%M&#x27;</span>)&#125;</span> <span class="hljs-subst">#&#123;meeting.title&#125;</span>&quot;, meeting %&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">      &lt;/div&gt;</span><br><span class="hljs-string">    &lt;% end %&gt;</span><br><span class="hljs-string">  &lt;/div&gt;</span><br><span class="hljs-string">&lt;% end %&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>simple_calendar其實也有把每個部份都定義了class名稱，<br>所以也可以到application.css檔案去更改套用，<br>但因為我使用tailwind，可以直接編輯html碼上的css，<br>後續優化可以再將重複的css樣式再放到application.css<br>或其他自定義的css即可，看個人習慣！</p>
-<p>這樣就完成啦！是不是客製化程度非常高呢！<br>本篇文章是我由以下參考資料整理+自己製作而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://github.com/excid3/simple_calendar">simple_calendar</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://youtu.be/NhAGTL4ARfw?feature=shared">Create A Simple Calendar In Ruby On Rails 7</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://tailwindcomponents.com/component/calendar-table">Calendar Table Template</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>ruby</tag>
-        <tag>rails</tag>
-        <tag>simple calendar</tag>
-        <tag>gem</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
     <url>/2023/12/24/rails-admin-layout-devise/</url>
     <content><![CDATA[<style>
@@ -1178,10 +1054,131 @@ border-style:dashed;
         <category>Ruby on Rails</category>
       </categories>
       <tags>
-        <tag>rails</tag>
         <tag>devise</tag>
         <tag>rails7</tag>
+        <tag>rails</tag>
         <tag>layout</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
+    <url>/2024/01/14/simple-calendar/</url>
+    <content><![CDATA[<style>
+
+
+.em-div{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+
+<img src="/images/simple-calendar/banner.avif">
+
+<p>圖片來源：<a href="https://unsplash.com/photos/black-marker-on-notebook-zni0zgb3bkQ">Unsplash-Estée Janssens</a><br>在製作專案的時候發現寶藏gem套件<a href="https://github.com/excid3/simple_calendar">simple_calendar</a>(ﾉ&gt;ω&lt;)ﾉ，<br>可以輕鬆地製作月曆，而且客製化程度高，可以自定義CSS樣式，<br>這是我這次做出來的月曆：<br><img src="/images/simple-calendar/5.png"></p>
+<ul>
+<li>本次選擇使用<a href="%5Bhttps://tailwindcss.com/%5D(https://tailwindcss.com/)">tailwind</a> CSS框架，安裝方法可以參考<a href="https://tailwindcss.com/docs/installation">tailwind installaion</a></li>
+<li>亦可以使用bootstrap，安裝請參考：<a href="%5Bhttps://getbootstrap.com/%5D(https://getbootstrap.com/)">bootstrap</a></li>
+</ul>
+<hr>
+<h3 id="安裝simple-calendar"><a href="#安裝simple-calendar" class="headerlink" title="安裝simple_calendar"></a>安裝<a href="https://github.com/excid3/simple_calendar">simple_calendar</a></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle add simple_calendar<br></code></pre></td></tr></table></figure>
+
+<p>貼上後執行bundle i即可</p>
+<h3 id="製作新增會議的CRUD"><a href="#製作新增會議的CRUD" class="headerlink" title="製作新增會議的CRUD"></a>製作新增會議的CRUD</h3><p>因為demo所以使用meeting，可以自由選擇名稱，meeting會有開始時間＆結束時間，所以也增加<code>start_time</code> &amp; <code>end_time</code>的column</p>
+<p>因為新增會議不是本次demo的重點🤣使用scaffold會幫忙製作CRUD</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#terminal</span><br>rails g scaffold <span class="hljs-title class_">Consultation</span> title <span class="hljs-symbol">description:</span>text <span class="hljs-symbol">start_time:</span>datetime e<br><span class="hljs-symbol">nd_time:</span>datetime<br></code></pre></td></tr></table></figure>
+
+<p>完成後執行<code>rails db:migrate</code></p>
+<h3 id="建立主頁"><a href="#建立主頁" class="headerlink" title="建立主頁"></a>建立主頁</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<h3 id="在主頁自定義方法"><a href="#在主頁自定義方法" class="headerlink" title="在主頁自定義方法"></a>在主頁自定義方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+<p>除了Month Calendar，另外還有Week Calendar、Custom Length Calendar<br>客製化程度很高，可以依自己需要選擇</p>
+<p>開啟 <code>rails s</code>就會出現月曆</p>
+<img src="/images/simple-calendar/2.png">
+
+<div class="em-div">
+補充：simple_calendar 預設開始時間的Model column是start_time，結束時間是end_time，
+如果是別的column名稱，有兩個方法可以改變：
+</div>
+
+<ol>
+<li><p>在程式碼中加入attribute：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>到model定義</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="定義-meetings"><a href="#定義-meetings" class="headerlink" title="定義@meetings"></a>定義<code>@meetings</code></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#pages_controller.rb</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">home</span><br>    <span class="hljs-variable">@meetings</span> = <span class="hljs-title class_">Meeting</span>.where(<br>      <span class="hljs-symbol">star_time:</span> <span class="hljs-title class_">Time</span>.now.beginning_of_month.beginning_of_week..<span class="hljs-title class_">Time</span>.now.end_of_month.end_of_week<br>    )<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>來說明一下這段程式碼的意思：</p>
+<div class="em-div">
+
+
+<p>使用<code>where</code>方法來檢索符合特定條件對象，<br>條件為：指定會議的開始時間應該在本月的開始到結束之間，<br>並且是在一周的開始到結束之間，這樣就可以得到當前月份內的會議。</p>
+<p>簡單來說，我們使用<code>where</code>方法，獲取當前月份內的會議，並將這些會議存儲在 <code>@meetings</code> 變數中，以便在<code>view</code>中顯示。</p>
+</div>
+
+
+<div class="em-div">
+
+<p>如果使用SQL語法，，其實更好理解</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> meetings<br><span class="hljs-keyword">WHERE</span> start_time <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;開始時間&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;結束時間&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>「開始時間」：<code>Time.now.beginning_of_month.beginning_of_week</code> 生成的日期時間，<br>「結束時間」  <code>Time.now.end_of_month.end_of_week</code> 生成的日期時間，<br>這個查詢找會檢索所有在當前月份的第一週的開始時間到當前月份的最後一週的結束時間之間的會議。</p>
+</div>
+
+
+<p>這時候網頁的畫面會像這樣：<br><img src="/images/simple-calendar/2.png"></p>
+<p>為什麼還是一樣？因為Meeting沒有任何資料d(&#96;･∀･)b</p>
+<h3 id="在Meeting裡增加一些資料"><a href="#在Meeting裡增加一些資料" class="headerlink" title="在Meeting裡增加一些資料"></a>在Meeting裡增加一些資料</h3><p>到<code>http://127.0.0.1:3000/meetings</code>，點選create新增<br>新增文完畢之後，回到<code>home.html.erb</code>，使用each do方法，將meetings顯示</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date, meetings</span>| %&gt;<br>  &lt;%= date %&gt;<br>  &lt;% meetings.each <span class="hljs-keyword">do</span> |<span class="hljs-params">meeting</span>| %&gt;<br>    &lt;%= link_to meeting.title, meeting %&gt;<br>    &lt;%= meeting.description %&gt;<br>  &lt;% <span class="hljs-keyword">end</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+
+<p>補充：這裡需要輸入兩個資料，<br><code>&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</code><br>simple_calendar已經幫忙寫好方法，meetings會塞到相對應的時間內，<br>如果沒有寫的話meeting會重複印到每一天的表格內</p>
+</div>
+
+<p>這時畫面就會像這樣：<br><img src="/images/simple-calendar/3.png"></p>
+<p>做到這裡，基本上沒有樣式🤣，除了可以在<code>home.html.erb</code>內編輯樣式外，<br>另外可以使用 <a href="https://github.com/excid3/simple_calendar">simple_calendar</a>內的客製化樣式</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">simple_calendar:</span>views<br></code></pre></td></tr></table></figure>
+
+<p>這會在 app&#x2F;views 中產生一個名為 simple_calendar 的資料夾，<br>可以根據自己的意願進行編輯。<br>執行之後可以看到他幫忙長出了這些資料：</p>
+<img src="/images/simple-calendar/4.png">
+
+<p>可以到application.css做一些自定義的編輯</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#application.css</span><br>.simple-calendar &#123;<br>  .day &#123;&#125;<br><br>  .wday-<span class="hljs-number">0</span> &#123;&#125;<br>  .wday-<span class="hljs-number">1</span> &#123;&#125;<br>  .wday-<span class="hljs-number">2</span> &#123;&#125;<br>  .wday-<span class="hljs-number">3</span> &#123;&#125;<br>  .wday-<span class="hljs-number">4</span> &#123;&#125;<br>  .wday-<span class="hljs-number">5</span> &#123;&#125;<br>  .wday-<span class="hljs-number">6</span> &#123;&#125;<br><br>  .today &#123;&#125;<br>  .past &#123;&#125;<br>  .future &#123;&#125;<br><br>  .start-date &#123;&#125;<br><br>  .prev-month &#123;&#125;<br>  .<span class="hljs-keyword">next</span>-month &#123; &#125;<br>  .current-month &#123;&#125;<br><br>  .has-events &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>也可以到simple_calendar幫忙長出來app&#x2F;views&#x2F;simple_calendar內調整預設的樣式<br>我是選擇直接到<code>_month_calendar.html.erb</code>修改，最後成果如下，應該有變得好看許多🤣<br><img src="/images/simple-calendar/5.png"><br>我做了這些修改：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#_month_calendar.html.erb</span><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;container mx-auto mt-10&quot;</span>&gt;<br>  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;wrapper bg-white rounded shadow w-full&quot;</span>&gt;<br>    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;simple-calendar&quot;</span>&gt;<br>      &lt;nav&gt;<br>        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;header flex justify-between border-b p-2&quot;</span>&gt;<br>          &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-lg font-bold&quot;</span>&gt;<br>            &lt;time datetime=<span class="hljs-string">&quot;&lt;%= start_date.strftime(&#x27;%Y-%m&#x27;) %&gt;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;calendar-title&quot;</span>&gt;&lt;%= t(<span class="hljs-string">&#x27;date.month_names&#x27;</span>)[start_date.month] %&gt; &lt;%= start_date.year %&gt;&lt;<span class="hljs-regexp">/time&gt;</span><br><span class="hljs-regexp">          &lt;/span</span>&gt;<br><br>          &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;<br>            &lt;%= link_to t(<span class="hljs-string">&#x27;simple_calendar.today&#x27;</span>, <span class="hljs-symbol">default:</span> <span class="hljs-string">&#x27;Today&#x27;</span>), calendar.url_for_today_view %&gt;<br><br>            &lt;%= link_to calendar.url_for_previous_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-left-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br><br>            &lt;%= link_to calendar.url_for_next_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-right-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br>          &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">        &lt;/div</span>&gt;<br>      &lt;<span class="hljs-regexp">/nav&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">      &lt;table class=&quot;table table-striped w-full&quot;&gt;</span><br><span class="hljs-regexp">        &lt;thead&gt;</span><br><span class="hljs-regexp">          &lt;tr&gt;</span><br><span class="hljs-regexp">            &lt;% date_range.slice(0, 7).each do |day| %&gt;</span><br><span class="hljs-regexp">              &lt;th class=&quot;p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs&quot;&gt;</span><br><span class="hljs-regexp">                &lt;span class=&quot;xl:block lg:block md:block sm:block hidden&quot;&gt;</span><br><span class="hljs-regexp">                  &lt;%= t(&#x27;date.abbr_day_names&#x27;)[day.wday] %&gt;</span><br><span class="hljs-regexp">                &lt;/span</span>&gt;<br>              &lt;<span class="hljs-regexp">/th&gt;</span><br><span class="hljs-regexp">            &lt;% end %&gt;</span><br><span class="hljs-regexp">          &lt;/tr</span>&gt;<br>        &lt;<span class="hljs-regexp">/thead&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">        &lt;tbody&gt;</span><br><span class="hljs-regexp">          &lt;% date_range.each_slice(7) do |week| %&gt;</span><br><span class="hljs-regexp">            &lt;tr class=&quot;text-center h-20&quot;&gt;</span><br><span class="hljs-regexp">                &lt;% week.each do |day| %&gt;</span><br><span class="hljs-regexp">                  &lt;%= content_tag :td, class: &quot;border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300&quot; do %&gt;</span><br><span class="hljs-regexp">                    &lt;% instance_exec(day, calendar.sorted_events_for(day), &amp;passed_block) %&gt;</span><br><span class="hljs-regexp">                  &lt;% end %&gt;</span><br><span class="hljs-regexp">                &lt;% end %&gt;</span><br><span class="hljs-regexp">            &lt;/tr</span>&gt;<br>          &lt;% <span class="hljs-keyword">end</span> %&gt;<br>        &lt;<span class="hljs-regexp">/tbody&gt;</span><br><span class="hljs-regexp">      &lt;/table</span>&gt;<br>    &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">  &lt;/div</span>&gt;<br>&lt;<span class="hljs-regexp">/div&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-center m-5 text-xl&quot;</span>&gt;<span class="hljs-title class_">My</span> calendar&lt;<span class="hljs-regexp">/h1&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</span><br><span class="hljs-regexp">  &lt;div class=&quot;flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden&quot;&gt;</span><br><span class="hljs-regexp">    &lt;div class=&quot;top h-5 w-full&quot;&gt;</span><br><span class="hljs-regexp">      &lt;span class=&quot;text-gray-500&quot;&gt;</span><br><span class="hljs-regexp">        &lt;%= date.strftime(&#x27;%m/</span>%d<span class="hljs-string">&#x27;) %&gt;</span><br><span class="hljs-string">      &lt;/span&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;% meetings.each do |meeting| %&gt;</span><br><span class="hljs-string">      &lt;div class=&quot;bottom flex-grow py-1 w-full cursor-pointer&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;event bg-blue-400 text-white rounded p-1 text-sm mb-1&quot;&gt;</span><br><span class="hljs-string">          &lt;%= link_to &quot;<span class="hljs-subst">#&#123;meeting.start_time.strftime(<span class="hljs-string">&#x27;%k:%M&#x27;</span>)&#125;</span> <span class="hljs-subst">#&#123;meeting.title&#125;</span>&quot;, meeting %&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">      &lt;/div&gt;</span><br><span class="hljs-string">    &lt;% end %&gt;</span><br><span class="hljs-string">  &lt;/div&gt;</span><br><span class="hljs-string">&lt;% end %&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>simple_calendar其實也有把每個部份都定義了class名稱，<br>所以也可以到application.css檔案去更改套用，<br>但因為我使用tailwind，可以直接編輯html碼上的css，<br>後續優化可以再將重複的css樣式再放到application.css<br>或其他自定義的css即可，看個人習慣！</p>
+<p>這樣就完成啦！是不是客製化程度非常高呢！<br>本篇文章是我由以下參考資料整理+自己製作而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://github.com/excid3/simple_calendar">simple_calendar</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://youtu.be/NhAGTL4ARfw?feature=shared">Create A Simple Calendar In Ruby On Rails 7</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://tailwindcomponents.com/component/calendar-table">Calendar Table Template</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>rails</tag>
+        <tag>ruby</tag>
+        <tag>simple calendar</tag>
+        <tag>gem</tag>
       </tags>
   </entry>
   <entry>
