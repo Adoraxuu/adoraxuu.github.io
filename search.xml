@@ -582,6 +582,34 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day03 palindrome number</title>
+    <url>/2024/02/01/leetcode-palindrome-number/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p>
+<img src="/images/leetcode-palindrome-number/01.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/palindrome-number/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">x</span>)<br>  x.to_s == x.to_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>我第一個想到使用<code>reverse</code>，不過<code>reverse</code>必須要字串才行，<br>因此山不轉路轉，把一開始給的x值使用<code>.to_s</code>轉為字串即可！</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x) == <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+<p>python的reverse寫法很特別！<br>不過一樣是要先轉成字串所以使用<code>str(x)</code></p>
+<p>其中<code>[::-1]</code>是反轉讀取的意思，如果是array的話也會反轉讀取<br>倘若是<code>[3::-1]</code>則會從索引值<code>3</code>開始反轉讀取</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> isPalindrome = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">return</span> x == [...x.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>我使用<code>...</code>的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展開符號</a>將字串轉為陣列，再使用<code>reverse</code>的功能，將陣列反轉，最後使用<code>join(&#39;&#39;)</code>組起來，如果反轉完等於<code>x</code>也回傳<code>true</code>!</p>
+<p>今天的題目稍微簡單一點，我們明天繼續٩(๑❛ᴗ❛๑)۶</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>Python</tag>
+        <tag>palindrome number</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day01 merge sorted array</title>
     <url>/2024/01/30/leetcode-merge-sorted-array/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p>
@@ -631,34 +659,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day03 palindrome number</title>
-    <url>/2024/02/01/leetcode-palindrome-number/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p>
-<img src="/images/leetcode-palindrome-number/01.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/palindrome-number/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">x</span>)<br>  x.to_s == x.to_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>我第一個想到使用<code>reverse</code>，不過<code>reverse</code>必須要字串才行，<br>因此山不轉路轉，把一開始給的x值使用<code>.to_s</code>轉為字串即可！</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x) == <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
-<p>python的reverse寫法很特別！<br>不過一樣是要先轉成字串所以使用<code>str(x)</code></p>
-<p>其中<code>[::-1]</code>是反轉讀取的意思，如果是array的話也會反轉讀取<br>倘若是<code>[3::-1]</code>則會從索引值<code>3</code>開始反轉讀取</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> isPalindrome = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">return</span> x == [...x.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>我使用<code>...</code>的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展開符號</a>將字串轉為陣列，再使用<code>reverse</code>的功能，將陣列反轉，最後使用<code>join(&#39;&#39;)</code>組起來，如果反轉完等於<code>x</code>也回傳<code>true</code>!</p>
-<p>今天的題目稍微簡單一點，我們明天繼續٩(๑❛ᴗ❛๑)۶</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>Python</tag>
-        <tag>palindrome number</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day04 roman to integer</title>
     <url>/2024/02/02/leetcode-roman-to-integer/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
@@ -694,31 +694,31 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day06 valid parentheses</title>
-    <url>/2024/02/04/leetcode-valid-parentheses/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
-<img src="/images/leetcode-valid-parentheses/0204.png">
+    <title>Leetcode挑戰: Day02 two sum</title>
+    <url>/2024/01/31/leetcode-two-sum/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
+<img src="/images/leetcode-two-sum/1.png">
 
-<p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>先設定一個名為<code>stack</code>的空陣列，還有左括號的hash，<br>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p>
-<p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure>
-<p><code>python</code>使用一樣的方式，不過因為<code>python</code>的添加<code>list</code>使用的是<code>append</code>，所以這裡我改用<code>stack.append(char)</code> </p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>
+<p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
+<li><code>nums</code>: 傳入的陣列</li>
+<li><code>target</code>:目標之和</li>
+<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
+<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
+<li><code>seen[target - num]</code>: 目標數字的索引值</li>
+<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
+</ul>
+<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
 ]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
       <tags>
         <tag>Ruby</tag>
-        <tag>JavaScript</tag>
         <tag>leetcode</tag>
-        <tag>Python</tag>
-        <tag>longest common prefix</tag>
+        <tag>two sum</tag>
       </tags>
   </entry>
   <entry>
@@ -876,6 +876,34 @@ border-style:dashed;
         <tag>v3</tag>
         <tag>faraday</tag>
         <tag>金流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day06 valid parentheses</title>
+    <url>/2024/02/04/leetcode-valid-parentheses/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
+<img src="/images/leetcode-valid-parentheses/0204.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先設定一個名為<code>stack</code>的空陣列，還有左括號的hash，<br>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p>
+<p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure>
+<p><code>python</code>使用一樣的方式，不過因為<code>python</code>的添加<code>list</code>使用的是<code>append</code>，所以這裡我改用<code>stack.append(char)</code> </p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>Python</tag>
+        <tag>longest common prefix</tag>
       </tags>
   </entry>
   <entry>
@@ -1154,113 +1182,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day02 two sum</title>
-    <url>/2024/01/31/leetcode-two-sum/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
-<img src="/images/leetcode-two-sum/1.png">
-
-<p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
-<ul>
-<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
-<li><code>nums</code>: 傳入的陣列</li>
-<li><code>target</code>:目標之和</li>
-<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
-<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
-<li><code>seen[target - num]</code>: 目標數字的索引值</li>
-<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
-</ul>
-<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>leetcode</tag>
-        <tag>two sum</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>職涯: 為什麼要轉職工程師?</title>
-    <url>/2024/01/28/why-choose-to-be-a-software-developer/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<p>「要不要當工程師？」<br>其實這這問題在我心中出現了很多次，第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
-<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，那時候智慧型手機、youtube不普及、沒有社群網站，也沒有現在隨處可見的教學。</p>
-<img src="/images/Transition/2.jpeg">
-
-<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
-<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。記得同學傳給我一個留言板的網址，可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
-<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
-<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
-<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
-<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
-<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，不過這段時間是我一段很美好的回憶，我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
-<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
-
-<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
-<p>第一次接觸正式的程式是高中時，當時唸資料處理科，每週都有6堂的計算機概論課、會到電腦教室上課。</p>
-<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。當時只覺得，程式真的好方便，過程好有趣！</p>
-<p>我很喜歡計算機概論這門課，記得當時有很多同學選擇資管系作爲大學升學的科系，但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，因此當時也沒有把工程師當作就業的選項。</p>
-<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
-
-<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
-<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，當初因為善於和人溝通、想要領到更多的薪水，所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
-<p>感謝金融業的經歷讓我對於財經市場有更多的認識，也在此時因為每日面對變化多端的金融市場和業績目標的要求，大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、說服客戶調整帳上資產、如何找到新的目標客戶、如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
-<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，只能夠根據當下的市場環境判斷並隨時調整，我發現自己沒有辦法對賣「不確定」的東西產生熱情。</p>
-<p>但這個時候該放棄嗎？<br>換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
-<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」，這時候我想起國小時做的第一個網頁，想起自己花了許多時間自已拼湊、實作到忘記時間，最後成功完成成品的時刻。</p>
-<div class="em-div">
-「想了這麼多年，要不這次就給自己一個機會呢？」
-</div>
-
-<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，這次我不想要再中途放棄，因為轉職要花費的成本很大，也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
-<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
-<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，報名了某平台的「程式設計入門」新手村萬元挑戰，這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，最後也順利完成了，每天學習的時候都很快樂。</p>
-<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課。</p>
-<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
-
-<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，因此這三個月的過程很精實。</p>
-<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，透過寫文章搜集資料的過程也能學習很多，這個部落格也是因此而產生出來的～</p>
-<img src="/images/7-2.jpeg">
-另外五倍還有許軟軟性課程，透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，昨天剛剛Demo Day結束。<p>
-
-
-<p>學習的過程中也發現：自己很喜歡和電腦溝通，因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
-<p>解決後還能夠再多想想，能有其他更好的作法嗎？也許是過往的工作經驗，已經讓我習慣面對挫折、解決挫折了，途中一定有遇到困難，但只要找出解決辦法就好，也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
-<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，常常寫到進入心流忘記時間，剛抬頭是白天，再次抬頭就是黑夜，更常常寫到忘記喝水、上廁所，但每一天都很開心。</p>
-<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
-<p>最想，如果能用一句話概括我轉職的原因：</p>
-<div class="em-div2">
-因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式；因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
-</div>
-
-]]></content>
-      <categories>
-        <category>職涯</category>
-      </categories>
-      <tags>
-        <tag>轉職</tag>
-        <tag>職涯</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</title>
     <url>/2023/11/15/var-let-const/</url>
     <content><![CDATA[<style>
@@ -1482,6 +1403,121 @@ output: TypeError: Assignment to constant variable.
         <tag>var</tag>
         <tag>let</tag>
         <tag>const</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day07 remove duplicates from sorted array</title>
+    <url>/2024/02/05/leetcode-remove-duplicates-from-sorted-array/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
+<img src="/images/leetcode-remove-duplicates-from-sorted-array/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">leetcode</a></p>
+<p>此題目雖然看似簡單，但需要注意一個小細節，除了最後回傳不重複的數有幾個外，原始傳入的<code>nums</code>也需要改變，這樣才會通過測驗！</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">remove_duplicates</span>(<span class="hljs-params">nums</span>)<br>  nums.uniq!<br>  nums.size<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>見證Ruby黑魔法的時刻٩(^ᴗ^)۶，這邊特別注意的是，<code>uniq!</code>為什麼要使用驚嘆號<code>!</code>呢？因為使用驚嘆號才能更改原始的<code>nums</code>，如果使用<code>uniq</code>則是回傳新的Array</p>
+<p>詳情可見Ruby API <a href="https://rubyapi.org/3.3/o/s?q=uniq!">uniq!</a>, <a href="https://rubyapi.org/3.3/o/s?q=uniq">uniq</a></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        nums[:] = <span class="hljs-built_in">set</span>(nums)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums)<br></code></pre></td></tr></table></figure>
+<p>Python的話可以使用<code>set(nums)</code>，set 是一組無序且沒有重複的元素，所以我外面使用了<code>sorted</code>排序。</p>
+<p>因為要改變<code>nums</code>的值，所以使用<code>nums[:]</code></p>
+<p>詳情可參考：<a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">nums</span>) &#123;<br>    nums.<span class="hljs-title function_">splice</span>(<span class="hljs-number">0</span>, nums.<span class="hljs-property">length</span>, ...<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(nums));<br>    <span class="hljs-keyword">return</span> nums.<span class="hljs-property">length</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS定義<code>set</code>為：<code>集合（set）中的元素只会出现一次，即集合中的元素是唯一的。</code>，可以參考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a>，但因為要改變<code>nums</code>的數，因此需要使用<code>splice</code>，移除或者替换已存在的元素和&#x2F;或添加新元素就地改變一个Array的内容。</p>
+<p>最後答案就出來了！</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://rubyapi.org/3.3/o/s?q=uniq!">Ruby API</a></li>
+<li><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>Python</tag>
+        <tag>remove duplicates from sorted array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>職涯: 為什麼要轉職工程師?</title>
+    <url>/2024/01/28/why-choose-to-be-a-software-developer/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<p>「要不要當工程師？」<br>其實這這問題在我心中出現了很多次，第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
+<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，那時候智慧型手機、youtube不普及、沒有社群網站，也沒有現在隨處可見的教學。</p>
+<img src="/images/Transition/2.jpeg">
+
+<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
+<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。記得同學傳給我一個留言板的網址，可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
+<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
+<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
+<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
+<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
+<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，不過這段時間是我一段很美好的回憶，我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
+<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
+
+<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
+<p>第一次接觸正式的程式是高中時，當時唸資料處理科，每週都有6堂的計算機概論課、會到電腦教室上課。</p>
+<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。當時只覺得，程式真的好方便，過程好有趣！</p>
+<p>我很喜歡計算機概論這門課，記得當時有很多同學選擇資管系作爲大學升學的科系，但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，因此當時也沒有把工程師當作就業的選項。</p>
+<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
+
+<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
+<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，當初因為善於和人溝通、想要領到更多的薪水，所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
+<p>感謝金融業的經歷讓我對於財經市場有更多的認識，也在此時因為每日面對變化多端的金融市場和業績目標的要求，大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、說服客戶調整帳上資產、如何找到新的目標客戶、如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
+<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，只能夠根據當下的市場環境判斷並隨時調整，我發現自己沒有辦法對賣「不確定」的東西產生熱情。</p>
+<p>但這個時候該放棄嗎？<br>換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
+<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」，這時候我想起國小時做的第一個網頁，想起自己花了許多時間自已拼湊、實作到忘記時間，最後成功完成成品的時刻。</p>
+<div class="em-div">
+「想了這麼多年，要不這次就給自己一個機會呢？」
+</div>
+
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，這次我不想要再中途放棄，因為轉職要花費的成本很大，也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
+<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
+<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，報名了某平台的「程式設計入門」新手村萬元挑戰，這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，最後也順利完成了，每天學習的時候都很快樂。</p>
+<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課。</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
+
+<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，因此這三個月的過程很精實。</p>
+<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，透過寫文章搜集資料的過程也能學習很多，這個部落格也是因此而產生出來的～</p>
+<img src="/images/7-2.jpeg">
+另外五倍還有許軟軟性課程，透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，昨天剛剛Demo Day結束。<p>
+
+
+<p>學習的過程中也發現：自己很喜歡和電腦溝通，因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
+<p>解決後還能夠再多想想，能有其他更好的作法嗎？也許是過往的工作經驗，已經讓我習慣面對挫折、解決挫折了，途中一定有遇到困難，但只要找出解決辦法就好，也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，常常寫到進入心流忘記時間，剛抬頭是白天，再次抬頭就是黑夜，更常常寫到忘記喝水、上廁所，但每一天都很開心。</p>
+<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>最想，如果能用一句話概括我轉職的原因：</p>
+<div class="em-div2">
+因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式；因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
+</div>
+
+]]></content>
+      <categories>
+        <category>職涯</category>
+      </categories>
+      <tags>
+        <tag>轉職</tag>
+        <tag>職涯</tag>
       </tags>
   </entry>
 </search>
