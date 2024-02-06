@@ -584,7 +584,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
   <entry>
     <title>Leetcode挑戰: Day08 majority element</title>
     <url>/2024/02/06/leetcode-majority-element/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
 <img src="/images/leetcode-majority-element/0206.png">
 
 <p>題目來源：<a href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
