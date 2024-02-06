@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Leetcode挑戰: Day08 majority element | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Ruby, JavaScript, leetcode, Python, majority element">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Leetcode挑戰: Day08 majority element</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-06</a> 
+    <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
+<img src="/images/leetcode-majority-element/0206.png">
+
+<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
+<p>在讀題目的時候，發現有一個小細節，題目寫要找出出現次數大於<code>[n/2]</code>的數字，且假定這個數字一定存在Array中。那也就代表，只要找出最常出現的數就可以了，因為陣列中只要其中一個數出現的數量大於<code>[n/2]</code>，剩下的數出現次數就不會大於<code>[n/2]</code>，可以想像成，西瓜被挖走一半多一點，剩下的西瓜再怎麼分都沒辦法大於一半。</p>
+<p>所以這題只要找出，出現次數最多的數字即可！讓我們開始解題吧～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_element</span>(<span class="hljs-params">nums</span>)<br>  nums.tally.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這裡使用了(tally)[<a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=tally%5D">https://rubyapi.org/3.3/o/s?q=tally]</a></p>
+<p>在Ruby API的解釋為：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Enumerable<span class="hljs-comment">#tally</span><br>Returns a hash containing <span class="hljs-keyword">the</span> counts <span class="hljs-keyword">of</span> <span class="hljs-keyword">equal</span> elements:<br>Each key <span class="hljs-keyword">is</span> an element <span class="hljs-keyword">of</span> self.<br>Each value <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">number</span> elements <span class="hljs-keyword">equal</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">that</span> key.<br></code></pre></td></tr></table></figure>
+<p>意思就是建立一個hash，key是<code>self</code>，value是出現的次數，簡單的範例：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">result = <span class="hljs-string">%w[a b c b c a c b]</span>.tally<br>puts result<br><span class="hljs-comment"># =&gt; &#123;&quot;a&quot;=&gt;2, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>建立了hash之後，即可以使用(max_by)[<a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=max_by%5D%EF%BC%8C%60max_by%60%EF%BC%8C%60max_by%60%E5%85%81%E8%A8%B1%E8%BC%B8%E5%85%A5%E5%80%BC%E7%82%BA%7B%7D%EF%BC%8C%E6%9C%83%E8%BF%94%E9%82%84%7B%7D%E5%85%A7%E6%9C%80%E5%A4%A7%E7%9A%84%E5%80%BC%EF%BC%8C%E5%9B%A0%E7%82%BA%E8%BF%94%E9%82%84%E7%9A%84%E6%9C%83%E6%98%AF%60Array%60%EF%BC%8C%E4%BE%86%E7%9C%8B%E4%B8%80%E4%B8%8B%E7%AF%84%E4%BE%8B%EF%BC%9A">https://rubyapi.org/3.3/o/s?q=max_by]，`max_by`，`max_by`允許輸入值為{}，會返還{}內最大的值，因為返還的會是`Array`，來看一下範例：</a></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;<br>puts result<br><span class="hljs-comment">#[:bar, 10]</span><br></code></pre></td></tr></table></figure>
+
+<p>如果只要取出key呢？可以使用<code>[0]</code>來取出Array的第一個數，也是<code>Array</code>內最常出現的<code>key</code>:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br>puts result<br><span class="hljs-comment">#10</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> Counter(nums).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+
+<p>在python計算數量可以使用<a target="_blank" rel="noopener" href="https://docs.python.org/zh-tw/3/library/collections.html#collections.Counter">Counter()物件</a>，來看看範例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br>words = [<span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>]<br>cnt = Counter()<br>cnt.update(words)<br><br><span class="hljs-built_in">print</span>(cnt)<br><span class="hljs-comment">#Counter(&#123;&#x27;blue&#x27;: 3, &#x27;red&#x27;: 2, &#x27;green&#x27;: 1&#125;)</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以使用<code>.most_common(1)[0][0]</code>，<code>(1)</code>代表取出第一個結果，這時輸出的值會是<code>[(3, 2)]</code>，因此還必須要使用<code>[0][0]</code>代表取出第一組Array的第一個數才會得到解答！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> majority;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> num <span class="hljs-keyword">of</span> nums) &#123;<br>        <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) &#123;<br>            majority = num;<br>        &#125;<br><br>        count += (num === majority) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> majority;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS我採用的是(摩爾投票法)[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95]%EF%BC%8C%E6%B6%88%E9%99%A4%E4%B8%8D%E5%90%8C%E5%85%83%E7%B4%A0%E4%B9%8B%E9%96%93%E7%9A%84%E7%A5%A8%E6%95%B8%EF%BC%8C%E6%9C%80%E7%B5%82%E4%BF%9D%E7%95%99%E7%9A%84%E5%B0%B1%E6%98%AF%E5%8F%AF%E8%83%BD%E7%9A%84%E4%B8%BB%E8%A6%81%E5%85%83%E7%B4%A0%E3%80%82">https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95]，消除不同元素之間的票數，最終保留的就是可能的主要元素。</a></p>
+<p>一開始先把<code>count</code>設定為0，如果接下來遇到的數字相同<code>count + 1</code>，不同<code>count - 1</code>，如果<code>count</code>又變回 0（代表刪掉一樣數量的a &amp; b），這時就會更改<code>majority = num</code>，最後殘存活下來的就是<code>majority</code>了！</p>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2024-02-06</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/majority-element/" class="post-tags__link button"># majority element</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/02/05/leetcode-remove-duplicates-from-sorted-array/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Leetcode挑戰: Day07 remove duplicates from sorted array</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
