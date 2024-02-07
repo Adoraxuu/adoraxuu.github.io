@@ -43,8 +43,10 @@
  <!-- meta -->
 
 
-<title>About me | Adora&#39;s Blog</title>
+<title>leetcode-length-of-last-word | Adora&#39;s Blog</title>
 
+
+    <meta name="keywords" content="Ruby, JavaScript, leetcode, Python, majority element">
 
 
  <!-- OpenGraph -->
@@ -119,9 +121,11 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">About me</h1>
+  <h1 class="post-title__text">leetcode-length-of-last-word</h1>
   <div class="post-title__meta">
-    <a href="/archives/2023/11/" class="post-meta__date button">2023-11-01</a> 
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-07</a> 
+    <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
+
  
     
     
@@ -142,39 +146,52 @@
     
   </div>
 
-  <div class="post__content"><style>
-.ava-block{
-    text-align: center;
-}
+  <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第九天，讓我們開始吧！</p>
+<img src="/images/leetcode-length-of-last-word/1.png">
 
-.avatar{
-    height: 45%;
-    width: 45%;
-}
-</style>
-<div class="ava-block">
-<img class="avatar" src="/img/avatar6.jpeg" alt="">
+<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
+<p>因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。</p>
+<p>這個題目不會再取用原始給予的<code>input</code>值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純一點～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_last_word</span>(<span class="hljs-params">s</span>)<br>  s.strip.split(<span class="hljs-string">&#x27; &#x27;</span>).last.length<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby可以使用<a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=strip">strip</a>去除前後的空格，接著使用<code>split(&#39; &#39;)</code>將空格拆分為陣列，取出<code>last.length</code>就找出答案了～</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s.strip().split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<p>Python也是使用<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/stdtypes.html">strip</a>，接著使用<code>split(&#39; &#39;)</code>拆分為陣列，這個和Ruby相同。最後使用<code>[-1]</code>取出最後一位數，再使用<code>len()</code>包住即可～</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLastWord = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">pop</span>().<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>JS去除前後的空格使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>
 </div>
 
-<h2 id="關於我"><a href="#關於我" class="headerlink" title="關於我"></a>關於我</h2><ul>
-<li>💛 我是 <strong>Adora</strong></li>
-<li>💡 熱愛學習新技術，永不停歇</li>
-<li>🌈 分享學習的技術知識，一起成長</li>
-<li>🌟 喜歡將生活分享變成有趣的故事</li>
-<li>🚀 希望能夠成為 full stack developer</li>
-<li>📝 這個 Blog 是使用 Hexo 架設而成，採用主題 [Cards] © <a target="_blank" rel="noopener" href="https://github.com/ChrAlpha">ChrAlpha</a>，也歡迎多交流！</li>
-</ul>
-<h2 id="你可以找到我"><a href="#你可以找到我" class="headerlink" title="你可以找到我"></a>你可以找到我</h2><ul>
-<li>📧 Email: <a href="mailto:&#x61;&#x64;&#x6f;&#114;&#97;&#120;&#117;&#48;&#49;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x61;&#x64;&#x6f;&#114;&#97;&#120;&#117;&#48;&#49;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;</a></li>
-<li>🐈 GitHub: <a target="_blank" rel="noopener" href="https://github.com/Adoraxuu">Adoraxuu</a></li>
-<li>📸 Instagram: <a target="_blank" rel="noopener" href="https://www.instagram.com/yin.001/">yin.001</a></li>
-<li>如果你對技術、生活、或是任何其他有趣的話題感興趣，歡迎隨時與我聯繫！🌸<!--</li>
-</ul>
-</div>
-
-   <div class="post-footer__meta"><p>updated at 2024-01-30</p></div> <div class="post-entry__tags"></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-07</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/majority-element/" class="post-tags__link button"># majority element</a></div>
 </article>
 
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/02/06/leetcode-majority-element/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Leetcode挑戰: Day08 majority element</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
  
 <div
   class="post__comments content-card"
