@@ -803,7 +803,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day11 single-number</title>
+    <title>Leetcode挑戰: Day11 single number</title>
     <url>/2024/02/09/leetcode-single-number/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十天，終於完成1&#x2F;3了，讓我們開始吧！</p>
 <img src="/images/leetcode-single-number/1.png">
@@ -830,7 +830,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>Python</tag>
-        <tag>length of last word</tag>
+        <tag>single number</tag>
       </tags>
   </entry>
   <entry>
