@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Leetcode挑戰: Day10 valid palindrome | Adora&#39;s Blog</title>
+<title>Leetcode挑戰: Day11 single-number | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Ruby, JavaScript, leetcode, Python, length of last word">
@@ -121,9 +121,9 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Leetcode挑戰: Day10 valid palindrome</h1>
+  <h1 class="post-title__text">Leetcode挑戰: Day11 single-number</h1>
   <div class="post-title__meta">
-    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-08</a> 
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-09</a> 
     <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
 
  
@@ -147,53 +147,37 @@
   </div>
 
   <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十天，終於完成1&#x2F;3了，讓我們開始吧！</p>
-<img src="/images/leetcode-valid-palindrome/banner.png">
+<img src="/images/leetcode-single-number/1.png">
 
-<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-palindrome">leetcode</a></p>
-<p>這個問題要求判斷句子是否為回文。在進行比較時，會需要先將所有字母轉換為小寫，並去除所有非字母和數字。然後，比較處理過的字串是否和它的反轉相等。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>)<br>  clean_s = s.downcase.gsub(<span class="hljs-regexp">/[^a-z0-9]/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>  clean_s == clean_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>使用<code>downcase</code>將字符轉換為小寫，再使用<code>gsub</code>去除非字母和數字的字，最後比較反轉是否相同就完成了～</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 將字符轉換為小寫，去除非字母和數字的字</span><br>    clean_s = <span class="hljs-string">&#x27;&#x27;</span>.join(char.lower() <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s <span class="hljs-keyword">if</span> char.isalnum())<br>    <span class="hljs-comment"># 比較處理過的字串和它的反轉是否相等</span><br>    <span class="hljs-keyword">return</span> clean_s == clean_s[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/single-number">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">single_number</span>(<span class="hljs-params">nums</span>)<br>  nums.reduce(<span class="hljs-symbol">:^</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這次用到<code>XOR</code>符號<code>^</code>，這是種運算邏輯，用於對兩個二進制數的對應位進行比較，規則如下：兩個對應位數字不同，會回傳<code>1</code>，兩個對應位不同則會回傳<code>0</code>，用此來找出只出現一次的數字。</p>
+<p>範例如下：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-number">0</span> xor <span class="hljs-number">0</span> = <span class="hljs-number">0</span><br><span class="hljs-number">0</span> xor <span class="hljs-number">1</span> = <span class="hljs-number">1</span><br><span class="hljs-number">1</span> xor <span class="hljs-number">0</span> = <span class="hljs-number">1</span><br><span class="hljs-number">1</span> xor <span class="hljs-number">1</span> = <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
 
-<p><code>isalnum()</code>方法用於檢查字符串中的所有字是否都是字母和數字。如果是，該方法返回 True，表示所有字符均為字母（a-z、A-Z）和數字（0-9）。反之，如果字符串中包含非字母和非數字的字符，例如空格、驚嘆號、井號、百分號、和問號等，該方法將返回 False。</p>
-<p>使用這個方法就不用使用<code>gsub</code>取代了，因為只有是字母和數字才會放進<code>clean_s</code>裡</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">s</span>) &#123;<br>  <span class="hljs-comment">// 將字串轉換為小寫，去除非字母和數字</span><br>  <span class="hljs-keyword">const</span> cleanS = s.<span class="hljs-title function_">toLowerCase</span>().<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[^a-z0-9]/g</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>  <span class="hljs-comment">// 比較處理過的字串和它的反轉是否相等</span><br>  <span class="hljs-keyword">return</span> cleanS === cleanS.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果我們傳入<code>[4, 1, 2, 1, 2]</code>呢？根據<code>reduce(:^)</code>會這樣運算<code>4 ^ 1 ^ 2 ^ 1 ^ 2</code>：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ruby">  <span class="hljs-number">4</span>:  <span class="hljs-number">100</span><br>  <span class="hljs-number">1</span>:  <span class="hljs-number">001</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">101</span>  <br><br>  <span class="hljs-number">5</span>:  <span class="hljs-number">101</span><br>  <span class="hljs-number">2</span>:  <span class="hljs-number">010</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">111</span> <br><br>  <span class="hljs-number">7</span>:  <span class="hljs-number">111</span><br>  <span class="hljs-number">1</span>:  <span class="hljs-number">001</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">110</span> <br><br>  <span class="hljs-number">6</span>:  <span class="hljs-number">110</span><br>  <span class="hljs-number">2</span>:  <span class="hljs-number">010</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">100</span><br></code></pre></td></tr></table></figure>
+<p>也可以用另外一個方法理解，<code>1 ^ 1 = 0</code>, <code>2 ^ 2 = 0</code>, <code>0 ^ 4 = 4</code><br>只要有不同於其他的數，就會被留下來，這樣答案就出來了！</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">singleNumber</span>(<span class="hljs-params">self, nums</span>):<br>        <span class="hljs-keyword">return</span> reduce(<span class="hljs-keyword">lambda</span> x, y: x ^ y, nums)<br></code></pre></td></tr></table></figure>
+<p>Python也是一樣邏輯，只不過<code>reduce</code>寫法不同，可以參考：<a target="_blank" rel="noopener" href="https://docs.python.org/3.0/library/functools.html">reduce</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> singleNumber = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">return</span> nums.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">acc, num</span>) =&gt;</span> acc ^ num, <span class="hljs-number">0</span>);<br>  &#125;;<br></code></pre></td></tr></table></figure>
+<p>JS也是一樣邏輯，只不過<code>reduce</code>寫法不同，可以參考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce">reduce</a></p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-02-08</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/length-of-last-word/" class="post-tags__link button"># length of last word</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-09</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/length-of-last-word/" class="post-tags__link button"># length of last word</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2024/02/09/leetcode-single-number/" class="nav__link">
-      <div>
-        <svg
-          viewBox="0 0 1024 1024"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
-            fill="#808080"
-          ></path>
-        </svg>
-      </div>
-      <div>
-        <div class="nav__label">Previous Post</div>
-        <div class="nav__title">Leetcode挑戰: Day11 single-number</div>
-      </div>
-    </a>
-    
   </div>
   <div class="nav__next">
     
-    <a href="/2024/02/07/leetcode-length-of-last-word/" class="nav__link">
+    <a href="/2024/02/08/leetcode-valid-palindrome/" class="nav__link">
       <div>
         <div class="nav__label">Next Post</div>
-        <div class="nav__title">Leetcode挑戰: Day09 length of last word</div>
+        <div class="nav__title">Leetcode挑戰: Day10 valid palindrome</div>
       </div>
       <div>
         <svg
