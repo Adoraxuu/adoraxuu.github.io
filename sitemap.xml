@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://adora-xu.com/2024/02/09/leetcode-single-number/</loc>
+    <loc>http://adora-xu.com/2024/02/08/leetcode-valid-palindrome/</loc>
     
     <lastmod>2024-02-09</lastmod>
     
@@ -11,9 +11,9 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/2024/02/08/leetcode-valid-palindrome/</loc>
+    <loc>http://adora-xu.com/2024/02/09/leetcode-single-number/</loc>
     
-    <lastmod>2024-02-08</lastmod>
+    <lastmod>2024-02-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -308,7 +308,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/header.css</loc>
+    <loc>http://adora-xu.com/css/index.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -317,7 +317,7 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/css/index.css</loc>
+    <loc>http://adora-xu.com/css/header.css</loc>
     
     <lastmod>2023-10-30</lastmod>
     
@@ -586,6 +586,13 @@
   
   <url>
     <loc>http://adora-xu.com/tags/two-sum/</loc>
+    <lastmod>2024-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/valid-palindrome/</loc>
     <lastmod>2024-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
