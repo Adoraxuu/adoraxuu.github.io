@@ -1257,9 +1257,9 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day12 search insert position</title>
+    <title>Leetcode挑戰: Day13 search insert position</title>
     <url>/2024/02/11/search-insert-position/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十一天，讓我們開始吧！</p>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
 <img src="/images/search-insert-position/1.png">
 
 <p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
