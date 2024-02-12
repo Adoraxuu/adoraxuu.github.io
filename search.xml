@@ -863,6 +863,35 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day14 sqrtx</title>
+    <url>/2024/02/12/leetcode-sqrtx/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十四天，讓我們開始吧！</p>
+<img src="/images/sqrtx/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/sqrtx/">leetcode</a></p>
+<p>今天的題目是尋找平方根，但是不能用內建的數學方法來找，題目解釋如下：</p>
+<p>在给定一个非負整數 x 的情况下，返回四捨五入到最接近整数的 x 的平方根。返回的整數也應為非負整数。</p>
+<p>不得使用任何内置指数函数或运算符。<br>例如，請勿在 c++ 中使用 pow(x, 0.5) 或在 python 中使用 x ** 0.5。</p>
+<p>題目韓算單純，因為僅要四捨五入到整數位即可，也可以使用昨天用到的<code>二分法</code>，從中間切一半開始測試，這樣很快就可以找到了！</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_sqrt</span>(<span class="hljs-params">x</span>)<br>  <span class="hljs-comment"># 初始化左右邊界，0...x</span><br>  left, right = <span class="hljs-number">0</span>, x<br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span>  <span class="hljs-comment"># 計算中間值</span><br>    mid_squared = mid * mid  <span class="hljs-comment"># 計算中間值的平方</span><br><br>    <span class="hljs-keyword">if</span> mid_squared == x<br>      <span class="hljs-keyword">return</span> mid.to_i  <span class="hljs-comment"># 如果中間值的平方等於 x，返回中間值（轉換為整數形式）</span><br>    <span class="hljs-keyword">elsif</span> mid_squared &lt; x<br>      left = mid + <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方小於 x，就使用mid+1...x來比較，因此調整left的值</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方大於 x，就使用left...mid-1來比較，因此調整right的值</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> right.to_i  <span class="hljs-comment"># 當 left &gt; right 時，right 就是小於或等於平方根的整數值，因此要向下取整，所以返回右邊界（轉換為整數形式）</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-comment"># 初始化左右邊界</span><br>        left, right = <span class="hljs-number">0</span>, x<br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span>  <span class="hljs-comment"># 計算中間值</span><br>            mid_squared = mid * mid  <span class="hljs-comment"># 計算中間值的平方</span><br><br>            <span class="hljs-keyword">if</span> mid_squared == x:<br>                <span class="hljs-keyword">return</span> mid  <span class="hljs-comment"># 如果中間值的平方等於 x，返回中間值</span><br>            <span class="hljs-keyword">elif</span> mid_squared &lt; x:<br>                left = mid + <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方小於 x，調整左邊界</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方大於 x，調整右邊界</span><br><br>        <span class="hljs-keyword">return</span> right  <span class="hljs-comment"># 因為要向下取整，所以返回右邊界</span><br></code></pre></td></tr></table></figure>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> right = x;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">const</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">const</span> midSquared = mid * mid;<br>  <br>      <span class="hljs-keyword">if</span> (midSquared === x) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (midSquared &lt; x) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> right;<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p>雖然如果使用內建的方法超快就可以解出來了，但學習使用二分法也能夠在其他的條件下應用！</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>Python</tag>
+        <tag>sqrtx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day02 two sum</title>
     <url>/2024/01/31/leetcode-two-sum/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
