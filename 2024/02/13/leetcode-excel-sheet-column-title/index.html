@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Leetcode挑戰: Day15 excel sheet column title | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Ruby, JavaScript, leetcode, Python, excel sheet column title">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Leetcode挑戰: Day15 excel sheet column title</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-13</a> 
+    <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十五天，讓我們開始吧！</p>
+<img src="/images/leetcode-excel-sheet-column-title/0213.png">
+
+<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
+<p>這次的題目蠻有趣的，是給予Excel的欄位將數換為數字，Excel欄位的慣例為：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs clean">A -&gt; <span class="hljs-number">1</span><br>B -&gt; <span class="hljs-number">2</span><br>C -&gt; <span class="hljs-number">3</span><br>...<br>Z -&gt; <span class="hljs-number">26</span><br>AA -&gt; <span class="hljs-number">27</span><br>AB -&gt; <span class="hljs-number">28</span> <br>...<br></code></pre></td></tr></table></figure>
+<p>A<del>Z是1</del>26，27是AA,28是AB，依序下去，等於是滿<code>26</code>後會進位。<br>這樣來看，其實Excel欄位和26進位蠻像的，轉換需要 &#x2F; 26後的餘數對應到相應的字母即可（和十進位轉二進位有點像），因為剛好對應的是字母，可以將其轉換為<code>ASCII</code>碼，在<code>ASCII</code>裡，<code>A</code>為<code>065</code>、<code>B</code>為<code>066</code>….依序排序，排序到<code>Z</code>為<code>090</code>。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">convert_to_title</span>(<span class="hljs-params">column_number</span>)<br>  result = <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment">#利用空字串來儲存結果</span><br>  <span class="hljs-keyword">while</span> column_number &gt; <span class="hljs-number">0</span><br>    column_number -= <span class="hljs-number">1</span> <span class="hljs-comment"># 減去1，這樣1就對應到&#x27;A&#x27;</span><br>    result = (<span class="hljs-string">&#x27;A&#x27;</span>.ord + column_number % <span class="hljs-number">26</span>).chr + result<br>    <span class="hljs-comment"># 取得對應字母，加到結果字串的最前面</span><br>    column_number /= <span class="hljs-number">26</span><br>    <span class="hljs-comment"># 將 column_number 除以 26，以處理下一位數字</span><br>  <span class="hljs-keyword">end</span><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p><code>column_number -= 1</code><br>此方法是利用<code>餘數</code>先取<code>個位數</code>的字母，再<code>/26</code>取得接下來的數字字母，會需要先<code>-1</code>，這樣<code>1</code>才能對應到<code>A</code></p>
+<p><code>result = (&#39;A&#39;.ord + column_number % 26).chr + result</code><br>這段的<code>ord</code>是將字母轉換為<code>ASCII</code>，因為每個字母都是按照順序排序，所以中間的差數就是<code>&#39;A&#39;.ord</code>，最後再使用<code>.chr</code>轉為數字，最後 <code>+ result</code>更新<code>result</code>的數，並確保下一個<code>result</code>會放在前面</p>
+<p>接著最後再將輸入值<code>/26</code>來處理下一位數（真的和十進位轉二進位蠻像的～）</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">self, columnNumber: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        result = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">while</span> columnNumber:<br>            columnNumber -= <span class="hljs-number">1</span><br>            result = <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(<span class="hljs-string">&#x27;A&#x27;</span>) + columnNumber % <span class="hljs-number">26</span>) + result<br>            columnNumber //= <span class="hljs-number">26</span><br>        <span class="hljs-keyword">return</span> result<br><br></code></pre></td></tr></table></figure>
+<p>Python和Ruby的解法相同，只要改變寫法即可！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">columnNumber</span>) &#123;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-string">&#x27;&#x27;</span>;<br>    <span class="hljs-keyword">while</span> (columnNumber &gt; <span class="hljs-number">0</span>) &#123;<br>        columnNumber--;<br>        result = <span class="hljs-title class_">String</span>.<span class="hljs-title function_">fromCharCode</span>(<span class="hljs-string">&#x27;A&#x27;</span>.<span class="hljs-title function_">charCodeAt</span>(<span class="hljs-number">0</span>) + columnNumber % <span class="hljs-number">26</span>) + result;<br>        columnNumber = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(columnNumber / <span class="hljs-number">26</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS也和Ruby的解法相同，只要改變寫法即可！<br>今天就到這裡～明天繼續加油！</p>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2024-02-13</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/excel-sheet-column-title/" class="post-tags__link button"># excel sheet column title</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/02/12/leetcode-sqrtx/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Leetcode挑戰: Day14 sqrtx</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
