@@ -43,10 +43,10 @@
  <!-- meta -->
 
 
-<title>Leetcode挑戰: Day07 remove duplicates from sorted array | Adora&#39;s Blog</title>
+<title>CodeWars:credit card mask | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, JavaScript, Python, leetcode, remove duplicates from sorted array">
+    <meta name="keywords" content="Ruby, JavaScript, codewars, Python, credit card mask">
 
 
  <!-- OpenGraph -->
@@ -121,10 +121,10 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Leetcode挑戰: Day07 remove duplicates from sorted array</h1>
+  <h1 class="post-title__text">CodeWars:credit card mask</h1>
   <div class="post-title__meta">
-    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-05</a> 
-    <span class="separate-dot"></span><a href="/categories/leetcode/" class="button">leetcode</a>
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-16</a> 
+    <span class="separate-dot"></span><a href="/categories/codewars/" class="button">codewars</a>
 
  
     
@@ -146,63 +146,31 @@
     
   </div>
 
-  <div class="post__content"><p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
-<img src="/images/leetcode-remove-duplicates-from-sorted-array/1.png">
-
-<p>題目來源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">leetcode</a></p>
-<p>此題目雖然看似簡單，但需要注意一個小細節，除了最後回傳不重複的數有幾個外，原始傳入的<code>nums</code>也需要改變，這樣才會通過測驗！</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">remove_duplicates</span>(<span class="hljs-params">nums</span>)<br>  nums.uniq!<br>  nums.size<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>見證Ruby黑魔法的時刻٩(^ᴗ^)۶，這邊特別注意的是，<code>uniq!</code>為什麼要使用驚嘆號<code>!</code>呢？因為使用驚嘆號才能更改原始的<code>nums</code>，如果使用<code>uniq</code>則是回傳新的Array</p>
-<p>詳情可見Ruby API <a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=uniq!">uniq!</a>, <a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=uniq">uniq</a></p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        nums[:] = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">set</span>(nums))<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums)<br></code></pre></td></tr></table></figure>
-<p>Python的話可以使用<code>set(nums)</code>，set 是一組無序且沒有重複的元素，所以我外面使用了<code>sorted</code>排序。</p>
-<p>因為要改變<code>nums</code>的值，所以使用<code>nums[:]</code></p>
-<p>詳情可參考：<a target="_blank" rel="noopener" href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">nums</span>) &#123;<br>    nums.<span class="hljs-title function_">splice</span>(<span class="hljs-number">0</span>, nums.<span class="hljs-property">length</span>, ...<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(nums));<br>    <span class="hljs-keyword">return</span> nums.<span class="hljs-property">length</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>JS定義<code>set</code>為：<code>集合（set）中的元素只会出现一次，即集合中的元素是唯一的。</code>，可以參考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a>，但因為要改變<code>nums</code>的數，因此需要使用<code>splice</code>，移除或者替换已存在的元素和&#x2F;或添加新元素就地改變一个Array的内容。</p>
-<p>最後答案就出來了！</p>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=uniq!">Ruby API</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a></li>
-</ul>
+  <div class="post__content"><p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a target="_blank" rel="noopener" href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
+<p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
+<p>如果沒有大於4碼，就直接顯示<code>cc</code>即可 ٩(^ᴗ^)۶</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;#&quot;</span> * (<span class="hljs-built_in">len</span>(cc)-<span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>:]<br></code></pre></td></tr></table></figure>
+<p>Python比較特別，如果字串<code>*</code>小於等於零的數字，會返還空值。<br>所以這裡不需要使用判斷式就可以完成o(^▽^)o</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>) &#123;<br>    <span class="hljs-keyword">return</span> cc.<span class="hljs-property">length</span> &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span>.<span class="hljs-title function_">repeat</span>(cc.<span class="hljs-property">length</span> - <span class="hljs-number">4</span>) + cc.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">4</span>) : cc<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>JS和Ruby的解法邏輯一樣，使用三元運算子判斷長度<code>cc.length</code>是否 &gt; 4，如果大於的話則返回扣掉4個長度的<code> &quot;#&quot;.repeat(cc.length - 4)</code>+最後四碼<code>cc.slice(-4)</code>，如果小於4直接返還<code>cc</code></p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-02-06</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/remove-duplicates-from-sorted-array/" class="post-tags__link button"># remove duplicates from sorted array</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-16</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/credit-card-mask/" class="post-tags__link button"># credit card mask</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2024/02/06/leetcode-majority-element/" class="nav__link">
-      <div>
-        <svg
-          viewBox="0 0 1024 1024"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
-            fill="#808080"
-          ></path>
-        </svg>
-      </div>
-      <div>
-        <div class="nav__label">Previous Post</div>
-        <div class="nav__title">Leetcode挑戰: Day08 majority element</div>
-      </div>
-    </a>
-    
   </div>
   <div class="nav__next">
     
-    <a href="/2024/02/04/leetcode-valid-parentheses/" class="nav__link">
+    <a href="/2024/02/13/leetcode-excel-sheet-column-title/" class="nav__link">
       <div>
         <div class="nav__label">Next Post</div>
-        <div class="nav__title">Leetcode挑戰: Day06 valid parentheses</div>
+        <div class="nav__title">Leetcode挑戰: Day15 excel sheet column title</div>
       </div>
       <div>
         <svg

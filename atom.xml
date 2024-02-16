@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-02-13T15:50:12.541Z</updated>
+  <updated>2024-02-16T08:12:39.113Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CodeWars:credit card mask</title>
+    <link href="http://adora-xu.com/2024/02/16/codewars-credit-card-mask/"/>
+    <id>http://adora-xu.com/2024/02/16/codewars-credit-card-mask/</id>
+    <published>2024-02-16T08:05:11.000Z</published>
+    <updated>2024-02-16T08:12:39.113Z</updated>
+    
+    <content type="html"><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p><p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p><p>如果沒有大於4碼，就直接顯示<code>cc</code>即可 ٩(^ᴗ^)۶</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;#&quot;</span> * (<span class="hljs-built_in">len</span>(cc)-<span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>:]<br></code></pre></td></tr></table></figure><p>Python比較特別，如果字串<code>*</code>小於等於零的數字，會返還空值。<br>所以這裡不需要使用判斷式就可以完成o(^▽^)o</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>) &#123;<br>    <span class="hljs-keyword">return</span> cc.<span class="hljs-property">length</span> &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span>.<span class="hljs-title function_">repeat</span>(cc.<span class="hljs-property">length</span> - <span class="hljs-number">4</span>) + cc.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">4</span>) : cc<br>&#125;<br></code></pre></td></tr></table></figure><p>JS和Ruby的解法邏輯一樣，使用三元運算子判斷長度<code>cc.length</code>是否 &gt; 4，如果大於的話則返回扣掉4個長度的<code> &quot;#&quot;.repeat(cc.length - 4)</code>+最後四碼<code>cc.slice(-4)</code>，如果小於4直接返還<code>cc</code></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶&lt;br&gt;題目：&lt;a href=&quot;https://www.codewars.com/kata/5412509bd436bd33920011bc&quot;&gt;Codewars&lt;/a&gt;&lt;br&gt;一樣會用&lt;code&gt;Ruby&lt;/c</summary>
+      
+    
+    
+    
+    <category term="codewars" scheme="http://adora-xu.com/categories/codewars/"/>
+    
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="credit card mask" scheme="http://adora-xu.com/tags/credit-card-mask/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode挑戰: Day15 excel sheet column title</title>
@@ -41,9 +73,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="excel sheet column title" scheme="http://adora-xu.com/tags/excel-sheet-column-title/"/>
     
@@ -74,9 +106,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="sqrtx" scheme="http://adora-xu.com/tags/sqrtx/"/>
     
@@ -107,9 +139,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="search insert position" scheme="http://adora-xu.com/tags/search-insert-position/"/>
     
@@ -140,9 +172,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="plus one" scheme="http://adora-xu.com/tags/plus-one/"/>
     
@@ -173,9 +205,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="single number" scheme="http://adora-xu.com/tags/single-number/"/>
     
@@ -205,9 +237,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="valid palindrome" scheme="http://adora-xu.com/tags/valid-palindrome/"/>
     
@@ -238,9 +270,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="length of last word" scheme="http://adora-xu.com/tags/length-of-last-word/"/>
     
@@ -271,9 +303,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="majority element" scheme="http://adora-xu.com/tags/majority-element/"/>
     
@@ -304,9 +336,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="remove duplicates from sorted array" scheme="http://adora-xu.com/tags/remove-duplicates-from-sorted-array/"/>
     
@@ -337,9 +369,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="longest common prefix" scheme="http://adora-xu.com/tags/longest-common-prefix/"/>
     
@@ -370,9 +402,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="longest common prefix" scheme="http://adora-xu.com/tags/longest-common-prefix/"/>
     
@@ -403,9 +435,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="roman to integer" scheme="http://adora-xu.com/tags/roman-to-integer/"/>
     
@@ -436,9 +468,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="palindrome number" scheme="http://adora-xu.com/tags/palindrome-number/"/>
     
@@ -500,9 +532,9 @@
     
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
     
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="merge sorted array" scheme="http://adora-xu.com/tags/merge-sorted-array/"/>
     
@@ -628,9 +660,9 @@ border-style:dashed;
     
     <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
-    
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
+    
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="simple calendar" scheme="http://adora-xu.com/tags/simple-calendar/"/>
     
@@ -670,46 +702,6 @@ border-style:dashed;
     <category term="amazon" scheme="http://adora-xu.com/tags/amazon/"/>
     
     <category term="s3" scheme="http://adora-xu.com/tags/s3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
-    <link href="http://adora-xu.com/2023/12/24/rails-admin-layout-devise/"/>
-    <id>http://adora-xu.com/2023/12/24/rails-admin-layout-devise/</id>
-    <published>2023-12-24T04:03:04.000Z</published>
-    <updated>2024-01-15T04:28:03.620Z</updated>
-    
-    <content type="html"><![CDATA[<style>.em-div{background-color: #d4a373;color: white;padding: 10px;margin: 10px;border-radius: 5px;}.em-div2{border:2px #d4a373 solid;margin:5px;padding:10px 2px 2px 2px;border-style:dashed;}.image-container {  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */  border-radius: 10px; /* 圓角效果 */  overflow: hidden; /* 超出部分隱藏 */  margin: 5px; /* 留白效果 */}</style><h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container"><img src="/images/rails_admin_layout_devise/banner.png"></div><p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p><p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p><blockquote><p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p></blockquote><p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p><p>以下為實作步驟：</p><ul><li>new一個新專案，我名稱設為blog，也可以設定別的</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure><ul><li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure><ul><li>新增pages_controller＆home.html.erb</li></ul><p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure><ul><li>利用scaffold做CRUD的流程</li></ul><p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure><div class="image-container"><img src="/images/rails_admin_layout_devise/01.png"></div><ul><li>設定routes</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure><ul><li>安裝Devise &amp; 生成使用者</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure><p>devise會自動幫你增加檔案，真的很方便</p><ul><li>生一個migration，增加role欄位到User資料表</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure><ul><li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure><ul><li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p><code>current_user&amp;.admin?</code></p><p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p><p>可以用 &amp;. 簡化</p><p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p><p>如果不是的話， layout就使用預設導入application</p><ul><li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li></ul><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure><p>接著可以到home.html.erb頁面，寫跳轉的判斷</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure><p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p><p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p><p>接著就大功告成了！！</p><p>這是剛剛步驟做出的首頁</p><div class="image-container"><img src="/images/rails_admin_layout_devise/03.png"></div><p>登入頁面</p><div class="image-container"><img src="/images/rails_admin_layout_devise/04.png"></div><p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p><p>搭配指令，來快速指定某使用者的role</p><div class="image-container"><img src="/images/rails_admin_layout_devise/05.png"></div><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure><p>登入成功後，就有管理者的介面了！！</p><div class="image-container"><img src="/images/rails_admin_layout_devise/06.png"></div><p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p><p>讓他的介面看起來和一般使用者有區隔</p><p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p><p>這整個步驟大約10分鐘就可以完成了！！</p><p>有興趣也可以試看看～～</p><hr><p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;style&gt;
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 s</summary>
-      
-    
-    
-    
-    <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
-    
-    
-    <category term="devise" scheme="http://adora-xu.com/tags/devise/"/>
-    
-    <category term="rails7" scheme="http://adora-xu.com/tags/rails7/"/>
-    
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
-    
-    <category term="layout" scheme="http://adora-xu.com/tags/layout/"/>
     
   </entry>
   
