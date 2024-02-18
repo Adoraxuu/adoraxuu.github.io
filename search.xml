@@ -360,9 +360,9 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>CodeWars:credit card mask</title>
+    <title>CodeWars: credit card mask</title>
     <url>/2024/02/16/codewars-credit-card-mask/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
 <p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
 <h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
 <p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
@@ -385,9 +385,11 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>CodeWars:sum of digits / digital root</title>
+    <title>CodeWars: sum of digits / digital root</title>
     <url>/2024/02/18/codewars-sum-of-digits-digital-root/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/541c8630095125aba6000c00">Codewars</a><br>一樣會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br>&lt;img src&#x3D;&#x2F;images&#x2F;codewars-sum-of-digits-digital-root&#x2F;0218.png”&gt;</p>
+    <content><![CDATA[<p>這也是這幾天遇到程式的面試題目，一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/541c8630095125aba6000c00">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p>
+<img src="/images/codewars-digital-root/0218.png">
+
 <p>今天解的是<code>6kyu</code>的難度，做這個題目前想到<code>生命靈數</code>也是這樣取的，把自己的西元出生年月日依序加起來，得到的個位數就是自己的<code>生命靈數</code>。</p>
 <p>可以使用<code>兩種</code>方法來解，一種是<code>遞迴</code>，一種經由<code>公式推導</code>計算式，解法如下：</p>
 <h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法一</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  n &lt; <span class="hljs-number">10</span> ? n : digital_root(n.digits.sum)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>

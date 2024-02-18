@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>CodeWars:credit card mask | Adora&#39;s Blog</title>
+<title>CodeWars: credit card mask | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Ruby, JavaScript, codewars, Python, credit card mask">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">CodeWars:credit card mask</h1>
+  <h1 class="post-title__text">CodeWars: credit card mask</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/02/" class="post-meta__date button">2024-02-16</a> 
     <span class="separate-dot"></span><a href="/categories/codewars/" class="button">codewars</a>
@@ -146,7 +146,7 @@
     
   </div>
 
-  <div class="post__content"><p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a target="_blank" rel="noopener" href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
+  <div class="post__content"><p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a target="_blank" rel="noopener" href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
 <p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
 <h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
 <p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
@@ -158,7 +158,7 @@
 <p>Codewars 7kyu的題目和leetcode easy相比稍微簡單一點，很適合練習不同程式的基本用法～很可惜前幾天的Leetcode挑戰斷在Day 15，接下來繼續努力o(^∀^*)o</p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-02-16</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/credit-card-mask/" class="post-tags__link button"># credit card mask</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-18</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/credit-card-mask/" class="post-tags__link button"># credit card mask</a></div>
 </article>
 
 
@@ -181,7 +181,7 @@
       </div>
       <div>
         <div class="nav__label">Previous Post</div>
-        <div class="nav__title">CodeWars:sum of digits / digital root</div>
+        <div class="nav__title">CodeWars: sum of digits / digital root</div>
       </div>
     </a>
     
