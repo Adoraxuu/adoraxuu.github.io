@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adora-xu.com/2024/02/18/codewars-sum-of-digits-digital-root/</loc>
+    
+    <lastmod>2024-02-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://adora-xu.com/2024/02/20/codewars-sum-of-a-sequence/</loc>
     
     <lastmod>2024-02-20</lastmod>
@@ -12,15 +21,6 @@
   
   <url>
     <loc>http://adora-xu.com/2024/02/16/codewars-credit-card-mask/</loc>
-    
-    <lastmod>2024-02-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/2024/02/18/codewars-sum-of-digits-digital-root/</loc>
     
     <lastmod>2024-02-18</lastmod>
     
@@ -445,7 +445,7 @@
 
   <url>
     <loc>http://adora-xu.com/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -453,413 +453,420 @@
   
   <url>
     <loc>http://adora-xu.com/tags/codewars/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Ruby/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/JavaScript/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Python/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/AOC/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Advent-of-code/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Rails/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/MVC/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/AWS/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Ruby-on-Rails/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/active-stroage/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/amazon/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/s3/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/defer/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/async/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Web/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/rendering/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/credit-card-mask/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Sum-of-a-sequence/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/sum-of-digits/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/digital-root/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/%E9%81%9E%E8%BF%B4/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/recursion/</loc>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/hoisting/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/%E8%AE%8A%E6%95%B8%E6%8F%90%E5%8D%87/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/Event-Loop/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/leetcode/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/excel-sheet-column-title/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/length-of-last-word/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/longest-common-prefix/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/majority-element/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/merge-sorted-array/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/palindrome-number/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/plus-one/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/remove-duplicates-from-sorted-array/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/roman-to-integer/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/single-number/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/sqrtx/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/two-sum/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/valid-palindrome/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/line-pay/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/API/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/line-pay-API/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/line-pay-v3/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/v3/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/faraday/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/%E9%87%91%E6%B5%81/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/devise/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/rails7/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/rails/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/layout/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/search-insert-position/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/ruby/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/simple-calendar/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/gem/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/var/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/let/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/const/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/%E8%BD%89%E8%81%B7/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/tags/%E8%81%B7%E6%B6%AF/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -868,42 +875,42 @@
   
   <url>
     <loc>http://adora-xu.com/categories/codewars/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/categories/Ruby/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/categories/Ruby-on-Rails/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/categories/JavaScript/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/categories/leetcode/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://adora-xu.com/categories/%E8%81%B7%E6%B6%AF/</loc>
-    <lastmod>2024-02-20</lastmod>
+    <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
