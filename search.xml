@@ -63,9 +63,9 @@ match會回傳符合內容的物件，看起來像這個樣子：
         <category>Ruby</category>
       </categories>
       <tags>
-        <tag>Ruby</tag>
         <tag>AOC</tag>
         <tag>Advent of code</tag>
+        <tag>Ruby</tag>
       </tags>
   </entry>
   <entry>
@@ -377,11 +377,33 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <category>codewars</category>
       </categories>
       <tags>
-        <tag>codewars</tag>
         <tag>Ruby</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>credit card mask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeWars: Square every digit</title>
+    <url>/2024/02/20/codewars-square-every-digit/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/546e2562b03326a88e000020">Codewars - Square Every Digit</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-square-every-digit/0220_2.png"></p>
+<p>這次的題目就是將輸入的內容拆開為陣列，各別平方後，再加入組合起來就能得到答案了٩(^ᴗ^)۶</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>)<br>  num.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span>&#125;.join.to_i<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>聽到<code>各別</code>兩個字，腦中一定會自動聯想到<code>map</code>，這題也是使用<code>map</code>個字平方後再使用<code>join</code>組合成字串後，再使用<code>to_i</code>返還數字</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(digit)**<span class="hljs-number">2</span>) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(num)))<br></code></pre></td></tr></table></figure>
+<p><code>python</code>則是寫法稍微不同，可以使用<code>for digit in str(num)</code>即可</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">squareDigits</span>(<span class="hljs-params">num</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(num.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">digit</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(digit)**<span class="hljs-number">2</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">10</span>);<br>  &#125;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>codewars</tag>
+        <tag>Python</tag>
+        <tag>square every digit</tag>
       </tags>
   </entry>
   <entry>
@@ -403,9 +425,9 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <category>codewars</category>
       </categories>
       <tags>
-        <tag>codewars</tag>
         <tag>Ruby</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>Sum of a sequence</tag>
       </tags>
@@ -444,9 +466,9 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <category>codewars</category>
       </categories>
       <tags>
-        <tag>codewars</tag>
         <tag>Ruby</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>sum of digits</tag>
         <tag>digital root</tag>

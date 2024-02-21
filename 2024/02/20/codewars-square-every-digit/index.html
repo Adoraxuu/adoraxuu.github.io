@@ -43,10 +43,10 @@
  <!-- meta -->
 
 
-<title>CodeWars: Sum of a sequence | Adora&#39;s Blog</title>
+<title>CodeWars: Square every digit | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, JavaScript, codewars, Python, Sum of a sequence">
+    <meta name="keywords" content="Ruby, JavaScript, codewars, Python, square every digit">
 
 
  <!-- OpenGraph -->
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">CodeWars: Sum of a sequence</h1>
+  <h1 class="post-title__text">CodeWars: Square every digit</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/02/" class="post-meta__date button">2024-02-20</a> 
     <span class="separate-dot"></span><a href="/categories/codewars/" class="button">codewars</a>
@@ -146,53 +146,29 @@
     
   </div>
 
-  <div class="post__content"><p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a target="_blank" rel="noopener" href="https://www.codewars.com/kata/586f6741c66d18c22800010a">Codewars - Sum of a sequence</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/Sum-of-a-sequence/0220.png"></p>
-<p>這個題目也蠻有趣的，會給三個值<code>(begin,end,step)</code>，如果<code>begin &gt; end</code>則回傳<code>0</code>，沒有的話就以<code>step</code>為差，由<code>begin</code>加總至<code>end</code>，只要讀懂了題目依序寫成程式碼答案就出來了୧☉□☉୨</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>)<br>  (begin_number..end_number).step(step).sum<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby的<code>step</code>有一個有趣的地方，只要範圍不對的話，就會回傳0，<br>所以如果<code>begin_number</code>&gt;<code>end_number</code>，即會回傳0，而不需要多加判斷</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br></code></pre></td></tr></table></figure>
-<p>和<code>ruby</code>不一樣的地方是，<code>python</code>的<code>Range</code>如果是<code>range(1,4)</code>，出現的結果會是<code>[1,2,3]</code>並不會包含最後一位數，所以這裡需要<code>+1</code></p>
-<p>而Python和Ruby一樣，如果加總的範圍不對的話會回傳<code>0</code>，因此不需要額外填寫判斷式。<br>可以參考範例:</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br><br><span class="hljs-comment"># 範例</span><br><span class="hljs-built_in">print</span>(sequence_sum(<span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>))   <span class="hljs-comment"># 輸出: 0</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sequenceSum</span>(<span class="hljs-params">begin, end, step</span>) &#123;<br>    <span class="hljs-keyword">if</span> (begin &gt; end) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(&#123; <span class="hljs-attr">length</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((end - begin) / step) + <span class="hljs-number">1</span> &#125;, <span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> begin + i * step).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, num</span>) =&gt;</span> sum + num, <span class="hljs-number">0</span>);<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
-<p>JS就沒那麼多好用的方法，但因為加總的公式也不複雜，這裡就使用判斷式+加總的公式解，效率也比較高～</p>
+  <div class="post__content"><p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a target="_blank" rel="noopener" href="https://www.codewars.com/kata/546e2562b03326a88e000020">Codewars - Square Every Digit</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-square-every-digit/0220_2.png"></p>
+<p>這次的題目就是將輸入的內容拆開為陣列，各別平方後，再加入組合起來就能得到答案了٩(^ᴗ^)۶</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>)<br>  num.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span>&#125;.join.to_i<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>聽到<code>各別</code>兩個字，腦中一定會自動聯想到<code>map</code>，這題也是使用<code>map</code>個字平方後再使用<code>join</code>組合成字串後，再使用<code>to_i</code>返還數字</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(digit)**<span class="hljs-number">2</span>) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(num)))<br></code></pre></td></tr></table></figure>
+<p><code>python</code>則是寫法稍微不同，可以使用<code>for digit in str(num)</code>即可</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">squareDigits</span>(<span class="hljs-params">num</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(num.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">digit</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(digit)**<span class="hljs-number">2</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">10</span>);<br>  &#125;<br></code></pre></td></tr></table></figure>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-02-20</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Sum-of-a-sequence/" class="post-tags__link button"># Sum of a sequence</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-20</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/square-every-digit/" class="post-tags__link button"># square every digit</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2024/02/20/codewars-square-every-digit/" class="nav__link">
-      <div>
-        <svg
-          viewBox="0 0 1024 1024"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
-            fill="#808080"
-          ></path>
-        </svg>
-      </div>
-      <div>
-        <div class="nav__label">Previous Post</div>
-        <div class="nav__title">CodeWars: Square every digit</div>
-      </div>
-    </a>
-    
   </div>
   <div class="nav__next">
     
-    <a href="/2024/02/18/codewars-sum-of-digits-digital-root/" class="nav__link">
+    <a href="/2024/02/20/codewars-sum-of-a-sequence/" class="nav__link">
       <div>
         <div class="nav__label">Next Post</div>
-        <div class="nav__title">CodeWars: sum of digits / digital root（02/21更新）</div>
+        <div class="nav__title">CodeWars: Sum of a sequence</div>
       </div>
       <div>
         <svg
