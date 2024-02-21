@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adora-xu.com/2024/02/21/codewars-highest-and-lowest/</loc>
+    
+    <lastmod>2024-02-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://adora-xu.com/2024/02/18/codewars-sum-of-digits-digital-root/</loc>
     
     <lastmod>2024-02-21</lastmod>
@@ -461,20 +470,6 @@
 
   
   <url>
-    <loc>http://adora-xu.com/tags/AOC/</loc>
-    <lastmod>2024-02-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://adora-xu.com/tags/Advent-of-code/</loc>
-    <lastmod>2024-02-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://adora-xu.com/tags/Ruby/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -531,6 +526,20 @@
   </url>
   
   <url>
+    <loc>http://adora-xu.com/tags/AOC/</loc>
+    <lastmod>2024-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/Advent-of-code/</loc>
+    <lastmod>2024-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://adora-xu.com/tags/JavaScript/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -581,6 +590,13 @@
   
   <url>
     <loc>http://adora-xu.com/tags/credit-card-mask/</loc>
+    <lastmod>2024-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://adora-xu.com/tags/highest-and-lowest/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -671,14 +687,14 @@
   </url>
   
   <url>
-    <loc>http://adora-xu.com/tags/longest-common-prefix/</loc>
+    <loc>http://adora-xu.com/tags/majority-element/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://adora-xu.com/tags/majority-element/</loc>
+    <loc>http://adora-xu.com/tags/longest-common-prefix/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -890,14 +906,14 @@
 
   
   <url>
-    <loc>http://adora-xu.com/categories/Ruby/</loc>
+    <loc>http://adora-xu.com/categories/Ruby-on-Rails/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://adora-xu.com/categories/Ruby-on-Rails/</loc>
+    <loc>http://adora-xu.com/categories/Ruby/</loc>
     <lastmod>2024-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

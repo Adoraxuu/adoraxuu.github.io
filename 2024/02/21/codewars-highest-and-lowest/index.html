@@ -43,8 +43,10 @@
  <!-- meta -->
 
 
-<title>About me | Adora&#39;s Blog</title>
+<title>CodeWars:highest and lowest | Adora&#39;s Blog</title>
 
+
+    <meta name="keywords" content="Ruby, JavaScript, codewars, Python, highest and lowest">
 
 
  <!-- OpenGraph -->
@@ -119,9 +121,11 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">About me</h1>
+  <h1 class="post-title__text">CodeWars:highest and lowest</h1>
   <div class="post-title__meta">
-    <a href="/archives/2023/11/" class="post-meta__date button">2023-11-01</a> 
+    <a href="/archives/2024/02/" class="post-meta__date button">2024-02-21</a> 
+    <span class="separate-dot"></span><a href="/categories/codewars/" class="button">codewars</a>
+
  
     
     
@@ -142,39 +146,49 @@
     
   </div>
 
-  <div class="post__content"><style>
-.ava-block{
-    text-align: center;
-}
-
-.avatar{
-    height: 45%;
-    width: 45%;
-}
-</style>
-<div class="ava-block">
-<img class="avatar" src="/img/avatar6.jpeg" alt="">
+  <div class="post__content"><p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a target="_blank" rel="noopener" href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>)<br>  numbers.split.map(&amp;<span class="hljs-symbol">:to_i</span>).minmax.reverse.join(<span class="hljs-string">&#x27; &#x27;</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby有一個蠻好用的方法，<a target="_blank" rel="noopener" href="https://rubyapi.org/3.3/o/s?q=minmax">Array#minmax</a>，可以回傳陣列的最小值和最大值，範例如下：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>].minmax <span class="hljs-comment"># =&gt; [0, 2]</span><br></code></pre></td></tr></table></figure>
+<p>但題目是<code>high_and_low</code>，所以需要<code>reverse</code>，並使用<code>.join(&#39; &#39;)</code>將陣列轉為字串。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>):<br>    numbers = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, numbers.split()))<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(numbers)&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(numbers)&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+<p><code>f&quot;&#123;max(numbers)&#125; &#123;min(numbers)&#125;&quot;</code>這裡使用<a target="_blank" rel="noopener" href="https://docs.python.org/zh-tw/3/tutorial/inputoutput.html">f-string</a>將最大值和最小值插入到字符串中</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">highAndLow</span>(<span class="hljs-params">numbers</span>) &#123;<br>    <span class="hljs-keyword">const</span> nums = numbers.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.max(...nums)&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.min(...nums)&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>JS和Python也是用類似方法～</p>
 </div>
 
-<h2 id="關於我"><a href="#關於我" class="headerlink" title="關於我"></a>關於我</h2><ul>
-<li>💛 我是 <strong>Adora</strong></li>
-<li>💡 熱愛學習新技術，永不停歇</li>
-<li>🌈 分享學習的技術知識，一起成長</li>
-<li>🌟 喜歡將生活分享變成有趣的故事</li>
-<li>🚀 希望能夠成為 full stack developer</li>
-<li>📝 這個 Blog 是使用 Hexo 架設而成，採用主題 [Cards] © <a target="_blank" rel="noopener" href="https://github.com/ChrAlpha">ChrAlpha</a>，也歡迎多交流！</li>
-</ul>
-<h2 id="你可以找到我"><a href="#你可以找到我" class="headerlink" title="你可以找到我"></a>你可以找到我</h2><ul>
-<li>📧 Email: <a href="mailto:&#x61;&#100;&#x6f;&#114;&#x61;&#x78;&#x75;&#x30;&#x31;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;">&#x61;&#100;&#x6f;&#114;&#x61;&#x78;&#x75;&#x30;&#x31;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a></li>
-<li>🐈 GitHub: <a target="_blank" rel="noopener" href="https://github.com/Adoraxuu">Adoraxuu</a></li>
-<li>📸 Instagram: <a target="_blank" rel="noopener" href="https://www.instagram.com/yin.001/">yin.001</a></li>
-<li>如果你對技術、生活、或是任何其他有趣的話題感興趣，歡迎隨時與我聯繫！🌸<!--</li>
-</ul>
-</div>
-
-   <div class="post-footer__meta"><p>updated at 2024-01-30</p></div> <div class="post-entry__tags"></div>
+   <div class="post-footer__meta"><p>updated at 2024-02-21</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/highest-and-lowest/" class="post-tags__link button"># highest and lowest</a></div>
 </article>
 
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/02/20/codewars-square-every-digit/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">CodeWars: Square every digit</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
  
 <div
   class="post__comments content-card"
