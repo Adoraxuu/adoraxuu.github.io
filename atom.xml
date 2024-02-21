@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-02-21T05:23:36.662Z</updated>
+  <updated>2024-02-21T05:28:41.961Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>CodeWars:highest and lowest</title>
+    <title>CodeWars: Highest and lowest</title>
     <link href="http://adora-xu.com/2024/02/21/codewars-highest-and-lowest/"/>
     <id>http://adora-xu.com/2024/02/21/codewars-highest-and-lowest/</id>
     <published>2024-02-21T05:15:26.000Z</published>
-    <updated>2024-02-21T05:23:36.662Z</updated>
+    <updated>2024-02-21T05:28:41.961Z</updated>
     
     <content type="html"><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>)<br>  numbers.split.map(&amp;<span class="hljs-symbol">:to_i</span>).minmax.reverse.join(<span class="hljs-string">&#x27; &#x27;</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>Ruby有一個蠻好用的方法，<a href="https://rubyapi.org/3.3/o/s?q=minmax">Array#minmax</a>，可以回傳陣列的最小值和最大值，範例如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>].minmax <span class="hljs-comment"># =&gt; [0, 2]</span><br></code></pre></td></tr></table></figure><p>但題目是<code>high_and_low</code>，所以需要<code>reverse</code>，並使用<code>.join(&#39; &#39;)</code>將陣列轉為字串。</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>):<br>    numbers = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, numbers.split()))<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(numbers)&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(numbers)&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure><p><code>f&quot;&#123;max(numbers)&#125; &#123;min(numbers)&#125;&quot;</code>這裡使用<a href="https://docs.python.org/zh-tw/3/tutorial/inputoutput.html">f-string</a>將最大值和最小值插入到字符串中</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">highAndLow</span>(<span class="hljs-params">numbers</span>) &#123;<br>    <span class="hljs-keyword">const</span> nums = numbers.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.max(...nums)&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.min(...nums)&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure><p>JS和Python也是用類似方法～</p>]]></content>
     
