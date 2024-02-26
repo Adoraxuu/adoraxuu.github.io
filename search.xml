@@ -749,6 +749,41 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode: happy number</title>
+    <url>/2024/02/26/leetcode-happy-number/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題</p>
+<img src="/images/leetcode-happy-number/happy-number.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/happy-number/description/">leetcode</a></p>
+<p>其實這題和之前解過的<a href="https://adora-xu.com/2024/02/20/codewars-square-every-digit/">square every digit</a>蠻像的，都要將個別的數字平方，不過這裡多了判斷加總是否等於1的步驟。</p>
+<p>其實到這步就可以寫出程式碼，利用不斷迭代加上判斷式，判斷是否為快樂數。<br>以Ruby示範可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>)<br>  <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span><br>    n = n.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span> &#125;.sum<br>  <span class="hljs-keyword">end</span><br>  n == <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>但如果想要程式碼效率更高一點呢？</p>
+<p>就需要更了解快樂數一點，關於快樂數的介紹，可以參考維基百科：<a href="https://zh.wikipedia.org/zh-tw/%E5%BF%AB%E6%A8%82%E6%95%B8">快樂數</a></p>
+<p>其中有提到：</p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><code class="hljs tap">不是快樂數的數稱為不快樂數（英語：unhappy number），所有不快樂數的數位平方和計算，最後都會進入<span class="hljs-number"> 4 </span>→<span class="hljs-number"> 16 </span>→<span class="hljs-number"> 37 </span>→<span class="hljs-number"> 58 </span>→<span class="hljs-number"> 89 </span>→<span class="hljs-number"> 145 </span>→<span class="hljs-number"> 42 </span>→<span class="hljs-number"> 20 </span>→<span class="hljs-number"> 4 </span>的循環中。<br></code></pre></td></tr></table></figure>
+<p>因此，如果數字有<code>4</code>可以先排除，因為會進到無限循環中，這時程式碼變成了這樣：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>)<br>  <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span> &amp;&amp; n != <span class="hljs-number">4</span><br>    n = n.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span> &#125;.sum<br>  <span class="hljs-keyword">end</span><br>  n == <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>也可以把循環的數字，製作成一個<code>set</code>，避掉所有不快樂數無限循環的可能：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>)<br>  cycle_set = <span class="hljs-title class_">Set</span>.new([<span class="hljs-number">4</span>, <span class="hljs-number">16</span>, <span class="hljs-number">37</span>, <span class="hljs-number">58</span>, <span class="hljs-number">89</span>, <span class="hljs-number">145</span>, <span class="hljs-number">42</span>, <span class="hljs-number">20</span>])<br><br>  <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span> &amp;&amp; !cycle_set.<span class="hljs-keyword">include</span>?(n)<br>    n = n.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span> &#125;.sum<br>  <span class="hljs-keyword">end</span><br><br>  n == <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>因為覺得第二種解法比較直觀，效率也比較好，因此<code>python</code> &amp; <code>js</code>我都使用第二種寫法：</p>
+<h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> n != <span class="hljs-number">4</span>:<br>        n = <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">int</span>(digit) ** <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(n))<br>    <span class="hljs-keyword">return</span> n == <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isHappy</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">while</span> (n !== <span class="hljs-number">1</span> &amp;&amp; n !== <span class="hljs-number">4</span>) &#123;<br>        n = <span class="hljs-title class_">String</span>(n).<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, digit</span>) =&gt;</span> sum + digit ** <span class="hljs-number">2</span>, <span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> n === <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>happy number</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day05 longest common prefix</title>
     <url>/2024/02/03/leetcode-longest-common-prefix/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
@@ -778,52 +813,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Python</tag>
         <tag>leetcode</tag>
         <tag>longest common prefix</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day08 majority element</title>
-    <url>/2024/02/06/leetcode-majority-element/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
-<img src="/images/leetcode-majority-element/0206.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
-<p>在讀題目的時候，發現有一個小細節，題目寫要找出出現次數大於<code>[n/2]</code>的數字，且假定這個數字一定存在Array中。那也就代表，只要找出最常出現的數就可以了，因為陣列中只要其中一個數出現的數量大於<code>[n/2]</code>，剩下的數出現次數就不會大於<code>[n/2]</code>，可以想像成，西瓜被挖走一半多一點，剩下的西瓜再怎麼分都沒辦法大於一半。</p>
-<p>所以這題只要找出，出現次數最多的數字即可！讓我們開始解題吧～</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_element</span>(<span class="hljs-params">nums</span>)<br>  nums.tally.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>這裡使用了<a href="https://rubyapi.org/3.3/o/s?q=tally">tally</a></p>
-<p>在Ruby API的解釋為：</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><code class="hljs applescript">Enumerable<span class="hljs-comment">#tally</span><br>Returns a hash containing <span class="hljs-keyword">the</span> counts <span class="hljs-keyword">of</span> <span class="hljs-keyword">equal</span> elements:<br>Each key <span class="hljs-keyword">is</span> an element <span class="hljs-keyword">of</span> self.<br>Each value <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">number</span> elements <span class="hljs-keyword">equal</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">that</span> key.<br></code></pre></td></tr></table></figure>
-<p>意思就是建立一個hash，key是<code>self</code>，value是出現的次數，簡單的範例：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = <span class="hljs-string">%w[a b c b c a c b]</span>.tally<br>puts result<br><span class="hljs-comment"># =&gt; &#123;&quot;a&quot;=&gt;2, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3&#125;</span><br></code></pre></td></tr></table></figure>
-
-<p>建立了hash之後，即可以使用<a href="https://rubyapi.org/3.3/o/s?q=max_by">max_by</a>，<code>max_by</code>，<code>max_by</code>允許輸入值為{}，會返還{}內最大的值，因為返還的會是<code>Array</code>，來看一下範例：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;<br>puts result<br><span class="hljs-comment">#[:bar, 10]</span><br></code></pre></td></tr></table></figure>
-
-<p>如果只要取出key呢？可以使用<code>[0]</code>來取出Array的第一個數，也是<code>Array</code>內最常出現的<code>key</code>:</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br>puts result<br><span class="hljs-comment">#10</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> Counter(nums).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
-
-<p>在python計算數量可以使用<a href="https://docs.python.org/zh-tw/3/library/collections.html#collections.Counter">Counter()物件</a>，來看看範例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br>words = [<span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>]<br>cnt = Counter()<br>cnt.update(words)<br><br><span class="hljs-built_in">print</span>(cnt)<br><span class="hljs-comment">#Counter(&#123;&#x27;blue&#x27;: 3, &#x27;red&#x27;: 2, &#x27;green&#x27;: 1&#125;)</span><br></code></pre></td></tr></table></figure>
-
-<p>接著可以使用<code>.most_common(1)[0][0]</code>，<code>(1)</code>代表取出第一個結果，這時輸出的值會是<code>[(3, 2)]</code>，因此還必須要使用<code>[0][0]</code>代表取出第一組Array的第一個數才會得到解答！</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> majority;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> num <span class="hljs-keyword">of</span> nums) &#123;<br>        <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) &#123;<br>            majority = num;<br>        &#125;<br><br>        count += (num === majority) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> majority;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>JS我採用的是<a href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95">摩爾投票法</a>，消除不同元素之間的票數，最終保留的就是可能的主要元素。</p>
-<p>一開始先把<code>count</code>設定為0，如果接下來遇到的數字相同<code>count + 1</code>，不同<code>count - 1</code>，如果<code>count</code>又變回 0（代表刪掉一樣數量的a &amp; b），這時就會更改<code>majority = num</code>，最後殘存活下來的就是<code>majority</code>了！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>majority element</tag>
       </tags>
   </entry>
   <entry>
@@ -873,6 +862,52 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Python</tag>
         <tag>leetcode</tag>
         <tag>merge sorted array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day08 majority element</title>
+    <url>/2024/02/06/leetcode-majority-element/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
+<img src="/images/leetcode-majority-element/0206.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
+<p>在讀題目的時候，發現有一個小細節，題目寫要找出出現次數大於<code>[n/2]</code>的數字，且假定這個數字一定存在Array中。那也就代表，只要找出最常出現的數就可以了，因為陣列中只要其中一個數出現的數量大於<code>[n/2]</code>，剩下的數出現次數就不會大於<code>[n/2]</code>，可以想像成，西瓜被挖走一半多一點，剩下的西瓜再怎麼分都沒辦法大於一半。</p>
+<p>所以這題只要找出，出現次數最多的數字即可！讓我們開始解題吧～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_element</span>(<span class="hljs-params">nums</span>)<br>  nums.tally.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這裡使用了<a href="https://rubyapi.org/3.3/o/s?q=tally">tally</a></p>
+<p>在Ruby API的解釋為：</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><code class="hljs applescript">Enumerable<span class="hljs-comment">#tally</span><br>Returns a hash containing <span class="hljs-keyword">the</span> counts <span class="hljs-keyword">of</span> <span class="hljs-keyword">equal</span> elements:<br>Each key <span class="hljs-keyword">is</span> an element <span class="hljs-keyword">of</span> self.<br>Each value <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">number</span> elements <span class="hljs-keyword">equal</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">that</span> key.<br></code></pre></td></tr></table></figure>
+<p>意思就是建立一個hash，key是<code>self</code>，value是出現的次數，簡單的範例：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = <span class="hljs-string">%w[a b c b c a c b]</span>.tally<br>puts result<br><span class="hljs-comment"># =&gt; &#123;&quot;a&quot;=&gt;2, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>建立了hash之後，即可以使用<a href="https://rubyapi.org/3.3/o/s?q=max_by">max_by</a>，<code>max_by</code>，<code>max_by</code>允許輸入值為{}，會返還{}內最大的值，因為返還的會是<code>Array</code>，來看一下範例：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;<br>puts result<br><span class="hljs-comment">#[:bar, 10]</span><br></code></pre></td></tr></table></figure>
+
+<p>如果只要取出key呢？可以使用<code>[0]</code>來取出Array的第一個數，也是<code>Array</code>內最常出現的<code>key</code>:</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br>puts result<br><span class="hljs-comment">#10</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> Counter(nums).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+
+<p>在python計算數量可以使用<a href="https://docs.python.org/zh-tw/3/library/collections.html#collections.Counter">Counter()物件</a>，來看看範例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br>words = [<span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>]<br>cnt = Counter()<br>cnt.update(words)<br><br><span class="hljs-built_in">print</span>(cnt)<br><span class="hljs-comment">#Counter(&#123;&#x27;blue&#x27;: 3, &#x27;red&#x27;: 2, &#x27;green&#x27;: 1&#125;)</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以使用<code>.most_common(1)[0][0]</code>，<code>(1)</code>代表取出第一個結果，這時輸出的值會是<code>[(3, 2)]</code>，因此還必須要使用<code>[0][0]</code>代表取出第一組Array的第一個數才會得到解答！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> majority;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> num <span class="hljs-keyword">of</span> nums) &#123;<br>        <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) &#123;<br>            majority = num;<br>        &#125;<br><br>        count += (num === majority) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> majority;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS我採用的是<a href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95">摩爾投票法</a>，消除不同元素之間的票數，最終保留的就是可能的主要元素。</p>
+<p>一開始先把<code>count</code>設定為0，如果接下來遇到的數字相同<code>count + 1</code>，不同<code>count - 1</code>，如果<code>count</code>又變回 0（代表刪掉一樣數量的a &amp; b），這時就會更改<code>majority = num</code>，最後殘存活下來的就是<code>majority</code>了！</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>majority element</tag>
       </tags>
   </entry>
   <entry>

@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-02-21T05:30:53.813Z</updated>
+  <updated>2024-02-26T03:30:43.674Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode: happy number</title>
+    <link href="http://adora-xu.com/2024/02/26/leetcode-happy-number/"/>
+    <id>http://adora-xu.com/2024/02/26/leetcode-happy-number/</id>
+    <published>2024-02-26T03:26:48.000Z</published>
+    <updated>2024-02-26T03:30:43.674Z</updated>
+    
+    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題</p><img src="/images/leetcode-happy-number/happy-number.png"><p>題目來源：<a href="https://leetcode.com/problems/happy-number/description/">leetcode</a></p><p>其實這題和之前解過的<a href="https://adora-xu.com/2024/02/20/codewars-square-every-digit/">square every digit</a>蠻像的，都要將個別的數字平方，不過這裡多了判斷加總是否等於1的步驟。</p><p>其實到這步就可以寫出程式碼，利用不斷迭代加上判斷式，判斷是否為快樂數。<br>以Ruby示範可以這樣寫：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>)<br>  <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span><br>    n = n.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span> &#125;.sum<br>  <span class="hljs-keyword">end</span><br>  n == <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>但如果想要程式碼效率更高一點呢？</p><p>就需要更了解快樂數一點，關於快樂數的介紹，可以參考維基百科：<a href="https://zh.wikipedia.org/zh-tw/%E5%BF%AB%E6%A8%82%E6%95%B8">快樂數</a></p><p>其中有提到：</p><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">不是快樂數的數稱為不快樂數（英語：unhappy number），所有不快樂數的數位平方和計算，最後都會進入<span class="hljs-number"> 4 </span>→<span class="hljs-number"> 16 </span>→<span class="hljs-number"> 37 </span>→<span class="hljs-number"> 58 </span>→<span class="hljs-number"> 89 </span>→<span class="hljs-number"> 145 </span>→<span class="hljs-number"> 42 </span>→<span class="hljs-number"> 20 </span>→<span class="hljs-number"> 4 </span>的循環中。<br></code></pre></td></tr></table></figure><p>因此，如果數字有<code>4</code>可以先排除，因為會進到無限循環中，這時程式碼變成了這樣：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>)<br>  <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span> &amp;&amp; n != <span class="hljs-number">4</span><br>    n = n.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span> &#125;.sum<br>  <span class="hljs-keyword">end</span><br>  n == <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>也可以把循環的數字，製作成一個<code>set</code>，避掉所有不快樂數無限循環的可能：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>)<br>  cycle_set = <span class="hljs-title class_">Set</span>.new([<span class="hljs-number">4</span>, <span class="hljs-number">16</span>, <span class="hljs-number">37</span>, <span class="hljs-number">58</span>, <span class="hljs-number">89</span>, <span class="hljs-number">145</span>, <span class="hljs-number">42</span>, <span class="hljs-number">20</span>])<br><br>  <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span> &amp;&amp; !cycle_set.<span class="hljs-keyword">include</span>?(n)<br>    n = n.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span> &#125;.sum<br>  <span class="hljs-keyword">end</span><br><br>  n == <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>因為覺得第二種解法比較直觀，效率也比較好，因此<code>python</code> &amp; <code>js</code>我都使用第二種寫法：</p><h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> n != <span class="hljs-number">4</span>:<br>        n = <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">int</span>(digit) ** <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(n))<br>    <span class="hljs-keyword">return</span> n == <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure><h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isHappy</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">while</span> (n !== <span class="hljs-number">1</span> &amp;&amp; n !== <span class="hljs-number">4</span>) &#123;<br>        n = <span class="hljs-title class_">String</span>(n).<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, digit</span>) =&gt;</span> sum + digit ** <span class="hljs-number">2</span>, <span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> n === <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題&lt;/p&gt;
+&lt;img src=&quot;/images/leetcode</summary>
+      
+    
+    
+    
+    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
+    
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
+    
+    <category term="happy number" scheme="http://adora-xu.com/tags/happy-number/"/>
+    
+  </entry>
   
   <entry>
     <title>CodeWars: highest and lowest</title>
@@ -638,39 +671,6 @@
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="two sum" scheme="http://adora-xu.com/tags/two-sum/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day01 merge sorted array</title>
-    <link href="http://adora-xu.com/2024/01/30/leetcode-merge-sorted-array/"/>
-    <id>http://adora-xu.com/2024/01/30/leetcode-merge-sorted-array/</id>
-    <published>2024-01-30T13:59:31.000Z</published>
-    <updated>2024-02-01T13:48:44.607Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p><img src="/images/leet-code-day-1/1.png"><p>題目來源：<a href="https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">nums1, m, nums2, n</span>)<br>  nums1.replace((nums1[<span class="hljs-number">0</span>...m] + nums2).sort)<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># 測試</span><br>nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>m = <span class="hljs-number">3</span><br>nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>n = <span class="hljs-number">3</span><br><br>merge(nums1, m, nums2, n)<br>result_array = nums1.take(m + n)<br>puts result_array<br></code></pre></td></tr></table></figure><p>使用<code>replace</code>取代，</p><p><code>nums1[0..m]</code>為取位置0..m的陣列內容，再使用 <code>+nums2</code>，將兩個陣列內容組合起來，最後使用sort完成遞增排序。</p><p>Ruby蠻簡潔的！</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Do not return anything, modify nums1 in-place instead.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        nums1[m:] = nums2<br>        nums1.sort()<br></code></pre></td></tr></table></figure><p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[m:] = nums2</code>:將nums2添加到切片後的nums1內<br>最後再使用<code>sort</code>排序<code>nums1[:m]</code></p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ruby">var merge = function(nums1, m, nums2, n) &#123;<br>  nums1.splice(<span class="hljs-number">0</span>, m + n, ...nums1.slice(<span class="hljs-number">0</span>, m).concat(nums2).sort((a, b) =&gt; a - b));<br>&#125;;<br><br><span class="hljs-regexp">//</span> 測試<br>var nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>var m = <span class="hljs-number">3</span>;<br>var nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br>var n = <span class="hljs-number">3</span>;<br><br>merge(nums1, m, nums2, n);<br>console.log(nums1);<br></code></pre></td></tr></table></figure><p><code>slice</code></p><ul><li><code>arr.slice([begin[, end]])</code></li><li>slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分。而原本的陣列將不會被修改。</li><li>使用在這裡是要刪掉num1重複的部分，插入num2</li></ul><p><code>splice</code></p><ul><li><code>array.splice(start[, deleteCount[, item1[, item2[, ...]]]])</code></li><li>splice() 方法可以藉由刪除既有元素並／或加入新元素來改變一個陣列的內容。</li><li>在這裡是要加入num1+num2組合的內容</li><li>範例：</li></ul><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> months = [<span class="hljs-string">&#x27;Jan&#x27;</span>, <span class="hljs-string">&#x27;March&#x27;</span>, <span class="hljs-string">&#x27;April&#x27;</span>, <span class="hljs-string">&#x27;June&#x27;</span>];<br>months.<span class="hljs-title function_">splice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Feb&#x27;</span>);<br><span class="hljs-comment">// Inserts at index 1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(months);<br><span class="hljs-comment">// Expected output: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;, &quot;April&quot;, &quot;June&quot;]</span><br></code></pre></td></tr></table></figure><ul><li><code>nums1.splice(0, m + n, ...)</code>將合併且排序的數組插入到nums1的開始位置，取代原有的元素，其中0是開始位置，m + n是要刪除的元素數量，…是展開運算符，用於將排序後的數組展開成單獨的元素。</li><li>這個函數的目的是將兩個已排序的數組 nums1 和 nums2 合併，並將結果存儲在 nums1 中，同時保持排序狀態。</li></ul><hr><p>參考：<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">MDN</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第一天，讓我們開始吧！&lt;/p&gt;
-&lt;img src=&quot;/</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="merge sorted array" scheme="http://adora-xu.com/tags/merge-sorted-array/"/>
     
   </entry>
   
