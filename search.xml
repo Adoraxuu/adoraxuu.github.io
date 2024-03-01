@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Advent of code 2023 —Day 01</title>
-    <url>/2023/12/17/AOC-day01/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
-<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
-</blockquote>
-<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
-<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
-<p>這是第一天 Part 1的題目：</p>
-<img src="/images/AOC/01.png">
-
-<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
-<img src="/images/AOC/02.png">
-
-<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
-<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
-<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
-<div class="em-div2">
-
-<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
-</div>
-match會回傳符合內容的物件，看起來像這個樣子：
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
-
-<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
-<img src="/images/AOC/03.png">
-
-<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
-<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
-<p>如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby</category>
-      </categories>
-      <tags>
-        <tag>AOC</tag>
-        <tag>Advent of code</tag>
-        <tag>Ruby</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: MVC是什麼?</title>
     <url>/2023/12/02/MVC/</url>
     <content><![CDATA[<style>
@@ -250,6 +182,74 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>Advent of code 2023 —Day 01</title>
+    <url>/2023/12/17/AOC-day01/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
+<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
+</blockquote>
+<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
+<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
+<p>這是第一天 Part 1的題目：</p>
+<img src="/images/AOC/01.png">
+
+<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
+<img src="/images/AOC/02.png">
+
+<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
+<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
+<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
+<div class="em-div2">
+
+<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
+</div>
+match會回傳符合內容的物件，看起來像這個樣子：
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
+
+<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
+<img src="/images/AOC/03.png">
+
+<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
+<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
+<p>如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>AOC</tag>
+        <tag>Advent of code</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript: defer vs async</title>
     <url>/2023/11/18/async-vs-defer/</url>
     <content><![CDATA[<style>
@@ -360,6 +360,30 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>CodeWars: highest and lowest</title>
+    <url>/2024/02/21/codewars-highest-and-lowest/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>)<br>  numbers.split.map(&amp;<span class="hljs-symbol">:to_i</span>).minmax.reverse.join(<span class="hljs-string">&#x27; &#x27;</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby有一個蠻好用的方法，<a href="https://rubyapi.org/3.3/o/s?q=minmax">Array#minmax</a>，可以回傳陣列的最小值和最大值，範例如下：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>].minmax <span class="hljs-comment"># =&gt; [0, 2]</span><br></code></pre></td></tr></table></figure>
+<p>但題目是<code>high_and_low</code>，所以需要<code>reverse</code>，並使用<code>.join(&#39; &#39;)</code>將陣列轉為字串。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>):<br>    numbers = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, numbers.split()))<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(numbers)&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(numbers)&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+<p><code>f&quot;&#123;max(numbers)&#125; &#123;min(numbers)&#125;&quot;</code>這裡使用<a href="https://docs.python.org/zh-tw/3/tutorial/inputoutput.html">f-string</a>將最大值和最小值插入到字符串中</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">highAndLow</span>(<span class="hljs-params">numbers</span>) &#123;<br>    <span class="hljs-keyword">const</span> nums = numbers.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.max(...nums)&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.min(...nums)&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>JS和Python也是用類似方法～</p>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>codewars</tag>
+        <tag>Python</tag>
+        <tag>highest and lowest</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CodeWars: square every digit</title>
     <url>/2024/02/20/codewars-square-every-digit/</url>
     <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/546e2562b03326a88e000020">Codewars - Square Every Digit</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-square-every-digit/0220_2.png"></p>
@@ -379,6 +403,31 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>codewars</tag>
         <tag>Python</tag>
         <tag>square every digit</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeWars: credit card mask</title>
+    <url>/2024/02/16/codewars-credit-card-mask/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
+<p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
+<p>如果沒有大於4碼，就直接顯示<code>cc</code>即可 ٩(^ᴗ^)۶</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;#&quot;</span> * (<span class="hljs-built_in">len</span>(cc)-<span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>:]<br></code></pre></td></tr></table></figure>
+<p>Python比較特別，如果字串<code>*</code>小於等於零的數字，會返還空值。<br>所以這裡不需要使用判斷式就可以完成o(^▽^)o</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>) &#123;<br>    <span class="hljs-keyword">return</span> cc.<span class="hljs-property">length</span> &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span>.<span class="hljs-title function_">repeat</span>(cc.<span class="hljs-property">length</span> - <span class="hljs-number">4</span>) + cc.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">4</span>) : cc<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>JS和Ruby的解法邏輯一樣，使用三元運算子判斷長度<code>cc.length</code>是否 &gt; 4，如果大於的話則返回扣掉4個長度的<code> &quot;#&quot;.repeat(cc.length - 4)</code>+最後四碼<code>cc.slice(-4)</code>，如果小於4直接返還<code>cc</code></p>
+<p>Codewars 7kyu的題目和leetcode easy相比稍微簡單一點，很適合練習不同程式的基本用法～很可惜前幾天的Leetcode挑戰斷在Day 15，接下來繼續努力o(^∀^*)o</p>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>codewars</tag>
+        <tag>Python</tag>
+        <tag>credit card mask</tag>
       </tags>
   </entry>
   <entry>
@@ -423,32 +472,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>digital root</tag>
         <tag>遞迴</tag>
         <tag>recursion</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CodeWars: sum of a sequence</title>
-    <url>/2024/02/20/codewars-sum-of-a-sequence/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/586f6741c66d18c22800010a">Codewars - Sum of a sequence</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/Sum-of-a-sequence/0220.png"></p>
-<p>這個題目也蠻有趣的，會給三個值<code>(begin,end,step)</code>，如果<code>begin &gt; end</code>則回傳<code>0</code>，沒有的話就以<code>step</code>為差，由<code>begin</code>加總至<code>end</code>，只要讀懂了題目依序寫成程式碼答案就出來了୧☉□☉୨</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>)<br>  (begin_number..end_number).step(step).sum<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby的<code>step</code>有一個有趣的地方，只要範圍不對的話，就會回傳0，<br>所以如果<code>begin_number</code>&gt;<code>end_number</code>，即會回傳0，而不需要多加判斷</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br></code></pre></td></tr></table></figure>
-<p>和<code>ruby</code>不一樣的地方是，<code>python</code>的<code>Range</code>如果是<code>range(1,4)</code>，出現的結果會是<code>[1,2,3]</code>並不會包含最後一位數，所以這裡需要<code>+1</code></p>
-<p>而Python和Ruby一樣，如果加總的範圍不對的話會回傳<code>0</code>，因此不需要額外填寫判斷式。<br>可以參考範例:</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br><br><span class="hljs-comment"># 範例</span><br><span class="hljs-built_in">print</span>(sequence_sum(<span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>))   <span class="hljs-comment"># 輸出: 0</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sequenceSum</span>(<span class="hljs-params">begin, end, step</span>) &#123;<br>    <span class="hljs-keyword">if</span> (begin &gt; end) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(&#123; <span class="hljs-attr">length</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((end - begin) / step) + <span class="hljs-number">1</span> &#125;, <span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> begin + i * step).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, num</span>) =&gt;</span> sum + num, <span class="hljs-number">0</span>);<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
-<p>JS就沒那麼多好用的方法，但因為加總的公式也不複雜，這裡就使用判斷式+加總的公式解，效率也比較高～</p>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>codewars</tag>
-        <tag>Python</tag>
-        <tag>Sum of a sequence</tag>
       </tags>
   </entry>
   <entry>
@@ -558,6 +581,32 @@ ReferenceError: Cannot access 'a' before initialization
       </tags>
   </entry>
   <entry>
+    <title>CodeWars: sum of a sequence</title>
+    <url>/2024/02/20/codewars-sum-of-a-sequence/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/586f6741c66d18c22800010a">Codewars - Sum of a sequence</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/Sum-of-a-sequence/0220.png"></p>
+<p>這個題目也蠻有趣的，會給三個值<code>(begin,end,step)</code>，如果<code>begin &gt; end</code>則回傳<code>0</code>，沒有的話就以<code>step</code>為差，由<code>begin</code>加總至<code>end</code>，只要讀懂了題目依序寫成程式碼答案就出來了୧☉□☉୨</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>)<br>  (begin_number..end_number).step(step).sum<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby的<code>step</code>有一個有趣的地方，只要範圍不對的話，就會回傳0，<br>所以如果<code>begin_number</code>&gt;<code>end_number</code>，即會回傳0，而不需要多加判斷</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br></code></pre></td></tr></table></figure>
+<p>和<code>ruby</code>不一樣的地方是，<code>python</code>的<code>Range</code>如果是<code>range(1,4)</code>，出現的結果會是<code>[1,2,3]</code>並不會包含最後一位數，所以這裡需要<code>+1</code></p>
+<p>而Python和Ruby一樣，如果加總的範圍不對的話會回傳<code>0</code>，因此不需要額外填寫判斷式。<br>可以參考範例:</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br><br><span class="hljs-comment"># 範例</span><br><span class="hljs-built_in">print</span>(sequence_sum(<span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>))   <span class="hljs-comment"># 輸出: 0</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sequenceSum</span>(<span class="hljs-params">begin, end, step</span>) &#123;<br>    <span class="hljs-keyword">if</span> (begin &gt; end) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(&#123; <span class="hljs-attr">length</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((end - begin) / step) + <span class="hljs-number">1</span> &#125;, <span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> begin + i * step).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, num</span>) =&gt;</span> sum + num, <span class="hljs-number">0</span>);<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
+<p>JS就沒那麼多好用的方法，但因為加總的公式也不複雜，這裡就使用判斷式+加總的公式解，效率也比較高～</p>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>codewars</tag>
+        <tag>Python</tag>
+        <tag>Sum of a sequence</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript: 究竟什麼是 Event Loop？</title>
     <url>/2023/11/08/javascript-event-loop/</url>
     <content><![CDATA[<style>
@@ -642,55 +691,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>CodeWars: highest and lowest</title>
-    <url>/2024/02/21/codewars-highest-and-lowest/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>)<br>  numbers.split.map(&amp;<span class="hljs-symbol">:to_i</span>).minmax.reverse.join(<span class="hljs-string">&#x27; &#x27;</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby有一個蠻好用的方法，<a href="https://rubyapi.org/3.3/o/s?q=minmax">Array#minmax</a>，可以回傳陣列的最小值和最大值，範例如下：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>].minmax <span class="hljs-comment"># =&gt; [0, 2]</span><br></code></pre></td></tr></table></figure>
-<p>但題目是<code>high_and_low</code>，所以需要<code>reverse</code>，並使用<code>.join(&#39; &#39;)</code>將陣列轉為字串。</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>):<br>    numbers = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, numbers.split()))<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(numbers)&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(numbers)&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
-<p><code>f&quot;&#123;max(numbers)&#125; &#123;min(numbers)&#125;&quot;</code>這裡使用<a href="https://docs.python.org/zh-tw/3/tutorial/inputoutput.html">f-string</a>將最大值和最小值插入到字符串中</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">highAndLow</span>(<span class="hljs-params">numbers</span>) &#123;<br>    <span class="hljs-keyword">const</span> nums = numbers.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.max(...nums)&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.min(...nums)&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>JS和Python也是用類似方法～</p>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>codewars</tag>
-        <tag>Python</tag>
-        <tag>highest and lowest</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CodeWars: credit card mask</title>
-    <url>/2024/02/16/codewars-credit-card-mask/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
-<p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
-<p>如果沒有大於4碼，就直接顯示<code>cc</code>即可 ٩(^ᴗ^)۶</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;#&quot;</span> * (<span class="hljs-built_in">len</span>(cc)-<span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>:]<br></code></pre></td></tr></table></figure>
-<p>Python比較特別，如果字串<code>*</code>小於等於零的數字，會返還空值。<br>所以這裡不需要使用判斷式就可以完成o(^▽^)o</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>) &#123;<br>    <span class="hljs-keyword">return</span> cc.<span class="hljs-property">length</span> &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span>.<span class="hljs-title function_">repeat</span>(cc.<span class="hljs-property">length</span> - <span class="hljs-number">4</span>) + cc.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">4</span>) : cc<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>JS和Ruby的解法邏輯一樣，使用三元運算子判斷長度<code>cc.length</code>是否 &gt; 4，如果大於的話則返回扣掉4個長度的<code> &quot;#&quot;.repeat(cc.length - 4)</code>+最後四碼<code>cc.slice(-4)</code>，如果小於4直接返還<code>cc</code></p>
-<p>Codewars 7kyu的題目和leetcode easy相比稍微簡單一點，很適合練習不同程式的基本用法～很可惜前幾天的Leetcode挑戰斷在Day 15，接下來繼續努力o(^∀^*)o</p>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>codewars</tag>
-        <tag>Python</tag>
-        <tag>credit card mask</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day15 excel sheet column title</title>
     <url>/2024/02/13/leetcode-excel-sheet-column-title/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十五天，讓我們開始吧！</p>
@@ -769,6 +769,33 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day09 length of last word</title>
+    <url>/2024/02/07/leetcode-length-of-last-word/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第九天，讓我們開始吧！</p>
+<img src="/images/leetcode-length-of-last-word/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
+<p>因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。</p>
+<p>這個題目不會再取用原始給予的<code>input</code>值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純一點～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_last_word</span>(<span class="hljs-params">s</span>)<br>  s.strip.split(<span class="hljs-string">&#x27; &#x27;</span>).last.length<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby可以使用<a href="https://rubyapi.org/3.3/o/s?q=strip">strip</a>去除前後的空格，接著使用<code>split(&#39; &#39;)</code>將空格拆分為陣列，取出<code>last.length</code>就找出答案了～</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s.strip().split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<p>Python也是使用<a href="https://docs.python.org/3/library/stdtypes.html">strip</a>，接著使用<code>split(&#39; &#39;)</code>拆分為陣列，這個和Ruby相同。最後使用<code>[-1]</code>取出最後一位數，再使用<code>len()</code>包住取出長度即可～</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLastWord = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">pop</span>().<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>JS去除前後的空格使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>length of last word</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day05 longest common prefix</title>
     <url>/2024/02/03/leetcode-longest-common-prefix/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
@@ -801,20 +828,39 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day09 length of last word</title>
-    <url>/2024/02/07/leetcode-length-of-last-word/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第九天，讓我們開始吧！</p>
-<img src="/images/leetcode-length-of-last-word/1.png">
+    <title>Leetcode挑戰: Day08 majority element</title>
+    <url>/2024/02/06/leetcode-majority-element/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
+<img src="/images/leetcode-majority-element/0206.png">
 
-<p>題目來源：<a href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
-<p>因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。</p>
-<p>這個題目不會再取用原始給予的<code>input</code>值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純一點～</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_last_word</span>(<span class="hljs-params">s</span>)<br>  s.strip.split(<span class="hljs-string">&#x27; &#x27;</span>).last.length<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby可以使用<a href="https://rubyapi.org/3.3/o/s?q=strip">strip</a>去除前後的空格，接著使用<code>split(&#39; &#39;)</code>將空格拆分為陣列，取出<code>last.length</code>就找出答案了～</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s.strip().split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
-<p>Python也是使用<a href="https://docs.python.org/3/library/stdtypes.html">strip</a>，接著使用<code>split(&#39; &#39;)</code>拆分為陣列，這個和Ruby相同。最後使用<code>[-1]</code>取出最後一位數，再使用<code>len()</code>包住取出長度即可～</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLastWord = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">pop</span>().<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>JS去除前後的空格使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>
+<p>題目來源：<a href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
+<p>在讀題目的時候，發現有一個小細節，題目寫要找出出現次數大於<code>[n/2]</code>的數字，且假定這個數字一定存在Array中。那也就代表，只要找出最常出現的數就可以了，因為陣列中只要其中一個數出現的數量大於<code>[n/2]</code>，剩下的數出現次數就不會大於<code>[n/2]</code>，可以想像成，西瓜被挖走一半多一點，剩下的西瓜再怎麼分都沒辦法大於一半。</p>
+<p>所以這題只要找出，出現次數最多的數字即可！讓我們開始解題吧～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_element</span>(<span class="hljs-params">nums</span>)<br>  nums.tally.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這裡使用了<a href="https://rubyapi.org/3.3/o/s?q=tally">tally</a></p>
+<p>在Ruby API的解釋為：</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><code class="hljs applescript">Enumerable<span class="hljs-comment">#tally</span><br>Returns a hash containing <span class="hljs-keyword">the</span> counts <span class="hljs-keyword">of</span> <span class="hljs-keyword">equal</span> elements:<br>Each key <span class="hljs-keyword">is</span> an element <span class="hljs-keyword">of</span> self.<br>Each value <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">number</span> elements <span class="hljs-keyword">equal</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">that</span> key.<br></code></pre></td></tr></table></figure>
+<p>意思就是建立一個hash，key是<code>self</code>，value是出現的次數，簡單的範例：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = <span class="hljs-string">%w[a b c b c a c b]</span>.tally<br>puts result<br><span class="hljs-comment"># =&gt; &#123;&quot;a&quot;=&gt;2, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>建立了hash之後，即可以使用<a href="https://rubyapi.org/3.3/o/s?q=max_by">max_by</a>，<code>max_by</code>，<code>max_by</code>允許輸入值為{}，會返還{}內最大的值，因為返還的會是<code>Array</code>，來看一下範例：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;<br>puts result<br><span class="hljs-comment">#[:bar, 10]</span><br></code></pre></td></tr></table></figure>
+
+<p>如果只要取出key呢？可以使用<code>[0]</code>來取出Array的第一個數，也是<code>Array</code>內最常出現的<code>key</code>:</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br>puts result<br><span class="hljs-comment">#10</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> Counter(nums).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+
+<p>在python計算數量可以使用<a href="https://docs.python.org/zh-tw/3/library/collections.html#collections.Counter">Counter()物件</a>，來看看範例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br>words = [<span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>]<br>cnt = Counter()<br>cnt.update(words)<br><br><span class="hljs-built_in">print</span>(cnt)<br><span class="hljs-comment">#Counter(&#123;&#x27;blue&#x27;: 3, &#x27;red&#x27;: 2, &#x27;green&#x27;: 1&#125;)</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以使用<code>.most_common(1)[0][0]</code>，<code>(1)</code>代表取出第一個結果，這時輸出的值會是<code>[(3, 2)]</code>，因此還必須要使用<code>[0][0]</code>代表取出第一組Array的第一個數才會得到解答！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> majority;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> num <span class="hljs-keyword">of</span> nums) &#123;<br>        <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) &#123;<br>            majority = num;<br>        &#125;<br><br>        count += (num === majority) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> majority;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS我採用的是<a href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95">摩爾投票法</a>，消除不同元素之間的票數，最終保留的就是可能的主要元素。</p>
+<p>一開始先把<code>count</code>設定為0，如果接下來遇到的數字相同<code>count + 1</code>，不同<code>count - 1</code>，如果<code>count</code>又變回 0（代表刪掉一樣數量的a &amp; b），這時就會更改<code>majority = num</code>，最後殘存活下來的就是<code>majority</code>了！</p>
 ]]></content>
       <categories>
         <category>leetcode</category>
@@ -824,7 +870,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>Python</tag>
         <tag>leetcode</tag>
-        <tag>length of last word</tag>
+        <tag>majority element</tag>
       </tags>
   </entry>
   <entry>
@@ -902,52 +948,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Python</tag>
         <tag>leetcode</tag>
         <tag>palindrome number</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day08 majority element</title>
-    <url>/2024/02/06/leetcode-majority-element/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
-<img src="/images/leetcode-majority-element/0206.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
-<p>在讀題目的時候，發現有一個小細節，題目寫要找出出現次數大於<code>[n/2]</code>的數字，且假定這個數字一定存在Array中。那也就代表，只要找出最常出現的數就可以了，因為陣列中只要其中一個數出現的數量大於<code>[n/2]</code>，剩下的數出現次數就不會大於<code>[n/2]</code>，可以想像成，西瓜被挖走一半多一點，剩下的西瓜再怎麼分都沒辦法大於一半。</p>
-<p>所以這題只要找出，出現次數最多的數字即可！讓我們開始解題吧～</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_element</span>(<span class="hljs-params">nums</span>)<br>  nums.tally.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>這裡使用了<a href="https://rubyapi.org/3.3/o/s?q=tally">tally</a></p>
-<p>在Ruby API的解釋為：</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><code class="hljs applescript">Enumerable<span class="hljs-comment">#tally</span><br>Returns a hash containing <span class="hljs-keyword">the</span> counts <span class="hljs-keyword">of</span> <span class="hljs-keyword">equal</span> elements:<br>Each key <span class="hljs-keyword">is</span> an element <span class="hljs-keyword">of</span> self.<br>Each value <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">number</span> elements <span class="hljs-keyword">equal</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">that</span> key.<br></code></pre></td></tr></table></figure>
-<p>意思就是建立一個hash，key是<code>self</code>，value是出現的次數，簡單的範例：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = <span class="hljs-string">%w[a b c b c a c b]</span>.tally<br>puts result<br><span class="hljs-comment"># =&gt; &#123;&quot;a&quot;=&gt;2, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3&#125;</span><br></code></pre></td></tr></table></figure>
-
-<p>建立了hash之後，即可以使用<a href="https://rubyapi.org/3.3/o/s?q=max_by">max_by</a>，<code>max_by</code>，<code>max_by</code>允許輸入值為{}，會返還{}內最大的值，因為返還的會是<code>Array</code>，來看一下範例：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;<br>puts result<br><span class="hljs-comment">#[:bar, 10]</span><br></code></pre></td></tr></table></figure>
-
-<p>如果只要取出key呢？可以使用<code>[0]</code>來取出Array的第一個數，也是<code>Array</code>內最常出現的<code>key</code>:</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br>puts result<br><span class="hljs-comment">#10</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> Counter(nums).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
-
-<p>在python計算數量可以使用<a href="https://docs.python.org/zh-tw/3/library/collections.html#collections.Counter">Counter()物件</a>，來看看範例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br>words = [<span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>]<br>cnt = Counter()<br>cnt.update(words)<br><br><span class="hljs-built_in">print</span>(cnt)<br><span class="hljs-comment">#Counter(&#123;&#x27;blue&#x27;: 3, &#x27;red&#x27;: 2, &#x27;green&#x27;: 1&#125;)</span><br></code></pre></td></tr></table></figure>
-
-<p>接著可以使用<code>.most_common(1)[0][0]</code>，<code>(1)</code>代表取出第一個結果，這時輸出的值會是<code>[(3, 2)]</code>，因此還必須要使用<code>[0][0]</code>代表取出第一組Array的第一個數才會得到解答！</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> majority;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> num <span class="hljs-keyword">of</span> nums) &#123;<br>        <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) &#123;<br>            majority = num;<br>        &#125;<br><br>        count += (num === majority) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> majority;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>JS我採用的是<a href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95">摩爾投票法</a>，消除不同元素之間的票數，最終保留的就是可能的主要元素。</p>
-<p>一開始先把<code>count</code>設定為0，如果接下來遇到的數字相同<code>count + 1</code>，不同<code>count - 1</code>，如果<code>count</code>又變回 0（代表刪掉一樣數量的a &amp; b），這時就會更改<code>majority = num</code>，最後殘存活下來的就是<code>majority</code>了！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>majority element</tag>
       </tags>
   </entry>
   <entry>
@@ -1166,34 +1166,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day06 valid parentheses</title>
-    <url>/2024/02/04/leetcode-valid-parentheses/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
-<img src="/images/leetcode-valid-parentheses/0204.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>先設定一個名為<code>stack</code>的空陣列，還有左括號的hash，<br>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p>
-<p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure>
-<p><code>python</code>使用一樣的方式，不過因為<code>python</code>的添加<code>list</code>使用的是<code>append</code>，所以這裡我改用<code>stack.append(char)</code> </p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>longest common prefix</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: 串接LINE Pay API v3</title>
     <url>/2024/01/21/linepay/</url>
     <content><![CDATA[<style>
@@ -1351,6 +1323,188 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day06 valid parentheses</title>
+    <url>/2024/02/04/leetcode-valid-parentheses/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
+<img src="/images/leetcode-valid-parentheses/0204.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先設定一個名為<code>stack</code>的空陣列，還有左括號的hash，<br>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p>
+<p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure>
+<p><code>python</code>使用一樣的方式，不過因為<code>python</code>的添加<code>list</code>使用的是<code>append</code>，所以這裡我改用<code>stack.append(char)</code> </p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>longest common prefix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
+    <url>/2023/12/24/rails-admin-layout-devise/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+
+.image-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+  border-radius: 10px; /* 圓角效果 */
+  overflow: hidden; /* 超出部分隱藏 */
+  margin: 5px; /* 留白效果 */
+}
+</style>
+
+
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
+<img src="/images/rails_admin_layout_devise/banner.png">
+</div>
+
+<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
+<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
+<blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
+<p>以下為實作步驟：</p>
+<ul>
+<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新增pages_controller＆home.html.erb</li>
+</ul>
+<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>利用scaffold做CRUD的流程</li>
+</ul>
+<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/01.png">
+</div>
+
+<ul>
+<li>設定routes</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安裝Devise &amp; 生成使用者</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
+
+<p>devise會自動幫你增加檔案，真的很方便</p>
+<ul>
+<li>生一個migration，增加role欄位到User資料表</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><code>current_user&amp;.admin?</code></p>
+<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
+<p>可以用 &amp;. 簡化</p>
+<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
+<p>如果不是的話， layout就使用預設導入application</p>
+<ul>
+<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
+<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
+<p>接著就大功告成了！！</p>
+<p>這是剛剛步驟做出的首頁</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/03.png">
+</div>
+
+<p>登入頁面</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/04.png">
+</div>
+
+<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
+<p>搭配指令，來快速指定某使用者的role</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/05.png">
+</div>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
+
+<p>登入成功後，就有管理者的介面了！！</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/06.png">
+</div>
+
+<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
+<p>讓他的介面看起來和一般使用者有區隔</p>
+<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
+<p>這整個步驟大約10分鐘就可以完成了！！</p>
+<p>有興趣也可以試看看～～</p>
+<hr>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>devise</tag>
+        <tag>rails7</tag>
+        <tag>rails</tag>
+        <tag>layout</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python: PEP 8 程式碼風格指南 </title>
     <url>/2024/03/01/python-pep8-style-guide-for-python-code/</url>
     <content><![CDATA[<img src="/images/python-pep8-style-guide-for-python-code/python-logo.png">
@@ -1358,7 +1512,7 @@ border-style:dashed;
 <blockquote>
 <p>圖片來源: <a href="https://www.python.org/community/logos/">Python.org</a></p>
 </blockquote>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>前陣子在練習寫Python時，總覺得怪怪的，後來才發現，因為我沒有去了解Python的書寫風格。<br>就像練習寫作文要了解句讀的規則，寫程式一開始，也需要清楚該程式的書寫風格，才能夠在打好基礎架構下精進。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>自己在練習寫Python時，常覺得怪怪的，後來才發現，是因為我沒有了解Python的書寫風格。<br>就像練習寫作文要了解句讀的規則，寫程式一開始，也需要清楚該程式的書寫風格，才能夠在打好基礎架構下精進。</p>
 <p>雖然目前有許多方便的小工具，能夠自動幫忙整理排版、縮排等等，但覺得自己應該要先知道為什麼，再利用工具，才能夠更順利～</p>
 <p>Python有定義了PEP(Python Enhancement Proposal)，裡面有許多章節，而其中的<a href="https://peps.python.org/pep-0008/">PEP 8 – Style Guide for Python Code</a>，則可以解決我的煩惱，因為PEP 8的內容有很多，以下文章會分享自己覺得常用的規範。</p>
 <h2 id="縮排-Indentation"><a href="#縮排-Indentation" class="headerlink" title="縮排 Indentation"></a><a href="https://peps.python.org/pep-0008/#indentation">縮排 Indentation</a></h2><ul>
@@ -1540,160 +1694,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
-    <url>/2023/12/24/rails-admin-layout-devise/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-
-.image-container {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
-  border-radius: 10px; /* 圓角效果 */
-  overflow: hidden; /* 超出部分隱藏 */
-  margin: 5px; /* 留白效果 */
-}
-</style>
-
-
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
-<img src="/images/rails_admin_layout_devise/banner.png">
-</div>
-
-<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
-<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
-<blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
-</blockquote>
-<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
-<p>以下為實作步驟：</p>
-<ul>
-<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>新增pages_controller＆home.html.erb</li>
-</ul>
-<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>利用scaffold做CRUD的流程</li>
-</ul>
-<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/01.png">
-</div>
-
-<ul>
-<li>設定routes</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>安裝Devise &amp; 生成使用者</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
-
-<p>devise會自動幫你增加檔案，真的很方便</p>
-<ul>
-<li>生一個migration，增加role欄位到User資料表</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p><code>current_user&amp;.admin?</code></p>
-<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
-<p>可以用 &amp;. 簡化</p>
-<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
-<p>如果不是的話， layout就使用預設導入application</p>
-<ul>
-<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
-<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
-<p>接著就大功告成了！！</p>
-<p>這是剛剛步驟做出的首頁</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/03.png">
-</div>
-
-<p>登入頁面</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/04.png">
-</div>
-
-<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
-<p>搭配指令，來快速指定某使用者的role</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/05.png">
-</div>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
-
-<p>登入成功後，就有管理者的介面了！！</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/06.png">
-</div>
-
-<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
-<p>讓他的介面看起來和一般使用者有區隔</p>
-<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
-<p>這整個步驟大約10分鐘就可以完成了！！</p>
-<p>有興趣也可以試看看～～</p>
-<hr>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>devise</tag>
-        <tag>rails7</tag>
-        <tag>rails</tag>
-        <tag>layout</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day13 search insert position</title>
     <url>/2024/02/11/search-insert-position/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
@@ -1845,85 +1845,6 @@ border-style:dashed;
         <tag>ruby</tag>
         <tag>simple calendar</tag>
         <tag>gem</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>職涯: 為什麼要轉職工程師?</title>
-    <url>/2024/01/28/why-choose-to-be-a-software-developer/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<p>「要不要當工程師？」<br>其實這這問題在我心中出現了很多次，第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
-<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，那時候智慧型手機、youtube不普及、沒有社群網站，也沒有現在隨處可見的教學。</p>
-<img src="/images/Transition/2.jpeg">
-
-<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
-<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。記得同學傳給我一個留言板的網址，可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
-<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
-<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
-<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
-<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
-<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，不過這段時間是我一段很美好的回憶，我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
-<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
-
-<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
-<p>第一次接觸正式的程式是高中時，當時唸資料處理科，每週都有6堂的計算機概論課、會到電腦教室上課。</p>
-<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。當時只覺得，程式真的好方便，過程好有趣！</p>
-<p>我很喜歡計算機概論這門課，記得當時有很多同學選擇資管系作爲大學升學的科系，但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，因此當時也沒有把工程師當作就業的選項。</p>
-<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
-
-<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
-<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，當初因為善於和人溝通、想要領到更多的薪水，所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
-<p>感謝金融業的經歷讓我對於財經市場有更多的認識，也在此時因為每日面對變化多端的金融市場和業績目標的要求，大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、說服客戶調整帳上資產、如何找到新的目標客戶、如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
-<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，只能夠根據當下的市場環境判斷並隨時調整，我發現自己沒有辦法對賣「不確定」的東西產生熱情。</p>
-<p>但這個時候該放棄嗎？<br>換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
-<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」，這時候我想起國小時做的第一個網頁，想起自己花了許多時間自已拼湊、實作到忘記時間，最後成功完成成品的時刻。</p>
-<div class="em-div">
-「想了這麼多年，要不這次就給自己一個機會呢？」
-</div>
-
-<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，這次我不想要再中途放棄，因為轉職要花費的成本很大，也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
-<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
-<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，報名了某平台的「程式設計入門」新手村萬元挑戰，這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，最後也順利完成了，每天學習的時候都很快樂。</p>
-<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課。</p>
-<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
-
-<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，因此這三個月的過程很精實。</p>
-<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，透過寫文章搜集資料的過程也能學習很多，這個部落格也是因此而產生出來的～</p>
-<img src="/images/7-2.jpeg">
-另外五倍還有許軟軟性課程，透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，昨天剛剛Demo Day結束。<p>
-
-
-<p>學習的過程中也發現：自己很喜歡和電腦溝通，因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
-<p>解決後還能夠再多想想，能有其他更好的作法嗎？也許是過往的工作經驗，已經讓我習慣面對挫折、解決挫折了，途中一定有遇到困難，但只要找出解決辦法就好，也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
-<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，常常寫到進入心流忘記時間，剛抬頭是白天，再次抬頭就是黑夜，更常常寫到忘記喝水、上廁所，但每一天都很開心。</p>
-<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
-<p>最想，如果能用一句話概括我轉職的原因：</p>
-<div class="em-div2">
-因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式；因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
-</div>
-
-]]></content>
-      <categories>
-        <category>職涯</category>
-      </categories>
-      <tags>
-        <tag>轉職</tag>
-        <tag>職涯</tag>
       </tags>
   </entry>
   <entry>
@@ -2148,6 +2069,85 @@ output: TypeError: Assignment to constant variable.
         <tag>var</tag>
         <tag>let</tag>
         <tag>const</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>職涯: 為什麼要轉職工程師?</title>
+    <url>/2024/01/28/why-choose-to-be-a-software-developer/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<p>「要不要當工程師？」<br>其實這這問題在我心中出現了很多次，第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
+<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，那時候智慧型手機、youtube不普及、沒有社群網站，也沒有現在隨處可見的教學。</p>
+<img src="/images/Transition/2.jpeg">
+
+<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
+<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。記得同學傳給我一個留言板的網址，可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
+<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
+<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
+<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
+<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
+<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，不過這段時間是我一段很美好的回憶，我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
+<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
+
+<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
+<p>第一次接觸正式的程式是高中時，當時唸資料處理科，每週都有6堂的計算機概論課、會到電腦教室上課。</p>
+<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。當時只覺得，程式真的好方便，過程好有趣！</p>
+<p>我很喜歡計算機概論這門課，記得當時有很多同學選擇資管系作爲大學升學的科系，但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，因此當時也沒有把工程師當作就業的選項。</p>
+<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
+
+<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
+<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，當初因為善於和人溝通、想要領到更多的薪水，所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
+<p>感謝金融業的經歷讓我對於財經市場有更多的認識，也在此時因為每日面對變化多端的金融市場和業績目標的要求，大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、說服客戶調整帳上資產、如何找到新的目標客戶、如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
+<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，只能夠根據當下的市場環境判斷並隨時調整，我發現自己沒有辦法對賣「不確定」的東西產生熱情。</p>
+<p>但這個時候該放棄嗎？<br>換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
+<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」，這時候我想起國小時做的第一個網頁，想起自己花了許多時間自已拼湊、實作到忘記時間，最後成功完成成品的時刻。</p>
+<div class="em-div">
+「想了這麼多年，要不這次就給自己一個機會呢？」
+</div>
+
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，這次我不想要再中途放棄，因為轉職要花費的成本很大，也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
+<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
+<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，報名了某平台的「程式設計入門」新手村萬元挑戰，這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，最後也順利完成了，每天學習的時候都很快樂。</p>
+<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課。</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
+
+<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，因此這三個月的過程很精實。</p>
+<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，透過寫文章搜集資料的過程也能學習很多，這個部落格也是因此而產生出來的～</p>
+<img src="/images/7-2.jpeg">
+另外五倍還有許軟軟性課程，透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，昨天剛剛Demo Day結束。<p>
+
+
+<p>學習的過程中也發現：自己很喜歡和電腦溝通，因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
+<p>解決後還能夠再多想想，能有其他更好的作法嗎？也許是過往的工作經驗，已經讓我習慣面對挫折、解決挫折了，途中一定有遇到困難，但只要找出解決辦法就好，也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，常常寫到進入心流忘記時間，剛抬頭是白天，再次抬頭就是黑夜，更常常寫到忘記喝水、上廁所，但每一天都很開心。</p>
+<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>最想，如果能用一句話概括我轉職的原因：</p>
+<div class="em-div2">
+因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式；因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
+</div>
+
+]]></content>
+      <categories>
+        <category>職涯</category>
+      </categories>
+      <tags>
+        <tag>轉職</tag>
+        <tag>職涯</tag>
       </tags>
   </entry>
 </search>
