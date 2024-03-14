@@ -501,46 +501,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>職涯: 五倍學院轉職之旅</title>
-    <url>/2024/03/14/from-relationshop-manager-to-software-engineer/</url>
-    <content><![CDATA[<img src="/images/from-relationshop-manager-to-software-engineer/01.JPG">
-
-<p>沒想到也輪到我分享轉職成功心得了！</p>
-<p>在做出轉職決定之前，我參考了許多人的轉職經驗，學長姐們分享的成功轉職故事，不僅鞏固了我的信心，也讓我受益匪淺。</p>
-<p>現在，我想分享我的轉職歷程，希望能幫助更多的人。</p>
-<p>轉職前的工作是外商銀行的客戶關係經理，感謝這份經歷讓我對金融環境有更多的認識、也增進了應對進退與溝通能力。也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，也發現自己對於販賣金融商品始終無法產生熱情。</p>
-<p>因此在經過深思熟慮之後，我選擇了轉職軟體工程師。</p>
-<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>為了讓自己確定轉職的決心，我先給自己一個月的時間自習線上課程，每天規定自己進度和要完成的事項，最後也順利完成進度。</p>
-<p>不過僅靠線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題，並且希望有業界經驗的老師引路，提供正確的學習方法。</p>
-<p>諮詢過多個機構後，因為師資透明、教學內容貼近業界等因素，我最後選擇了ASTRO Camp、五倍學院全端工程師培訓課。</p>
-<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><p>在報名完課程之後，五倍會寄送線上先修教材，為了在正式上課時能夠順利銜接，我在拿到先修課程後便規劃自己每日的進度、有時間的話也會跟著實作。</p>
-<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails, Git等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，每天課堂結束也有助教時間提供學生詢問，讓同學們不要帶著問題回家，因此這三個月的過程很精實。</p>
-<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯。</p>
-<p>另外，五倍學院也提供了許多軟性課程，如產品開發、簡報表達、職涯輔導和企業參訪等，這些課程讓我們了解業界實際的開發過程，為轉職之路奠定了堅實的基礎。</p>
-<p>在課程結束後，同學們會被分組進行實體專案的製作。從零開始與組員共同討論專題主題、內容和時程，這不僅讓我們通過實際操作來學習，還能夠培養團隊合作和解決問題的能力。<p></p>
-<h2 id="職涯輔導"><a href="#職涯輔導" class="headerlink" title="職涯輔導"></a>職涯輔導</h2><p>五倍提供的軟性課程中，讓我受益最深的就是職涯輔導課。老師會根據履歷提供有效的建議，並透過模擬面試，幫助面試者解決可能存在的盲點。</p>
-<p>在面試時，我也經常運用老師所教的「不管提到什麼，都要有實際的案例，如果能夠提供實際數字更好。」這個方法，使得我的履歷更具可信度。</p>
-<p>畢竟，工程師都講求實事求是，轉職成功並獲得offer也是大多數人參加課程的最終目標。我認為五倍在此提供的課程和建議都對我非常有幫助！</p>
-<h2 id="心態"><a href="#心態" class="headerlink" title="心態"></a>心態</h2><p>這次的轉職經驗讓我發現，正確的心態很重要，因為轉職的路上不免會遇到許多的挫折，除了可以多加利用五倍提供的資源（老師、助教、課務組等），我覺得最重要的還是要「相信自己並付諸行動」。</p>
-<p>我是一個很容易多想的人，因此在轉職時我時常鼓勵自己，只要一感到焦慮就去開電腦、寫code、寫部落格、刷leetcode、刷codewars、看教學影片，久而久之心中的焦慮會逐漸轉化為平靜和自信。</p>
-<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，因為有五倍的老師、助教、課務組的正確引導，讓我的轉職之路有了好的開始。</p>
-<p>在課程結束一個月左右，我拿到了多個軟體工程師offer，這是在轉職前我絕對想不到的。</p>
-<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
-<p>如果你還在猶豫不決，可以報名<a href="https://5xcampus.com/camp/">ASTRO Camp的說明會</a>，課務組不會推銷、都很親切，會詳細解答你的所有問題～</p>
-]]></content>
-      <categories>
-        <category>職涯</category>
-      </categories>
-      <tags>
-        <tag>轉職</tag>
-        <tag>職涯</tag>
-        <tag>五倍學院</tag>
-        <tag>ASTRO</tag>
-        <tag>ASTRO Camp</tag>
-        <tag>五倍</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
     <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
@@ -644,6 +604,46 @@ ReferenceError: Cannot access 'a' before initialization
         <tag>JavaScript</tag>
         <tag>hoisting</tag>
         <tag>變數提升</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>職涯: 五倍學院轉職之旅</title>
+    <url>/2024/03/14/from-relationshop-manager-to-software-engineer/</url>
+    <content><![CDATA[<img src="/images/from-relationshop-manager-to-software-engineer/01.JPG">
+
+<p>沒想到也輪到我分享轉職成功心得了！</p>
+<p>在做出轉職決定之前，我參考了許多人的轉職經驗，學長姐們分享的成功轉職故事，不僅鞏固了我的信心，也讓我受益匪淺。</p>
+<p>現在，我想分享我的轉職歷程，希望能幫助更多的人。</p>
+<p>轉職前的工作是外商銀行的客戶關係經理，感謝這份經歷讓我對金融環境有更多的認識、也增進了應對進退與溝通能力。也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，也發現自己對於販賣金融商品始終無法產生熱情。</p>
+<p>因此在經過深思熟慮之後，我選擇了轉職軟體工程師。</p>
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>為了讓自己確定轉職的決心，我先給自己一個月的時間自習線上課程，每天規定自己進度和要完成的事項，最後也順利完成進度。</p>
+<p>不過僅靠線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題，並且希望有業界經驗的老師引路，提供正確的學習方法。</p>
+<p>諮詢過多個機構後，因為師資透明、教學內容貼近業界等因素，我最後選擇了ASTRO Camp、五倍學院全端工程師培訓課。</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><p>在報名完課程之後，五倍會寄送線上先修教材，為了在正式上課時能夠順利銜接，我在拿到先修課程後便規劃自己每日的進度、有時間的話也會跟著實作。</p>
+<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails, Git等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，每天課堂結束也有助教時間提供學生詢問，讓同學們不要帶著問題回家，因此這三個月的過程很精實。</p>
+<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯。</p>
+<p>另外，五倍學院也提供了許多軟性課程，如產品開發、簡報表達、職涯輔導和企業參訪等，這些課程讓我們了解業界實際的開發過程，為轉職之路奠定了堅實的基礎。</p>
+<p>在課程結束後，同學們會被分組進行實體專案的製作。從零開始與組員共同討論專題主題、內容和時程，這不僅讓我們通過實際操作來學習，還能夠培養團隊合作和解決問題的能力。<p></p>
+<h2 id="職涯輔導"><a href="#職涯輔導" class="headerlink" title="職涯輔導"></a>職涯輔導</h2><p>五倍提供的軟性課程中，讓我受益最深的就是職涯輔導課。老師會根據履歷提供有效的建議，並透過模擬面試，幫助面試者解決可能存在的盲點。</p>
+<p>在面試時，我也經常運用老師所教的「不管提到什麼，都要有實際的案例，如果能夠提供實際數字更好。」這個方法，使得我的履歷更具可信度。</p>
+<p>畢竟，工程師都講求實事求是，轉職成功並獲得offer也是大多數人參加課程的最終目標。我認為五倍在此提供的課程和建議都對我非常有幫助！</p>
+<h2 id="心態"><a href="#心態" class="headerlink" title="心態"></a>心態</h2><p>這次的轉職經驗讓我發現，正確的心態很重要，因為轉職的路上不免會遇到許多的挫折，除了可以多加利用五倍提供的資源（老師、助教、課務組等），我覺得最重要的還是要「相信自己並付諸行動」。</p>
+<p>我是一個很容易多想的人，因此在轉職時我時常鼓勵自己，只要一感到焦慮就去開電腦、寫code、寫部落格、刷leetcode、刷codewars、看教學影片，久而久之心中的焦慮會逐漸轉化為平靜和自信。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，因為有五倍的老師、助教、課務組的正確引導，讓我的轉職之路有了好的開始。</p>
+<p>在課程結束一個月左右，我拿到了多個軟體工程師offer，這是在轉職前我絕對想不到的。</p>
+<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>如果你還在猶豫不決，可以報名<a href="https://5xcampus.com/camp/">ASTRO Camp的說明會</a>，課務組不會推銷、都很親切，會詳細解答你的所有問題～</p>
+]]></content>
+      <categories>
+        <category>職涯</category>
+      </categories>
+      <tags>
+        <tag>轉職</tag>
+        <tag>職涯</tag>
+        <tag>五倍學院</tag>
+        <tag>ASTRO</tag>
+        <tag>ASTRO Camp</tag>
+        <tag>五倍</tag>
       </tags>
   </entry>
   <entry>
@@ -914,55 +914,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day01 merge sorted array</title>
-    <url>/2024/01/30/leetcode-merge-sorted-array/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p>
-<img src="/images/leet-code-day-1/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">nums1, m, nums2, n</span>)<br>  nums1.replace((nums1[<span class="hljs-number">0</span>...m] + nums2).sort)<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># 測試</span><br>nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>m = <span class="hljs-number">3</span><br>nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>n = <span class="hljs-number">3</span><br><br>merge(nums1, m, nums2, n)<br>result_array = nums1.take(m + n)<br>puts result_array<br></code></pre></td></tr></table></figure>
-
-<p>使用<code>replace</code>取代，</p>
-<p><code>nums1[0..m]</code>為取位置0..m的陣列內容，再使用 <code>+nums2</code>，將兩個陣列內容組合起來，最後使用sort完成遞增排序。</p>
-<p>Ruby蠻簡潔的！</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Do not return anything, modify nums1 in-place instead.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        nums1[m:] = nums2<br>        nums1.sort()<br></code></pre></td></tr></table></figure>
-<p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[m:] = nums2</code>:將nums2添加到切片後的nums1內<br>最後再使用<code>sort</code>排序<code>nums1[:m]</code></p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">var merge = function(nums1, m, nums2, n) &#123;<br>  nums1.splice(<span class="hljs-number">0</span>, m + n, ...nums1.slice(<span class="hljs-number">0</span>, m).concat(nums2).sort((a, b) =&gt; a - b));<br>&#125;;<br><br><span class="hljs-regexp">//</span> 測試<br>var nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>var m = <span class="hljs-number">3</span>;<br>var nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br>var n = <span class="hljs-number">3</span>;<br><br>merge(nums1, m, nums2, n);<br>console.log(nums1);<br></code></pre></td></tr></table></figure>
-
-<p><code>slice</code></p>
-<ul>
-<li><code>arr.slice([begin[, end]])</code></li>
-<li>slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分。而原本的陣列將不會被修改。</li>
-<li>使用在這裡是要刪掉num1重複的部分，插入num2</li>
-</ul>
-<p><code>splice</code></p>
-<ul>
-<li><code>array.splice(start[, deleteCount[, item1[, item2[, ...]]]])</code></li>
-<li>splice() 方法可以藉由刪除既有元素並／或加入新元素來改變一個陣列的內容。</li>
-<li>在這裡是要加入num1+num2組合的內容</li>
-<li>範例：</li>
-</ul>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> months = [<span class="hljs-string">&#x27;Jan&#x27;</span>, <span class="hljs-string">&#x27;March&#x27;</span>, <span class="hljs-string">&#x27;April&#x27;</span>, <span class="hljs-string">&#x27;June&#x27;</span>];<br>months.<span class="hljs-title function_">splice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Feb&#x27;</span>);<br><span class="hljs-comment">// Inserts at index 1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(months);<br><span class="hljs-comment">// Expected output: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;, &quot;April&quot;, &quot;June&quot;]</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><code>nums1.splice(0, m + n, ...)</code>將合併且排序的數組插入到nums1的開始位置，取代原有的元素，其中0是開始位置，m + n是要刪除的元素數量，…是展開運算符，用於將排序後的數組展開成單獨的元素。</li>
-<li>這個函數的目的是將兩個已排序的數組 nums1 和 nums2 合併，並將結果存儲在 nums1 中，同時保持排序狀態。</li>
-</ul>
-<hr>
-<p>參考：<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">MDN</a></p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>merge sorted array</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day03 palindrome number</title>
     <url>/2024/02/01/leetcode-palindrome-number/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p>
@@ -1020,28 +971,42 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day04 roman to integer</title>
-    <url>/2024/02/02/leetcode-roman-to-integer/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
-<img src="/images/leetcode-roman-to-integer/1.png">
+    <title>Leetcode挑戰: Day01 merge sorted array</title>
+    <url>/2024/01/30/leetcode-merge-sorted-array/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第一天，讓我們開始吧！</p>
+<img src="/images/leet-code-day-1/1.png">
 
-<p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p>
-<p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p>
-<p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p>
-<p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure>
-<p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>題目來源：<a href="https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">nums1, m, nums2, n</span>)<br>  nums1.replace((nums1[<span class="hljs-number">0</span>...m] + nums2).sort)<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># 測試</span><br>nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>m = <span class="hljs-number">3</span><br>nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>n = <span class="hljs-number">3</span><br><br>merge(nums1, m, nums2, n)<br>result_array = nums1.take(m + n)<br>puts result_array<br></code></pre></td></tr></table></figure>
 
-<p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p>
-<p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p>
-<h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+<p>使用<code>replace</code>取代，</p>
+<p><code>nums1[0..m]</code>為取位置0..m的陣列內容，再使用 <code>+nums2</code>，將兩個陣列內容組合起來，最後使用sort完成遞增排序。</p>
+<p>Ruby蠻簡潔的！</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Do not return anything, modify nums1 in-place instead.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        nums1[m:] = nums2<br>        nums1.sort()<br></code></pre></td></tr></table></figure>
+<p>python和Ruby一樣簡潔，不過有稍微不同：<br><code>nums1[:m]</code>:是指從nums1陣列中切片取出<code>m</code>個元素<br><code>nums1[m:] = nums2</code>:將nums2添加到切片後的nums1內<br>最後再使用<code>sort</code>排序<code>nums1[:m]</code></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">var merge = function(nums1, m, nums2, n) &#123;<br>  nums1.splice(<span class="hljs-number">0</span>, m + n, ...nums1.slice(<span class="hljs-number">0</span>, m).concat(nums2).sort((a, b) =&gt; a - b));<br>&#125;;<br><br><span class="hljs-regexp">//</span> 測試<br>var nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>var m = <span class="hljs-number">3</span>;<br>var nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br>var n = <span class="hljs-number">3</span>;<br><br>merge(nums1, m, nums2, n);<br>console.log(nums1);<br></code></pre></td></tr></table></figure>
 
-<p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>slice</code></p>
+<ul>
+<li><code>arr.slice([begin[, end]])</code></li>
+<li>slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分。而原本的陣列將不會被修改。</li>
+<li>使用在這裡是要刪掉num1重複的部分，插入num2</li>
+</ul>
+<p><code>splice</code></p>
+<ul>
+<li><code>array.splice(start[, deleteCount[, item1[, item2[, ...]]]])</code></li>
+<li>splice() 方法可以藉由刪除既有元素並／或加入新元素來改變一個陣列的內容。</li>
+<li>在這裡是要加入num1+num2組合的內容</li>
+<li>範例：</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> months = [<span class="hljs-string">&#x27;Jan&#x27;</span>, <span class="hljs-string">&#x27;March&#x27;</span>, <span class="hljs-string">&#x27;April&#x27;</span>, <span class="hljs-string">&#x27;June&#x27;</span>];<br>months.<span class="hljs-title function_">splice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Feb&#x27;</span>);<br><span class="hljs-comment">// Inserts at index 1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(months);<br><span class="hljs-comment">// Expected output: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;, &quot;April&quot;, &quot;June&quot;]</span><br></code></pre></td></tr></table></figure>
 
-<p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p>
-<p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>
+<ul>
+<li><code>nums1.splice(0, m + n, ...)</code>將合併且排序的數組插入到nums1的開始位置，取代原有的元素，其中0是開始位置，m + n是要刪除的元素數量，…是展開運算符，用於將排序後的數組展開成單獨的元素。</li>
+<li>這個函數的目的是將兩個已排序的數組 nums1 和 nums2 合併，並將結果存儲在 nums1 中，同時保持排序狀態。</li>
+</ul>
+<hr>
+<p>參考：<br><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">MDN</a></p>
 ]]></content>
       <categories>
         <category>leetcode</category>
@@ -1051,7 +1016,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>Python</tag>
         <tag>leetcode</tag>
-        <tag>roman to integer</tag>
+        <tag>merge sorted array</tag>
       </tags>
   </entry>
   <entry>
@@ -1088,6 +1053,41 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Python</tag>
         <tag>leetcode</tag>
         <tag>remove duplicates from sorted array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day04 roman to integer</title>
+    <url>/2024/02/02/leetcode-roman-to-integer/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
+<img src="/images/leetcode-roman-to-integer/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p>
+<p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p>
+<p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p>
+<p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure>
+<p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p>
+<p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p>
+<h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+
+<p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p>
+<p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>roman to integer</tag>
       </tags>
   </entry>
   <entry>
@@ -1580,6 +1580,39 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day13 search insert position</title>
+    <url>/2024/02/11/search-insert-position/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
+<img src="/images/search-insert-position/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
+<p>一開始看到題目原本想說，把數字插入陣列中排序後再返還索引值就好，但實際執行卻發現效率很差ʘ‿ʘ。</p>
+<p>後來想到可以使用二分法，先取中間的數字與target比較，分成兩邊，這樣最多就只要比較陣列一半的數量就好，會比較有效率，就像是猜數字，如果一開始就對半猜，猜到數字的機率也會快很多。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">search_insert</span>(<span class="hljs-params">nums, target</span>)<br>  left, right = <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span><br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">if</span> nums[mid] == target<br>      <span class="hljs-keyword">return</span> mid<br>    <span class="hljs-keyword">elsif</span> nums[mid] &lt; target<br>      left = mid + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> left<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這裡的<code>left</code>是指陣列的起始索引值，為<code>0</code>，<code>right</code>是陣列的結束值，為<code>nums.length - 1</code>，<code>mid</code>就是中間的索引值<code>(left+right)/2</code></p>
+<p>如果照排序看可以這樣理解：<br><code>left</code>,<code>mid</code>,<code>right</code></p>
+<p>一開始先猜中間，如果運氣好就是中間值，可直接返還<code>mid</code>。</p>
+<p>如果<code>target</code>比較大，即縮小<code>left</code>的範圍為<code>mid + 1</code>，比較數字的範圍也到了右半邊，接著會繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
+<p>如果<code>target</code>比較小，則縮小<code>right</code>的範圍為<code>mid - 1</code>，比較數字在左半邊，繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
+<p>直到<code>nums[mid] = target</code>，即會返還<code>mid</code>，也就是索引值。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">searchInsert</span>(<span class="hljs-params">self, nums, target</span>):<br>        left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> nums[mid] == target:<br>                <span class="hljs-keyword">return</span> mid<br>            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:<br>                left = mid + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">return</span> left<br></code></pre></td></tr></table></figure>
+<p><code>python</code>也是一樣邏輯，只是部分寫法不同</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> searchInsert = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">let</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (nums[mid] == target) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> left;<br>  &#125;;<br></code></pre></td></tr></table></figure>
+<p><code>js</code>也是相同，不過需要添加<code>Math.floor</code>讓<code>mid</code>值為無條件捨去</p>
+<p>這就是今天的解題了～其實不管什麼題目都可以用最笨的方法解，但是如果在讀題目時多想一點，就能讓程式碼效率更高！接下來幾天繼續加油🙌</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>search insert position</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
     <url>/2023/12/24/rails-admin-layout-devise/</url>
     <content><![CDATA[<style>
@@ -1731,39 +1764,6 @@ border-style:dashed;
         <tag>rails7</tag>
         <tag>rails</tag>
         <tag>layout</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day13 search insert position</title>
-    <url>/2024/02/11/search-insert-position/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
-<img src="/images/search-insert-position/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
-<p>一開始看到題目原本想說，把數字插入陣列中排序後再返還索引值就好，但實際執行卻發現效率很差ʘ‿ʘ。</p>
-<p>後來想到可以使用二分法，先取中間的數字與target比較，分成兩邊，這樣最多就只要比較陣列一半的數量就好，會比較有效率，就像是猜數字，如果一開始就對半猜，猜到數字的機率也會快很多。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">search_insert</span>(<span class="hljs-params">nums, target</span>)<br>  left, right = <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span><br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">if</span> nums[mid] == target<br>      <span class="hljs-keyword">return</span> mid<br>    <span class="hljs-keyword">elsif</span> nums[mid] &lt; target<br>      left = mid + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> left<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>這裡的<code>left</code>是指陣列的起始索引值，為<code>0</code>，<code>right</code>是陣列的結束值，為<code>nums.length - 1</code>，<code>mid</code>就是中間的索引值<code>(left+right)/2</code></p>
-<p>如果照排序看可以這樣理解：<br><code>left</code>,<code>mid</code>,<code>right</code></p>
-<p>一開始先猜中間，如果運氣好就是中間值，可直接返還<code>mid</code>。</p>
-<p>如果<code>target</code>比較大，即縮小<code>left</code>的範圍為<code>mid + 1</code>，比較數字的範圍也到了右半邊，接著會繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
-<p>如果<code>target</code>比較小，則縮小<code>right</code>的範圍為<code>mid - 1</code>，比較數字在左半邊，繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
-<p>直到<code>nums[mid] = target</code>，即會返還<code>mid</code>，也就是索引值。</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">searchInsert</span>(<span class="hljs-params">self, nums, target</span>):<br>        left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> nums[mid] == target:<br>                <span class="hljs-keyword">return</span> mid<br>            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:<br>                left = mid + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">return</span> left<br></code></pre></td></tr></table></figure>
-<p><code>python</code>也是一樣邏輯，只是部分寫法不同</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> searchInsert = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">let</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (nums[mid] == target) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> left;<br>  &#125;;<br></code></pre></td></tr></table></figure>
-<p><code>js</code>也是相同，不過需要添加<code>Math.floor</code>讓<code>mid</code>值為無條件捨去</p>
-<p>這就是今天的解題了～其實不管什麼題目都可以用最笨的方法解，但是如果在讀題目時多想一點，就能讓程式碼效率更高！接下來幾天繼續加油🙌</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>search insert position</tag>
       </tags>
   </entry>
   <entry>
