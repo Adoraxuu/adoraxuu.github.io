@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-03-14T04:09:11.587Z</updated>
+  <updated>2024-03-16T13:03:33.099Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode: number of 1 bits</title>
+    <link href="http://adora-xu.com/2024/03/16/leetcode-number-of-1-bits/"/>
+    <id>http://adora-xu.com/2024/03/16/leetcode-number-of-1-bits/</id>
+    <published>2024-03-16T12:55:48.000Z</published>
+    <updated>2024-03-16T13:03:33.099Z</updated>
+    
+    <content type="html"><![CDATA[<p>為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p><img src="/images/leetcode-number-of-1-bits/01.png"><p>題目來源：<a href="https://leetcode.com/problems/number-of-1-bits/submissions/1205238009/">leetcode</a></p><h2 id="漢明權重"><a href="#漢明權重" class="headerlink" title="漢明權重"></a>漢明權重</h2><p>此題提到了個特別的詞：<a href="https://zh.wikipedia.org/zh-tw/%E6%B1%89%E6%98%8E%E6%9D%83%E9%87%8D">漢明權重</a>，維基百科中解釋，漢明權重是一串符號中非零符號的個數。因此它等同於同樣長度的全零符號串的漢明距離。在最為常見的數據位符號串中，它是1的個數。</p><p>漢明權重(Hamming weight)是以理察·衛斯里·漢明(Richard Wesley Hamming)的名字命名的，它在包括資訊理論、編碼理論、密碼學等多個領域都有應用。</p><p>而這題的解法，就是將輸入的數字轉為二進位制的字串，接著計算<code>1</code>的數量即可。</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">hamming_weight</span>(<span class="hljs-params">n</span>)<br>  n.to_s(<span class="hljs-number">2</span>).count(<span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-keyword">end</span><br><br>puts hamming_weight(<span class="hljs-number">0b00000000000000000000000000001011</span>) <span class="hljs-comment"># 3</span><br>puts hamming_weight(<span class="hljs-number">0b00000000000000000000000010000000</span>) <span class="hljs-comment"># 1</span><br>puts hamming_weight(<span class="hljs-number">0b11111111111111111111111111111101</span>) <span class="hljs-comment"># 31</span><br></code></pre></td></tr></table></figure><p>在程式中經常使用<code>0b</code>開頭表示此為二進位制，而在Ruby中，前面有零的數字會被當作八進制數字解析，所以此題的傳入值前面可以加上<code>0b</code>，確保最後的結果會是正確的。</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingWeight</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">bin</span>(n).count(<span class="hljs-string">&#x27;1&#x27;</span>)<br><br>solution = Solution()<br><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b00000000000000000000000000001011</span>)) <span class="hljs-comment">#3</span><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b00000000000000000000000010000000</span>)) <span class="hljs-comment">#1</span><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b11111111111111111111111111111101</span>)) <span class="hljs-comment">#31</span><br></code></pre></td></tr></table></figure><p>Python的<code>bin(x)</code>將整數轉為帶前綴<code>0b</code>的二進制字串，因為<code>0b</code>並不會影響我們最後要計算<code>1</code>的數量的結果，因此不需要特別轉換。</p><p>如果要控制是否顯示前缀<code>0b</code>，可以使用：</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-built_in">format</span>(<span class="hljs-number">14</span>, <span class="hljs-string">&#x27;#b&#x27;</span>), <span class="hljs-built_in">format</span>(<span class="hljs-number">14</span>, <span class="hljs-string">&#x27;b&#x27;</span>)<br>(<span class="hljs-string">&#x27;0b1110&#x27;</span>, <span class="hljs-string">&#x27;1110&#x27;</span>)<br><span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-number">14</span>:#b&#125;</span>&#x27;</span>, <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-number">14</span>:b&#125;</span>&#x27;</span><br>(<span class="hljs-string">&#x27;0b1110&#x27;</span>, <span class="hljs-string">&#x27;1110&#x27;</span>)<br></code></pre></td></tr></table></figure><p>來源：<a href="https://docs.python.org/zh-cn/3/library/functions.html#bin">Python官方文件</a></p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> hammingWeight = <span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n.<span class="hljs-title function_">toString</span>(<span class="hljs-number">2</span>).<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;1&#x27;</span>).<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>&#125;;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b00000000000000000000000000001011</span>)) <span class="hljs-comment">//3</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b00000000000000000000000010000000</span>)) <span class="hljs-comment">//1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b11111111111111111111111111111101</span>)) <span class="hljs-comment">//31</span><br></code></pre></td></tr></table></figure><p>JS的使用<code>.split(&#39;1&#39;)</code>，將字串依據1分割為陣列，最後計算陣列的長度再<code>-1</code>就可以得到答案了！</p><p>為什麼這裡要<code>-1</code>呢？可以想像一個蛋糕，如果切了一刀會變成兩塊，其中的那一刀，在這裡就是<code>1</code>的意思，我們最後要得到的是<code>切了幾刀</code>，而不是<code>蛋糕有幾塊</code>，所以為了校正最後會需要<code>-1</code>。</p><p>以上就是今天的Leetcode刷題解釋٩(●˙▿˙●)۶</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，讓我們開始吧！&lt;/p&gt;
+&lt;img src=&quot;/images/le</summary>
+      
+    
+    
+    
+    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
+    
+    
+    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
+    
+    <category term="number of 1 bits" scheme="http://adora-xu.com/tags/number-of-1-bits/"/>
+    
+  </entry>
   
   <entry>
     <title>職涯: 五倍學院轉職之旅</title>
@@ -147,9 +180,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -179,9 +212,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -211,9 +244,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -243,9 +276,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -281,9 +314,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -650,39 +683,6 @@
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="longest common prefix" scheme="http://adora-xu.com/tags/longest-common-prefix/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day04 roman to integer</title>
-    <link href="http://adora-xu.com/2024/02/02/leetcode-roman-to-integer/"/>
-    <id>http://adora-xu.com/2024/02/02/leetcode-roman-to-integer/</id>
-    <published>2024-02-02T15:36:56.000Z</published>
-    <updated>2024-02-02T15:43:36.818Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p><img src="/images/leetcode-roman-to-integer/1.png"><p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p><p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p><p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p><p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure><p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p><p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p><h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure><p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure><p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p><p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;Python&lt;/code&gt;、&lt;code&gt;JavaScript&lt;/code&gt;來解題，今天來到第四天，讓我們繼續吧！&lt;/p&gt;
-&lt;img src=&quot;/ima</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="roman to integer" scheme="http://adora-xu.com/tags/roman-to-integer/"/>
     
   </entry>
   
