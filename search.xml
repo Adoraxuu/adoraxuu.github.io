@@ -1868,7 +1868,7 @@ border-style:dashed;
 </div>
 
 <p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p>
-<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件，<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
+<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件。<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
 <p>網頁的生命週期分成兩個階段：</p>
 <ol>
 <li>bootstrap phase (configuration and initialization)</li>
