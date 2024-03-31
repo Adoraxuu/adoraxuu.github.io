@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Ruby on Rails: 什麼是Abstraction layer | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="rails, abstraction layer, ruby, layered design">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Ruby on Rails: 什麼是Abstraction layer</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/03/" class="post-meta__date button">2024-03-31</a> 
+    <span class="separate-dot"></span><a href="/categories/Ruby-on-Rails/" class="button">Ruby on Rails</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/ruby-on-rails-abstraction-layer/banner.jpg">
+
+<blockquote>
+<p>圖片來源: <a target="_blank" rel="noopener" href="https://unsplash.com/photos/orange-pink-and-teal-illustration-Tk0B3Dfkf_4">Usplash - Clark Van Der Beken</a></p>
+</blockquote>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>首圖的layer好美٩(๑❛ᴗ❛๑)۶，不過對於程式的世界，Layer的意義非常地遼闊，來看下維基百科對於Layer的定義：</p>
+<div class="em-div2">
+
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">物件導向設計</a>中的<strong>層</strong>（layer）是一群和其他<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E6%A8%A1%E7%B5%84">模組</a>有類似<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%80%A6%E5%90%88%E6%80%A7_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">耦合性</a>的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B1%BB_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">類別</a>。層也可以說是一組可<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E7%94%A8">復用</a>的軟體組件，可以在類似的環境下復用。</p>
+<p>各層的模組會用<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">樹</a>狀的階級架構來規劃，各層模組之間的依賴關係會用連接來表示。各層之間的依賴關係可能是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">繼承</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E7%89%A9%E4%BB%B6%E8%A4%87%E5%90%88&action=edit&redlink=1">複合</a>或聚合（aggregation）關係，不過也有可能是其他的關係。</p>
+<p>分層是許多書籍中都會提到的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F">架構模式</a>，例如《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=Pattern-Oriented_Software_Architecture&action=edit&redlink=1">Pattern-Oriented Software Architecture</a>》書中就有提到。</p>
+</div>
+
+<p>看到了裡面的<code>類別</code>、<code>繼承</code>，好像很熟悉，在Ruby on Rails中有使用到，但是整個組起來，看懂一點點又好像沒看懂？</p>
+<p>接著來看看維基百科對於<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B1%A4">Abstraction layer</a>的定義：</p>
+<div class="em-div2">
+
+<p><strong>抽象層</strong>（英語：abstraction layer， abstraction level，或 a layer of abstraction）是一種隱藏獨特功能執行細節的方法。使用抽象層的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">軟體</a>模型包含<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI</a>網路協定七層模型、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/OpenGL">OpenGL</a>繪圖函式庫及以Unix為原本的輸入輸出（I&#x2F;O）模型，並適用於大部分新一代的作業系統。</p>
+<p>在Unix作業系統中，大部分的輸入輸出形式被視為從裝置讀寫的串流值。而串流值模型為了提供獨立裝置被檔案及終端機I&#x2F;O所使用。為了在應用層讀寫裝置，程式呼叫<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8">函式</a>開啟像是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B5%82%E7%AB%AF%E6%A9%9F">終端機</a>的實體裝置或是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">網路</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%AA%94%E6%A1%88">檔案</a>系統的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%99%9B%E6%93%AC">虛擬</a>裝置。裝置的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AF%A6%E9%AB%94">實體</a>特徵是被允許程式設計師讀寫資料的作業系統所調用。接著<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1">作業系統</a>操作正確的讀寫轉換。</p>
+<p>大部分的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9B%BE%E5%BD%A2%E5%BA%93">圖形庫</a>，像是OpenGL，提供抽象圖形裝置模型。這種函式庫的主要功能在於轉換<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB">程式設計師</a>的指令到<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E5%BD%A2%E5%85%83%E4%BB%B6&action=edit&redlink=1">圖形元件</a>。這個特殊的繪圖指令與對傳統陰極射線管銀幕的指令不同，而是隱藏了抽象介面的細節。</p>
+<p>在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8">資訊學</a>，抽象層是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B_(%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8)">模型</a>或<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95">演算法</a>的推廣。</p>
+</div>
+
+<p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p>
+<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件，<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
+<p>網頁的生命週期分成兩個階段：</p>
+<ol>
+<li>bootstrap phase (configuration and initialization)</li>
+</ol>
+<ul>
+<li>載入應用程式碼</li>
+<li>初始化和配置框架元件</li>
+</ul>
+<ol start="2">
+<li>serving phase</li>
+</ol>
+<ul>
+<li>執行許多獨立的Web Request</li>
+</ul>
+<p>而我們先暫時聚焦在serving phase上，因為網頁請求(Web Request)是獨立的，因此服務階段可以被視為一條流水線，我們將請求資料（raw material）放在輸送帶上，中間通過許多工作站，並在最後得到回應</p>
+<p>試想像，要怎麼讓流水線提高效率呢？就要把工作站拉出來，看有什麼可以改進的，而抽象層，就可以想像成流水線上的工作站。把工作站拉出來的這個過程（extraction of abstraction layers），也可以稱作分層（layering），而這個架構模式可以提高軟體的品質。</p>
+<p>而一個抽象層應該要有什麼屬性呢？</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">單一職責</a>（職責可以很廣泛，但不應重複，遵循<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">關注點分離</a>）</li>
+<li>各層應該是鬆散耦合的，並且沒有循環或反向依賴關係。<ul>
+<li>如果我們從上到下繪製請求處理流程，層間連接永遠不應該向上，並且我們應該盡量減少層間連接數。（可以想像成流水線，很少會流到一半倒回去做）</li>
+</ul>
+</li>
+<li>抽像不應洩漏其內部結構<ul>
+<li>提取抽象的主要想法是將介面與實作分離</li>
+</ul>
+</li>
+<li>應該可以單獨提取抽象層</li>
+</ul>
+<p>如果遵循以上的這些原則，可以讓開發者易於重構、debug和測試。</p>
+<p>在現實生活中，衡量效率的標準是速度； 在軟體開發中，速度也是關鍵——發布新功能的速度，而要怎麼能夠快速地發布新功能？這取決於許多因素，而最主要的因素就是程式碼的<strong>可維護性</strong>，其中包括：添加新功能和對現有功能進行更改、除錯的容易程度，應用軟體設計模式和提取抽象層是保持高可維護性的兩個主要工具。</p>
+<p>而抽象層不是越多越好，主要看整個應用程式的架構，基本的Rails僅包含了三個抽象層概念：Model、Controller、View(也就是我們所常說的MVC)</p>
+<p>至於要如何逐步引入新的抽象層呢？</p>
+<p>可以參考本書：<a target="_blank" rel="noopener" href="https://www.packtpub.com/product/layered-design-for-ruby-on-rails-applications/9781801813785">Layered Design for Ruby on Rails Applications</a></p>
+<p>未來也會將本書提到的有趣的概念整理分享，今天就先到這裡٩(●˙▿˙●)۶<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9781801813785">Layered Design for Ruby on Rails Applications</a>**</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5">Wiki</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2024-03-31</p></div> <div class="post-entry__tags"><a href="/tags/rails/" class="post-tags__link button"># rails</a><a href="/tags/abstraction-layer/" class="post-tags__link button"># abstraction layer</a><a href="/tags/ruby/" class="post-tags__link button"># ruby</a><a href="/tags/layered-design/" class="post-tags__link button"># layered design</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/03/17/ruby-aws-ivs-obs-livestream/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>

@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-03-17T04:42:56.969Z</updated>
+  <updated>2024-03-31T15:25:58.632Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ruby on Rails: 什麼是Abstraction layer</title>
+    <link href="http://adora-xu.com/2024/03/31/ruby-on-rails-abstraction-layer/"/>
+    <id>http://adora-xu.com/2024/03/31/ruby-on-rails-abstraction-layer/</id>
+    <published>2024-03-31T15:19:47.000Z</published>
+    <updated>2024-03-31T15:25:58.632Z</updated>
+    
+    <content type="html"><![CDATA[<style>.em-div{background-color: #d4a373;color: white;padding: 10px;margin: 10px;border-radius: 5px;}.em-div2{border:2px #d4a373 solid;margin:5px;padding:10px 2px 2px 2px;border-style:dashed;}</style><h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/ruby-on-rails-abstraction-layer/banner.jpg"><blockquote><p>圖片來源: <a href="https://unsplash.com/photos/orange-pink-and-teal-illustration-Tk0B3Dfkf_4">Usplash - Clark Van Der Beken</a></p></blockquote><h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>首圖的layer好美٩(๑❛ᴗ❛๑)۶，不過對於程式的世界，Layer的意義非常地遼闊，來看下維基百科對於Layer的定義：</p><div class="em-div2"><p><a href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">物件導向設計</a>中的<strong>層</strong>（layer）是一群和其他<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E6%A8%A1%E7%B5%84">模組</a>有類似<a href="https://zh.wikipedia.org/wiki/%E8%80%A6%E5%90%88%E6%80%A7_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">耦合性</a>的<a href="https://zh.wikipedia.org/wiki/%E7%B1%BB_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">類別</a>。層也可以說是一組可<a href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E7%94%A8">復用</a>的軟體組件，可以在類似的環境下復用。</p><p>各層的模組會用<a href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">樹</a>狀的階級架構來規劃，各層模組之間的依賴關係會用連接來表示。各層之間的依賴關係可能是<a href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">繼承</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%E7%89%A9%E4%BB%B6%E8%A4%87%E5%90%88&action=edit&redlink=1">複合</a>或聚合（aggregation）關係，不過也有可能是其他的關係。</p><p>分層是許多書籍中都會提到的<a href="https://zh.wikipedia.org/wiki/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F">架構模式</a>，例如《<a href="https://zh.wikipedia.org/w/index.php?title=Pattern-Oriented_Software_Architecture&action=edit&redlink=1">Pattern-Oriented Software Architecture</a>》書中就有提到。</p></div><p>看到了裡面的<code>類別</code>、<code>繼承</code>，好像很熟悉，在Ruby on Rails中有使用到，但是整個組起來，看懂一點點又好像沒看懂？</p><p>接著來看看維基百科對於<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B1%A4">Abstraction layer</a>的定義：</p><div class="em-div2"><p><strong>抽象層</strong>（英語：abstraction layer， abstraction level，或 a layer of abstraction）是一種隱藏獨特功能執行細節的方法。使用抽象層的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">軟體</a>模型包含<a href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI</a>網路協定七層模型、<a href="https://zh.wikipedia.org/wiki/OpenGL">OpenGL</a>繪圖函式庫及以Unix為原本的輸入輸出（I&#x2F;O）模型，並適用於大部分新一代的作業系統。</p><p>在Unix作業系統中，大部分的輸入輸出形式被視為從裝置讀寫的串流值。而串流值模型為了提供獨立裝置被檔案及終端機I&#x2F;O所使用。為了在應用層讀寫裝置，程式呼叫<a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8">函式</a>開啟像是<a href="https://zh.wikipedia.org/wiki/%E7%B5%82%E7%AB%AF%E6%A9%9F">終端機</a>的實體裝置或是<a href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">網路</a>、<a href="https://zh.wikipedia.org/wiki/%E6%AA%94%E6%A1%88">檔案</a>系統的<a href="https://zh.wikipedia.org/wiki/%E8%99%9B%E6%93%AC">虛擬</a>裝置。裝置的<a href="https://zh.wikipedia.org/wiki/%E5%AF%A6%E9%AB%94">實體</a>特徵是被允許程式設計師讀寫資料的作業系統所調用。接著<a href="https://zh.wikipedia.org/wiki/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1">作業系統</a>操作正確的讀寫轉換。</p><p>大部分的<a href="https://zh.wikipedia.org/wiki/%E5%9B%BE%E5%BD%A2%E5%BA%93">圖形庫</a>，像是OpenGL，提供抽象圖形裝置模型。這種函式庫的主要功能在於轉換<a href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB">程式設計師</a>的指令到<a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E5%BD%A2%E5%85%83%E4%BB%B6&action=edit&redlink=1">圖形元件</a>。這個特殊的繪圖指令與對傳統陰極射線管銀幕的指令不同，而是隱藏了抽象介面的細節。</p><p>在<a href="https://zh.wikipedia.org/wiki/%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8">資訊學</a>，抽象層是<a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B_(%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8)">模型</a>或<a href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95">演算法</a>的推廣。</p></div><p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p><p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件，<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p><p>網頁的生命週期分成兩個階段：</p><ol><li>bootstrap phase (configuration and initialization)</li></ol><ul><li>載入應用程式碼</li><li>初始化和配置框架元件</li></ul><ol start="2"><li>serving phase</li></ol><ul><li>執行許多獨立的Web Request</li></ul><p>而我們先暫時聚焦在serving phase上，因為網頁請求(Web Request)是獨立的，因此服務階段可以被視為一條流水線，我們將請求資料（raw material）放在輸送帶上，中間通過許多工作站，並在最後得到回應</p><p>試想像，要怎麼讓流水線提高效率呢？就要把工作站拉出來，看有什麼可以改進的，而抽象層，就可以想像成流水線上的工作站。把工作站拉出來的這個過程（extraction of abstraction layers），也可以稱作分層（layering），而這個架構模式可以提高軟體的品質。</p><p>而一個抽象層應該要有什麼屬性呢？</p><ul><li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">單一職責</a>（職責可以很廣泛，但不應重複，遵循<a href="https://zh.wikipedia.org/wiki/%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">關注點分離</a>）</li><li>各層應該是鬆散耦合的，並且沒有循環或反向依賴關係。<ul><li>如果我們從上到下繪製請求處理流程，層間連接永遠不應該向上，並且我們應該盡量減少層間連接數。（可以想像成流水線，很少會流到一半倒回去做）</li></ul></li><li>抽像不應洩漏其內部結構<ul><li>提取抽象的主要想法是將介面與實作分離</li></ul></li><li>應該可以單獨提取抽象層</li></ul><p>如果遵循以上的這些原則，可以讓開發者易於重構、debug和測試。</p><p>在現實生活中，衡量效率的標準是速度； 在軟體開發中，速度也是關鍵——發布新功能的速度，而要怎麼能夠快速地發布新功能？這取決於許多因素，而最主要的因素就是程式碼的<strong>可維護性</strong>，其中包括：添加新功能和對現有功能進行更改、除錯的容易程度，應用軟體設計模式和提取抽象層是保持高可維護性的兩個主要工具。</p><p>而抽象層不是越多越好，主要看整個應用程式的架構，基本的Rails僅包含了三個抽象層概念：Model、Controller、View(也就是我們所常說的MVC)</p><p>至於要如何逐步引入新的抽象層呢？</p><p>可以參考本書：<a href="https://www.packtpub.com/product/layered-design-for-ruby-on-rails-applications/9781801813785">Layered Design for Ruby on Rails Applications</a></p><p>未來也會將本書提到的有趣的概念整理分享，今天就先到這裡٩(●˙▿˙●)۶<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://www.tenlong.com.tw/products/9781801813785">Layered Design for Ruby on Rails Applications</a>**</p></blockquote><blockquote><p><a href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5">Wiki</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;style&gt;
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 s</summary>
+      
+    
+    
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
+    
+    
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
+    
+    <category term="abstraction layer" scheme="http://adora-xu.com/tags/abstraction-layer/"/>
+    
+    <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
+    
+    <category term="layered design" scheme="http://adora-xu.com/tags/layered-design/"/>
+    
+  </entry>
   
   <entry>
     <title>Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</title>
@@ -40,9 +80,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
-    
     <category term="Rails" scheme="http://adora-xu.com/tags/Rails/"/>
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
     <category term="AMAZON IVS" scheme="http://adora-xu.com/tags/AMAZON-IVS/"/>
     
@@ -220,9 +260,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -252,9 +292,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -284,9 +324,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -316,9 +356,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -354,9 +394,9 @@
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -657,39 +697,6 @@
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="remove duplicates from sorted array" scheme="http://adora-xu.com/tags/remove-duplicates-from-sorted-array/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day06 valid parentheses</title>
-    <link href="http://adora-xu.com/2024/02/04/leetcode-valid-parentheses/"/>
-    <id>http://adora-xu.com/2024/02/04/leetcode-valid-parentheses/</id>
-    <published>2024-02-04T14:28:52.000Z</published>
-    <updated>2024-02-05T07:54:00.247Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p><img src="/images/leetcode-valid-parentheses/0204.png"><p>題目來源：<a href="https://leetcode.com/problems/valid-parentheses/">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid</span>(<span class="hljs-params">s</span>)<br>  stack = []<br>  mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span> =&gt; <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span> =&gt; <span class="hljs-string">&#x27;[&#x27;</span> &#125;<br><br>  s.each_char <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    <span class="hljs-keyword">if</span> mapping.key?(char)<br>      top_element = stack.pop |<span class="hljs-params"></span>| <span class="hljs-string">&#x27;#&#x27;</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> <span class="hljs-keyword">if</span> mapping[char] != top_element<br>    <span class="hljs-keyword">else</span><br>      stack.push(char)<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  stack.empty?<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>先設定一個名為<code>stack</code>的空陣列，還有左括號的hash，<br>因為key為右括號，所以第一次的左括號都無懸念地進入<code>stack</code>，第二次迴圈，<code>top_element</code>則取出上一次放進去的左括號，並去比對是否和第二次迴圈對應到的左括號相符。</p><p>如果不符合即會回傳<code>false</code>，如果所有的括號都成對，即<code>stack</code>為空</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        stack = []<br>        mapping = &#123;<span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span>&#125;<br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> mapping:<br>                top_element = stack.pop() <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;#&#x27;</span><br>                <span class="hljs-keyword">if</span> mapping[char] != top_element:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                stack.append(char)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stack<br></code></pre></td></tr></table></figure><p><code>python</code>使用一樣的方式，不過因為<code>python</code>的添加<code>list</code>使用的是<code>append</code>，所以這裡我改用<code>stack.append(char)</code> </p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isValid = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> stack = [];<br>    <span class="hljs-keyword">const</span> mapping = &#123; <span class="hljs-string">&#x27;)&#x27;</span>: <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>: <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>: <span class="hljs-string">&#x27;[&#x27;</span> &#125;;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> char <span class="hljs-keyword">of</span> s) &#123;<br>        <span class="hljs-keyword">if</span> (mapping[char]) &#123;<br>            <span class="hljs-keyword">const</span> topElement = stack.<span class="hljs-title function_">pop</span>() || <span class="hljs-string">&#x27;#&#x27;</span>;<br>            <span class="hljs-keyword">if</span> (mapping[char] !== topElement) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            stack.<span class="hljs-title function_">push</span>(char);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> !stack.<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure><p>JS也是依樣畫葫蘆！只要稍微改寫一下寫法即可</p><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>參考資料：<br><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python手冊</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;Python&lt;/code&gt;、&lt;code&gt;JavaScript&lt;/code&gt;來解題，今天來到第六天，讓我們繼續吧！&lt;/p&gt;
-&lt;img src=&quot;/ima</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="longest common prefix" scheme="http://adora-xu.com/tags/longest-common-prefix/"/>
     
   </entry>
   
