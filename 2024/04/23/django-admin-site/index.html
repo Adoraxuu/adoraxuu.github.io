@@ -147,12 +147,11 @@
   </div>
 
   <div class="post__content"><h2 id="admin站點使用"><a href="#admin站點使用" class="headerlink" title="admin站點使用"></a>admin站點使用</h2><p>Django有內建Admin Site，讓開發者可以輕鬆管理資料。<br>原本新建專案的時候還在疑惑，為什麼DB裡面已經有這麼多Table，原來是給內建的admin使用的。</p>
-<p>要怎麼進去admin呢？執行<code>python manage.py runserver</code>時，瀏覽器開啟<code>http://127.0.0.1:8000/admin</code>就能夠看到登入介面：</p>
+<p>要怎麼進去admin呢？<br>執行<code>$ python manage.py runserver</code>時，在網址最後面輸入<code>/admin</code>就能夠看到登入介面：</p>
 <img src="/images/django-admin-site/0.png">
 
-<h2 id="創建帳號密碼"><a href="#創建帳號密碼" class="headerlink" title="創建帳號密碼"></a>創建帳號密碼</h2><p>在終端機輸入就可以設定admin的帳號密碼：</p>
-<p><code>$ python manage.py createsuperuser</code></p>
-<h2 id="登入帳號密碼"><a href="#登入帳號密碼" class="headerlink" title="登入帳號密碼"></a>登入帳號密碼</h2><p>回到剛剛的 <code>[http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)</code> 就可以看到預設的Table了</p>
+<h2 id="創建帳號密碼"><a href="#創建帳號密碼" class="headerlink" title="創建帳號密碼"></a>創建帳號密碼</h2><p>在終端機輸入就可以設定admin的帳號密碼：<br><code>$ python manage.py createsuperuser</code></p>
+<h2 id="登入帳號密碼"><a href="#登入帳號密碼" class="headerlink" title="登入帳號密碼"></a>登入帳號密碼</h2><p>回到剛剛的 <code>/admin</code> 就可以看到預設的Table了</p>
 <img src="/images/django-admin-site/1.png">
 
 <p>咦，那昨天做的POST呢？需要手動加入</p>
@@ -177,14 +176,14 @@
 
 <img src="/images/django-admin-site/6.png">
 
-<p>記得在學習Ruby on Rails的時候，對於ORM和資料庫都不熟悉，所以還自己安裝了Ruby on Rails的後台Gem來幫助自己新增Demo資料，Djang內建Admin站點蠻貼心的，一開始安裝就自動內建了٩(^ᴗ^)۶</p>
+<p>記得在學習Ruby on Rails的時候，對於ORM和資料庫都不熟悉，操作起來不免有點礙手礙腳，Djang內建Admin站點蠻貼心的，一開始安裝就自動內建了٩(^ᴗ^)۶</p>
 <p>不過Django的ORM使用方法也是需要熟悉，就留到下篇來說明！<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/contrib/admin/">Django docs - admin</a></p>
 <p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Admin_site">MDN - Admin_site</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2024-04-23</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/MTV/" class="post-tags__link button"># MTV</a><a href="/tags/admin/" class="post-tags__link button"># admin</a><a href="/tags/admin-site/" class="post-tags__link button"># admin site</a></div>
+   <div class="post-footer__meta"><p>更新於 2024-04-23</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/MTV/" class="post-tags__link button"># MTV</a><a href="/tags/admin/" class="post-tags__link button"># admin</a><a href="/tags/admin-site/" class="post-tags__link button"># admin site</a></div>
 </article>
 
 
@@ -222,7 +221,7 @@
   id="comment"
 >
   
-    <h4>评论</h4>
+    <h4>評論</h4>
     
     
     
