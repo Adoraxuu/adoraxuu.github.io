@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-04-23T10:58:55.102Z</updated>
+  <updated>2024-04-23T10:59:53.347Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -21,15 +21,14 @@
     <link href="http://adora-xu.com/2024/04/23/django-admin-site/"/>
     <id>http://adora-xu.com/2024/04/23/django-admin-site/</id>
     <published>2024-04-23T10:54:35.000Z</published>
-    <updated>2024-04-23T10:58:55.102Z</updated>
+    <updated>2024-04-23T10:59:53.347Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="admin站點使用"><a href="#admin站點使用" class="headerlink" title="admin站點使用"></a>admin站點使用</h2><p>Django有內建Admin Site，讓開發者可以輕鬆管理資料。</p><p>原本新建專案的時候還在疑惑，為什麼DB裡面已經有這麼多Table，原來是給內建的admin使用的。</p><p>要怎麼進去admin呢？只要執行<code>python manage.py runserver</code>時，</p><p>瀏覽器開啟<code>http://127.0.0.1:8000/admin</code>就能夠看到登入介面：</p><img src="/images/django-admin-site/0.png"><h2 id="創建帳號密碼"><a href="#創建帳號密碼" class="headerlink" title="創建帳號密碼"></a>創建帳號密碼</h2><p>在終端機輸入就可以設定admin的帳號密碼：</p><p><code>$ python manage.py createsuperuser</code></p><h2 id="登入帳號密碼"><a href="#登入帳號密碼" class="headerlink" title="登入帳號密碼"></a>登入帳號密碼</h2><p>回到剛剛的 <code>[http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)</code> 就可以看到預設的Table了</p><img src="/images/django-admin-site/1.png"><p>咦，那昨天做的POST呢？需要手動加入</p><h2 id="把POST加進去admin裡"><a href="#把POST加進去admin裡" class="headerlink" title="把POST加進去admin裡"></a>把POST加進去admin裡</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    <span class="hljs-keyword">pass</span><br><br></code></pre></td></tr></table></figure><p>這時就能看到POST</p><img src="/images/django-admin-site/2.png"><p>點擊Posts，可以看到文章列表</p><img src="/images/django-admin-site/3.png"><p>可以按右上角的ADD POST增加資料</p><img src="/images/django-admin-site/4.png"><h2 id="自定義admin顯示資料"><a href="#自定義admin顯示資料" class="headerlink" title="自定義admin顯示資料"></a>自定義admin顯示資料</h2><p>Django也提供了很多自定義</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;slug&#x27;</span>,<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 顯示欄位</span><br>    list_filter = (<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 按照作者 or 發佈日期篩選文章</span><br>    search_fields = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment"># 搜尋</span><br>    prepopulated_fields = &#123;<span class="hljs-string">&#x27;slug&#x27;</span>: (<span class="hljs-string">&#x27;title&#x27;</span>,)&#125; <span class="hljs-comment"># 自動填寫：輸入title時自動填寫slug</span><br><br></code></pre></td></tr></table></figure><p>關於更多客製化，可以參考：<a href="https://docs.djangoproject.com/en/5.0/ref/contrib/admin/">django docs - admin</a></p><p>這時看我們的POST就更豐富了：</p><img src="/images/django-admin-site/5.png">也可以手動新增資料<img src="/images/django-admin-site/6.png"><p>記得在學習Ruby on Rails的時候，對於ORM和資料庫都不熟悉，所以還自己安裝了Ruby on Rails的後台Gem來幫助自己新增Demo資料，Djang內建Admin站點蠻貼心的，一開始安裝就自動內建了٩(^ᴗ^)۶</p><p>不過Django的ORM使用方法也是需要熟悉，就留到下篇來說明！<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/contrib/admin/">Django docs - admin</a></p><p><a href="https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Admin_site">MDN - Admin_site</a></p><p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="admin站點使用"><a href="#admin站點使用" class="headerlink" title="admin站點使用"></a>admin站點使用</h2><p>Django有內建Admin Site，讓開發者可以輕鬆管理資料。<br>原本新建專案的時候還在疑惑，為什麼DB裡面已經有這麼多Table，原來是給內建的admin使用的。</p><p>要怎麼進去admin呢？只要執行<code>python manage.py runserver</code>時，瀏覽器開啟<code>http://127.0.0.1:8000/admin</code>就能夠看到登入介面：</p><img src="/images/django-admin-site/0.png"><h2 id="創建帳號密碼"><a href="#創建帳號密碼" class="headerlink" title="創建帳號密碼"></a>創建帳號密碼</h2><p>在終端機輸入就可以設定admin的帳號密碼：</p><p><code>$ python manage.py createsuperuser</code></p><h2 id="登入帳號密碼"><a href="#登入帳號密碼" class="headerlink" title="登入帳號密碼"></a>登入帳號密碼</h2><p>回到剛剛的 <code>[http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)</code> 就可以看到預設的Table了</p><img src="/images/django-admin-site/1.png"><p>咦，那昨天做的POST呢？需要手動加入</p><h2 id="把POST加進去admin裡"><a href="#把POST加進去admin裡" class="headerlink" title="把POST加進去admin裡"></a>把POST加進去admin裡</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    <span class="hljs-keyword">pass</span><br><br></code></pre></td></tr></table></figure><p>這時就能看到POST</p><img src="/images/django-admin-site/2.png"><p>點擊Posts，可以看到文章列表</p><img src="/images/django-admin-site/3.png"><p>可以按右上角的ADD POST增加資料</p><img src="/images/django-admin-site/4.png"><h2 id="自定義admin顯示資料"><a href="#自定義admin顯示資料" class="headerlink" title="自定義admin顯示資料"></a>自定義admin顯示資料</h2><p>Django也提供了很多自定義</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;slug&#x27;</span>,<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 顯示欄位</span><br>    list_filter = (<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 按照作者 or 發佈日期篩選文章</span><br>    search_fields = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment"># 搜尋</span><br>    prepopulated_fields = &#123;<span class="hljs-string">&#x27;slug&#x27;</span>: (<span class="hljs-string">&#x27;title&#x27;</span>,)&#125; <span class="hljs-comment"># 自動填寫：輸入title時自動填寫slug</span><br><br></code></pre></td></tr></table></figure><p>關於更多客製化，可以參考：<a href="https://docs.djangoproject.com/en/5.0/ref/contrib/admin/">django docs - admin</a></p><p>這時看我們的POST就更豐富了：</p><img src="/images/django-admin-site/5.png">也可以手動新增資料<img src="/images/django-admin-site/6.png"><p>記得在學習Ruby on Rails的時候，對於ORM和資料庫都不熟悉，所以還自己安裝了Ruby on Rails的後台Gem來幫助自己新增Demo資料，Djang內建Admin站點蠻貼心的，一開始安裝就自動內建了٩(^ᴗ^)۶</p><p>不過Django的ORM使用方法也是需要熟悉，就留到下篇來說明！<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/contrib/admin/">Django docs - admin</a></p><p><a href="https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Admin_site">MDN - Admin_site</a></p><p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;admin站點使用&quot;&gt;&lt;a href=&quot;#admin站點使用&quot; class=&quot;headerlink&quot; title=&quot;admin站點使用&quot;&gt;&lt;/a&gt;admin站點使用&lt;/h2&gt;&lt;p&gt;Django有內建Admin Site，讓開發者可以輕鬆管理資料。&lt;/p&gt;
-&lt;p&gt;原</summary>
+    <summary type="html">&lt;h2 id=&quot;admin站點使用&quot;&gt;&lt;a href=&quot;#admin站點使用&quot; class=&quot;headerlink&quot; title=&quot;admin站點使用&quot;&gt;&lt;/a&gt;admin站點使用&lt;/h2&gt;&lt;p&gt;Django有內建Admin Site，讓開發者可以輕鬆管理資料。&lt;br&gt;原本新建專</summary>
       
     
     
@@ -112,9 +111,9 @@ border:2px #d4a373 s</summary>
     
     <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
-    <category term="abstraction layer" scheme="http://adora-xu.com/tags/abstraction-layer/"/>
-    
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
+    
+    <category term="abstraction layer" scheme="http://adora-xu.com/tags/abstraction-layer/"/>
     
     <category term="layered design" scheme="http://adora-xu.com/tags/layered-design/"/>
     
@@ -144,9 +143,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="Rails" scheme="http://adora-xu.com/tags/Rails/"/>
-    
     <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
+    
+    <category term="Rails" scheme="http://adora-xu.com/tags/Rails/"/>
     
     <category term="AMAZON IVS" scheme="http://adora-xu.com/tags/AMAZON-IVS/"/>
     
@@ -324,9 +323,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -356,9 +355,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -388,9 +387,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -420,9 +419,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -458,9 +457,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
