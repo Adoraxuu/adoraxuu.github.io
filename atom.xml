@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-04-22T12:30:54.318Z</updated>
+  <updated>2024-04-23T10:58:55.102Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Django: 從零開始學 2 - admin site</title>
+    <link href="http://adora-xu.com/2024/04/23/django-admin-site/"/>
+    <id>http://adora-xu.com/2024/04/23/django-admin-site/</id>
+    <published>2024-04-23T10:54:35.000Z</published>
+    <updated>2024-04-23T10:58:55.102Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="admin站點使用"><a href="#admin站點使用" class="headerlink" title="admin站點使用"></a>admin站點使用</h2><p>Django有內建Admin Site，讓開發者可以輕鬆管理資料。</p><p>原本新建專案的時候還在疑惑，為什麼DB裡面已經有這麼多Table，原來是給內建的admin使用的。</p><p>要怎麼進去admin呢？只要執行<code>python manage.py runserver</code>時，</p><p>瀏覽器開啟<code>http://127.0.0.1:8000/admin</code>就能夠看到登入介面：</p><img src="/images/django-admin-site/0.png"><h2 id="創建帳號密碼"><a href="#創建帳號密碼" class="headerlink" title="創建帳號密碼"></a>創建帳號密碼</h2><p>在終端機輸入就可以設定admin的帳號密碼：</p><p><code>$ python manage.py createsuperuser</code></p><h2 id="登入帳號密碼"><a href="#登入帳號密碼" class="headerlink" title="登入帳號密碼"></a>登入帳號密碼</h2><p>回到剛剛的 <code>[http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)</code> 就可以看到預設的Table了</p><img src="/images/django-admin-site/1.png"><p>咦，那昨天做的POST呢？需要手動加入</p><h2 id="把POST加進去admin裡"><a href="#把POST加進去admin裡" class="headerlink" title="把POST加進去admin裡"></a>把POST加進去admin裡</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    <span class="hljs-keyword">pass</span><br><br></code></pre></td></tr></table></figure><p>這時就能看到POST</p><img src="/images/django-admin-site/2.png"><p>點擊Posts，可以看到文章列表</p><img src="/images/django-admin-site/3.png"><p>可以按右上角的ADD POST增加資料</p><img src="/images/django-admin-site/4.png"><h2 id="自定義admin顯示資料"><a href="#自定義admin顯示資料" class="headerlink" title="自定義admin顯示資料"></a>自定義admin顯示資料</h2><p>Django也提供了很多自定義</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;slug&#x27;</span>,<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 顯示欄位</span><br>    list_filter = (<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 按照作者 or 發佈日期篩選文章</span><br>    search_fields = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment"># 搜尋</span><br>    prepopulated_fields = &#123;<span class="hljs-string">&#x27;slug&#x27;</span>: (<span class="hljs-string">&#x27;title&#x27;</span>,)&#125; <span class="hljs-comment"># 自動填寫：輸入title時自動填寫slug</span><br><br></code></pre></td></tr></table></figure><p>關於更多客製化，可以參考：<a href="https://docs.djangoproject.com/en/5.0/ref/contrib/admin/">django docs - admin</a></p><p>這時看我們的POST就更豐富了：</p><img src="/images/django-admin-site/5.png">也可以手動新增資料<img src="/images/django-admin-site/6.png"><p>記得在學習Ruby on Rails的時候，對於ORM和資料庫都不熟悉，所以還自己安裝了Ruby on Rails的後台Gem來幫助自己新增Demo資料，Djang內建Admin站點蠻貼心的，一開始安裝就自動內建了٩(^ᴗ^)۶</p><p>不過Django的ORM使用方法也是需要熟悉，就留到下篇來說明！<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/contrib/admin/">Django docs - admin</a></p><p><a href="https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Admin_site">MDN - Admin_site</a></p><p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;admin站點使用&quot;&gt;&lt;a href=&quot;#admin站點使用&quot; class=&quot;headerlink&quot; title=&quot;admin站點使用&quot;&gt;&lt;/a&gt;admin站點使用&lt;/h2&gt;&lt;p&gt;Django有內建Admin Site，讓開發者可以輕鬆管理資料。&lt;/p&gt;
+&lt;p&gt;原</summary>
+      
+    
+    
+    
+    <category term="Django" scheme="http://adora-xu.com/categories/Django/"/>
+    
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="Django" scheme="http://adora-xu.com/tags/Django/"/>
+    
+    <category term="MTV" scheme="http://adora-xu.com/tags/MTV/"/>
+    
+    <category term="admin" scheme="http://adora-xu.com/tags/admin/"/>
+    
+    <category term="admin site" scheme="http://adora-xu.com/tags/admin-site/"/>
+    
+  </entry>
   
   <entry>
     <title>Django: 從零開始學 1 - 設計Table</title>
@@ -77,11 +110,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
     
     
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
+    
     <category term="abstraction layer" scheme="http://adora-xu.com/tags/abstraction-layer/"/>
     
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
-    
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="layered design" scheme="http://adora-xu.com/tags/layered-design/"/>
     
@@ -662,39 +695,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="length of last word" scheme="http://adora-xu.com/tags/length-of-last-word/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day08 majority element</title>
-    <link href="http://adora-xu.com/2024/02/06/leetcode-majority-element/"/>
-    <id>http://adora-xu.com/2024/02/06/leetcode-majority-element/</id>
-    <published>2024-02-06T10:23:43.000Z</published>
-    <updated>2024-02-07T05:10:21.437Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p><img src="/images/leetcode-majority-element/0206.png"><p>題目來源：<a href="https://leetcode.com/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150">leetcode</a></p><p>在讀題目的時候，發現有一個小細節，題目寫要找出出現次數大於<code>[n/2]</code>的數字，且假定這個數字一定存在Array中。那也就代表，只要找出最常出現的數就可以了，因為陣列中只要其中一個數出現的數量大於<code>[n/2]</code>，剩下的數出現次數就不會大於<code>[n/2]</code>，可以想像成，西瓜被挖走一半多一點，剩下的西瓜再怎麼分都沒辦法大於一半。</p><p>所以這題只要找出，出現次數最多的數字即可！讓我們開始解題吧～</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_element</span>(<span class="hljs-params">nums</span>)<br>  nums.tally.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>這裡使用了<a href="https://rubyapi.org/3.3/o/s?q=tally">tally</a></p><p>在Ruby API的解釋為：</p><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Enumerable<span class="hljs-comment">#tally</span><br>Returns a hash containing <span class="hljs-keyword">the</span> counts <span class="hljs-keyword">of</span> <span class="hljs-keyword">equal</span> elements:<br>Each key <span class="hljs-keyword">is</span> an element <span class="hljs-keyword">of</span> self.<br>Each value <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">number</span> elements <span class="hljs-keyword">equal</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">that</span> key.<br></code></pre></td></tr></table></figure><p>意思就是建立一個hash，key是<code>self</code>，value是出現的次數，簡單的範例：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">result = <span class="hljs-string">%w[a b c b c a c b]</span>.tally<br>puts result<br><span class="hljs-comment"># =&gt; &#123;&quot;a&quot;=&gt;2, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3&#125;</span><br></code></pre></td></tr></table></figure><p>建立了hash之後，即可以使用<a href="https://rubyapi.org/3.3/o/s?q=max_by">max_by</a>，<code>max_by</code>，<code>max_by</code>允許輸入值為{}，會返還{}內最大的值，因為返還的會是<code>Array</code>，來看一下範例：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;<br>puts result<br><span class="hljs-comment">#[:bar, 10]</span><br></code></pre></td></tr></table></figure><p>如果只要取出key呢？可以使用<code>[0]</code>來取出Array的第一個數，也是<code>Array</code>內最常出現的<code>key</code>:</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">result = &#123;<span class="hljs-symbol">foo:</span> <span class="hljs-number">1</span>, <span class="hljs-symbol">bar:</span> <span class="hljs-number">10</span>, <span class="hljs-symbol">baz:</span> <span class="hljs-number">8</span>&#125;.max_by &#123;|<span class="hljs-params">key, value</span>| value &#125;[<span class="hljs-number">0</span>]<br>puts result<br><span class="hljs-comment">#10</span><br></code></pre></td></tr></table></figure><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> Counter(nums).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure><p>在python計算數量可以使用<a href="https://docs.python.org/zh-tw/3/library/collections.html#collections.Counter">Counter()物件</a>，來看看範例：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br>words = [<span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;red&#x27;</span>, <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>]<br>cnt = Counter()<br>cnt.update(words)<br><br><span class="hljs-built_in">print</span>(cnt)<br><span class="hljs-comment">#Counter(&#123;&#x27;blue&#x27;: 3, &#x27;red&#x27;: 2, &#x27;green&#x27;: 1&#125;)</span><br></code></pre></td></tr></table></figure><p>接著可以使用<code>.most_common(1)[0][0]</code>，<code>(1)</code>代表取出第一個結果，這時輸出的值會是<code>[(3, 2)]</code>，因此還必須要使用<code>[0][0]</code>代表取出第一組Array的第一個數才會得到解答！</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">majorityElement</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> majority;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> num <span class="hljs-keyword">of</span> nums) &#123;<br>        <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) &#123;<br>            majority = num;<br>        &#125;<br><br>        count += (num === majority) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> majority;<br>&#125;<br></code></pre></td></tr></table></figure><p>JS我採用的是<a href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95">摩爾投票法</a>，消除不同元素之間的票數，最終保留的就是可能的主要元素。</p><p>一開始先把<code>count</code>設定為0，如果接下來遇到的數字相同<code>count + 1</code>，不同<code>count - 1</code>，如果<code>count</code>又變回 0（代表刪掉一樣數量的a &amp; b），這時就會更改<code>majority = num</code>，最後殘存活下來的就是<code>majority</code>了！</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第八天，讓我們開始吧！&lt;/p&gt;
-&lt;img src=&quot;/</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="majority element" scheme="http://adora-xu.com/tags/majority-element/"/>
     
   </entry>
   
