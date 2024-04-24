@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-04-23T14:28:11.657Z</updated>
+  <updated>2024-04-24T11:58:37.310Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Django : 從零開始學 3 — ORM</title>
+    <link href="http://adora-xu.com/2024/04/24/django-orm/"/>
+    <id>http://adora-xu.com/2024/04/24/django-orm/</id>
+    <published>2024-04-24T11:54:22.000Z</published>
+    <updated>2024-04-24T11:58:37.310Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是Rails的<code>$rails c</code>指令)：</p><p><em><code>$ python manage.py shell</code></em></p><img src="/images/django-orm/1.png"><h2 id="載入Models"><a href="#載入Models" class="headerlink" title="載入Models"></a>載入Models</h2><p>首先會需要將建立的models import</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> blog.models <span class="hljs-keyword">import</span> Post<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br></code></pre></td></tr></table></figure><h2 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h2><p>可以先看一個簡單的範例：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user = User.objects.get(username=<span class="hljs-string">&#x27;admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user<br></code></pre></td></tr></table></figure><p>使用get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果 <code>get()</code> 發現多個對象，會引發一個 <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a> 異常：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Entry.objects.get(name=<span class="hljs-string">&quot;A Duplicated Name&quot;</span>)  <span class="hljs-comment"># raises Entry.MultipleObjectsReturned</span><br></code></pre></td></tr></table></figure><p>這個比較像是Ruby on Rails的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code> 例外訊息。</p><p>另外一個也蠻像的，就是Rails的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習Rails？）。</p><h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的 <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的QuerySet</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure><p>這就比較像Rails的<code>where()</code>，找到會返回 <code>ActiveRecord::Relation</code> 包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p><h3 id="filter-找不到的情況"><a href="#filter-找不到的情況" class="headerlink" title="filter()找不到的情況"></a>filter()找不到的情況</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;aaa&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet []&gt;<br></code></pre></td></tr></table></figure><h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude()"></a>exclude()</h3><p>排除查找的參數</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.exclude(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure><h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><p>秀出所有東西：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure><p>可以使用for迴圈將文章標題印出來：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br><span class="hljs-meta">... </span><br>second-post<br>hi<br></code></pre></td></tr></table></figure><h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post(title=<span class="hljs-string">&#x27;created from shell&#x27;</span>, slug=<span class="hljs-string">&#x27;create-from-shell&#x27;</span>, body=<span class="hljs-string">&#x27;this is body&#x27;</span>, author=user, status= <span class="hljs-string">&#x27;draft&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure><p>這裡需要<code>.save()</code> 才會將資料儲存到資料庫裡</p><h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post.title<br><span class="hljs-string">&#x27;created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post.title = <span class="hljs-string">&#x27;new created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: new created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure><p>更新倒是蠻容易的，只要用個<code>=</code> 即可</p><h2 id="first"><a href="#first" class="headerlink" title="first()"></a>first()</h2><p>第一個對象</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure><h2 id="last"><a href="#last" class="headerlink" title="last()"></a>last()</h2><p>最後一個對象</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().last()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure><h2 id="order-by"><a href="#order-by" class="headerlink" title="order_by()"></a>order_by()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;, &lt;Post: second-post&gt;]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;-title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;, &lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure><p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是QuerySet</p><p>也可以使用索引<code>[0]</code>，來返回指定的值：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br></code></pre></td></tr></table></figure><p>這時返回的就是單一值</p><h2 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = post.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;second-post&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.delete()<br>(<span class="hljs-number">1</span>, &#123;<span class="hljs-string">&#x27;blog.Post&#x27;</span>: <span class="hljs-number">1</span>&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>Post.objects.<span class="hljs-built_in">all</span>()<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure><p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://docs.djangoproject.com/en/5.0/topics/db/queries/">Django doc - Making quries</a></p></blockquote><blockquote><p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#get">Django doc - QuerySet</a></p></blockquote><blockquote><p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Django-shell&quot;&gt;&lt;a href=&quot;#Django-shell&quot; class=&quot;headerlink&quot; title=&quot;Django shell&quot;&gt;&lt;/a&gt;Django shell&lt;/h2&gt;&lt;p&gt;在終端機執行以下指令會進入互動模式(像是Rails的&lt;cod</summary>
+      
+    
+    
+    
+    <category term="Django" scheme="http://adora-xu.com/categories/Django/"/>
+    
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="Django" scheme="http://adora-xu.com/tags/Django/"/>
+    
+    <category term="ORM" scheme="http://adora-xu.com/tags/ORM/"/>
+    
+  </entry>
   
   <entry>
     <title>Django: 從零開始學 2 - admin site</title>
@@ -109,11 +137,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
     
     
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
+    
     <category term="abstraction layer" scheme="http://adora-xu.com/tags/abstraction-layer/"/>
     
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
-    
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="layered design" scheme="http://adora-xu.com/tags/layered-design/"/>
     
@@ -143,9 +171,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
-    
     <category term="Rails" scheme="http://adora-xu.com/tags/Rails/"/>
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
     <category term="AMAZON IVS" scheme="http://adora-xu.com/tags/AMAZON-IVS/"/>
     
@@ -661,39 +689,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="valid palindrome" scheme="http://adora-xu.com/tags/valid-palindrome/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day09 length of last word</title>
-    <link href="http://adora-xu.com/2024/02/07/leetcode-length-of-last-word/"/>
-    <id>http://adora-xu.com/2024/02/07/leetcode-length-of-last-word/</id>
-    <published>2024-02-07T11:23:24.000Z</published>
-    <updated>2024-02-13T15:46:20.790Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第九天，讓我們開始吧！</p><img src="/images/leetcode-length-of-last-word/1.png"><p>題目來源：<a href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p><p>因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。</p><p>這個題目不會再取用原始給予的<code>input</code>值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純一點～</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_last_word</span>(<span class="hljs-params">s</span>)<br>  s.strip.split(<span class="hljs-string">&#x27; &#x27;</span>).last.length<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>Ruby可以使用<a href="https://rubyapi.org/3.3/o/s?q=strip">strip</a>去除前後的空格，接著使用<code>split(&#39; &#39;)</code>將空格拆分為陣列，取出<code>last.length</code>就找出答案了～</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s.strip().split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure><p>Python也是使用<a href="https://docs.python.org/3/library/stdtypes.html">strip</a>，接著使用<code>split(&#39; &#39;)</code>拆分為陣列，這個和Ruby相同。最後使用<code>[-1]</code>取出最後一位數，再使用<code>len()</code>包住取出長度即可～</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLastWord = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">pop</span>().<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure><p>JS去除前後的空格使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第九天，讓我們開始吧！&lt;/p&gt;
-&lt;img src=&quot;/</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="length of last word" scheme="http://adora-xu.com/tags/length-of-last-word/"/>
     
   </entry>
   
