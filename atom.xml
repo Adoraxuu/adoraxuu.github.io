@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-04-24T11:58:37.310Z</updated>
+  <updated>2024-04-25T12:56:27.934Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Django : 從零開始學 4 — URLS 路徑</title>
+    <link href="http://adora-xu.com/2024/04/25/django-urls/"/>
+    <id>http://adora-xu.com/2024/04/25/django-urls/</id>
+    <published>2024-04-25T12:53:34.000Z</published>
+    <updated>2024-04-25T12:56:27.934Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="資料夾"><a href="#資料夾" class="headerlink" title="資料夾"></a>資料夾</h2><p>這是目前my_project內的資料夾結構：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">.<br>└── project<br>    ├── blog<br>    │   ├── __pycache__<br>    │   ├── migrations<br>    │   │   └── __pycache__<br>    │   └── templates<br>    │       └── blog<br>    └── project<br>        └── __pycache__<br></code></pre></td></tr></table></figure><h2 id="ROOT-URLCONF"><a href="#ROOT-URLCONF" class="headerlink" title="ROOT_URLCONF"></a>ROOT_URLCONF</h2><p>可以在<code>settings.py</code> 看到我們將<code>ROOT_URLCONF</code>設定在<code>project.urls</code></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/project/settings.py</span><br>ROOT_URLCONF = <span class="hljs-string">&#x27;project.urls&#x27;</span><br></code></pre></td></tr></table></figure><p>也就代表Django在使用者拜訪路徑時會先去找<code>project.urls</code>（也像Rails的<code>routes.rb</code>）可以把<code>ROOT_URLCONF</code>想像成指路人，所有APP的路徑都要聽這個檔案指揮</p><p>接著我們開啟指路人：<code>project.urls</code></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin <br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include <span class="hljs-comment">#修改這行</span><br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    path(<span class="hljs-string">&#x27;blog/&#x27;</span>, include(<span class="hljs-string">&#x27;blog.urls&#x27;</span>)), <span class="hljs-comment">#新增這行</span><br>]<br></code></pre></td></tr></table></figure><p>這樣代表，在網址最後加上<code>/blog/</code>的時候，他會去找<code>blog/urls.py</code>去要資料。</p><h3 id="blog-urls-py（URLconf）"><a href="#blog-urls-py（URLconf）" class="headerlink" title="blog&#x2F;urls.py（URLconf）"></a>blog&#x2F;urls.py（URLconf）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, views.<span class="hljs-built_in">list</span>, name=<span class="hljs-string">&#x27;list&#x27;</span>),<br>]<br></code></pre></td></tr></table></figure><p>這樣代表在網址<code>/blog/</code>後面沒接任何東西時，會去找<code>view</code>的<code>list</code>方法</p><h3 id="project-blog-views-py"><a href="#project-blog-views-py" class="headerlink" title="project&#x2F;blog&#x2F;views.py"></a>project&#x2F;blog&#x2F;views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">list</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;blog/list.html&#x27;</span>)<br></code></pre></td></tr></table></figure><p>這樣代表在lsit方法裡，他會發一個request請求，去render 同一個資料夾內 <code>/templates/blog/list.html</code> 檔案，如果原本沒有資料夾／檔案就在這裡新增吧～</p><p>最後就可以看到成果：</p><img src="/images/django-urls/01.png"><p>Template我只有寫了一行hello world (*°∀°)，下次來使用路徑轉換器&amp;裝飾Template吧～</p><p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://docs.djangoproject.com/en/5.0/topics/http/urls/">Django doc - Urls</a></p></blockquote><blockquote><p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;資料夾&quot;&gt;&lt;a href=&quot;#資料夾&quot; class=&quot;headerlink&quot; title=&quot;資料夾&quot;&gt;&lt;/a&gt;資料夾&lt;/h2&gt;&lt;p&gt;這是目前my_project內的資料夾結構：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table</summary>
+      
+    
+    
+    
+    <category term="Django" scheme="http://adora-xu.com/categories/Django/"/>
+    
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="Django" scheme="http://adora-xu.com/tags/Django/"/>
+    
+    <category term="URL" scheme="http://adora-xu.com/tags/URL/"/>
+    
+  </entry>
   
   <entry>
     <title>Django : 從零開始學 3 — ORM</title>
@@ -657,38 +686,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="single number" scheme="http://adora-xu.com/tags/single-number/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day10 valid palindrome</title>
-    <link href="http://adora-xu.com/2024/02/08/leetcode-valid-palindrome/"/>
-    <id>http://adora-xu.com/2024/02/08/leetcode-valid-palindrome/</id>
-    <published>2024-02-08T15:03:06.000Z</published>
-    <updated>2024-02-09T02:54:01.809Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十天，終於完成1&#x2F;3了，讓我們開始吧！</p><img src="/images/leetcode-valid-palindrome/banner.png"><p>題目來源：<a href="https://leetcode.com/problems/valid-palindrome">leetcode</a></p><p>這個問題要求判斷句子是否為回文。在進行比較時，會需要先將所有字母轉換為小寫，並去除所有非字母和數字。然後，比較處理過的字串是否和它的反轉相等。</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>)<br>  clean_s = s.downcase.gsub(<span class="hljs-regexp">/[^a-z0-9]/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>  clean_s == clean_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>使用<code>downcase</code>將字符轉換為小寫，再使用<code>gsub</code>去除非字母和數字的字，最後比較反轉是否相同就完成了～</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 將字符轉換為小寫，去除非字母和數字的字</span><br>    clean_s = <span class="hljs-string">&#x27;&#x27;</span>.join(char.lower() <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s <span class="hljs-keyword">if</span> char.isalnum())<br>    <span class="hljs-comment"># 比較處理過的字串和它的反轉是否相等</span><br>    <span class="hljs-keyword">return</span> clean_s == clean_s[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure><p><code>isalnum()</code>方法用於檢查字符串中的所有字是否都是字母和數字。如果是，該方法返回 True，表示所有字符均為字母（a-z、A-Z）和數字（0-9）。反之，如果字符串中包含非字母和非數字的字符，例如空格、驚嘆號、井號、百分號、和問號等，該方法將返回 False。</p><p>使用這個方法就不用使用<code>gsub</code>取代了，因為只有是字母和數字才會放進<code>clean_s</code>裡</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">s</span>) &#123;<br>  <span class="hljs-comment">// 將字串轉換為小寫，去除非字母和數字</span><br>  <span class="hljs-keyword">const</span> cleanS = s.<span class="hljs-title function_">toLowerCase</span>().<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[^a-z0-9]/g</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>  <span class="hljs-comment">// 比較處理過的字串和它的反轉是否相等</span><br>  <span class="hljs-keyword">return</span> cleanS === cleanS.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第十天，終於完成1&amp;#x2F;3了，讓我們開始吧！&lt;/</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="valid palindrome" scheme="http://adora-xu.com/tags/valid-palindrome/"/>
     
   </entry>
   

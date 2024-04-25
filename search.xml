@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Advent of code 2023 —Day 01</title>
-    <url>/2023/12/17/AOC-day01/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
-<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
-</blockquote>
-<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
-<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
-<p>這是第一天 Part 1的題目：</p>
-<img src="/images/AOC/01.png">
-
-<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
-<img src="/images/AOC/02.png">
-
-<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
-<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
-<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
-<div class="em-div2">
-
-<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
-</div>
-match會回傳符合內容的物件，看起來像這個樣子：
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
-
-<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
-<img src="/images/AOC/03.png">
-
-<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
-<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
-<p>如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby</category>
-      </categories>
-      <tags>
-        <tag>AOC</tag>
-        <tag>Advent of code</tag>
-        <tag>Ruby</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails: MVC是什麼?</title>
     <url>/2023/12/02/MVC/</url>
     <content><![CDATA[<style>
@@ -141,6 +73,74 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>Ruby</tag>
         <tag>Rails</tag>
         <tag>MVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Advent of code 2023 —Day 01</title>
+    <url>/2023/12/17/AOC-day01/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
+<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
+</blockquote>
+<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
+<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
+<p>這是第一天 Part 1的題目：</p>
+<img src="/images/AOC/01.png">
+
+<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
+<img src="/images/AOC/02.png">
+
+<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
+<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
+<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
+<div class="em-div2">
+
+<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
+</div>
+match會回傳符合內容的物件，看起來像這個樣子：
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
+
+<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
+<img src="/images/AOC/03.png">
+
+<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
+<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
+<p>如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>AOC</tag>
+        <tag>Advent of code</tag>
       </tags>
   </entry>
   <entry>
@@ -250,30 +250,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>CodeWars: highest and lowest</title>
-    <url>/2024/02/21/codewars-highest-and-lowest/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>)<br>  numbers.split.map(&amp;<span class="hljs-symbol">:to_i</span>).minmax.reverse.join(<span class="hljs-string">&#x27; &#x27;</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby有一個蠻好用的方法，<a href="https://rubyapi.org/3.3/o/s?q=minmax">Array#minmax</a>，可以回傳陣列的最小值和最大值，範例如下：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>].minmax <span class="hljs-comment"># =&gt; [0, 2]</span><br></code></pre></td></tr></table></figure>
-<p>但題目是<code>high_and_low</code>，所以需要<code>reverse</code>，並使用<code>.join(&#39; &#39;)</code>將陣列轉為字串。</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>):<br>    numbers = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, numbers.split()))<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(numbers)&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(numbers)&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
-<p><code>f&quot;&#123;max(numbers)&#125; &#123;min(numbers)&#125;&quot;</code>這裡使用<a href="https://docs.python.org/zh-tw/3/tutorial/inputoutput.html">f-string</a>將最大值和最小值插入到字符串中</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">highAndLow</span>(<span class="hljs-params">numbers</span>) &#123;<br>    <span class="hljs-keyword">const</span> nums = numbers.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.max(...nums)&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.min(...nums)&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>JS和Python也是用類似方法～</p>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>codewars</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>highest and lowest</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CodeWars: credit card mask</title>
     <url>/2024/02/16/codewars-credit-card-mask/</url>
     <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
@@ -296,98 +272,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>JavaScript</tag>
         <tag>Python</tag>
         <tag>credit card mask</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CodeWars: square every digit</title>
-    <url>/2024/02/20/codewars-square-every-digit/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/546e2562b03326a88e000020">Codewars - Square Every Digit</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-square-every-digit/0220_2.png"></p>
-<p>這次的題目就是將輸入的內容拆開為陣列，各別平方後，再加入組合起來就能得到答案了٩(^ᴗ^)۶</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>)<br>  num.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span>&#125;.join.to_i<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>聽到<code>各別</code>兩個字，腦中一定會自動聯想到<code>map</code>，這題也是使用<code>map</code>個字平方後再使用<code>join</code>組合成字串後，再使用<code>to_i</code>返還數字</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(digit)**<span class="hljs-number">2</span>) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(num)))<br></code></pre></td></tr></table></figure>
-<p><code>python</code>則是寫法稍微不同，可以使用<code>for digit in str(num)</code>即可</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">squareDigits</span>(<span class="hljs-params">num</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(num.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">digit</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(digit)**<span class="hljs-number">2</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">10</span>);<br>  &#125;<br></code></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>codewars</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>square every digit</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CodeWars: sum of digits / digital root（02/21更新）</title>
-    <url>/2024/02/18/codewars-sum-of-digits-digital-root/</url>
-    <content><![CDATA[<p>這也是這幾天遇到程式的面試題目，一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/541c8630095125aba6000c00">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p>
-<img src="/images/codewars-digital-root/0218.png">
-
-<p>今天解的是<code>6kyu</code>的難度，做這個題目前想到<code>生命靈數</code>也是這樣取的，把自己的西元出生年月日依序加起來，得到的個位數就是自己的<code>生命靈數</code>。</p>
-<p>可以使用<code>兩種</code>方法來解，一種是<code>遞迴</code>，一種經由<code>公式推導</code>計算式，解法如下：</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法一</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  n &lt; <span class="hljs-number">10</span> ? n : digital_root(n.digits.sum)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p><code>遞迴(recursion)</code>簡單來說就是函式會一直重複呼叫本身直到達成條件，<br>假如定義一個輸入值為<code>digital_root(666)</code><br>第一次的結果為<code>6 + 6 + 6 = 18</code>，但值還沒有達到條件的<code>n &lt; 10</code>，<br>所以會再重複呼叫一次，此時<code>n = 18</code>，<code>1 + 8 = 9</code>，<br>已經達到<code>n &lt; 10</code>的條件，因此會回傳<code>9</code></p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法二</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  n.zero? ? <span class="hljs-number">0</span> : (n - <span class="hljs-number">1</span>) % <span class="hljs-number">9</span> + <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>解法二就是之前常說的：如果在看到題目前多想一點，可以讓程式效率更高。<br>因為此字根是使用<code>10進位制</code>，每個字根都是<code>過9進位</code>，<code>數字和 &gt; 9</code>時就要再重複相加，因此這裡的<code>% 9</code>就是簡化重複相加的步驟，以下舉例：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">10 </span>% <span class="hljs-number">9</span> = <span class="hljs-number">1</span><br><span class="hljs-symbol">100 </span>% <span class="hljs-number">9</span> = <span class="hljs-number">1</span><br><span class="hljs-symbol">1000 </span>% <span class="hljs-number">9</span> = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<p>這樣看來應該<code>% 9</code>就可以得到答案，為什麼答案會是<code>n.zero? ? 0 : (n - 1) % 9 + 1</code>呢？</p>
-<p>第一個是因為如果輸入值剛好是0的話，應該直接返回<code>0</code>，因此在前面加了判斷式。</p>
-<p>第二個是因為<code>% 9</code>遇到<code>9的倍數</code>就會出錯，為了避免這個情況，會需要先將<code>n-1</code>，<code>%9</code>後再<code>+1</code>，這樣遇到9的倍數答案也能正確～</p>
-<h2 id="2024-02-21更新"><a href="#2024-02-21更新" class="headerlink" title="2024&#x2F;02&#x2F;21更新"></a>2024&#x2F;02&#x2F;21更新</h2><p>這幾天去面試收到的反饋，既然已經知道會有遇到<code>9的倍數</code>就出錯的問題，怎麼不直接寫在程式碼裡呢？因此就出現了<code>解法三</code>，看起來更清楚！</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法三</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  <span class="hljs-keyword">case</span><br>  <span class="hljs-keyword">when</span> n.zero?<br>    <span class="hljs-number">0</span><br>  <span class="hljs-keyword">when</span> n % <span class="hljs-number">9</span> == <span class="hljs-number">0</span><br>    <span class="hljs-number">9</span><br>  <span class="hljs-keyword">else</span><br>    n % <span class="hljs-number">9</span><br>  <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>其實本題目也和鼎鼎大名的費氏列數解法相關，也有用到遞迴的概念，解法也一併補充在這裡：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>)<br>  n &lt;= <span class="hljs-number">1</span> ? n : fibonacci(n - <span class="hljs-number">1</span>) + fibonacci(n - <span class="hljs-number">2</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>後面<code>Python</code>的解法和<code>JS</code>解法大致相同，只有寫法不同而已：</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">return</span> n <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">10</span> <span class="hljs-keyword">else</span> digital_root(<span class="hljs-built_in">sum</span>(<span class="hljs-built_in">int</span>(digit) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(n)))<br></code></pre></td></tr></table></figure>
-<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">return</span> n <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> (n - <span class="hljs-number">1</span>) % <span class="hljs-number">9</span> + <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    <span class="hljs-keyword">elif</span> n % <span class="hljs-number">9</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">9</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> n % <span class="hljs-number">9</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n &lt; <span class="hljs-number">10</span> ? n : <span class="hljs-title function_">digitalRoot</span>([...n.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, digit</span>) =&gt;</span> sum + <span class="hljs-built_in">parseInt</span>(digit), <span class="hljs-number">0</span>));<br>  &#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot2</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n === <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : (n - <span class="hljs-number">1</span>) % <span class="hljs-number">9</span> + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot</span>(<span class="hljs-params">n</span>) &#123;<br>  <span class="hljs-keyword">switch</span> (<span class="hljs-literal">true</span>) &#123;<br>    <span class="hljs-keyword">case</span> n === <span class="hljs-number">0</span>:<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">case</span> n % <span class="hljs-number">9</span> === <span class="hljs-number">0</span>:<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">9</span>;<br>    <span class="hljs-attr">default</span>:<br>      <span class="hljs-keyword">return</span> n % <span class="hljs-number">9</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>codewars</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>sum of digits</tag>
-        <tag>digital root</tag>
-        <tag>遞迴</tag>
-        <tag>recursion</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CodeWars: sum of a sequence</title>
-    <url>/2024/02/20/codewars-sum-of-a-sequence/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/586f6741c66d18c22800010a">Codewars - Sum of a sequence</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/Sum-of-a-sequence/0220.png"></p>
-<p>這個題目也蠻有趣的，會給三個值<code>(begin,end,step)</code>，如果<code>begin &gt; end</code>則回傳<code>0</code>，沒有的話就以<code>step</code>為差，由<code>begin</code>加總至<code>end</code>，只要讀懂了題目依序寫成程式碼答案就出來了୧☉□☉୨</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>)<br>  (begin_number..end_number).step(step).sum<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby的<code>step</code>有一個有趣的地方，只要範圍不對的話，就會回傳0，<br>所以如果<code>begin_number</code>&gt;<code>end_number</code>，即會回傳0，而不需要多加判斷</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br></code></pre></td></tr></table></figure>
-<p>和<code>ruby</code>不一樣的地方是，<code>python</code>的<code>Range</code>如果是<code>range(1,4)</code>，出現的結果會是<code>[1,2,3]</code>並不會包含最後一位數，所以這裡需要<code>+1</code></p>
-<p>而Python和Ruby一樣，如果加總的範圍不對的話會回傳<code>0</code>，因此不需要額外填寫判斷式。<br>可以參考範例:</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br><br><span class="hljs-comment"># 範例</span><br><span class="hljs-built_in">print</span>(sequence_sum(<span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>))   <span class="hljs-comment"># 輸出: 0</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sequenceSum</span>(<span class="hljs-params">begin, end, step</span>) &#123;<br>    <span class="hljs-keyword">if</span> (begin &gt; end) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(&#123; <span class="hljs-attr">length</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((end - begin) / step) + <span class="hljs-number">1</span> &#125;, <span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> begin + i * step).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, num</span>) =&gt;</span> sum + num, <span class="hljs-number">0</span>);<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
-<p>JS就沒那麼多好用的方法，但因為加總的公式也不複雜，這裡就使用判斷式+加總的公式解，效率也比較高～</p>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>codewars</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>Sum of a sequence</tag>
       </tags>
   </entry>
   <entry>
@@ -498,6 +382,122 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>async</tag>
         <tag>Web</tag>
         <tag>rendering</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeWars: highest and lowest</title>
+    <url>/2024/02/21/codewars-highest-and-lowest/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>)<br>  numbers.split.map(&amp;<span class="hljs-symbol">:to_i</span>).minmax.reverse.join(<span class="hljs-string">&#x27; &#x27;</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby有一個蠻好用的方法，<a href="https://rubyapi.org/3.3/o/s?q=minmax">Array#minmax</a>，可以回傳陣列的最小值和最大值，範例如下：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>].minmax <span class="hljs-comment"># =&gt; [0, 2]</span><br></code></pre></td></tr></table></figure>
+<p>但題目是<code>high_and_low</code>，所以需要<code>reverse</code>，並使用<code>.join(&#39; &#39;)</code>將陣列轉為字串。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">high_and_low</span>(<span class="hljs-params">numbers</span>):<br>    numbers = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, numbers.split()))<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(numbers)&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(numbers)&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+<p><code>f&quot;&#123;max(numbers)&#125; &#123;min(numbers)&#125;&quot;</code>這裡使用<a href="https://docs.python.org/zh-tw/3/tutorial/inputoutput.html">f-string</a>將最大值和最小值插入到字符串中</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">highAndLow</span>(<span class="hljs-params">numbers</span>) &#123;<br>    <span class="hljs-keyword">const</span> nums = numbers.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.max(...nums)&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-built_in">Math</span>.min(...nums)&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>JS和Python也是用類似方法～</p>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>codewars</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>highest and lowest</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeWars: sum of a sequence</title>
+    <url>/2024/02/20/codewars-sum-of-a-sequence/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/586f6741c66d18c22800010a">Codewars - Sum of a sequence</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/Sum-of-a-sequence/0220.png"></p>
+<p>這個題目也蠻有趣的，會給三個值<code>(begin,end,step)</code>，如果<code>begin &gt; end</code>則回傳<code>0</code>，沒有的話就以<code>step</code>為差，由<code>begin</code>加總至<code>end</code>，只要讀懂了題目依序寫成程式碼答案就出來了୧☉□☉୨</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>)<br>  (begin_number..end_number).step(step).sum<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby的<code>step</code>有一個有趣的地方，只要範圍不對的話，就會回傳0，<br>所以如果<code>begin_number</code>&gt;<code>end_number</code>，即會回傳0，而不需要多加判斷</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br></code></pre></td></tr></table></figure>
+<p>和<code>ruby</code>不一樣的地方是，<code>python</code>的<code>Range</code>如果是<code>range(1,4)</code>，出現的結果會是<code>[1,2,3]</code>並不會包含最後一位數，所以這裡需要<code>+1</code></p>
+<p>而Python和Ruby一樣，如果加總的範圍不對的話會回傳<code>0</code>，因此不需要額外填寫判斷式。<br>可以參考範例:</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sequence_sum</span>(<span class="hljs-params">begin_number, end_number, step</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(begin_number, end_number + <span class="hljs-number">1</span>, step))<br><br><span class="hljs-comment"># 範例</span><br><span class="hljs-built_in">print</span>(sequence_sum(<span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>))   <span class="hljs-comment"># 輸出: 0</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sequenceSum</span>(<span class="hljs-params">begin, end, step</span>) &#123;<br>    <span class="hljs-keyword">if</span> (begin &gt; end) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(&#123; <span class="hljs-attr">length</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((end - begin) / step) + <span class="hljs-number">1</span> &#125;, <span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> begin + i * step).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, num</span>) =&gt;</span> sum + num, <span class="hljs-number">0</span>);<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
+<p>JS就沒那麼多好用的方法，但因為加總的公式也不複雜，這裡就使用判斷式+加總的公式解，效率也比較高～</p>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>codewars</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>Sum of a sequence</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeWars: square every digit</title>
+    <url>/2024/02/20/codewars-square-every-digit/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/546e2562b03326a88e000020">Codewars - Square Every Digit</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-square-every-digit/0220_2.png"></p>
+<p>這次的題目就是將輸入的內容拆開為陣列，各別平方後，再加入組合起來就能得到答案了٩(^ᴗ^)۶</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>)<br>  num.to_s.chars.map &#123; |<span class="hljs-params">digit</span>| digit.to_i ** <span class="hljs-number">2</span>&#125;.join.to_i<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>聽到<code>各別</code>兩個字，腦中一定會自動聯想到<code>map</code>，這題也是使用<code>map</code>個字平方後再使用<code>join</code>組合成字串後，再使用<code>to_i</code>返還數字</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square_digits</span>(<span class="hljs-params">num</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(digit)**<span class="hljs-number">2</span>) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(num)))<br></code></pre></td></tr></table></figure>
+<p><code>python</code>則是寫法稍微不同，可以使用<code>for digit in str(num)</code>即可</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">squareDigits</span>(<span class="hljs-params">num</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(num.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">digit</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(digit)**<span class="hljs-number">2</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">10</span>);<br>  &#125;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>codewars</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>square every digit</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeWars: sum of digits / digital root（02/21更新）</title>
+    <url>/2024/02/18/codewars-sum-of-digits-digital-root/</url>
+    <content><![CDATA[<p>這也是這幾天遇到程式的面試題目，一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/541c8630095125aba6000c00">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p>
+<img src="/images/codewars-digital-root/0218.png">
+
+<p>今天解的是<code>6kyu</code>的難度，做這個題目前想到<code>生命靈數</code>也是這樣取的，把自己的西元出生年月日依序加起來，得到的個位數就是自己的<code>生命靈數</code>。</p>
+<p>可以使用<code>兩種</code>方法來解，一種是<code>遞迴</code>，一種經由<code>公式推導</code>計算式，解法如下：</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法一</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  n &lt; <span class="hljs-number">10</span> ? n : digital_root(n.digits.sum)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p><code>遞迴(recursion)</code>簡單來說就是函式會一直重複呼叫本身直到達成條件，<br>假如定義一個輸入值為<code>digital_root(666)</code><br>第一次的結果為<code>6 + 6 + 6 = 18</code>，但值還沒有達到條件的<code>n &lt; 10</code>，<br>所以會再重複呼叫一次，此時<code>n = 18</code>，<code>1 + 8 = 9</code>，<br>已經達到<code>n &lt; 10</code>的條件，因此會回傳<code>9</code></p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法二</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  n.zero? ? <span class="hljs-number">0</span> : (n - <span class="hljs-number">1</span>) % <span class="hljs-number">9</span> + <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>解法二就是之前常說的：如果在看到題目前多想一點，可以讓程式效率更高。<br>因為此字根是使用<code>10進位制</code>，每個字根都是<code>過9進位</code>，<code>數字和 &gt; 9</code>時就要再重複相加，因此這裡的<code>% 9</code>就是簡化重複相加的步驟，以下舉例：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">10 </span>% <span class="hljs-number">9</span> = <span class="hljs-number">1</span><br><span class="hljs-symbol">100 </span>% <span class="hljs-number">9</span> = <span class="hljs-number">1</span><br><span class="hljs-symbol">1000 </span>% <span class="hljs-number">9</span> = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>這樣看來應該<code>% 9</code>就可以得到答案，為什麼答案會是<code>n.zero? ? 0 : (n - 1) % 9 + 1</code>呢？</p>
+<p>第一個是因為如果輸入值剛好是0的話，應該直接返回<code>0</code>，因此在前面加了判斷式。</p>
+<p>第二個是因為<code>% 9</code>遇到<code>9的倍數</code>就會出錯，為了避免這個情況，會需要先將<code>n-1</code>，<code>%9</code>後再<code>+1</code>，這樣遇到9的倍數答案也能正確～</p>
+<h2 id="2024-02-21更新"><a href="#2024-02-21更新" class="headerlink" title="2024&#x2F;02&#x2F;21更新"></a>2024&#x2F;02&#x2F;21更新</h2><p>這幾天去面試收到的反饋，既然已經知道會有遇到<code>9的倍數</code>就出錯的問題，怎麼不直接寫在程式碼裡呢？因此就出現了<code>解法三</code>，看起來更清楚！</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#解法三</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>)<br>  <span class="hljs-keyword">case</span><br>  <span class="hljs-keyword">when</span> n.zero?<br>    <span class="hljs-number">0</span><br>  <span class="hljs-keyword">when</span> n % <span class="hljs-number">9</span> == <span class="hljs-number">0</span><br>    <span class="hljs-number">9</span><br>  <span class="hljs-keyword">else</span><br>    n % <span class="hljs-number">9</span><br>  <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>其實本題目也和鼎鼎大名的費氏列數解法相關，也有用到遞迴的概念，解法也一併補充在這裡：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>)<br>  n &lt;= <span class="hljs-number">1</span> ? n : fibonacci(n - <span class="hljs-number">1</span>) + fibonacci(n - <span class="hljs-number">2</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>後面<code>Python</code>的解法和<code>JS</code>解法大致相同，只有寫法不同而已：</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">return</span> n <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">10</span> <span class="hljs-keyword">else</span> digital_root(<span class="hljs-built_in">sum</span>(<span class="hljs-built_in">int</span>(digit) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(n)))<br></code></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">return</span> n <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> (n - <span class="hljs-number">1</span>) % <span class="hljs-number">9</span> + <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">digital_root</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    <span class="hljs-keyword">elif</span> n % <span class="hljs-number">9</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">9</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> n % <span class="hljs-number">9</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n &lt; <span class="hljs-number">10</span> ? n : <span class="hljs-title function_">digitalRoot</span>([...n.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, digit</span>) =&gt;</span> sum + <span class="hljs-built_in">parseInt</span>(digit), <span class="hljs-number">0</span>));<br>  &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot2</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n === <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : (n - <span class="hljs-number">1</span>) % <span class="hljs-number">9</span> + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot</span>(<span class="hljs-params">n</span>) &#123;<br>  <span class="hljs-keyword">switch</span> (<span class="hljs-literal">true</span>) &#123;<br>    <span class="hljs-keyword">case</span> n === <span class="hljs-number">0</span>:<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">case</span> n % <span class="hljs-number">9</span> === <span class="hljs-number">0</span>:<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">9</span>;<br>    <span class="hljs-attr">default</span>:<br>      <span class="hljs-keyword">return</span> n % <span class="hljs-number">9</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>codewars</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>sum of digits</tag>
+        <tag>digital root</tag>
+        <tag>遞迴</tag>
+        <tag>recursion</tag>
       </tags>
   </entry>
   <entry>
@@ -774,6 +774,47 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>Python</tag>
         <tag>Django</tag>
         <tag>ORM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django : 從零開始學 4 — URLS 路徑</title>
+    <url>/2024/04/25/django-urls/</url>
+    <content><![CDATA[<h2 id="資料夾"><a href="#資料夾" class="headerlink" title="資料夾"></a>資料夾</h2><p>這是目前my_project內的資料夾結構：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">.<br>└── project<br>    ├── blog<br>    │   ├── __pycache__<br>    │   ├── migrations<br>    │   │   └── __pycache__<br>    │   └── templates<br>    │       └── blog<br>    └── project<br>        └── __pycache__<br></code></pre></td></tr></table></figure>
+
+<h2 id="ROOT-URLCONF"><a href="#ROOT-URLCONF" class="headerlink" title="ROOT_URLCONF"></a>ROOT_URLCONF</h2><p>可以在<code>settings.py</code> 看到我們將<code>ROOT_URLCONF</code>設定在<code>project.urls</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/project/settings.py</span><br>ROOT_URLCONF = <span class="hljs-string">&#x27;project.urls&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>也就代表Django在使用者拜訪路徑時會先去找<code>project.urls</code>（也像Rails的<code>routes.rb</code>）可以把<code>ROOT_URLCONF</code>想像成指路人，所有APP的路徑都要聽這個檔案指揮</p>
+<p>接著我們開啟指路人：<code>project.urls</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin <br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include <span class="hljs-comment">#修改這行</span><br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    path(<span class="hljs-string">&#x27;blog/&#x27;</span>, include(<span class="hljs-string">&#x27;blog.urls&#x27;</span>)), <span class="hljs-comment">#新增這行</span><br>]<br></code></pre></td></tr></table></figure>
+
+<p>這樣代表，在網址最後加上<code>/blog/</code>的時候，他會去找<code>blog/urls.py</code>去要資料。</p>
+<h3 id="blog-urls-py（URLconf）"><a href="#blog-urls-py（URLconf）" class="headerlink" title="blog&#x2F;urls.py（URLconf）"></a>blog&#x2F;urls.py（URLconf）</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, views.<span class="hljs-built_in">list</span>, name=<span class="hljs-string">&#x27;list&#x27;</span>),<br>]<br></code></pre></td></tr></table></figure>
+
+<p>這樣代表在網址<code>/blog/</code>後面沒接任何東西時，會去找<code>view</code>的<code>list</code>方法</p>
+<h3 id="project-blog-views-py"><a href="#project-blog-views-py" class="headerlink" title="project&#x2F;blog&#x2F;views.py"></a>project&#x2F;blog&#x2F;views.py</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">list</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;blog/list.html&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>這樣代表在lsit方法裡，他會發一個request請求，去render 同一個資料夾內 <code>/templates/blog/list.html</code> 檔案，如果原本沒有資料夾／檔案就在這裡新增吧～</p>
+<p>最後就可以看到成果：</p>
+<img src="/images/django-urls/01.png">
+
+<p>Template我只有寫了一行hello world (*°∀°)，下次來使用路徑轉換器&amp;裝飾Template吧～</p>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://docs.djangoproject.com/en/5.0/topics/http/urls/">Django doc - Urls</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Django</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Django</tag>
+        <tag>URL</tag>
       </tags>
   </entry>
   <entry>
@@ -1239,34 +1280,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day03 palindrome number</title>
-    <url>/2024/02/01/leetcode-palindrome-number/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p>
-<img src="/images/leetcode-palindrome-number/01.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/palindrome-number/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">x</span>)<br>  x.to_s == x.to_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>我第一個想到使用<code>reverse</code>，不過<code>reverse</code>必須要字串才行，<br>因此山不轉路轉，把一開始給的x值使用<code>.to_s</code>轉為字串即可！</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x) == <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
-<p>python的reverse寫法很特別！<br>不過一樣是要先轉成字串所以使用<code>str(x)</code></p>
-<p>其中<code>[::-1]</code>是反轉讀取的意思，如果是array的話也會反轉讀取<br>倘若是<code>[3::-1]</code>則會從索引值<code>3</code>開始反轉讀取</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> isPalindrome = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">return</span> x == [...x.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>我使用<code>...</code>的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展開符號</a>將字串轉為陣列，再使用<code>reverse</code>的功能，將陣列反轉，最後使用<code>join(&#39;&#39;)</code>組起來，如果反轉完等於<code>x</code>也回傳<code>true</code>!</p>
-<p>今天的題目稍微簡單一點，我們明天繼續٩(๑❛ᴗ❛๑)۶</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>palindrome number</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode: number of 1 bits</title>
     <url>/2024/03/16/leetcode-number-of-1-bits/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p>
@@ -1301,6 +1314,98 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>number of 1 bits</tag>
         <tag>漢明權重</tag>
         <tag>hamming weight</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day03 palindrome number</title>
+    <url>/2024/02/01/leetcode-palindrome-number/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第三天，讓我們繼續吧！</p>
+<img src="/images/leetcode-palindrome-number/01.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/palindrome-number/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">x</span>)<br>  x.to_s == x.to_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>我第一個想到使用<code>reverse</code>，不過<code>reverse</code>必須要字串才行，<br>因此山不轉路轉，把一開始給的x值使用<code>.to_s</code>轉為字串即可！</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x) == <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+<p>python的reverse寫法很特別！<br>不過一樣是要先轉成字串所以使用<code>str(x)</code></p>
+<p>其中<code>[::-1]</code>是反轉讀取的意思，如果是array的話也會反轉讀取<br>倘若是<code>[3::-1]</code>則會從索引值<code>3</code>開始反轉讀取</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> isPalindrome = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">return</span> x == [...x.<span class="hljs-title function_">toString</span>()].<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>我使用<code>...</code>的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展開符號</a>將字串轉為陣列，再使用<code>reverse</code>的功能，將陣列反轉，最後使用<code>join(&#39;&#39;)</code>組起來，如果反轉完等於<code>x</code>也回傳<code>true</code>!</p>
+<p>今天的題目稍微簡單一點，我們明天繼續٩(๑❛ᴗ❛๑)۶</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>palindrome number</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day12 plus one</title>
+    <url>/2024/02/10/leetcode-plus-one/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十二天，讓我們開始吧！</p>
+<img src="/images/leetcode-plus-one/0210.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/plus-one/">leetcode</a></p>
+<p>這題題目很簡單，只要會使用將數字陣列轉為整數再加一，接著再轉回數字陣列就可以得到答案～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">plus_one</span>(<span class="hljs-params">digits</span>)<br>  (digits.join(<span class="hljs-string">&#x27;&#x27;</span>).to_i + <span class="hljs-number">1</span>).to_s.chars.map(&amp;<span class="hljs-symbol">:to_i</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><code>.map(&amp;:to_i)</code>原始的寫法為<code>.map&#123; |num| num.to_i &#125;</code></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits</span>):<br>        <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(digit) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>, digits))) + <span class="hljs-number">1</span>)]<br></code></pre></td></tr></table></figure>
+<p>Python轉換型態都是包一個括號在外面，<code>int(&#39;&#39;.join(map(str, digits)))</code>為將陣列內每一字連接為字串最後轉為整數，而後<code>+1</code>，再利用<code>str()</code>轉為字串。</p>
+<p>最後將每一字轉為整數陣列回傳。</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> plusOne = <span class="hljs-keyword">function</span>(<span class="hljs-params">digits</span>) &#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-title class_">BigInt</span>(digits.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)) + <span class="hljs-number">1n</span>).<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>  &#125;;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>js</code>比較特別，使用<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</a>，BigInt 是一個內建的物件，提供了表示大於 2^53 的整數的功能 (2^53 是 JavaScript 原生的Number能夠表示的最大值)，因為使用<code>BigInt</code>型態，所以<code>+1</code>要使用<code>+1n</code>，才能得到加一後的結果。</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>plus one</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day04 roman to integer</title>
+    <url>/2024/02/02/leetcode-roman-to-integer/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
+<img src="/images/leetcode-roman-to-integer/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p>
+<p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p>
+<p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p>
+<p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure>
+<p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p>
+<p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p>
+<h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+
+<p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p>
+<p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>roman to integer</tag>
       </tags>
   </entry>
   <entry>
@@ -1340,70 +1445,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day04 roman to integer</title>
-    <url>/2024/02/02/leetcode-roman-to-integer/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
-<img src="/images/leetcode-roman-to-integer/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p>
-<p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p>
-<p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p>
-<p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure>
-<p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p>
-<p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p>
-<h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
-
-<p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p>
-<p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>roman to integer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day12 plus one</title>
-    <url>/2024/02/10/leetcode-plus-one/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十二天，讓我們開始吧！</p>
-<img src="/images/leetcode-plus-one/0210.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/plus-one/">leetcode</a></p>
-<p>這題題目很簡單，只要會使用將數字陣列轉為整數再加一，接著再轉回數字陣列就可以得到答案～</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">plus_one</span>(<span class="hljs-params">digits</span>)<br>  (digits.join(<span class="hljs-string">&#x27;&#x27;</span>).to_i + <span class="hljs-number">1</span>).to_s.chars.map(&amp;<span class="hljs-symbol">:to_i</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p><code>.map(&amp;:to_i)</code>原始的寫法為<code>.map&#123; |num| num.to_i &#125;</code></p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits</span>):<br>        <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(digit) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>, digits))) + <span class="hljs-number">1</span>)]<br></code></pre></td></tr></table></figure>
-<p>Python轉換型態都是包一個括號在外面，<code>int(&#39;&#39;.join(map(str, digits)))</code>為將陣列內每一字連接為字串最後轉為整數，而後<code>+1</code>，再利用<code>str()</code>轉為字串。</p>
-<p>最後將每一字轉為整數陣列回傳。</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> plusOne = <span class="hljs-keyword">function</span>(<span class="hljs-params">digits</span>) &#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-title class_">BigInt</span>(digits.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)) + <span class="hljs-number">1n</span>).<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>  &#125;;<br></code></pre></td></tr></table></figure>
-
-<p>在<code>js</code>比較特別，使用<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</a>，BigInt 是一個內建的物件，提供了表示大於 2^53 的整數的功能 (2^53 是 JavaScript 原生的Number能夠表示的最大值)，因為使用<code>BigInt</code>型態，所以<code>+1</code>要使用<code>+1n</code>，才能得到加一後的結果。</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>plus one</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day11 single number</title>
     <url>/2024/02/09/leetcode-single-number/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十一天，讓我們開始吧！</p>
@@ -1435,6 +1476,34 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day02 two sum</title>
+    <url>/2024/01/31/leetcode-two-sum/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
+<img src="/images/leetcode-two-sum/1.png">
+
+<p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
+<li><code>nums</code>: 傳入的陣列</li>
+<li><code>target</code>:目標之和</li>
+<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
+<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
+<li><code>seen[target - num]</code>: 目標數字的索引值</li>
+<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
+</ul>
+<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>leetcode</tag>
+        <tag>two sum</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day14 sqrtx</title>
     <url>/2024/02/12/leetcode-sqrtx/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十四天，讓我們開始吧！</p>
@@ -1461,34 +1530,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Python</tag>
         <tag>leetcode</tag>
         <tag>sqrtx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day02 two sum</title>
-    <url>/2024/01/31/leetcode-two-sum/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
-<img src="/images/leetcode-two-sum/1.png">
-
-<p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
-<ul>
-<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
-<li><code>nums</code>: 傳入的陣列</li>
-<li><code>target</code>:目標之和</li>
-<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
-<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
-<li><code>seen[target - num]</code>: 目標數字的索引值</li>
-<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
-</ul>
-<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>leetcode</tag>
-        <tag>two sum</tag>
       </tags>
   </entry>
   <entry>
