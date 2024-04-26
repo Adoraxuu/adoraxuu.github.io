@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-04-25T12:56:27.934Z</updated>
+  <updated>2024-04-26T10:53:43.564Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Django : 從零開始學 5 — Templates</title>
+    <link href="http://adora-xu.com/2024/04/26/django-templates/"/>
+    <id>http://adora-xu.com/2024/04/26/django-templates/</id>
+    <published>2024-04-26T10:47:41.000Z</published>
+    <updated>2024-04-26T10:53:43.564Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前做完urls，今天就可以來處理前台顯示畫面Templates啦 ʕ •̀ o •́ ʔ</p><h2 id="blog-views"><a href="#blog-views" class="headerlink" title="blog&#x2F;views"></a>blog&#x2F;views</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">list</span>(<span class="hljs-params">request</span>):<br>    posts = Post.objects.<span class="hljs-built_in">all</span>()<br>    <span class="hljs-keyword">return</span> render(<br>        request,<br>        <span class="hljs-string">&#x27;blog/list.html&#x27;</span>,<br>        &#123;<span class="hljs-string">&#x27;posts&#x27;</span>: posts&#125;<br>    )<br></code></pre></td></tr></table></figure><p>先改寫blog&#x2F;vies裡面的lsit，讓list頁面能有我們建好model的post</p><h2 id="project-blog-templates-blog-list-html"><a href="#project-blog-templates-blog-list-html" class="headerlink" title="project&#x2F;blog&#x2F;templates&#x2F;blog&#x2F;list.html"></a>project&#x2F;blog&#x2F;templates&#x2F;blog&#x2F;list.html</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% block content %&#125;<br>    &lt;h1&gt;My blog&lt;/h1&gt;<br>    &#123;% <span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts %&#125;<br>        &lt;h2&gt;<br>            &lt;a href=<span class="hljs-string">&quot;&#123;&#123; post.get_url &#125;&#125;&quot;</span>&gt;<br>                &#123;&#123; post.title &#125;&#125;<br>            &lt;/a&gt;<br>        &lt;/h2&gt;<br>        &lt;p&gt;<br>            Published &#123;&#123; post.published_date|date:<span class="hljs-string">&quot;SHORT_DATE_FORMAT&quot;</span> &#125;&#125; by &#123;&#123; post.author &#125;&#125;<br>        &lt;/p&gt;<br>        &#123;&#123; post.body|truncatewords:<span class="hljs-number">30</span>|linebreaks &#125;&#125;<br>    &#123;% endfor %&#125;<br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure><ul><li><p><strong>變數：</strong></p></li><li><p>過濾器：舉幾個比較常見的例子</p><ul><li>default:<ul><li><code>&#123;&#123; value|default:"nothing" &#125;&#125;</code></li><li>如果變數為 false 或空，則使用給定的預設值。否則，使用變數的值。例如：</li></ul></li><li><strong><a href="https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#std-templatefilter-length">length</a>:</strong><ul><li><code>&#123;&#123; value|length &#125;&#125;</code></li><li>傳回值的長度。這適用於字串和列表。例如：</li></ul></li><li>date:<ul><li><code>&#123;&#123; value|date:"SHORT_DATE_FORMAT" &#125;&#125;</code></li><li>可自定義像是：</li><li><code>&#123;&#123; value|date:"D d M Y" &#125;&#125; &#123;&#123; value|time:"H:i" &#125;&#125;</code></li></ul></li><li>可以參考：<a href="https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#ref-templates-builtins-filters">Django Docs - 內建過濾參考</a></li></ul></li><li><p>標籤：</p><ul><li>for:<code>&#123;% for post in posts %&#125;….. &#123;% endfor %&#125;</code></li><li>if..elif..else</li><li>if 可以和過濾器一起使用</li></ul>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% <span class="hljs-keyword">if</span> athlete_list|length &gt; <span class="hljs-number">1</span> %&#125;<br>   Team: &#123;% <span class="hljs-keyword">for</span> athlete <span class="hljs-keyword">in</span> athlete_list %&#125; ... &#123;% endfor %&#125;<br>&#123;% <span class="hljs-keyword">else</span> %&#125;<br>   Athlete: &#123;&#123; athlete_list<span class="hljs-number">.0</span>.name &#125;&#125;<br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure></li></ul><p>這時候前面看起來效果就會像：</p><img src="/images/django-templates/1.png"><h2 id="模板繼承"><a href="#模板繼承" class="headerlink" title="模板繼承"></a>模板繼承</h2><p>模板繼承有點像是Rails的render，先把可以替換的地方挖空，變成base模板，子模板就可以自定義（覆蓋）挖空地方的內容</p><h3 id="Base模板"><a href="#Base模板" class="headerlink" title="Base模板"></a>Base模板</h3><p>首先看我們的base模板</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># template.html</span><br>&lt;!DOCTYPE html&gt;<br>&lt;html lang=<span class="hljs-string">&quot;en&quot;</span>&gt;<br>&lt;head&gt;<br>    &lt;meta charset=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;<br>    &lt;meta name=<span class="hljs-string">&quot;viewport&quot;</span> content=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;<br>    &lt;title&gt;Welcome, Templates Page&lt;/title&gt;<br>    &lt;style&gt;<br>        header &#123;<br>            background-color: <span class="hljs-comment">#333;</span><br>            color: white;<br>            padding: 20px;<br>            text-align: center;<br>        &#125;<br>    &lt;/style&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br>&lt;header&gt;<br>    &lt;h2&gt;Welcome, Templates Page&lt;/h2&gt;<br>&lt;/header&gt;<br><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;<br>    &#123;% block mymessage %&#125;<br>    &#123;% endblock %&#125;<br>&lt;/div&gt;<br><br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure><p>其實上面內容多半都是一般的html，只有一個地方比較特別</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;<br>    &#123;% block mymessage %&#125;<br>    &#123;% endblock %&#125;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure><p>這裡的    <code>&#123;% block mymessage %&#125; &#123;% endblock %&#125;</code> 可以被子模板替換</p><h3 id="子模板"><a href="#子模板" class="headerlink" title="子模板"></a>子模板</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% extends <span class="hljs-string">&#x27;template.html&#x27;</span> %&#125;<br><br>&#123;% block mymessage %&#125;<br>  &lt;p&gt;hihihi&lt;/p&gt;<br>&#123;% endblock %&#125; <br></code></pre></td></tr></table></figure><p>最上面加上 <code>&#123;% extends 'template.html' %&#125;</code> 就可以把 <code>block mymessage</code>換掉</p><img src="/images/django-templates/2.png"><p>其實就蠻像Rails的Render &#x2F; Component ٩(●ᴗ●)۶</p><p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://docs.djangoproject.com/en/5.0/ref/templates/">Django Docs - templates</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;之前做完urls，今天就可以來處理前台顯示畫面Templates啦 ʕ •̀ o •́ ʔ&lt;/p&gt;
+&lt;h2 id=&quot;blog-views&quot;&gt;&lt;a href=&quot;#blog-views&quot; class=&quot;headerlink&quot; title=&quot;blog&amp;#x2F;views&quot;&gt;&lt;/</summary>
+      
+    
+    
+    
+    <category term="Django" scheme="http://adora-xu.com/categories/Django/"/>
+    
+    
+    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
+    
+    <category term="Django" scheme="http://adora-xu.com/tags/Django/"/>
+    
+    <category term="Templates" scheme="http://adora-xu.com/tags/Templates/"/>
+    
+  </entry>
   
   <entry>
     <title>Django : 從零開始學 4 — URLS 路徑</title>
@@ -380,9 +409,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -412,9 +441,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -444,9 +473,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -476,9 +505,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -514,9 +543,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -653,39 +682,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="plus one" scheme="http://adora-xu.com/tags/plus-one/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day11 single number</title>
-    <link href="http://adora-xu.com/2024/02/09/leetcode-single-number/"/>
-    <id>http://adora-xu.com/2024/02/09/leetcode-single-number/</id>
-    <published>2024-02-09T02:50:44.000Z</published>
-    <updated>2024-02-09T02:55:35.510Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十一天，讓我們開始吧！</p><img src="/images/leetcode-single-number/1.png"><p>題目來源：<a href="https://leetcode.com/problems/single-number">leetcode</a></p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">single_number</span>(<span class="hljs-params">nums</span>)<br>  nums.reduce(<span class="hljs-symbol">:^</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>這次用到<code>XOR</code>符號<code>^</code>，這是種運算邏輯，用於對兩個二進制數的對應位進行比較，規則如下：兩個對應位數字不同，會回傳<code>1</code>，兩個對應位不同則會回傳<code>0</code>，用此來找出只出現一次的數字。</p><p>範例如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-number">0</span> xor <span class="hljs-number">0</span> = <span class="hljs-number">0</span><br><span class="hljs-number">0</span> xor <span class="hljs-number">1</span> = <span class="hljs-number">1</span><br><span class="hljs-number">1</span> xor <span class="hljs-number">0</span> = <span class="hljs-number">1</span><br><span class="hljs-number">1</span> xor <span class="hljs-number">1</span> = <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure><p>如果我們傳入<code>[4, 1, 2, 1, 2]</code>呢？根據<code>reduce(:^)</code>會這樣運算<code>4 ^ 1 ^ 2 ^ 1 ^ 2</code>：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ruby">  <span class="hljs-number">4</span>:  <span class="hljs-number">100</span><br>  <span class="hljs-number">1</span>:  <span class="hljs-number">001</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">101</span>  <br><br>  <span class="hljs-number">5</span>:  <span class="hljs-number">101</span><br>  <span class="hljs-number">2</span>:  <span class="hljs-number">010</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">111</span> <br><br>  <span class="hljs-number">7</span>:  <span class="hljs-number">111</span><br>  <span class="hljs-number">1</span>:  <span class="hljs-number">001</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">110</span> <br><br>  <span class="hljs-number">6</span>:  <span class="hljs-number">110</span><br>  <span class="hljs-number">2</span>:  <span class="hljs-number">010</span><br><span class="hljs-variable constant_">XOR</span>:  <span class="hljs-number">100</span><br></code></pre></td></tr></table></figure><p>也可以用另外一個方法理解，<code>1 ^ 1 = 0</code>, <code>2 ^ 2 = 0</code>, <code>0 ^ 4 = 4</code><br>只要有不同於其他的數，就會被留下來，這樣答案就出來了！</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">singleNumber</span>(<span class="hljs-params">self, nums</span>):<br>        <span class="hljs-keyword">return</span> reduce(<span class="hljs-keyword">lambda</span> x, y: x ^ y, nums)<br></code></pre></td></tr></table></figure><p>Python也是一樣邏輯，只不過<code>reduce</code>寫法不同，可以參考：<a href="https://docs.python.org/3.0/library/functools.html">reduce</a></p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> singleNumber = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">return</span> nums.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">acc, num</span>) =&gt;</span> acc ^ num, <span class="hljs-number">0</span>);<br>  &#125;;<br></code></pre></td></tr></table></figure><p>JS也是一樣邏輯，只不過<code>reduce</code>寫法不同，可以參考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce">reduce</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第十一天，讓我們開始吧！&lt;/p&gt;
-&lt;img src=&quot;</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="single number" scheme="http://adora-xu.com/tags/single-number/"/>
     
   </entry>
   
