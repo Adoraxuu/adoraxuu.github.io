@@ -250,6 +250,116 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>JavaScript: defer vs async</title>
+    <url>/2023/11/18/async-vs-defer/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png">
+
+<p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p>
+<ol>
+<li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li>
+<li><code>async</code></li>
+<li><code>defer</code></li>
+</ol>
+<p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p>
+<p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p>
+<h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png">
+
+<blockquote>
+<p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p>
+</blockquote>
+<h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul>
+<li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li>
+</ul>
+<h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol>
+<li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li>
+<li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li>
+<li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li>
+<li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li>
+</ol>
+<p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p>
+<blockquote>
+<p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
+</blockquote>
+<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
+<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
+<p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
+<p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
+<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
+<p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
+<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
+<h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
+
+<ul>
+<li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li>
+<li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li>
+<li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li>
+</ul>
+<p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
+<p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
+<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
+<ul>
+<li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
+<li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
+<li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li>
+<li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li>
+<li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li>
+<li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li>
+</ul>
+<p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p>
+<p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p>
+<h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<img src="/images/async_vs_defer/5rendering-time-defer.png">
+
+<ul>
+<li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li>
+<li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li>
+<li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
+<li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
+</ul>
+<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>defer</tag>
+        <tag>async</tag>
+        <tag>Web</tag>
+        <tag>rendering</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CodeWars: credit card mask</title>
     <url>/2024/02/16/codewars-credit-card-mask/</url>
     <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
@@ -268,8 +378,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </categories>
       <tags>
         <tag>Ruby</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>credit card mask</tag>
       </tags>
@@ -292,8 +402,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </categories>
       <tags>
         <tag>Ruby</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>highest and lowest</tag>
       </tags>
@@ -314,8 +424,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </categories>
       <tags>
         <tag>Ruby</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>square every digit</tag>
       </tags>
@@ -340,8 +450,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </categories>
       <tags>
         <tag>Ruby</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>Sum of a sequence</tag>
       </tags>
@@ -381,13 +491,106 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </categories>
       <tags>
         <tag>Ruby</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Python</tag>
         <tag>sum of digits</tag>
         <tag>digital root</tag>
         <tag>遞迴</tag>
         <tag>recursion</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django : 從零開始學 7 - 增加評論功能</title>
+    <url>/2024/05/15/django-add-comment/</url>
+    <content><![CDATA[<p>文章建立好後，也來增加評論表單，讓使用者可以留言吧～</p>
+<h2 id="增加-comment-model"><a href="#增加-comment-model" class="headerlink" title="增加 comment model"></a>增加 comment model</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Comment</span>(models.Model):<br>    post = models.ForeignKey( <span class="hljs-comment">#增加ForeignKey，讓他和post有關聯</span><br>        Post,<br>        on_delete=models.CASCADE, <span class="hljs-comment">#post被刪除，關聯的comment也會被刪除</span><br>        related_name=<span class="hljs-string">&#x27;comments&#x27;</span>,<br>    ) <br>    username = models.CharField(max_length=<span class="hljs-number">80</span>)<br>    email = models.EmailField()<br>    body = models.TextField()<br>    created = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    updated = models.DateTimeField(auto_now=<span class="hljs-literal">True</span>)<br>    active = models.BooleanField(default=<span class="hljs-literal">True</span>) <span class="hljs-comment">#是否顯示</span><br><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        ordering = (<span class="hljs-string">&#x27;-created&#x27;</span>,)<span class="hljs-comment">#排序規則，新的在上面</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>): <span class="hljs-comment">#debug的時候，可以印出來的格式</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Comment by &#123;&#125; on &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(self.username, self.post)<br></code></pre></td></tr></table></figure>
+
+<p><code>$ poetry run python manage.py makemigrations blog</code></p>
+<img src="/images/django-add-comment/0.png">
+
+<p><code>$ poetry run python manage.py migrate</code></p>
+<img src="/images/django-add-comment/1.png">
+
+
+<p>可以看到DB裡blog_comment的Table建立好了</p>
+<img src="/images/django-add-comment/2.png">
+
+
+<h2 id="更新Admin介面"><a href="#更新Admin介面" class="headerlink" title="更新Admin介面"></a>更新Admin介面</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post, Comment <span class="hljs-comment">#新增這行</span><br><br><span class="hljs-comment">#...其他程式</span><br><br><span class="hljs-comment">#新增以下</span><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Comment</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CommentAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;post&#x27;</span>, <span class="hljs-string">&#x27;created&#x27;</span>, <span class="hljs-string">&#x27;active&#x27;</span>)<br>    list_filter = (<span class="hljs-string">&#x27;active&#x27;</span>, <span class="hljs-string">&#x27;created&#x27;</span>, <span class="hljs-string">&#x27;updated&#x27;</span>)<br>    search_fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>後台就可以看到更新後的admin介面</p>
+<img src="/images/django-add-comment/3.png">
+
+
+<h2 id="透過ORM操作"><a href="#透過ORM操作" class="headerlink" title="透過ORM操作"></a>透過ORM操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ python manage.py shell<br>$ from blog.models import Post, Comment<br>$ post = Post.objects.all()<br></code></pre></td></tr></table></figure>
+
+<p>來看一下目前post是什麼：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post<br>&lt;QuerySet [&lt;Post: Lorem Ipsum2&gt;, &lt;Post: Lorem Ipsum&gt;, &lt;Post: created from shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在最後一篇post新增評論</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; from blog.models import Post, Comment<br>&gt;&gt;&gt; post = Post.objects.all()<br>&gt;&gt;&gt; post<br>&lt;QuerySet [&lt;Post: Lorem Ipsum2&gt;, &lt;Post: Lorem Ipsum&gt;, &lt;Post: created from shell&gt;, &lt;Post: hi&gt;]&gt;<br>&gt;&gt;&gt; post = post.last()<br>&gt;&gt;&gt; post<br>&lt;Post: hi&gt;<br>&gt;&gt;&gt; com = Comment(post=post, username=<span class="hljs-string">&#x27;text&#x27;</span>, email=<span class="hljs-string">&#x27;text@gmail.com&#x27;</span>, body=<span class="hljs-string">&#x27;here is a comment from shell&#x27;</span>)<br>&gt;&gt;&gt; com.save()<br>&gt;&gt;&gt; com<br>&lt;Comment: Comment by text on hi&gt;<br></code></pre></td></tr></table></figure>
+
+<p>也可以透過<code>.filter(id=).first()</code>找到想要新增的文章</p>
+<p>先使用for循環印出所有文章的id，在使用filter找指定的文章</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.all()<br>&gt;&gt;&gt; <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> post:<br>...     <span class="hljs-built_in">print</span>(p.id)<br>... <br>7<br>6<br>5<br>3<br>&gt;&gt;&gt; post = Post.objects.filter(<span class="hljs-built_in">id</span>=5).first()<br>&gt;&gt;&gt; com = Comment(post=post,username=<span class="hljs-string">&#x27;Amy&#x27;</span>,email=<span class="hljs-string">&#x27;Amy@gmail.com&#x27;</span>,body=<span class="hljs-string">&#x27;this is comment from Amy&#x27;</span>)<br>&gt;&gt;&gt; com.save()<br>&gt;&gt;&gt; com<br>&lt;Comment: Comment by Amy on created from shell&gt;<br></code></pre></td></tr></table></figure>
+
+<p>也可以看到DB的blog_comment Table裡面有資料：</p>
+<img src="/images/django-add-comment/4.png">
+
+
+<p>可以從post調出comments</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.filter(<span class="hljs-built_in">id</span>=5).first()<br>&gt;&gt;&gt; post.comments.all()<br>&lt;QuerySet [&lt;Comment: Comment by Amy on created from shell&gt;]&gt;<br>&gt;&gt;&gt; <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> post.comments.all():<br>...     <span class="hljs-built_in">print</span>(c)<br>... <br>Comment by Amy on created from shell<br></code></pre></td></tr></table></figure>
+
+<h2 id="將頻論放到blog前台"><a href="#將頻論放到blog前台" class="headerlink" title="將頻論放到blog前台"></a>將頻論放到blog前台</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/templates/blog/detail.html</span><br>&#123;% block content %&#125;<br>    &lt;h1&gt;&#123;&#123; post.title &#125;&#125;&lt;/h1&gt;<br>    &lt;p&gt;Published &#123;&#123; post.published_date &#125;&#125; by &#123;&#123; post.author &#125;&#125;&lt;/p&gt;<br>    &#123;&#123; post.body|linebreaks &#125;&#125;<br><br>    &#123;% with post.comments.count as total_comments %&#125;<br>        &lt;h2&gt;&#123;&#123; total_comments &#125;&#125; comment&#123;&#123; total_comments|pluralize &#125;&#125;&lt;/h2&gt;<br>    &#123;% endwith %&#125;<br><br>    &#123;% <span class="hljs-keyword">for</span> comment <span class="hljs-keyword">in</span> post.comments.all %&#125;<br>        &lt;div&gt;<br>            &lt;p&gt;Comment by &#123;&#123; comment.username &#125;&#125;&#123;&#123; comment.created &#125;&#125;&lt;/p&gt;<br>            &#123;&#123; comment.body|linebreaks &#125;&#125;<br>        &lt;/div&gt;<br>    &#123;% empty %&#125;<br>        &lt;p&gt;There are no comments yet.&lt;/p&gt;<br>    &#123;% endfor %&#125;<br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>comment&#123;&#123; total_comments|pluralize &#125;&#125;</code>：如果是複數就會+s</li>
+<li><code>&#123;% for comment in post.comments.all %&#125;</code> ：使用for循環帶出所有的評論</li>
+<li><code>&#123;% empty %&#125;</code> ：如果沒有頻論就顯示  <code>&lt;p&gt;There are no comments yet.&lt;/p&gt;</code></li>
+</ul>
+<p>做到這步驟，前台看起來就會像這樣，評論顯示在文章的下方</p>
+<img src="/images/django-add-comment/5.png">
+
+<img src="/images/django-add-comment/6.png">
+
+
+<h2 id="使用者輸入表單-form"><a href="#使用者輸入表單-form" class="headerlink" title="使用者輸入表單(form)"></a>使用者輸入表單(form)</h2><p>來建立一個表單讓使用者可以輸入評論內容</p>
+<h2 id="與model關聯"><a href="#與model關聯" class="headerlink" title="與model關聯"></a>與model關聯</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># project/blog/forms.py</span><br>from django import froms<br>from .models import Comment<br><br>class CommentForm(froms.ModelForm):<br>    class Meta:<br>        model = Comment <span class="hljs-comment">#與DB的Comment Model關聯</span><br>        fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment">#傳進來的資料</span><br></code></pre></td></tr></table></figure>
+
+<p>這步主要是能讓前台傳的資料與DB關聯</p>
+<h2 id="編輯views，以控制表單要傳遞的內容"><a href="#編輯views，以控制表單要傳遞的內容" class="headerlink" title="編輯views，以控制表單要傳遞的內容"></a>編輯views，以控制表單要傳遞的內容</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># project/blog/views.py</span><br>def detail(request, year, month, day, slug):<br><span class="hljs-comment">#... 其他程式</span><br><br>    <span class="hljs-comment"># List of active comments for this post</span><br>    comments = post.comments.filter(active=True) <span class="hljs-comment">#過濾出所有active的comment</span><br>    new_comment = None<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>: <span class="hljs-comment">#如果表單發送post請求</span><br>        comment_form = CommentForm(data=request.POST) <span class="hljs-comment"># 讀取form數據，產生comment_form對象</span><br>        <span class="hljs-keyword">if</span> comment_form.is_valid(): <span class="hljs-comment">#驗證是否正確</span><br>            new_comment = comment_form.save(commit=False) <span class="hljs-comment">#新建一個new_comment對象</span><br>            new_comment.post = post<br>            new_comment.save()<br>    <span class="hljs-keyword">else</span>:<br>        comment_form = CommentForm() <span class="hljs-comment">#如果不是post 是get，就做一個form的顯示</span><br><br>    <span class="hljs-built_in">return</span> render( <span class="hljs-comment"># return Template</span><br>        request,<br>        <span class="hljs-string">&#x27;blog/detail.html&#x27;</span>,<br>        &#123;<span class="hljs-string">&#x27;post&#x27;</span>: post,<br>         <span class="hljs-string">&#x27;comments&#x27;</span>: comments, <span class="hljs-comment"># 傳遞comment的資料到template</span><br>         <span class="hljs-string">&#x27;new_comment&#x27;</span>: new_comment,<br>         <span class="hljs-string">&#x27;comment_form&#x27;</span>: comment_form<br>         &#125;<br>    )<br><br><span class="hljs-comment">#... 其他程式</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="編輯前台顯示畫面"><a href="#編輯前台顯示畫面" class="headerlink" title="編輯前台顯示畫面"></a>編輯前台顯示畫面</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#project/blog/templates/blog/detail.html</span><br><br><span class="hljs-comment">#...其他程式</span><br>    &#123;% <span class="hljs-keyword">if</span> new_comment %&#125;<br>    &lt;h2&gt;<span class="hljs-title class_">Your</span> comment has been added.&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &#123;% else %&#125;</span><br><span class="hljs-regexp">    &lt;h3&gt;&lt;a name=&quot;commentform&quot;&gt;&lt;/a</span>&gt;<span class="hljs-title class_">Leave</span> a <span class="hljs-title class_">Comment</span>&lt;<span class="hljs-regexp">/h3&gt;</span><br><span class="hljs-regexp">    &lt;form action=&quot;#commentform&quot; method=&quot;post&quot;&gt;</span><br><span class="hljs-regexp">        &#123;&#123; comment_form.as_p &#125;&#125;</span><br><span class="hljs-regexp">        &#123;% csrf_token %&#125;</span><br><span class="hljs-regexp">        &lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;Add comment&quot;&gt;&lt;/p</span>&gt;<br>    &lt;<span class="hljs-regexp">/form&gt;</span><br><span class="hljs-regexp">    &#123;% endif %&#125;</span><br><span class="hljs-regexp">    </span><br><span class="hljs-regexp">#...其他程式</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&#123;&#123; *comment_form*.*as_p* &#125;&#125;：</code>顯示文字會用html的<p>…<p>包住</li>
+<li><code>&#123;% csrf_token %&#125;</code>：防止corss site攻擊</li>
+</ul>
+<p>以上都做好後，按右鍵查看原始碼可以看到，Django幫我們做了一個form</p>
+<img src="/images/django-add-comment/7.png">
+
+
+<p>前台也能夠順利使用表單新增留言了～</p>
+<img src="/images/django-add-comment/8.png">
+
+
+<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://docs.djangoproject.com/en/5.0/topics/forms/">Django Docs - Working with forms</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.udemy.com/course/django-2-web/">Django 2 Web开发入门与实战</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Django</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Django</tag>
+        <tag>form</tag>
+        <tag>comment</tag>
       </tags>
   </entry>
   <entry>
@@ -542,116 +745,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>JavaScript: defer vs async</title>
-    <url>/2023/11/18/async-vs-defer/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/async_vs_defer/title.png">
-
-<p>在製作網頁時，通常會用三個方法來將 JavaScript 載入網頁：</p>
-<ol>
-<li>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</li>
-<li><code>async</code></li>
-<li><code>defer</code></li>
-</ol>
-<p>這樣你的網頁才能夠順利動起來，為什麼要這樣做呢？究竟這三種方法有什麼差別呢？以下將會逐一說明(ㆁωㆁ*)</p>
-<p>要先理解<code>async</code>,<code>defer</code>的差別前，要先了解，瀏覽器是怎麼轉譯網頁的，這樣能夠更理解 JavaScript 使用不同方法載入的差別</p>
-<h2 id="瀏覽器是怎麼繪轉譯頁的呢？"><a href="#瀏覽器是怎麼繪轉譯頁的呢？" class="headerlink" title="瀏覽器是怎麼繪轉譯頁的呢？"></a>瀏覽器是怎麼繪轉譯頁的呢？</h2><img src="/images/async_vs_defer/1webdev.png">
-
-<blockquote>
-<p>圖片來源<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">web.dev</a></p>
-</blockquote>
-<h3 id="網頁的轉譯流程："><a href="#網頁的轉譯流程：" class="headerlink" title="網頁的轉譯流程："></a>網頁的轉譯流程：</h3><ul>
-<li>Bytes ➡️ Characters ➡️ Tokens ➡️ Nodes ➡️ DOM</li>
-</ul>
-<h3 id="流程解釋："><a href="#流程解釋：" class="headerlink" title="流程解釋："></a>流程解釋：</h3><ol>
-<li>從伺服器接收原始資料位元組(raw bytes of data)並將其轉換為人類看得懂的字元(Characters)。</li>
-<li>解析字元以提取 HTML 結構，此步驟稱為標記化（tokenization），它會產生標記（tokens）。</li>
-<li>將標記（tokens）轉換為節點（nodes）- 具有屬性的不同物件。</li>
-<li>連結節點（nodes）以建立資料結構，稱為 <strong>DOM</strong>（文件物件模型）和 CSSOM（CSS 物件模型）。</li>
-</ol>
-<p>以上流程確保 HTML 和 CSS 快速地傳遞到瀏覽器(ㆁωㆁ*)</p>
-<blockquote>
-<p>要了解更多請參考：<a href="https://web.dev/articles/critical-rendering-path/constructing-the-object-model?hl=zh-tw">Web.dev 建構物件模型</a></p>
-</blockquote>
-<p>這邊先幫大家畫個重點，「<strong>建立 DOM 是瀏覽器轉譯網頁的最後一步驟</strong>。」而「<strong>在瀏覽器引擎完成建置 DOM 之前使用者不會看到網站</strong>」</p>
-<h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
-<p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
-<p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
-<p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
-<p>延遲 DOM 就緒狀態的不僅僅是 JavaScript。還有 CSS、圖像、影片等。瀏覽器引擎必須先載入所有資源才能完成具象。</p>
-<p>當然睿智的工程師們早就知道這個問題的破解方法(๑˃̵ᴗ˂̵)ﻭ 這裡就要提到在開頭說的第一個方法</p>
-<h2 id="將放在前一行"><a href="#將放在前一行" class="headerlink" title="將&lt;script&gt;放在&lt;/body&gt;前一行"></a>將<code>&lt;script&gt;</code>放在<code>&lt;/body&gt;</code>前一行</h2><img src="/images/async_vs_defer/3rendering-time-endofbody.png">
-
-<ul>
-<li>瀏覽器會先解析完整個 HTML，再下載 JavaScript 檔案、解析，因此使用者可以在第一時間看到畫面。</li>
-<li>Script 有可能會異動到 HTML 元素，因此將<code> &lt;script&gt;</code> 置於<code>&lt;body&gt;</code>的底部，可以確保 HTML 元素已經完全載入，減少異動元素造成錯誤的風險。</li>
-<li>直到 DOM 完全建置好後（但會在 DOMContentLoaded 事件前）才被「執行」</li>
-</ul>
-<p>但這是好方法嗎？一切都看網頁的內容而定，如果 JavaScript 寫得很多檔案很大，或是由外部資源載入，可能就會導致網頁跑很慢(｡ŏ﹏ŏ)，使用者可能會覺得網頁壞掉 ಠ_ಠ</p>
-<p>但如果想要網頁載入更快一點怎麼辦？這時候<code>async</code>就派上用場啦 🤩</p>
-<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 的意思是 <strong>asynchrnous</strong>，意即<strong>非同步</strong> 使用的範例如下：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo2<span class="hljs-selector-class">.js</span>&quot; async&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
-
-<p>可以用圖片理解： <img src="/images/async_vs_defer/4rendering-time-async.png"></p>
-<ul>
-<li>解析 HTML 與載入腳本，是非同步進行。因此<code>async</code>會告訴瀏覽器，在解析 HTML 時不用等<code>&lt;script&gt;</code>腳本的下載與執行。</li>
-<li>async 的腳本載入與 HTML 解析是彼此獨立，async<strong>下載完就會馬上執行</strong>。</li>
-<li>除了跟 DOM 的建構是彼此獨立之外，帶有 async 屬性的腳本跟其他的腳本也是<strong>彼此獨立</strong>，哪個先下載完成就先執行。</li>
-<li>雖然在下載時不會暫停 HMTL 的解析，但在執行時其他的 Script 時會暫停解析（例如範例的 demo1 會先執行，接著再解析 demo2）</li>
-<li>通常使用在 Script 載入跟 DOM、其他腳本是沒有相互依賴關係時，例如 Google Analytics 這類分析用的腳本。</li>
-<li>async 若放在 html 中間，則拿不到後面解析的 DOM。</li>
-</ul>
-<p>async 真是省時間 ʕ•ᴥ•ʔ，但這是最好的方法嗎？並不是，一切也要看網頁的內容而定，如果有很多相互依賴的 Script 或是 Script 需要取得 DOM 元素就不適合。</p>
-<p>所以就有了第三種解決這問題的方法啦！那就是<code>defer</code></p>
-<h2 id="什麼是-defer"><a href="#什麼是-defer" class="headerlink" title="什麼是 defer?"></a>什麼是 defer?</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br>&lt;script <span class="hljs-attribute">src</span>=&quot;demo1<span class="hljs-selector-class">.js</span>&quot; defer&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
-
-<img src="/images/async_vs_defer/5rendering-time-defer.png">
-
-<ul>
-<li>defer 會告訴瀏覽器，不用等腳本的下載與執行，可以繼續完成 HTML 的解析與 DOM 的建構；在建構 DOM 的同時，會在背景中載入腳本，因此 defer 不會擋住畫面的具像（渲染）。</li>
-<li>如果腳本在 HTML 解析完成前就下載好，會等到 HTML 都<strong>完全解析</strong>後，才會執行。因此如果有腳本是需要等 HTML 解析完、DOM 完整建立後才能載入，那麼會需要選 defer。</li>
-<li>如果同時有多個帶有 defer 屬性的<code>&lt;script&gt;</code>資源，瀏覽器會同步下載，只是會依照在 HTML 中的順序執行。</li>
-<li>有些時候，可能某個腳本會依賴另一個腳本，例<code>demo1.js</code>依賴<code>demo2.js</code>，在範例中使<code>defer</code>可以確保<code>demo1.js</code>會在<code>demo2.js</code>之前執行。</li>
-</ul>
-<h2 id="放在前-v-s-Async-v-s-Defer"><a href="#放在前-v-s-Async-v-s-Defer" class="headerlink" title="放在&lt;/body&gt;前 v.s. Async v.s. Defer"></a>放在<code>&lt;/body&gt;</code>前 v.s. Async v.s. Defer</h2><p>了解這三種不同的方法時，自己也頭昏眼花了一陣子，所以特別製作了表格來幫助大家釐清： <img src="/images/async_vs_defer/6differ-table.png"></p>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://curiosum.com/blog/seo-speed-script-tags-async-vs-defer">curiosum：Async vs Defer</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/script-link-in-html">ExplainThis：script 標籤應該放在 HTML 的什麼位置？link 呢？</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.explainthis.io/zh-hant/swe/fe-script-async-defer-difference">ExplainThis：script 的 async 與 defer 有什麼不同？</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://pjchender.dev/javascript/js-async-defer/">PJchender：[JS] Async, defer attributes</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>defer</tag>
-        <tag>async</tag>
-        <tag>Web</tag>
-        <tag>rendering</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Django: 從零開始學 2 - admin site</title>
     <url>/2024/04/23/django-admin-site/</url>
     <content><![CDATA[<h2 id="admin站點使用"><a href="#admin站點使用" class="headerlink" title="admin站點使用"></a>admin站點使用</h2><p>Django有內建Admin Site，讓開發者可以輕鬆管理資料。<br>原本新建專案的時候還在疑惑，為什麼DB裡面已經有這麼多Table，原來是給內建的admin使用的。</p>
@@ -699,6 +792,81 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>MTV</tag>
         <tag>admin</tag>
         <tag>admin site</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django : 從零開始學 3 — ORM</title>
+    <url>/2024/04/24/django-orm/</url>
+    <content><![CDATA[<h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是Rails的<code>$rails c</code>指令)：</p>
+<p><em><code>$ python manage.py shell</code></em></p>
+<img src="/images/django-orm/1.png">
+
+
+<h2 id="載入Models"><a href="#載入Models" class="headerlink" title="載入Models"></a>載入Models</h2><p>首先會需要將建立的models import</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> blog.models <span class="hljs-keyword">import</span> Post<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br></code></pre></td></tr></table></figure>
+
+<h2 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h2><p>可以先看一個簡單的範例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user = User.objects.get(username=<span class="hljs-string">&#x27;admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user<br></code></pre></td></tr></table></figure>
+
+<p>使用get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果 <code>get()</code> 發現多個對象，會引發一個 <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a> 異常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Entry.objects.get(name=<span class="hljs-string">&quot;A Duplicated Name&quot;</span>)  <span class="hljs-comment"># raises Entry.MultipleObjectsReturned</span><br></code></pre></td></tr></table></figure>
+
+<p>這個比較像是Ruby on Rails的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code> 例外訊息。</p>
+<p>另外一個也蠻像的，就是Rails的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習Rails？）。</p>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的 <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的QuerySet</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這就比較像Rails的<code>where()</code>，找到會返回 <code>ActiveRecord::Relation</code> 包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p>
+<h3 id="filter-找不到的情況"><a href="#filter-找不到的情況" class="headerlink" title="filter()找不到的情況"></a>filter()找不到的情況</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;aaa&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet []&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude()"></a>exclude()</h3><p>排除查找的參數</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.exclude(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><p>秀出所有東西：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以使用for迴圈將文章標題印出來：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br><span class="hljs-meta">... </span><br>second-post<br>hi<br></code></pre></td></tr></table></figure>
+
+<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post(title=<span class="hljs-string">&#x27;created from shell&#x27;</span>, slug=<span class="hljs-string">&#x27;create-from-shell&#x27;</span>, body=<span class="hljs-string">&#x27;this is body&#x27;</span>, author=user, status= <span class="hljs-string">&#x27;draft&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這裡需要<code>.save()</code> 才會將資料儲存到資料庫裡</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post.title<br><span class="hljs-string">&#x27;created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post.title = <span class="hljs-string">&#x27;new created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: new created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
+
+<p>更新倒是蠻容易的，只要用個<code>=</code> 即可</p>
+<h2 id="first"><a href="#first" class="headerlink" title="first()"></a>first()</h2><p>第一個對象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="last"><a href="#last" class="headerlink" title="last()"></a>last()</h2><p>最後一個對象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().last()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="order-by"><a href="#order-by" class="headerlink" title="order_by()"></a>order_by()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;, &lt;Post: second-post&gt;]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;-title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;, &lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是QuerySet</p>
+<p>也可以使用索引<code>[0]</code>，來返回指定的值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這時返回的就是單一值</p>
+<h2 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = post.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;second-post&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.delete()<br>(<span class="hljs-number">1</span>, &#123;<span class="hljs-string">&#x27;blog.Post&#x27;</span>: <span class="hljs-number">1</span>&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>Post.objects.<span class="hljs-built_in">all</span>()<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://docs.djangoproject.com/en/5.0/topics/db/queries/">Django doc - Making quries</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#get">Django doc - QuerySet</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Django</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Django</tag>
+        <tag>ORM</tag>
       </tags>
   </entry>
   <entry>
@@ -886,6 +1054,117 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day09 length of last word</title>
+    <url>/2024/02/07/leetcode-length-of-last-word/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第九天，讓我們開始吧！</p>
+<img src="/images/leetcode-length-of-last-word/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
+<p>因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。</p>
+<p>這個題目不會再取用原始給予的<code>input</code>值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純一點～</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_last_word</span>(<span class="hljs-params">s</span>)<br>  s.strip.split(<span class="hljs-string">&#x27; &#x27;</span>).last.length<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby可以使用<a href="https://rubyapi.org/3.3/o/s?q=strip">strip</a>去除前後的空格，接著使用<code>split(&#39; &#39;)</code>將空格拆分為陣列，取出<code>last.length</code>就找出答案了～</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s.strip().split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<p>Python也是使用<a href="https://docs.python.org/3/library/stdtypes.html">strip</a>，接著使用<code>split(&#39; &#39;)</code>拆分為陣列，這個和Ruby相同。最後使用<code>[-1]</code>取出最後一位數，再使用<code>len()</code>包住取出長度即可～</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLastWord = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">pop</span>().<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>JS去除前後的空格使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>length of last word</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript: 究竟什麼是 Event Loop？</title>
+    <url>/2023/11/08/javascript-event-loop/</url>
+    <content><![CDATA[<style>
+  .em-div{
+  background-color: #d4a373;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  }
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
+JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
+
+<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
+<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
+
+<ul>
+  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
+  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
+  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
+</ul>
+<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
+
+<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
+
+<ul>
+  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
+  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
+
+<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
+
+<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
+
+<ul>
+  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
+  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
+</ul>
+
+<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
+
+<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
+
+<ul>
+  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
+  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
+  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
+  <li>如果不為空：處理 Call Stack 內的函數。</li>
+</ul>
+
+<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
+<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
+<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>會得到以下結果：</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
+
+<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
+
+<p>會得到以下結果：</p>
+<img src="/images/eventLoop/pasted-0.png">
+
+<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
+<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
+</blockquote>
+<blockquote>
+<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
+</blockquote>
+<blockquote>
+<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Event Loop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript: 變數提升 hoisting 到底是什麼？</title>
     <url>/2023/11/18/hoisting/</url>
     <content><![CDATA[<style>
@@ -992,196 +1271,6 @@ ReferenceError: Cannot access 'a' before initialization
       </tags>
   </entry>
   <entry>
-    <title>Django : 從零開始學 3 — ORM</title>
-    <url>/2024/04/24/django-orm/</url>
-    <content><![CDATA[<h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是Rails的<code>$rails c</code>指令)：</p>
-<p><em><code>$ python manage.py shell</code></em></p>
-<img src="/images/django-orm/1.png">
-
-
-<h2 id="載入Models"><a href="#載入Models" class="headerlink" title="載入Models"></a>載入Models</h2><p>首先會需要將建立的models import</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> blog.models <span class="hljs-keyword">import</span> Post<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br></code></pre></td></tr></table></figure>
-
-<h2 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h2><p>可以先看一個簡單的範例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user = User.objects.get(username=<span class="hljs-string">&#x27;admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user<br></code></pre></td></tr></table></figure>
-
-<p>使用get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果 <code>get()</code> 發現多個對象，會引發一個 <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a> 異常：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Entry.objects.get(name=<span class="hljs-string">&quot;A Duplicated Name&quot;</span>)  <span class="hljs-comment"># raises Entry.MultipleObjectsReturned</span><br></code></pre></td></tr></table></figure>
-
-<p>這個比較像是Ruby on Rails的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code> 例外訊息。</p>
-<p>另外一個也蠻像的，就是Rails的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習Rails？）。</p>
-<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的 <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的QuerySet</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這就比較像Rails的<code>where()</code>，找到會返回 <code>ActiveRecord::Relation</code> 包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p>
-<h3 id="filter-找不到的情況"><a href="#filter-找不到的情況" class="headerlink" title="filter()找不到的情況"></a>filter()找不到的情況</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;aaa&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet []&gt;<br></code></pre></td></tr></table></figure>
-
-<h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude()"></a>exclude()</h3><p>排除查找的參數</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.exclude(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><p>秀出所有東西：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>可以使用for迴圈將文章標題印出來：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br><span class="hljs-meta">... </span><br>second-post<br>hi<br></code></pre></td></tr></table></figure>
-
-<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post(title=<span class="hljs-string">&#x27;created from shell&#x27;</span>, slug=<span class="hljs-string">&#x27;create-from-shell&#x27;</span>, body=<span class="hljs-string">&#x27;this is body&#x27;</span>, author=user, status= <span class="hljs-string">&#x27;draft&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這裡需要<code>.save()</code> 才會將資料儲存到資料庫裡</p>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post.title<br><span class="hljs-string">&#x27;created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post.title = <span class="hljs-string">&#x27;new created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: new created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
-
-<p>更新倒是蠻容易的，只要用個<code>=</code> 即可</p>
-<h2 id="first"><a href="#first" class="headerlink" title="first()"></a>first()</h2><p>第一個對象</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
-
-<h2 id="last"><a href="#last" class="headerlink" title="last()"></a>last()</h2><p>最後一個對象</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().last()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<h2 id="order-by"><a href="#order-by" class="headerlink" title="order_by()"></a>order_by()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;, &lt;Post: second-post&gt;]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;-title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;, &lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是QuerySet</p>
-<p>也可以使用索引<code>[0]</code>，來返回指定的值：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這時返回的就是單一值</p>
-<h2 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = post.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;second-post&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.delete()<br>(<span class="hljs-number">1</span>, &#123;<span class="hljs-string">&#x27;blog.Post&#x27;</span>: <span class="hljs-number">1</span>&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>Post.objects.<span class="hljs-built_in">all</span>()<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://docs.djangoproject.com/en/5.0/topics/db/queries/">Django doc - Making quries</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#get">Django doc - QuerySet</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Django</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>Django</tag>
-        <tag>ORM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript: 究竟什麼是 Event Loop？</title>
-    <url>/2023/11/08/javascript-event-loop/</url>
-    <content><![CDATA[<style>
-  .em-div{
-  background-color: #d4a373;
-  color: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  }
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/eventLoop/blocks.jpg">
-JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它一次只能執行一個任務， 而「Event Loop」就是使 JavaScript 能夠處理多個任務的秘訣
-
-<p>其中包含了：Call Stack（呼叫堆疊）、Event Loop（事件循環）、Callback Queqe(回調佇列)，以下會逐步介紹。</p>
-<h3 id="Call-Stack-呼叫堆疊"><a href="#Call-Stack-呼叫堆疊" class="headerlink" title="Call Stack 呼叫堆疊"></a>Call Stack 呼叫堆疊</h3><img src="/images/eventLoop/callstack.png">
-
-<ul>
-  <li>因為 JavaScript 為單執行緒的設計，**一次只能執行一個動作**，因此等待執行的任務會被放入 Call Stack。</li>
-  <li>準備執行的任務會像積木一樣，由下往上堆疊。</li>
-  <li>執行時，也像積木一樣，由上往下拿取，也稱為先進後出法（LIFO, Last in First out）</li>
-</ul>
-<div class="em-div">但如果出現像 SetTimeout()、fetch()等等運行時間較長的函數，該怎麼辦呢？這個時候 Web API 就派上用場了！</div>
-
-<h3 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a>Web APIs</h3><img src="/images/eventLoop/webapis.png">
-
-<ul>
-  <li>每當呼叫非同步函數時，它都會被傳送到對應的瀏覽器 API，該 API 會等待完成函數延遲的操作後再傳回進行處理。</li>
-  <li>以 setTimeout()為例，當 Call Stack 執行時，setTimeout()會被傳送到 Web API，等待指定的時間完成再將該操作傳回進行處理。</li>
-
-<div class="em-div">從 Web API 等時間跑完後，它將操作發送到哪裡？他們被發送到「事件佇列（Event Queue）」</div>
-
-<h3 id="Event-Queue-事件佇列"><a href="#Event-Queue-事件佇列" class="headerlink" title="Event Queue 事件佇列"></a>Event Queue 事件佇列</h3><img src="/images/eventLoop/eventque.png">
-
-<ul>
-  <li>Event Queue 裡面是待執行的任務，其中每個訊息都與一個 function 相關聯。</li>
-  <li>當堆疊中有足夠空間時，會從 Event Queue 事件佇列拿取一個任務進行處理，處理過程包含了呼叫相關聯的 function。只有當堆疊清空時，該佇列才算是完成處理。</li>
-</ul>
-
-<div class="em-div">上面分別介紹了 Call Stack、Web APIs、Event Queue，接下來可以將他們組起來了！組起來後可以更好地理解 Event Loop。</div>
-
-<h3 id="Event-Loop-事件循環"><a href="#Event-Loop-事件循環" class="headerlink" title="Event Loop 事件循環"></a>Event Loop 事件循環</h3><img src="/images/eventLoop/eventloop.png">
-
-<ul>
-  <li>Event Loop 它不斷檢查 Call Stack 呼叫堆疊是否為空。</li>
-  <li>如果為空：則從事件佇列 Event Queue 中新增函式至 Call Stack。</li>
-  <li>新增函式至 Call Stack 的步驟，又稱為非同步回調（asynchronous ）</li>
-  <li>如果不為空：處理 Call Stack 內的函數。</li>
-</ul>
-
-<h3 id="範例示意"><a href="#範例示意" class="headerlink" title="範例示意"></a>範例示意</h3><p>當然，如果僅以上介紹，無法完整了解，這班準備了幾個程式碼及搭配<a href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>，讓讀者能夠更了解其運行步驟</p>
-<p>可以按此<a href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpIik7CnNldFRpbWVvdXQoZnVuY3Rpb24gY2IoKSB7CiAgY29uc29sZS5sb2coInRoZXJlIik7Cn0sIDUwMDApOwpjb25zb2xlLmxvZygiZW5kIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">loupe</a>了解 JavaScript 運行以上程式的步驟</p>
-<h3 id="範例示範"><a href="#範例示範" class="headerlink" title="範例示範"></a>範例示範</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>);<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">cb</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;there&quot;</span>);<br>&#125;, <span class="hljs-number">5000</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;end&quot;</span>);<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">Hi<br><span class="hljs-keyword">end</span><br>there<br></code></pre></td></tr></table></figure>
-
-<h3 id="範例示範-2"><a href="#範例示範-2" class="headerlink" title="範例示範 2"></a>範例示範 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">foo</span>();<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br></code></pre></td></tr></table></figure>
-
-<p>會得到以下結果：</p>
-<img src="/images/eventLoop/pasted-0.png">
-
-<p>此又稱為<strong>Stack Overflow</strong>，當 Stack 不斷增長，直到瀏覽器記憶體耗盡。是瀏覽器在哀嚎的聲音 😂😂</p>
-<p>以上是關於 Event Loop 的介紹，是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p>What the heck is the event loop anyway? | Philip Roberts <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
-</blockquote>
-<blockquote>
-<p>請說明瀏覽器中的事件循環 (Event Loop) <a href="https://www.explainthis.io/zh-hant/swe/what-is-event-loop">https://www.explainthis.io/zh-hant/swe/what-is-event-loop</a></p>
-</blockquote>
-<blockquote>
-<p>What is an event loop in JavaScript? <a href="https://www.educative.io/answers/what-is-an-event-loop-in-javascript">https://www.educative.io/answers/what-is-an-event-loop-in-javascript</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>Event Loop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day15 excel sheet column title</title>
-    <url>/2024/02/13/leetcode-excel-sheet-column-title/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十五天，讓我們開始吧！</p>
-<img src="/images/leetcode-excel-sheet-column-title/0213.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
-<p>這次的題目蠻有趣的，是給予Excel的欄位將數換為數字，Excel欄位的慣例為：</p>
-<figure class="highlight clean"><table><tr><td class="code"><pre><code class="hljs clean">A -&gt; <span class="hljs-number">1</span><br>B -&gt; <span class="hljs-number">2</span><br>C -&gt; <span class="hljs-number">3</span><br>...<br>Z -&gt; <span class="hljs-number">26</span><br>AA -&gt; <span class="hljs-number">27</span><br>AB -&gt; <span class="hljs-number">28</span> <br>...<br></code></pre></td></tr></table></figure>
-<p>A<del>Z是1</del>26，27是AA,28是AB，依序下去，等於是滿<code>26</code>後會進位。<br>這樣來看，其實Excel欄位和26進位蠻像的，轉換需要 &#x2F; 26後的餘數對應到相應的字母即可（和十進位轉二進位有點像），因為剛好對應的是字母，可以將其轉換為<code>ASCII</code>碼，在<code>ASCII</code>裡，<code>A</code>為<code>065</code>、<code>B</code>為<code>066</code>….依序排序，排序到<code>Z</code>為<code>090</code>。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">convert_to_title</span>(<span class="hljs-params">column_number</span>)<br>  result = <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment">#利用空字串來儲存結果</span><br>  <span class="hljs-keyword">while</span> column_number &gt; <span class="hljs-number">0</span><br>    column_number -= <span class="hljs-number">1</span> <span class="hljs-comment"># 減去1，這樣1就對應到&#x27;A&#x27;</span><br>    result = (<span class="hljs-string">&#x27;A&#x27;</span>.ord + column_number % <span class="hljs-number">26</span>).chr + result<br>    <span class="hljs-comment"># 取得對應字母，加到結果字串的最前面</span><br>    column_number /= <span class="hljs-number">26</span><br>    <span class="hljs-comment"># 將 column_number 除以 26，以處理下一位數字</span><br>  <span class="hljs-keyword">end</span><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p><code>column_number -= 1</code><br>此方法是利用<code>餘數</code>先取<code>個位數</code>的字母，再<code>/26</code>取得接下來的數字字母，會需要先<code>-1</code>，這樣<code>1</code>才能對應到<code>A</code></p>
-<p><code>result = (&#39;A&#39;.ord + column_number % 26).chr + result</code><br>這段的<code>ord</code>是將字母轉換為<code>ASCII</code>，因為每個字母都是按照順序排序，所以中間的差數就是<code>&#39;A&#39;.ord</code>，最後再使用<code>.chr</code>轉為數字，最後 <code>+ result</code>更新<code>result</code>的數，並確保下一個<code>result</code>會放在前面</p>
-<p>接著最後再將輸入值<code>/26</code>來處理下一位數（真的和十進位轉二進位蠻像的～）</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">self, columnNumber: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        result = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">while</span> columnNumber:<br>            columnNumber -= <span class="hljs-number">1</span><br>            result = <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(<span class="hljs-string">&#x27;A&#x27;</span>) + columnNumber % <span class="hljs-number">26</span>) + result<br>            columnNumber //= <span class="hljs-number">26</span><br>        <span class="hljs-keyword">return</span> result<br><br></code></pre></td></tr></table></figure>
-<p>Python和Ruby的解法相同，只要改變寫法即可！</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">columnNumber</span>) &#123;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-string">&#x27;&#x27;</span>;<br>    <span class="hljs-keyword">while</span> (columnNumber &gt; <span class="hljs-number">0</span>) &#123;<br>        columnNumber--;<br>        result = <span class="hljs-title class_">String</span>.<span class="hljs-title function_">fromCharCode</span>(<span class="hljs-string">&#x27;A&#x27;</span>.<span class="hljs-title function_">charCodeAt</span>(<span class="hljs-number">0</span>) + columnNumber % <span class="hljs-number">26</span>) + result;<br>        columnNumber = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(columnNumber / <span class="hljs-number">26</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>JS也和Ruby的解法相同，只要改變寫法即可！<br>今天就到這裡～明天繼續加油！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>excel sheet column title</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode: happy number</title>
     <url>/2024/02/26/leetcode-happy-number/</url>
     <content><![CDATA[<style>
@@ -1229,20 +1318,24 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day09 length of last word</title>
-    <url>/2024/02/07/leetcode-length-of-last-word/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第九天，讓我們開始吧！</p>
-<img src="/images/leetcode-length-of-last-word/1.png">
+    <title>Leetcode挑戰: Day15 excel sheet column title</title>
+    <url>/2024/02/13/leetcode-excel-sheet-column-title/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十五天，讓我們開始吧！</p>
+<img src="/images/leetcode-excel-sheet-column-title/0213.png">
 
 <p>題目來源：<a href="https://leetcode.com/problems/length-of-last-word/description/">leetcode</a></p>
-<p>因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。</p>
-<p>這個題目不會再取用原始給予的<code>input</code>值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純一點～</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_last_word</span>(<span class="hljs-params">s</span>)<br>  s.strip.split(<span class="hljs-string">&#x27; &#x27;</span>).last.length<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby可以使用<a href="https://rubyapi.org/3.3/o/s?q=strip">strip</a>去除前後的空格，接著使用<code>split(&#39; &#39;)</code>將空格拆分為陣列，取出<code>last.length</code>就找出答案了～</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s.strip().split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
-<p>Python也是使用<a href="https://docs.python.org/3/library/stdtypes.html">strip</a>，接著使用<code>split(&#39; &#39;)</code>拆分為陣列，這個和Ruby相同。最後使用<code>[-1]</code>取出最後一位數，再使用<code>len()</code>包住取出長度即可～</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLastWord = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>).<span class="hljs-title function_">pop</span>().<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>JS去除前後的空格使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>
+<p>這次的題目蠻有趣的，是給予Excel的欄位將數換為數字，Excel欄位的慣例為：</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><code class="hljs clean">A -&gt; <span class="hljs-number">1</span><br>B -&gt; <span class="hljs-number">2</span><br>C -&gt; <span class="hljs-number">3</span><br>...<br>Z -&gt; <span class="hljs-number">26</span><br>AA -&gt; <span class="hljs-number">27</span><br>AB -&gt; <span class="hljs-number">28</span> <br>...<br></code></pre></td></tr></table></figure>
+<p>A<del>Z是1</del>26，27是AA,28是AB，依序下去，等於是滿<code>26</code>後會進位。<br>這樣來看，其實Excel欄位和26進位蠻像的，轉換需要 &#x2F; 26後的餘數對應到相應的字母即可（和十進位轉二進位有點像），因為剛好對應的是字母，可以將其轉換為<code>ASCII</code>碼，在<code>ASCII</code>裡，<code>A</code>為<code>065</code>、<code>B</code>為<code>066</code>….依序排序，排序到<code>Z</code>為<code>090</code>。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">convert_to_title</span>(<span class="hljs-params">column_number</span>)<br>  result = <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment">#利用空字串來儲存結果</span><br>  <span class="hljs-keyword">while</span> column_number &gt; <span class="hljs-number">0</span><br>    column_number -= <span class="hljs-number">1</span> <span class="hljs-comment"># 減去1，這樣1就對應到&#x27;A&#x27;</span><br>    result = (<span class="hljs-string">&#x27;A&#x27;</span>.ord + column_number % <span class="hljs-number">26</span>).chr + result<br>    <span class="hljs-comment"># 取得對應字母，加到結果字串的最前面</span><br>    column_number /= <span class="hljs-number">26</span><br>    <span class="hljs-comment"># 將 column_number 除以 26，以處理下一位數字</span><br>  <span class="hljs-keyword">end</span><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p><code>column_number -= 1</code><br>此方法是利用<code>餘數</code>先取<code>個位數</code>的字母，再<code>/26</code>取得接下來的數字字母，會需要先<code>-1</code>，這樣<code>1</code>才能對應到<code>A</code></p>
+<p><code>result = (&#39;A&#39;.ord + column_number % 26).chr + result</code><br>這段的<code>ord</code>是將字母轉換為<code>ASCII</code>，因為每個字母都是按照順序排序，所以中間的差數就是<code>&#39;A&#39;.ord</code>，最後再使用<code>.chr</code>轉為數字，最後 <code>+ result</code>更新<code>result</code>的數，並確保下一個<code>result</code>會放在前面</p>
+<p>接著最後再將輸入值<code>/26</code>來處理下一位數（真的和十進位轉二進位蠻像的～）</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">self, columnNumber: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        result = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">while</span> columnNumber:<br>            columnNumber -= <span class="hljs-number">1</span><br>            result = <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(<span class="hljs-string">&#x27;A&#x27;</span>) + columnNumber % <span class="hljs-number">26</span>) + result<br>            columnNumber //= <span class="hljs-number">26</span><br>        <span class="hljs-keyword">return</span> result<br><br></code></pre></td></tr></table></figure>
+<p>Python和Ruby的解法相同，只要改變寫法即可！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">columnNumber</span>) &#123;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-string">&#x27;&#x27;</span>;<br>    <span class="hljs-keyword">while</span> (columnNumber &gt; <span class="hljs-number">0</span>) &#123;<br>        columnNumber--;<br>        result = <span class="hljs-title class_">String</span>.<span class="hljs-title function_">fromCharCode</span>(<span class="hljs-string">&#x27;A&#x27;</span>.<span class="hljs-title function_">charCodeAt</span>(<span class="hljs-number">0</span>) + columnNumber % <span class="hljs-number">26</span>) + result;<br>        columnNumber = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(columnNumber / <span class="hljs-number">26</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS也和Ruby的解法相同，只要改變寫法即可！<br>今天就到這裡～明天繼續加油！</p>
 ]]></content>
       <categories>
         <category>leetcode</category>
@@ -1252,7 +1345,7 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>Python</tag>
         <tag>leetcode</tag>
-        <tag>length of last word</tag>
+        <tag>excel sheet column title</tag>
       </tags>
   </entry>
   <entry>
@@ -1448,6 +1541,42 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day07 remove duplicates from sorted array</title>
+    <url>/2024/02/05/leetcode-remove-duplicates-from-sorted-array/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
+<img src="/images/leetcode-remove-duplicates-from-sorted-array/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">leetcode</a></p>
+<p>此題目雖然看似簡單，但需要注意一個小細節，除了最後回傳不重複的數有幾個外，原始傳入的<code>nums</code>也需要改變，這樣才會通過測驗！</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">remove_duplicates</span>(<span class="hljs-params">nums</span>)<br>  nums.uniq!<br>  nums.size<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>見證Ruby黑魔法的時刻٩(^ᴗ^)۶，這邊特別注意的是，<code>uniq!</code>為什麼要使用驚嘆號<code>!</code>呢？因為使用驚嘆號才能更改原始的<code>nums</code>，如果使用<code>uniq</code>則是回傳新的Array</p>
+<p>詳情可見Ruby API <a href="https://rubyapi.org/3.3/o/s?q=uniq!">uniq!</a>, <a href="https://rubyapi.org/3.3/o/s?q=uniq">uniq</a></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        nums[:] = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">set</span>(nums))<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums)<br></code></pre></td></tr></table></figure>
+<p>Python的話可以使用<code>set(nums)</code>，set 是一組無序且沒有重複的元素，所以我外面使用了<code>sorted</code>排序。</p>
+<p>因為要改變<code>nums</code>的值，所以使用<code>nums[:]</code></p>
+<p>詳情可參考：<a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">nums</span>) &#123;<br>    nums.<span class="hljs-title function_">splice</span>(<span class="hljs-number">0</span>, nums.<span class="hljs-property">length</span>, ...<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(nums));<br>    <span class="hljs-keyword">return</span> nums.<span class="hljs-property">length</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JS定義<code>set</code>為：<code>集合（set）中的元素只会出现一次，即集合中的元素是唯一的。</code>，可以參考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a>，但因為要改變<code>nums</code>的數，因此需要使用<code>splice</code>，移除或者替换已存在的元素和&#x2F;或添加新元素就地改變一个Array的内容。</p>
+<p>最後答案就出來了！</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://rubyapi.org/3.3/o/s?q=uniq!">Ruby API</a></li>
+<li><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>remove duplicates from sorted array</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day12 plus one</title>
     <url>/2024/02/10/leetcode-plus-one/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十二天，讓我們開始吧！</p>
@@ -1540,42 +1669,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>Python</tag>
         <tag>leetcode</tag>
         <tag>single number</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day07 remove duplicates from sorted array</title>
-    <url>/2024/02/05/leetcode-remove-duplicates-from-sorted-array/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
-<img src="/images/leetcode-remove-duplicates-from-sorted-array/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">leetcode</a></p>
-<p>此題目雖然看似簡單，但需要注意一個小細節，除了最後回傳不重複的數有幾個外，原始傳入的<code>nums</code>也需要改變，這樣才會通過測驗！</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">remove_duplicates</span>(<span class="hljs-params">nums</span>)<br>  nums.uniq!<br>  nums.size<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>見證Ruby黑魔法的時刻٩(^ᴗ^)۶，這邊特別注意的是，<code>uniq!</code>為什麼要使用驚嘆號<code>!</code>呢？因為使用驚嘆號才能更改原始的<code>nums</code>，如果使用<code>uniq</code>則是回傳新的Array</p>
-<p>詳情可見Ruby API <a href="https://rubyapi.org/3.3/o/s?q=uniq!">uniq!</a>, <a href="https://rubyapi.org/3.3/o/s?q=uniq">uniq</a></p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        nums[:] = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">set</span>(nums))<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums)<br></code></pre></td></tr></table></figure>
-<p>Python的話可以使用<code>set(nums)</code>，set 是一組無序且沒有重複的元素，所以我外面使用了<code>sorted</code>排序。</p>
-<p>因為要改變<code>nums</code>的值，所以使用<code>nums[:]</code></p>
-<p>詳情可參考：<a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">nums</span>) &#123;<br>    nums.<span class="hljs-title function_">splice</span>(<span class="hljs-number">0</span>, nums.<span class="hljs-property">length</span>, ...<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(nums));<br>    <span class="hljs-keyword">return</span> nums.<span class="hljs-property">length</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>JS定義<code>set</code>為：<code>集合（set）中的元素只会出现一次，即集合中的元素是唯一的。</code>，可以參考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a>，但因為要改變<code>nums</code>的數，因此需要使用<code>splice</code>，移除或者替换已存在的元素和&#x2F;或添加新元素就地改變一个Array的内容。</p>
-<p>最後答案就出來了！</p>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://rubyapi.org/3.3/o/s?q=uniq!">Ruby API</a></li>
-<li><a href="https://docs.python.org/zh-tw/3/tutorial/datastructures.html">Python docs</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>remove duplicates from sorted array</tag>
       </tags>
   </entry>
   <entry>
@@ -1848,60 +1941,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</title>
-    <url>/2024/03/17/ruby-aws-ivs-obs-livestream/</url>
-    <content><![CDATA[<img src="/images/ruby-aws-ivs-obs-stream-live/cover.avif">
-
-<p>圖片來源：<a href="https://unsplash.com/photos/black-smartphone-taking-photo-of-yellow-round-fruits-8zsBofKrhP8">Usplash</a></p>
-<h2 id="AMAZON-IVS"><a href="#AMAZON-IVS" class="headerlink" title="AMAZON IVS"></a>AMAZON IVS</h2><p><a href="https://aws.amazon.com/tw/ivs/">Amazon IVS</a>是AMAZON的互動式影片服務，可以利用此構建即時串流和互動影片體驗。</p>
-<p>本篇文章主要參考 <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> ＆ <a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
-<h2 id="建立IVS-Channel"><a href="#建立IVS-Channel" class="headerlink" title="建立IVS Channel"></a>建立IVS Channel</h2><p>AWS IVS的服務超過一定額度會需要收費，收費標準可以參考這裡：<a href="https://aws.amazon.com/tw/ivs/pricing/">Amazon 互動式影片服務定價</a>，這次使用的範圍在免費額度內。</p>
-<img src="/images/ruby-aws-ivs-obs-stream-live/1.png">
-
-<p>打上Channel name即可，下方亦有可以將直播影片儲存至S3等選項，可依照個人需要調整</p>
-<p>建置完成就會看到這個畫面：<br><img src="/images/ruby-aws-ivs-obs-stream-live/2.png"></p>
-<h2 id="建置Ruby-on-Rails專案"><a href="#建置Ruby-on-Rails專案" class="headerlink" title="建置Ruby on Rails專案"></a>建置Ruby on Rails專案</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new video<br><span class="hljs-variable">$ </span>rails g controller pages home<br><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-
-<p>為了方便可以將<code>config/routes.rb</code> 增加  <code>root &#39;pages#home’</code></p>
-<h2 id="串接AWS-IVS直播"><a href="#串接AWS-IVS直播" class="headerlink" title="串接AWS IVS直播"></a>串接AWS IVS直播</h2><p>參考：<a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
-<p>最重要的部分就是這段，記得將PLAYBACK_URL替換成要載入的URL<br><img src="/images/ruby-aws-ivs-obs-stream-live/3.png"></p>
-<p>要載入的URL：<br><img src="/images/ruby-aws-ivs-obs-stream-live/4.png"></p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#app/views/pages/home.html.erb</span><br>&lt;h1&gt;<span class="hljs-title class_">Pages</span><span class="hljs-comment">#home&lt;/h1&gt;</span><br>&lt;p&gt;<span class="hljs-title class_">Find</span> me <span class="hljs-keyword">in</span> app/views/pages/home.html.erb&lt;<span class="hljs-regexp">/p&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;script src=&quot;https:/</span><span class="hljs-regexp">/player.live-video.net/</span><span class="hljs-number">1.26</span>.<span class="hljs-number">0</span>/amazon-ivs-player.min.js<span class="hljs-string">&quot;&gt;&lt;/script&gt;</span><br><span class="hljs-string">&lt;div id=&quot;</span>amazon-ivs<span class="hljs-string">&quot;&gt;</span><br><span class="hljs-string">    &lt;video id=&quot;</span>video-player<span class="hljs-string">&quot;</span><br><span class="hljs-string">        autoplay</span><br><span class="hljs-string">        controls</span><br><span class="hljs-string">        playsinline</span><br><span class="hljs-string">        style=&quot;</span>max-<span class="hljs-symbol">height:</span> 500px; max-<span class="hljs-symbol">width:</span> 500px<span class="hljs-string">&quot;</span><br><span class="hljs-string">    &gt;&lt;/video&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  if (IVSPlayer.isPlayerSupported) &#123;</span><br><span class="hljs-string">    const player = IVSPlayer.create();</span><br><span class="hljs-string">    player.attachHTMLVideoElement(document.getElementById(&#x27;video-player&#x27;));</span><br><span class="hljs-string">    player.load(&quot;</span><span class="hljs-title class_">Playback</span> <span class="hljs-variable constant_">URL</span><span class="hljs-string">&quot;);</span><br><span class="hljs-string">    player.play();</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&lt;/script&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="設定OBS"><a href="#設定OBS" class="headerlink" title="設定OBS"></a>設定OBS</h2><p>有在接觸直播的人應該蠻熟悉OBS的，OBS是一個<strong>用於錄影和直播的自由開源軟體，</strong>常見的Youtube, Twitch,FB, Instagram都可以接此直播，自訂的功能也很高，或是也可以像我們這次一樣，使用AWS IVS + OBS 放到自己的網頁專案裡，可以參考和下載：<a href="https://obsproject.com/">OBS</a></p>
-<p>OBS → Setting → Stream → 複製自己AWS Channel的server &amp; key貼上<br><img src="/images/ruby-aws-ivs-obs-stream-live/5.png"></p>
-<p>AWS IVS Server &amp; Key<br><img src="/images/ruby-aws-ivs-obs-stream-live/6.png"></p>
-<p>接著在OBS 按下Star Stream就大功告成了！</p>
-<p>AWS Channel:<br><img src="/images/ruby-aws-ivs-obs-stream-live/7.png"></p>
-<p>網頁：<br><img src="/images/ruby-aws-ivs-obs-stream-live/8.png"></p>
-<p>原本想說串接直播不知道會不會很難，看了<a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> 的教學發現透過AWS IVS變得簡單很多！</p>
-<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p> <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> </p>
-</blockquote>
-<blockquote>
-<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://obsproject.com/">OBS</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Rails</tag>
-        <tag>Ruby on Rails</tag>
-        <tag>AMAZON IVS</tag>
-        <tag>OBS</tag>
-        <tag>livestream</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python: PEP 8 程式碼風格指南 </title>
     <url>/2024/03/01/python-pep8-style-guide-for-python-code/</url>
     <content><![CDATA[<img src="/images/python-pep8-style-guide-for-python-code/python-logo.png">
@@ -2091,133 +2130,57 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 什麼是Abstraction layer</title>
-    <url>/2024/03/31/ruby-on-rails-abstraction-layer/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
+    <title>Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</title>
+    <url>/2024/03/17/ruby-aws-ivs-obs-livestream/</url>
+    <content><![CDATA[<img src="/images/ruby-aws-ivs-obs-stream-live/cover.avif">
 
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
+<p>圖片來源：<a href="https://unsplash.com/photos/black-smartphone-taking-photo-of-yellow-round-fruits-8zsBofKrhP8">Usplash</a></p>
+<h2 id="AMAZON-IVS"><a href="#AMAZON-IVS" class="headerlink" title="AMAZON IVS"></a>AMAZON IVS</h2><p><a href="https://aws.amazon.com/tw/ivs/">Amazon IVS</a>是AMAZON的互動式影片服務，可以利用此構建即時串流和互動影片體驗。</p>
+<p>本篇文章主要參考 <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> ＆ <a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
+<h2 id="建立IVS-Channel"><a href="#建立IVS-Channel" class="headerlink" title="建立IVS Channel"></a>建立IVS Channel</h2><p>AWS IVS的服務超過一定額度會需要收費，收費標準可以參考這裡：<a href="https://aws.amazon.com/tw/ivs/pricing/">Amazon 互動式影片服務定價</a>，這次使用的範圍在免費額度內。</p>
+<img src="/images/ruby-aws-ivs-obs-stream-live/1.png">
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/ruby-on-rails-abstraction-layer/banner.jpg">
+<p>打上Channel name即可，下方亦有可以將直播影片儲存至S3等選項，可依照個人需要調整</p>
+<p>建置完成就會看到這個畫面：<br><img src="/images/ruby-aws-ivs-obs-stream-live/2.png"></p>
+<h2 id="建置Ruby-on-Rails專案"><a href="#建置Ruby-on-Rails專案" class="headerlink" title="建置Ruby on Rails專案"></a>建置Ruby on Rails專案</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new video<br><span class="hljs-variable">$ </span>rails g controller pages home<br><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
 
-<blockquote>
-<p>圖片來源: <a href="https://unsplash.com/photos/orange-pink-and-teal-illustration-Tk0B3Dfkf_4">Usplash - Clark Van Der Beken</a></p>
-</blockquote>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>首圖的layer好美٩(๑❛ᴗ❛๑)۶，不過對於程式的世界，Layer的意義非常地遼闊，來看下維基百科對於Layer的定義：</p>
-<div class="em-div2">
+<p>為了方便可以將<code>config/routes.rb</code> 增加  <code>root &#39;pages#home’</code></p>
+<h2 id="串接AWS-IVS直播"><a href="#串接AWS-IVS直播" class="headerlink" title="串接AWS IVS直播"></a>串接AWS IVS直播</h2><p>參考：<a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
+<p>最重要的部分就是這段，記得將PLAYBACK_URL替換成要載入的URL<br><img src="/images/ruby-aws-ivs-obs-stream-live/3.png"></p>
+<p>要載入的URL：<br><img src="/images/ruby-aws-ivs-obs-stream-live/4.png"></p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#app/views/pages/home.html.erb</span><br>&lt;h1&gt;<span class="hljs-title class_">Pages</span><span class="hljs-comment">#home&lt;/h1&gt;</span><br>&lt;p&gt;<span class="hljs-title class_">Find</span> me <span class="hljs-keyword">in</span> app/views/pages/home.html.erb&lt;<span class="hljs-regexp">/p&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;script src=&quot;https:/</span><span class="hljs-regexp">/player.live-video.net/</span><span class="hljs-number">1.26</span>.<span class="hljs-number">0</span>/amazon-ivs-player.min.js<span class="hljs-string">&quot;&gt;&lt;/script&gt;</span><br><span class="hljs-string">&lt;div id=&quot;</span>amazon-ivs<span class="hljs-string">&quot;&gt;</span><br><span class="hljs-string">    &lt;video id=&quot;</span>video-player<span class="hljs-string">&quot;</span><br><span class="hljs-string">        autoplay</span><br><span class="hljs-string">        controls</span><br><span class="hljs-string">        playsinline</span><br><span class="hljs-string">        style=&quot;</span>max-<span class="hljs-symbol">height:</span> 500px; max-<span class="hljs-symbol">width:</span> 500px<span class="hljs-string">&quot;</span><br><span class="hljs-string">    &gt;&lt;/video&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  if (IVSPlayer.isPlayerSupported) &#123;</span><br><span class="hljs-string">    const player = IVSPlayer.create();</span><br><span class="hljs-string">    player.attachHTMLVideoElement(document.getElementById(&#x27;video-player&#x27;));</span><br><span class="hljs-string">    player.load(&quot;</span><span class="hljs-title class_">Playback</span> <span class="hljs-variable constant_">URL</span><span class="hljs-string">&quot;);</span><br><span class="hljs-string">    player.play();</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&lt;/script&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p><a href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">物件導向設計</a>中的<strong>層</strong>（layer）是一群和其他<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E6%A8%A1%E7%B5%84">模組</a>有類似<a href="https://zh.wikipedia.org/wiki/%E8%80%A6%E5%90%88%E6%80%A7_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">耦合性</a>的<a href="https://zh.wikipedia.org/wiki/%E7%B1%BB_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">類別</a>。層也可以說是一組可<a href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E7%94%A8">復用</a>的軟體組件，可以在類似的環境下復用。</p>
-<p>各層的模組會用<a href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">樹</a>狀的階級架構來規劃，各層模組之間的依賴關係會用連接來表示。各層之間的依賴關係可能是<a href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">繼承</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%E7%89%A9%E4%BB%B6%E8%A4%87%E5%90%88&action=edit&redlink=1">複合</a>或聚合（aggregation）關係，不過也有可能是其他的關係。</p>
-<p>分層是許多書籍中都會提到的<a href="https://zh.wikipedia.org/wiki/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F">架構模式</a>，例如《<a href="https://zh.wikipedia.org/w/index.php?title=Pattern-Oriented_Software_Architecture&action=edit&redlink=1">Pattern-Oriented Software Architecture</a>》書中就有提到。</p>
-</div>
-
-<p>看到了裡面的<code>類別</code>、<code>繼承</code>，好像很熟悉，在Ruby on Rails中有使用到，但是整個組起來，看懂一點點又好像沒看懂？</p>
-<p>接著來看看維基百科對於<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B1%A4">Abstraction layer</a>的定義：</p>
-<div class="em-div2">
-
-<p><strong>抽象層</strong>（英語：abstraction layer， abstraction level，或 a layer of abstraction）是一種隱藏獨特功能執行細節的方法。使用抽象層的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">軟體</a>模型包含<a href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI</a>網路協定七層模型、<a href="https://zh.wikipedia.org/wiki/OpenGL">OpenGL</a>繪圖函式庫及以Unix為原本的輸入輸出（I&#x2F;O）模型，並適用於大部分新一代的作業系統。</p>
-<p>在Unix作業系統中，大部分的輸入輸出形式被視為從裝置讀寫的串流值。而串流值模型為了提供獨立裝置被檔案及終端機I&#x2F;O所使用。為了在應用層讀寫裝置，程式呼叫<a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8">函式</a>開啟像是<a href="https://zh.wikipedia.org/wiki/%E7%B5%82%E7%AB%AF%E6%A9%9F">終端機</a>的實體裝置或是<a href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">網路</a>、<a href="https://zh.wikipedia.org/wiki/%E6%AA%94%E6%A1%88">檔案</a>系統的<a href="https://zh.wikipedia.org/wiki/%E8%99%9B%E6%93%AC">虛擬</a>裝置。裝置的<a href="https://zh.wikipedia.org/wiki/%E5%AF%A6%E9%AB%94">實體</a>特徵是被允許程式設計師讀寫資料的作業系統所調用。接著<a href="https://zh.wikipedia.org/wiki/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1">作業系統</a>操作正確的讀寫轉換。</p>
-<p>大部分的<a href="https://zh.wikipedia.org/wiki/%E5%9B%BE%E5%BD%A2%E5%BA%93">圖形庫</a>，像是OpenGL，提供抽象圖形裝置模型。這種函式庫的主要功能在於轉換<a href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB">程式設計師</a>的指令到<a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E5%BD%A2%E5%85%83%E4%BB%B6&action=edit&redlink=1">圖形元件</a>。這個特殊的繪圖指令與對傳統陰極射線管銀幕的指令不同，而是隱藏了抽象介面的細節。</p>
-<p>在<a href="https://zh.wikipedia.org/wiki/%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8">資訊學</a>，抽象層是<a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B_(%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8)">模型</a>或<a href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95">演算法</a>的推廣。</p>
-</div>
-
-<p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p>
-<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件。<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
-<p>網頁的生命週期分成兩個階段：</p>
-<ol>
-<li>bootstrap phase (configuration and initialization)</li>
-</ol>
-<ul>
-<li>載入應用程式碼</li>
-<li>初始化和配置框架元件</li>
-</ul>
-<ol start="2">
-<li>serving phase</li>
-</ol>
-<ul>
-<li>執行許多獨立的Web Request</li>
-</ul>
-<p>而我們先暫時聚焦在serving phase上，因為網頁請求(Web Request)是獨立的，因此服務階段可以被視為一條流水線，我們將請求資料（raw material）放在輸送帶上，中間通過許多工作站，並在最後得到回應</p>
-<p>試想像，要怎麼讓流水線提高效率呢？就要把工作站拉出來，看有什麼可以改進的，而抽象層，就可以想像成流水線上的工作站。把工作站拉出來的這個過程（extraction of abstraction layers），也可以稱作分層（layering），而這個架構模式可以提高軟體的品質。</p>
-<p>而一個抽象層應該要有什麼屬性呢？</p>
-<ul>
-<li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">單一職責</a>（職責可以很廣泛，但不應重複，遵循<a href="https://zh.wikipedia.org/wiki/%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">關注點分離</a>）</li>
-<li>各層應該是鬆散耦合的，並且沒有循環或反向依賴關係。<ul>
-<li>如果我們從上到下繪製請求處理流程，層間連接永遠不應該向上，並且我們應該盡量減少層間連接數。（可以想像成流水線，很少會流到一半倒回去做）</li>
-</ul>
-</li>
-<li>抽像不應洩漏其內部結構<ul>
-<li>提取抽象的主要想法是將介面與實作分離</li>
-</ul>
-</li>
-<li>應該可以單獨提取抽象層</li>
-</ul>
-<p>如果遵循以上的這些原則，可以讓開發者易於重構、debug和測試。</p>
-<p>在現實生活中，衡量效率的標準是速度； 在軟體開發中，速度也是關鍵——發布新功能的速度，而要怎麼能夠快速地發布新功能？這取決於許多因素，而最主要的因素就是程式碼的<strong>可維護性</strong>，其中包括：添加新功能和對現有功能進行更改、除錯的容易程度，應用軟體設計模式和提取抽象層是保持高可維護性的兩個主要工具。</p>
-<p>而抽象層不是越多越好，主要看整個應用程式的架構，基本的Rails僅包含了三個抽象層概念：Model、Controller、View(也就是我們所常說的MVC)</p>
-<p>至於要如何逐步引入新的抽象層呢？</p>
-<p>可以參考本書：<a href="https://www.packtpub.com/product/layered-design-for-ruby-on-rails-applications/9781801813785">Layered Design for Ruby on Rails Applications</a></p>
-<p>未來也會將本書提到的有趣的概念整理分享，今天就先到這裡٩(●˙▿˙●)۶<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h2 id="設定OBS"><a href="#設定OBS" class="headerlink" title="設定OBS"></a>設定OBS</h2><p>有在接觸直播的人應該蠻熟悉OBS的，OBS是一個<strong>用於錄影和直播的自由開源軟體，</strong>常見的Youtube, Twitch,FB, Instagram都可以接此直播，自訂的功能也很高，或是也可以像我們這次一樣，使用AWS IVS + OBS 放到自己的網頁專案裡，可以參考和下載：<a href="https://obsproject.com/">OBS</a></p>
+<p>OBS → Setting → Stream → 複製自己AWS Channel的server &amp; key貼上<br><img src="/images/ruby-aws-ivs-obs-stream-live/5.png"></p>
+<p>AWS IVS Server &amp; Key<br><img src="/images/ruby-aws-ivs-obs-stream-live/6.png"></p>
+<p>接著在OBS 按下Star Stream就大功告成了！</p>
+<p>AWS Channel:<br><img src="/images/ruby-aws-ivs-obs-stream-live/7.png"></p>
+<p>網頁：<br><img src="/images/ruby-aws-ivs-obs-stream-live/8.png"></p>
+<p>原本想說串接直播不知道會不會很難，看了<a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> 的教學發現透過AWS IVS變得簡單很多！</p>
+<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.tenlong.com.tw/products/9781801813785">Layered Design for Ruby on Rails Applications</a>**</p>
+<p> <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> </p>
 </blockquote>
 <blockquote>
-<p><a href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5">Wiki</a></p>
+<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://obsproject.com/">OBS</a></p>
 </blockquote>
 ]]></content>
       <categories>
         <category>Ruby on Rails</category>
       </categories>
       <tags>
-        <tag>abstraction layer</tag>
-        <tag>ruby</tag>
-        <tag>rails</tag>
-        <tag>layered design</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day13 search insert position</title>
-    <url>/2024/02/11/search-insert-position/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
-<img src="/images/search-insert-position/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
-<p>一開始看到題目原本想說，把數字插入陣列中排序後再返還索引值就好，但實際執行卻發現效率很差ʘ‿ʘ。</p>
-<p>後來想到可以使用二分法，先取中間的數字與target比較，分成兩邊，這樣最多就只要比較陣列一半的數量就好，會比較有效率，就像是猜數字，如果一開始就對半猜，猜到數字的機率也會快很多。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">search_insert</span>(<span class="hljs-params">nums, target</span>)<br>  left, right = <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span><br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">if</span> nums[mid] == target<br>      <span class="hljs-keyword">return</span> mid<br>    <span class="hljs-keyword">elsif</span> nums[mid] &lt; target<br>      left = mid + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> left<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>這裡的<code>left</code>是指陣列的起始索引值，為<code>0</code>，<code>right</code>是陣列的結束值，為<code>nums.length - 1</code>，<code>mid</code>就是中間的索引值<code>(left+right)/2</code></p>
-<p>如果照排序看可以這樣理解：<br><code>left</code>,<code>mid</code>,<code>right</code></p>
-<p>一開始先猜中間，如果運氣好就是中間值，可直接返還<code>mid</code>。</p>
-<p>如果<code>target</code>比較大，即縮小<code>left</code>的範圍為<code>mid + 1</code>，比較數字的範圍也到了右半邊，接著會繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
-<p>如果<code>target</code>比較小，則縮小<code>right</code>的範圍為<code>mid - 1</code>，比較數字在左半邊，繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
-<p>直到<code>nums[mid] = target</code>，即會返還<code>mid</code>，也就是索引值。</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">searchInsert</span>(<span class="hljs-params">self, nums, target</span>):<br>        left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> nums[mid] == target:<br>                <span class="hljs-keyword">return</span> mid<br>            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:<br>                left = mid + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">return</span> left<br></code></pre></td></tr></table></figure>
-<p><code>python</code>也是一樣邏輯，只是部分寫法不同</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> searchInsert = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">let</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (nums[mid] == target) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> left;<br>  &#125;;<br></code></pre></td></tr></table></figure>
-<p><code>js</code>也是相同，不過需要添加<code>Math.floor</code>讓<code>mid</code>值為無條件捨去</p>
-<p>這就是今天的解題了～其實不管什麼題目都可以用最笨的方法解，但是如果在讀題目時多想一點，就能讓程式碼效率更高！接下來幾天繼續加油🙌</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
         <tag>Ruby</tag>
-        <tag>JavaScript</tag>
-        <tag>Python</tag>
-        <tag>leetcode</tag>
-        <tag>search insert position</tag>
+        <tag>Rails</tag>
+        <tag>Ruby on Rails</tag>
+        <tag>AMAZON IVS</tag>
+        <tag>OBS</tag>
+        <tag>livestream</tag>
       </tags>
   </entry>
   <entry>
@@ -2368,10 +2331,140 @@ border-style:dashed;
         <category>Ruby on Rails</category>
       </categories>
       <tags>
-        <tag>rails</tag>
         <tag>devise</tag>
         <tag>rails7</tag>
+        <tag>rails</tag>
         <tag>layout</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 什麼是Abstraction layer</title>
+    <url>/2024/03/31/ruby-on-rails-abstraction-layer/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/ruby-on-rails-abstraction-layer/banner.jpg">
+
+<blockquote>
+<p>圖片來源: <a href="https://unsplash.com/photos/orange-pink-and-teal-illustration-Tk0B3Dfkf_4">Usplash - Clark Van Der Beken</a></p>
+</blockquote>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>首圖的layer好美٩(๑❛ᴗ❛๑)۶，不過對於程式的世界，Layer的意義非常地遼闊，來看下維基百科對於Layer的定義：</p>
+<div class="em-div2">
+
+<p><a href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">物件導向設計</a>中的<strong>層</strong>（layer）是一群和其他<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E6%A8%A1%E7%B5%84">模組</a>有類似<a href="https://zh.wikipedia.org/wiki/%E8%80%A6%E5%90%88%E6%80%A7_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">耦合性</a>的<a href="https://zh.wikipedia.org/wiki/%E7%B1%BB_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">類別</a>。層也可以說是一組可<a href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E7%94%A8">復用</a>的軟體組件，可以在類似的環境下復用。</p>
+<p>各層的模組會用<a href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">樹</a>狀的階級架構來規劃，各層模組之間的依賴關係會用連接來表示。各層之間的依賴關係可能是<a href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">繼承</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%E7%89%A9%E4%BB%B6%E8%A4%87%E5%90%88&action=edit&redlink=1">複合</a>或聚合（aggregation）關係，不過也有可能是其他的關係。</p>
+<p>分層是許多書籍中都會提到的<a href="https://zh.wikipedia.org/wiki/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F">架構模式</a>，例如《<a href="https://zh.wikipedia.org/w/index.php?title=Pattern-Oriented_Software_Architecture&action=edit&redlink=1">Pattern-Oriented Software Architecture</a>》書中就有提到。</p>
+</div>
+
+<p>看到了裡面的<code>類別</code>、<code>繼承</code>，好像很熟悉，在Ruby on Rails中有使用到，但是整個組起來，看懂一點點又好像沒看懂？</p>
+<p>接著來看看維基百科對於<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B1%A4">Abstraction layer</a>的定義：</p>
+<div class="em-div2">
+
+<p><strong>抽象層</strong>（英語：abstraction layer， abstraction level，或 a layer of abstraction）是一種隱藏獨特功能執行細節的方法。使用抽象層的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">軟體</a>模型包含<a href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI</a>網路協定七層模型、<a href="https://zh.wikipedia.org/wiki/OpenGL">OpenGL</a>繪圖函式庫及以Unix為原本的輸入輸出（I&#x2F;O）模型，並適用於大部分新一代的作業系統。</p>
+<p>在Unix作業系統中，大部分的輸入輸出形式被視為從裝置讀寫的串流值。而串流值模型為了提供獨立裝置被檔案及終端機I&#x2F;O所使用。為了在應用層讀寫裝置，程式呼叫<a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8">函式</a>開啟像是<a href="https://zh.wikipedia.org/wiki/%E7%B5%82%E7%AB%AF%E6%A9%9F">終端機</a>的實體裝置或是<a href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">網路</a>、<a href="https://zh.wikipedia.org/wiki/%E6%AA%94%E6%A1%88">檔案</a>系統的<a href="https://zh.wikipedia.org/wiki/%E8%99%9B%E6%93%AC">虛擬</a>裝置。裝置的<a href="https://zh.wikipedia.org/wiki/%E5%AF%A6%E9%AB%94">實體</a>特徵是被允許程式設計師讀寫資料的作業系統所調用。接著<a href="https://zh.wikipedia.org/wiki/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1">作業系統</a>操作正確的讀寫轉換。</p>
+<p>大部分的<a href="https://zh.wikipedia.org/wiki/%E5%9B%BE%E5%BD%A2%E5%BA%93">圖形庫</a>，像是OpenGL，提供抽象圖形裝置模型。這種函式庫的主要功能在於轉換<a href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB">程式設計師</a>的指令到<a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E5%BD%A2%E5%85%83%E4%BB%B6&action=edit&redlink=1">圖形元件</a>。這個特殊的繪圖指令與對傳統陰極射線管銀幕的指令不同，而是隱藏了抽象介面的細節。</p>
+<p>在<a href="https://zh.wikipedia.org/wiki/%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8">資訊學</a>，抽象層是<a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B_(%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8)">模型</a>或<a href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95">演算法</a>的推廣。</p>
+</div>
+
+<p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p>
+<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件。<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
+<p>網頁的生命週期分成兩個階段：</p>
+<ol>
+<li>bootstrap phase (configuration and initialization)</li>
+</ol>
+<ul>
+<li>載入應用程式碼</li>
+<li>初始化和配置框架元件</li>
+</ul>
+<ol start="2">
+<li>serving phase</li>
+</ol>
+<ul>
+<li>執行許多獨立的Web Request</li>
+</ul>
+<p>而我們先暫時聚焦在serving phase上，因為網頁請求(Web Request)是獨立的，因此服務階段可以被視為一條流水線，我們將請求資料（raw material）放在輸送帶上，中間通過許多工作站，並在最後得到回應</p>
+<p>試想像，要怎麼讓流水線提高效率呢？就要把工作站拉出來，看有什麼可以改進的，而抽象層，就可以想像成流水線上的工作站。把工作站拉出來的這個過程（extraction of abstraction layers），也可以稱作分層（layering），而這個架構模式可以提高軟體的品質。</p>
+<p>而一個抽象層應該要有什麼屬性呢？</p>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">單一職責</a>（職責可以很廣泛，但不應重複，遵循<a href="https://zh.wikipedia.org/wiki/%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">關注點分離</a>）</li>
+<li>各層應該是鬆散耦合的，並且沒有循環或反向依賴關係。<ul>
+<li>如果我們從上到下繪製請求處理流程，層間連接永遠不應該向上，並且我們應該盡量減少層間連接數。（可以想像成流水線，很少會流到一半倒回去做）</li>
+</ul>
+</li>
+<li>抽像不應洩漏其內部結構<ul>
+<li>提取抽象的主要想法是將介面與實作分離</li>
+</ul>
+</li>
+<li>應該可以單獨提取抽象層</li>
+</ul>
+<p>如果遵循以上的這些原則，可以讓開發者易於重構、debug和測試。</p>
+<p>在現實生活中，衡量效率的標準是速度； 在軟體開發中，速度也是關鍵——發布新功能的速度，而要怎麼能夠快速地發布新功能？這取決於許多因素，而最主要的因素就是程式碼的<strong>可維護性</strong>，其中包括：添加新功能和對現有功能進行更改、除錯的容易程度，應用軟體設計模式和提取抽象層是保持高可維護性的兩個主要工具。</p>
+<p>而抽象層不是越多越好，主要看整個應用程式的架構，基本的Rails僅包含了三個抽象層概念：Model、Controller、View(也就是我們所常說的MVC)</p>
+<p>至於要如何逐步引入新的抽象層呢？</p>
+<p>可以參考本書：<a href="https://www.packtpub.com/product/layered-design-for-ruby-on-rails-applications/9781801813785">Layered Design for Ruby on Rails Applications</a></p>
+<p>未來也會將本書提到的有趣的概念整理分享，今天就先到這裡٩(●˙▿˙●)۶<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.tenlong.com.tw/products/9781801813785">Layered Design for Ruby on Rails Applications</a>**</p>
+</blockquote>
+<blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5">Wiki</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>rails</tag>
+        <tag>abstraction layer</tag>
+        <tag>ruby</tag>
+        <tag>layered design</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day13 search insert position</title>
+    <url>/2024/02/11/search-insert-position/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
+<img src="/images/search-insert-position/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
+<p>一開始看到題目原本想說，把數字插入陣列中排序後再返還索引值就好，但實際執行卻發現效率很差ʘ‿ʘ。</p>
+<p>後來想到可以使用二分法，先取中間的數字與target比較，分成兩邊，這樣最多就只要比較陣列一半的數量就好，會比較有效率，就像是猜數字，如果一開始就對半猜，猜到數字的機率也會快很多。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">search_insert</span>(<span class="hljs-params">nums, target</span>)<br>  left, right = <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span><br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">if</span> nums[mid] == target<br>      <span class="hljs-keyword">return</span> mid<br>    <span class="hljs-keyword">elsif</span> nums[mid] &lt; target<br>      left = mid + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> left<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這裡的<code>left</code>是指陣列的起始索引值，為<code>0</code>，<code>right</code>是陣列的結束值，為<code>nums.length - 1</code>，<code>mid</code>就是中間的索引值<code>(left+right)/2</code></p>
+<p>如果照排序看可以這樣理解：<br><code>left</code>,<code>mid</code>,<code>right</code></p>
+<p>一開始先猜中間，如果運氣好就是中間值，可直接返還<code>mid</code>。</p>
+<p>如果<code>target</code>比較大，即縮小<code>left</code>的範圍為<code>mid + 1</code>，比較數字的範圍也到了右半邊，接著會繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
+<p>如果<code>target</code>比較小，則縮小<code>right</code>的範圍為<code>mid - 1</code>，比較數字在左半邊，繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
+<p>直到<code>nums[mid] = target</code>，即會返還<code>mid</code>，也就是索引值。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">searchInsert</span>(<span class="hljs-params">self, nums, target</span>):<br>        left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> nums[mid] == target:<br>                <span class="hljs-keyword">return</span> mid<br>            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:<br>                left = mid + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">return</span> left<br></code></pre></td></tr></table></figure>
+<p><code>python</code>也是一樣邏輯，只是部分寫法不同</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> searchInsert = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">let</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (nums[mid] == target) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> left;<br>  &#125;;<br></code></pre></td></tr></table></figure>
+<p><code>js</code>也是相同，不過需要添加<code>Math.floor</code>讓<code>mid</code>值為無條件捨去</p>
+<p>這就是今天的解題了～其實不管什麼題目都可以用最笨的方法解，但是如果在讀題目時多想一點，就能讓程式碼效率更高！接下來幾天繼續加油🙌</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>JavaScript</tag>
+        <tag>Python</tag>
+        <tag>leetcode</tag>
+        <tag>search insert position</tag>
       </tags>
   </entry>
   <entry>
@@ -2489,8 +2582,8 @@ border-style:dashed;
       </categories>
       <tags>
         <tag>Ruby on Rails</tag>
-        <tag>ruby</tag>
         <tag>rails</tag>
+        <tag>ruby</tag>
         <tag>simple calendar</tag>
         <tag>gem</tag>
       </tags>
@@ -2796,99 +2889,6 @@ border-style:dashed;
       <tags>
         <tag>轉職</tag>
         <tag>職涯</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Django : 從零開始學 7 - 增加評論功能</title>
-    <url>/2024/05/15/django-add-comment/</url>
-    <content><![CDATA[<p>文章建立好後，也來增加評論表單，讓使用者可以留言吧～</p>
-<h2 id="增加-comment-model"><a href="#增加-comment-model" class="headerlink" title="增加 comment model"></a>增加 comment model</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Comment</span>(models.Model):<br>    post = models.ForeignKey( <span class="hljs-comment">#增加ForeignKey，讓他和post有關聯</span><br>        Post,<br>        on_delete=models.CASCADE, <span class="hljs-comment">#post被刪除，關聯的comment也會被刪除</span><br>        related_name=<span class="hljs-string">&#x27;comments&#x27;</span>,<br>    ) <br>    username = models.CharField(max_length=<span class="hljs-number">80</span>)<br>    email = models.EmailField()<br>    body = models.TextField()<br>    created = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    updated = models.DateTimeField(auto_now=<span class="hljs-literal">True</span>)<br>    active = models.BooleanField(default=<span class="hljs-literal">True</span>) <span class="hljs-comment">#是否顯示</span><br><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        ordering = (<span class="hljs-string">&#x27;-created&#x27;</span>,)<span class="hljs-comment">#排序規則，新的在上面</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>): <span class="hljs-comment">#debug的時候，可以印出來的格式</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Comment by &#123;&#125; on &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(self.username, self.post)<br></code></pre></td></tr></table></figure>
-
-<p><code>$ poetry run python manage.py makemigrations blog</code></p>
-<img src="/images/django-add-comment/0.png">
-
-<p><code>$ poetry run python manage.py migrate</code></p>
-<img src="/images/django-add-comment/1.png">
-
-
-<p>可以看到DB裡blog_comment的Table建立好了</p>
-<img src="/images/django-add-comment/2.png">
-
-
-<h2 id="更新Admin介面"><a href="#更新Admin介面" class="headerlink" title="更新Admin介面"></a>更新Admin介面</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post, Comment <span class="hljs-comment">#新增這行</span><br><br><span class="hljs-comment">#...其他程式</span><br><br><span class="hljs-comment">#新增以下</span><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Comment</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CommentAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;post&#x27;</span>, <span class="hljs-string">&#x27;created&#x27;</span>, <span class="hljs-string">&#x27;active&#x27;</span>)<br>    list_filter = (<span class="hljs-string">&#x27;active&#x27;</span>, <span class="hljs-string">&#x27;created&#x27;</span>, <span class="hljs-string">&#x27;updated&#x27;</span>)<br>    search_fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>後台就可以看到更新後的admin介面</p>
-<img src="/images/django-add-comment/3.png">
-
-
-<h2 id="透過ORM操作"><a href="#透過ORM操作" class="headerlink" title="透過ORM操作"></a>透過ORM操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ python manage.py shell<br>$ from blog.models import Post, Comment<br>$ post = Post.objects.all()<br></code></pre></td></tr></table></figure>
-
-<p>來看一下目前post是什麼：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post<br>&lt;QuerySet [&lt;Post: Lorem Ipsum2&gt;, &lt;Post: Lorem Ipsum&gt;, &lt;Post: created from shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>在最後一篇post新增評論</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; from blog.models import Post, Comment<br>&gt;&gt;&gt; post = Post.objects.all()<br>&gt;&gt;&gt; post<br>&lt;QuerySet [&lt;Post: Lorem Ipsum2&gt;, &lt;Post: Lorem Ipsum&gt;, &lt;Post: created from shell&gt;, &lt;Post: hi&gt;]&gt;<br>&gt;&gt;&gt; post = post.last()<br>&gt;&gt;&gt; post<br>&lt;Post: hi&gt;<br>&gt;&gt;&gt; com = Comment(post=post, username=<span class="hljs-string">&#x27;text&#x27;</span>, email=<span class="hljs-string">&#x27;text@gmail.com&#x27;</span>, body=<span class="hljs-string">&#x27;here is a comment from shell&#x27;</span>)<br>&gt;&gt;&gt; com.save()<br>&gt;&gt;&gt; com<br>&lt;Comment: Comment by text on hi&gt;<br></code></pre></td></tr></table></figure>
-
-<p>也可以透過<code>.filter(id=).first()</code>找到想要新增的文章</p>
-<p>先使用for循環印出所有文章的id，在使用filter找指定的文章</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.all()<br>&gt;&gt;&gt; <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> post:<br>...     <span class="hljs-built_in">print</span>(p.id)<br>... <br>7<br>6<br>5<br>3<br>&gt;&gt;&gt; post = Post.objects.filter(<span class="hljs-built_in">id</span>=5).first()<br>&gt;&gt;&gt; com = Comment(post=post,username=<span class="hljs-string">&#x27;Amy&#x27;</span>,email=<span class="hljs-string">&#x27;Amy@gmail.com&#x27;</span>,body=<span class="hljs-string">&#x27;this is comment from Amy&#x27;</span>)<br>&gt;&gt;&gt; com.save()<br>&gt;&gt;&gt; com<br>&lt;Comment: Comment by Amy on created from shell&gt;<br></code></pre></td></tr></table></figure>
-
-<p>也可以看到DB的blog_comment Table裡面有資料：</p>
-<img src="/images/django-add-comment/4.png">
-
-
-<p>可以從post調出comments</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.filter(<span class="hljs-built_in">id</span>=5).first()<br>&gt;&gt;&gt; post.comments.all()<br>&lt;QuerySet [&lt;Comment: Comment by Amy on created from shell&gt;]&gt;<br>&gt;&gt;&gt; <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> post.comments.all():<br>...     <span class="hljs-built_in">print</span>(c)<br>... <br>Comment by Amy on created from shell<br></code></pre></td></tr></table></figure>
-
-<h2 id="將頻論放到blog前台"><a href="#將頻論放到blog前台" class="headerlink" title="將頻論放到blog前台"></a>將頻論放到blog前台</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/templates/blog/detail.html</span><br>&#123;% block content %&#125;<br>    &lt;h1&gt;&#123;&#123; post.title &#125;&#125;&lt;/h1&gt;<br>    &lt;p&gt;Published &#123;&#123; post.published_date &#125;&#125; by &#123;&#123; post.author &#125;&#125;&lt;/p&gt;<br>    &#123;&#123; post.body|linebreaks &#125;&#125;<br><br>    &#123;% with post.comments.count as total_comments %&#125;<br>        &lt;h2&gt;&#123;&#123; total_comments &#125;&#125; comment&#123;&#123; total_comments|pluralize &#125;&#125;&lt;/h2&gt;<br>    &#123;% endwith %&#125;<br><br>    &#123;% <span class="hljs-keyword">for</span> comment <span class="hljs-keyword">in</span> post.comments.all %&#125;<br>        &lt;div&gt;<br>            &lt;p&gt;Comment by &#123;&#123; comment.username &#125;&#125;&#123;&#123; comment.created &#125;&#125;&lt;/p&gt;<br>            &#123;&#123; comment.body|linebreaks &#125;&#125;<br>        &lt;/div&gt;<br>    &#123;% empty %&#125;<br>        &lt;p&gt;There are no comments yet.&lt;/p&gt;<br>    &#123;% endfor %&#125;<br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><code>comment&#123;&#123; total_comments|pluralize &#125;&#125;</code>：如果是複數就會+s</li>
-<li><code>&#123;% for comment in post.comments.all %&#125;</code> ：使用for循環帶出所有的評論</li>
-<li><code>&#123;% empty %&#125;</code> ：如果沒有頻論就顯示  <code>&lt;p&gt;There are no comments yet.&lt;/p&gt;</code></li>
-</ul>
-<p>做到這步驟，前台看起來就會像這樣，評論顯示在文章的下方</p>
-<img src="/images/django-add-comment/5.png">
-
-<img src="/images/django-add-comment/6.png">
-
-
-<h2 id="使用者輸入表單-form"><a href="#使用者輸入表單-form" class="headerlink" title="使用者輸入表單(form)"></a>使用者輸入表單(form)</h2><p>來建立一個表單讓使用者可以輸入評論內容</p>
-<h2 id="與model關聯"><a href="#與model關聯" class="headerlink" title="與model關聯"></a>與model關聯</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># project/blog/forms.py</span><br>from django import froms<br>from .models import Comment<br><br>class CommentForm(froms.ModelForm):<br>    class Meta:<br>        model = Comment <span class="hljs-comment">#與DB的Comment Model關聯</span><br>        fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment">#傳進來的資料</span><br></code></pre></td></tr></table></figure>
-
-<p>這步主要是能讓前台傳的資料與DB關聯</p>
-<h2 id="編輯views，以控制表單要傳遞的內容"><a href="#編輯views，以控制表單要傳遞的內容" class="headerlink" title="編輯views，以控制表單要傳遞的內容"></a>編輯views，以控制表單要傳遞的內容</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># project/blog/views.py</span><br>def detail(request, year, month, day, slug):<br><span class="hljs-comment">#... 其他程式</span><br><br>    <span class="hljs-comment"># List of active comments for this post</span><br>    comments = post.comments.filter(active=True) <span class="hljs-comment">#過濾出所有active的comment</span><br>    new_comment = None<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>: <span class="hljs-comment">#如果表單發送post請求</span><br>        comment_form = CommentForm(data=request.POST) <span class="hljs-comment"># 讀取form數據，產生comment_form對象</span><br>        <span class="hljs-keyword">if</span> comment_form.is_valid(): <span class="hljs-comment">#驗證是否正確</span><br>            new_comment = comment_form.save(commit=False) <span class="hljs-comment">#新建一個new_comment對象</span><br>            new_comment.post = post<br>            new_comment.save()<br>    <span class="hljs-keyword">else</span>:<br>        comment_form = CommentForm() <span class="hljs-comment">#如果不是post 是get，就做一個form的顯示</span><br><br>    <span class="hljs-built_in">return</span> render( <span class="hljs-comment"># return Template</span><br>        request,<br>        <span class="hljs-string">&#x27;blog/detail.html&#x27;</span>,<br>        &#123;<span class="hljs-string">&#x27;post&#x27;</span>: post,<br>         <span class="hljs-string">&#x27;comments&#x27;</span>: comments, <span class="hljs-comment"># 傳遞comment的資料到template</span><br>         <span class="hljs-string">&#x27;new_comment&#x27;</span>: new_comment,<br>         <span class="hljs-string">&#x27;comment_form&#x27;</span>: comment_form<br>         &#125;<br>    )<br><br><span class="hljs-comment">#... 其他程式</span><br><br></code></pre></td></tr></table></figure>
-
-<h2 id="編輯前台顯示畫面"><a href="#編輯前台顯示畫面" class="headerlink" title="編輯前台顯示畫面"></a>編輯前台顯示畫面</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#project/blog/templates/blog/detail.html</span><br><br><span class="hljs-comment">#...其他程式</span><br>    &#123;% <span class="hljs-keyword">if</span> new_comment %&#125;<br>    &lt;h2&gt;<span class="hljs-title class_">Your</span> comment has been added.&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &#123;% else %&#125;</span><br><span class="hljs-regexp">    &lt;h3&gt;&lt;a name=&quot;commentform&quot;&gt;&lt;/a</span>&gt;<span class="hljs-title class_">Leave</span> a <span class="hljs-title class_">Comment</span>&lt;<span class="hljs-regexp">/h3&gt;</span><br><span class="hljs-regexp">    &lt;form action=&quot;#commentform&quot; method=&quot;post&quot;&gt;</span><br><span class="hljs-regexp">        &#123;&#123; comment_form.as_p &#125;&#125;</span><br><span class="hljs-regexp">        &#123;% csrf_token %&#125;</span><br><span class="hljs-regexp">        &lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;Add comment&quot;&gt;&lt;/p</span>&gt;<br>    &lt;<span class="hljs-regexp">/form&gt;</span><br><span class="hljs-regexp">    &#123;% endif %&#125;</span><br><span class="hljs-regexp">    </span><br><span class="hljs-regexp">#...其他程式</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><code>&#123;&#123; *comment_form*.*as_p* &#125;&#125;：</code>顯示文字會用html的<p>…<p>包住</li>
-<li><code>&#123;% csrf_token %&#125;</code>：防止corss site攻擊</li>
-</ul>
-<p>以上都做好後，按右鍵查看原始碼可以看到，Django幫我們做了一個form</p>
-<img src="/images/django-add-comment/7.png">
-
-
-<p>前台也能夠順利使用表單新增留言了～</p>
-<img src="/images/django-add-comment/8.png">
-
-
-<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://docs.djangoproject.com/en/5.0/topics/forms/">Django Docs - Working with forms</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.udemy.com/course/django-2-web/">Django 2 Web开发入门与实战</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Django</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>Django</tag>
-        <tag>form</tag>
-        <tag>comment</tag>
       </tags>
   </entry>
 </search>
