@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Django : 從零開始學 7 - 增加評論功能 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Python, Django, form, comment">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Django : 從零開始學 7 - 增加評論功能</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/05/" class="post-meta__date button">2024-05-15</a> 
+    <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><p>文章建立好後，也來增加評論表單，讓使用者可以留言吧～</p>
+<h2 id="增加-comment-model"><a href="#增加-comment-model" class="headerlink" title="增加 comment model"></a>增加 comment model</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Comment</span>(models.Model):<br>    post = models.ForeignKey( <span class="hljs-comment">#增加ForeignKey，讓他和post有關聯</span><br>        Post,<br>        on_delete=models.CASCADE, <span class="hljs-comment">#post被刪除，關聯的comment也會被刪除</span><br>        related_name=<span class="hljs-string">&#x27;comments&#x27;</span>,<br>    ) <br>    username = models.CharField(max_length=<span class="hljs-number">80</span>)<br>    email = models.EmailField()<br>    body = models.TextField()<br>    created = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    updated = models.DateTimeField(auto_now=<span class="hljs-literal">True</span>)<br>    active = models.BooleanField(default=<span class="hljs-literal">True</span>) <span class="hljs-comment">#是否顯示</span><br><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        ordering = (<span class="hljs-string">&#x27;-created&#x27;</span>,)<span class="hljs-comment">#排序規則，新的在上面</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>): <span class="hljs-comment">#debug的時候，可以印出來的格式</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Comment by &#123;&#125; on &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(self.username, self.post)<br></code></pre></td></tr></table></figure>
+
+<p><code>$ poetry run python manage.py makemigrations blog</code></p>
+<img src="/images/django-add-comment/0.png">
+
+<p><code>$ poetry run python manage.py migrate</code></p>
+<img src="/images/django-add-comment/1.png">
+
+
+<p>可以看到DB裡blog_comment的Table建立好了</p>
+<img src="/images/django-add-comment/2.png">
+
+
+<h2 id="更新Admin介面"><a href="#更新Admin介面" class="headerlink" title="更新Admin介面"></a>更新Admin介面</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post, Comment <span class="hljs-comment">#新增這行</span><br><br><span class="hljs-comment">#...其他程式</span><br><br><span class="hljs-comment">#新增以下</span><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Comment</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CommentAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;post&#x27;</span>, <span class="hljs-string">&#x27;created&#x27;</span>, <span class="hljs-string">&#x27;active&#x27;</span>)<br>    list_filter = (<span class="hljs-string">&#x27;active&#x27;</span>, <span class="hljs-string">&#x27;created&#x27;</span>, <span class="hljs-string">&#x27;updated&#x27;</span>)<br>    search_fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>後台就可以看到更新後的admin介面</p>
+<img src="/images/django-add-comment/3.png">
+
+
+<h2 id="透過ORM操作"><a href="#透過ORM操作" class="headerlink" title="透過ORM操作"></a>透過ORM操作</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ python manage.py shell<br>$ from blog.models import Post, Comment<br>$ post = Post.objects.all()<br></code></pre></td></tr></table></figure>
+
+<p>來看一下目前post是什麼：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post<br>&lt;QuerySet [&lt;Post: Lorem Ipsum2&gt;, &lt;Post: Lorem Ipsum&gt;, &lt;Post: created from shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在最後一篇post新增評論</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; from blog.models import Post, Comment<br>&gt;&gt;&gt; post = Post.objects.all()<br>&gt;&gt;&gt; post<br>&lt;QuerySet [&lt;Post: Lorem Ipsum2&gt;, &lt;Post: Lorem Ipsum&gt;, &lt;Post: created from shell&gt;, &lt;Post: hi&gt;]&gt;<br>&gt;&gt;&gt; post = post.last()<br>&gt;&gt;&gt; post<br>&lt;Post: hi&gt;<br>&gt;&gt;&gt; com = Comment(post=post, username=<span class="hljs-string">&#x27;text&#x27;</span>, email=<span class="hljs-string">&#x27;text@gmail.com&#x27;</span>, body=<span class="hljs-string">&#x27;here is a comment from shell&#x27;</span>)<br>&gt;&gt;&gt; com.save()<br>&gt;&gt;&gt; com<br>&lt;Comment: Comment by text on hi&gt;<br></code></pre></td></tr></table></figure>
+
+<p>也可以透過<code>.filter(id=).first()</code>找到想要新增的文章</p>
+<p>先使用for循環印出所有文章的id，在使用filter找指定的文章</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.all()<br>&gt;&gt;&gt; <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> post:<br>...     <span class="hljs-built_in">print</span>(p.id)<br>... <br>7<br>6<br>5<br>3<br>&gt;&gt;&gt; post = Post.objects.filter(<span class="hljs-built_in">id</span>=5).first()<br>&gt;&gt;&gt; com = Comment(post=post,username=<span class="hljs-string">&#x27;Amy&#x27;</span>,email=<span class="hljs-string">&#x27;Amy@gmail.com&#x27;</span>,body=<span class="hljs-string">&#x27;this is comment from Amy&#x27;</span>)<br>&gt;&gt;&gt; com.save()<br>&gt;&gt;&gt; com<br>&lt;Comment: Comment by Amy on created from shell&gt;<br></code></pre></td></tr></table></figure>
+
+<p>也可以看到DB的blog_comment Table裡面有資料：</p>
+<img src="/images/django-add-comment/4.png">
+
+
+<p>可以從post調出comments</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.filter(<span class="hljs-built_in">id</span>=5).first()<br>&gt;&gt;&gt; post.comments.all()<br>&lt;QuerySet [&lt;Comment: Comment by Amy on created from shell&gt;]&gt;<br>&gt;&gt;&gt; <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> post.comments.all():<br>...     <span class="hljs-built_in">print</span>(c)<br>... <br>Comment by Amy on created from shell<br></code></pre></td></tr></table></figure>
+
+<h2 id="將頻論放到blog前台"><a href="#將頻論放到blog前台" class="headerlink" title="將頻論放到blog前台"></a>將頻論放到blog前台</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/templates/blog/detail.html</span><br>&#123;% block content %&#125;<br>    &lt;h1&gt;&#123;&#123; post.title &#125;&#125;&lt;/h1&gt;<br>    &lt;p&gt;Published &#123;&#123; post.published_date &#125;&#125; by &#123;&#123; post.author &#125;&#125;&lt;/p&gt;<br>    &#123;&#123; post.body|linebreaks &#125;&#125;<br><br>    &#123;% with post.comments.count as total_comments %&#125;<br>        &lt;h2&gt;&#123;&#123; total_comments &#125;&#125; comment&#123;&#123; total_comments|pluralize &#125;&#125;&lt;/h2&gt;<br>    &#123;% endwith %&#125;<br><br>    &#123;% <span class="hljs-keyword">for</span> comment <span class="hljs-keyword">in</span> post.comments.all %&#125;<br>        &lt;div&gt;<br>            &lt;p&gt;Comment by &#123;&#123; comment.username &#125;&#125;&#123;&#123; comment.created &#125;&#125;&lt;/p&gt;<br>            &#123;&#123; comment.body|linebreaks &#125;&#125;<br>        &lt;/div&gt;<br>    &#123;% empty %&#125;<br>        &lt;p&gt;There are no comments yet.&lt;/p&gt;<br>    &#123;% endfor %&#125;<br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>comment&#123;&#123; total_comments|pluralize &#125;&#125;</code>：如果是複數就會+s</li>
+<li><code>&#123;% for comment in post.comments.all %&#125;</code> ：使用for循環帶出所有的評論</li>
+<li><code>&#123;% empty %&#125;</code> ：如果沒有頻論就顯示  <code>&lt;p&gt;There are no comments yet.&lt;/p&gt;</code></li>
+</ul>
+<p>做到這步驟，前台看起來就會像這樣，評論顯示在文章的下方</p>
+<img src="/images/django-add-comment/5.png">
+
+<img src="/images/django-add-comment/6.png">
+
+
+<h2 id="使用者輸入表單-form"><a href="#使用者輸入表單-form" class="headerlink" title="使用者輸入表單(form)"></a>使用者輸入表單(form)</h2><p>來建立一個表單讓使用者可以輸入評論內容</p>
+<h2 id="與model關聯"><a href="#與model關聯" class="headerlink" title="與model關聯"></a>與model關聯</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># project/blog/forms.py</span><br>from django import froms<br>from .models import Comment<br><br>class CommentForm(froms.ModelForm):<br>    class Meta:<br>        model = Comment <span class="hljs-comment">#與DB的Comment Model關聯</span><br>        fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;email&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment">#傳進來的資料</span><br></code></pre></td></tr></table></figure>
+
+<p>這步主要是能讓前台傳的資料與DB關聯</p>
+<h2 id="編輯views，以控制表單要傳遞的內容"><a href="#編輯views，以控制表單要傳遞的內容" class="headerlink" title="編輯views，以控制表單要傳遞的內容"></a>編輯views，以控制表單要傳遞的內容</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># project/blog/views.py</span><br>def detail(request, year, month, day, slug):<br><span class="hljs-comment">#... 其他程式</span><br><br>    <span class="hljs-comment"># List of active comments for this post</span><br>    comments = post.comments.filter(active=True) <span class="hljs-comment">#過濾出所有active的comment</span><br>    new_comment = None<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>: <span class="hljs-comment">#如果表單發送post請求</span><br>        comment_form = CommentForm(data=request.POST) <span class="hljs-comment"># 讀取form數據，產生comment_form對象</span><br>        <span class="hljs-keyword">if</span> comment_form.is_valid(): <span class="hljs-comment">#驗證是否正確</span><br>            new_comment = comment_form.save(commit=False) <span class="hljs-comment">#新建一個new_comment對象</span><br>            new_comment.post = post<br>            new_comment.save()<br>    <span class="hljs-keyword">else</span>:<br>        comment_form = CommentForm() <span class="hljs-comment">#如果不是post 是get，就做一個form的顯示</span><br><br>    <span class="hljs-built_in">return</span> render( <span class="hljs-comment"># return Template</span><br>        request,<br>        <span class="hljs-string">&#x27;blog/detail.html&#x27;</span>,<br>        &#123;<span class="hljs-string">&#x27;post&#x27;</span>: post,<br>         <span class="hljs-string">&#x27;comments&#x27;</span>: comments, <span class="hljs-comment"># 傳遞comment的資料到template</span><br>         <span class="hljs-string">&#x27;new_comment&#x27;</span>: new_comment,<br>         <span class="hljs-string">&#x27;comment_form&#x27;</span>: comment_form<br>         &#125;<br>    )<br><br><span class="hljs-comment">#... 其他程式</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="編輯前台顯示畫面"><a href="#編輯前台顯示畫面" class="headerlink" title="編輯前台顯示畫面"></a>編輯前台顯示畫面</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#project/blog/templates/blog/detail.html</span><br><br><span class="hljs-comment">#...其他程式</span><br>    &#123;% <span class="hljs-keyword">if</span> new_comment %&#125;<br>    &lt;h2&gt;<span class="hljs-title class_">Your</span> comment has been added.&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &#123;% else %&#125;</span><br><span class="hljs-regexp">    &lt;h3&gt;&lt;a name=&quot;commentform&quot;&gt;&lt;/a</span>&gt;<span class="hljs-title class_">Leave</span> a <span class="hljs-title class_">Comment</span>&lt;<span class="hljs-regexp">/h3&gt;</span><br><span class="hljs-regexp">    &lt;form action=&quot;#commentform&quot; method=&quot;post&quot;&gt;</span><br><span class="hljs-regexp">        &#123;&#123; comment_form.as_p &#125;&#125;</span><br><span class="hljs-regexp">        &#123;% csrf_token %&#125;</span><br><span class="hljs-regexp">        &lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;Add comment&quot;&gt;&lt;/p</span>&gt;<br>    &lt;<span class="hljs-regexp">/form&gt;</span><br><span class="hljs-regexp">    &#123;% endif %&#125;</span><br><span class="hljs-regexp">    </span><br><span class="hljs-regexp">#...其他程式</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&#123;&#123; *comment_form*.*as_p* &#125;&#125;：</code>顯示文字會用html的<p>…<p>包住</li>
+<li><code>&#123;% csrf_token %&#125;</code>：防止corss site攻擊</li>
+</ul>
+<p>以上都做好後，按右鍵查看原始碼可以看到，Django幫我們做了一個form</p>
+<img src="/images/django-add-comment/7.png">
+
+
+<p>前台也能夠順利使用表單新增留言了～</p>
+<img src="/images/django-add-comment/8.png">
+
+
+<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/topics/forms/">Django Docs - Working with forms</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Django 2 Web开发入门与实战</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>更新於 2024-05-15</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/form/" class="post-tags__link button"># form</a><a href="/tags/comment/" class="post-tags__link button"># comment</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/05/09/django-url-page/" class="nav__link">
+      <div>
+        <div class="nav__label">下一篇</div>
+        <div class="nav__title">Django : 從零開始學 6 — 自定義URL &amp; 分頁</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>評論</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
