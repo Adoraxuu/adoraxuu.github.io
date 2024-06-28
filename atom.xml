@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-06-28T04:20:24.890Z</updated>
+  <updated>2024-06-28T04:34:26.636Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>React: 實體課程學習心得</title>
+    <link href="http://adora-xu.com/2024/06/28/react/"/>
+    <id>http://adora-xu.com/2024/06/28/react/</id>
+    <published>2024-06-28T04:24:24.000Z</published>
+    <updated>2024-06-28T04:34:26.636Z</updated>
+    
+    <content type="html"><![CDATA[<img src="/images/react/React.webp"><p>作為一名剛起步的 Junior 全端工程師，我過去大多是用 JavaScript 撰寫前端程式。為了提升自己的技能，我決定報名五倍學院開設的<a href="https://5xcampus.com/courses/react.html">《React 全攻略 - 入門到進階》</a>課程，目標是深入學習時下熱門的前端框架：React，並朝著 Senior 工程師的方向邁進。</p><p>在學習 React 的過程中，收穫了好多寶貴的經驗。奶綠茶老師是一位業界資深的工程師主管，他從底層邏輯開始講解 React 的基礎知識，並用程式碼作為範例，分享了許多業界的實戰經驗和在工作中實際會用到的 React 寫法。這些內容不僅讓我理解得更深入，也讓我在應用 React 時更加得心應手。</p><p>而且老師上課風格幽默有趣，課程中會穿插工作上與 React 或是工程師相關的趣事，也讓課程內容變得更活潑及生活化，每次上課玩都覺得除了學習 React 之外，也透過課程內容讓自己開眼界、學習資深工程師的思考方式，每次上課完都覺得收穫滿滿。</p><h2 id="課程簡介"><a href="#課程簡介" class="headerlink" title="課程簡介"></a>課程簡介</h2><p>《React 全攻略 - 入門到進階》課程是為了幫助學員打好 React 的基礎，成為更加扎實的 React 前端工程師而設計的。課程內容涵蓋了從基礎到進階的各個方面，老師還會分享許多實際開發中的團隊協作經驗和技巧，這些都是書籍和一般線上課程中難以見到的寶貴內容。</p><p>奶綠茶老師透過 50+ 份示範程式檔案，從最基礎的 React Components 如何撰寫 、Props 傳遞機制等，分享 React 核心語法；還有 Typescript 、styled-components 、Tailwind CSS、Redux 等更進階的實戰應用。</p><p>這門課特別適合以下的人：</p><ul><li>前端工程師：希望透過學習 React 來精進 JavaScript 技術。</li><li>有 Vue.js 或 Angular 開發經驗者：想快速上手 React。</li><li>有 React 自學經驗的開發者：希望鞏固基礎觀念。</li><li>想了解 React 開發團隊合作與管理的開發者：尋求更高效的團隊協作方法。</li></ul><h2 id="React-的基礎知識"><a href="#React-的基礎知識" class="headerlink" title="React 的基礎知識"></a>React 的基礎知識</h2><p>在課堂上，老師詳細講解了 JSX、組件（Components）、屬性（Props）、狀態（State）等基礎知識。這些是學習 React 的核心基礎，了解了核心的底層邏輯後，更能進一步學習和應用。</p><h3 id="Components-Props"><a href="#Components-Props" class="headerlink" title="Components &amp; Props"></a>Components &amp; Props</h3><p>在 React 中，component 是讓程式重複利用的重要基礎。<br>奶綠茶老師教我們如何創建 component 並使用 props 傳遞數據，並教導了我們幾個重要的概念：</p><ul><li>compnent 要獲取變數，一定會從 props 拿</li><li>React component 的第一個參數就是 props，其型別一定是物件</li></ul><p>實際的程式碼範例：</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">PropTypes</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">FunctionalCard01</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> &#123; img, name, children, price &#125; = props;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__img&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#123;img&#125;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&#123;name&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__name&quot;</span>&gt;</span>&#123;name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__price&quot;</span>&gt;</span>&#123;price&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__quote&quot;</span>&gt;</span>&#123;children&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;;<br><br><span class="hljs-title class_">FunctionalCard01</span>.<span class="hljs-property">propTypes</span> = &#123;<br>  <span class="hljs-attr">price</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">number</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">img</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">name</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">children</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">node</span>,<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">FunctionalCard01</span>;<br></code></pre></td></tr></table></figure><p>這是一段簡單的 Functional Component，它接收 props 並在 JSX 中渲染。這種方式讓 component 變得更為靈活和可重複使用。</p><h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><ul><li>每個 component 除了可以從 props 拿值外，本身還可以儲存變數。就像物件可以儲存自己的屬性一樣，React component 也可以有自己的狀態。</li><li>函數沒有 this 概念，它在呼叫完後就被釋放，無法在函數內部儲存變數的結果。要如何在函數中儲存變數的狀態呢？可以使用 useState 來實現。</li></ul><p>實際的程式碼範例：</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">atClick</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-title function_">setCount</span>(count + <span class="hljs-number">1</span>);<br>&#125;;<br><br><span class="hljs-keyword">return</span> (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;border p-2 border-black&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span>count: &#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;atClick&#125;</span>&gt;</span></span><br><span class="language-xml">      increment</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure><p>這段程式碼表示使用 useState 來管理計數器的狀態，並在按鈕點擊時更新狀態。</p><p>另外 React 的 useState 還有一個重要的觀念：</p><ul><li>useState 儲存狀態，只有第一次傳入的值會被使用。所以，React 的 useState 允許你傳入一個函式來回傳初始值，這個函式只會被執行一次。是否需要使用這個函式取決於初始化的成本是否昂貴。</li></ul><p>實際的程式碼範例：</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// <span class="hljs-doctag">FIXME:</span> Bad</span><br><span class="hljs-comment">// 這裡會被執行好多次</span><br><span class="hljs-keyword">const</span> [countBad, setCountBad] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;bad&#x27;</span>));<br><br><span class="hljs-comment">// [x]: Correct</span><br><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// 這裡的 function 只會被執行一次</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;correct&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure><h3 id="從入門到進階"><a href="#從入門到進階" class="headerlink" title="從入門到進階"></a>從入門到進階</h3><p>除了以上的範例，奶綠茶老師的 React 課程緊扣課程的標題「從入門到進階」，讓我印象深刻的內容還有：useEffect 第二個參數的差異、深入理解 useRef 幫助我們獲取 DOM 元素，使用 useState 和 useEffect 來處理表單輸入和驗證、使用 React.memo 來優化 component 性能，避免不必要的重渲染、自定義 Fetch Hook 將邏輯提取到可重用的函式使組件更加簡潔，並且更易於測試和維護、使用 Redux Thunk 進行異步操作、使用 testing library 進行單元測試等等，這些都讓我對 React 有了更全面的了解。</p><p>如果你在自學 React 的路上，但總覺得卡卡的，或是不懂使用 A 方法或 B 方法哪個比較好、效率比較高、不懂哪個方法在工作上比較常使用，都推薦你來上奶綠茶老師的《React 全攻略 - 入門到進階》課程，除了能解決你以上的問題，更能夠讓你在 React 的學習上有全面的提升、少走很多彎路！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;img src=&quot;/images/react/React.webp&quot;&gt;
+
+&lt;p&gt;作為一名剛起步的 Junior 全端工程師，我過去大多是用 JavaScript 撰寫前端程式。為了提升自己的技能，我決定報名五倍學院開設的&lt;a href=&quot;https://5xcampus.com</summary>
+      
+    
+    
+    
+    <category term="React" scheme="http://adora-xu.com/categories/React/"/>
+    
+    
+    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="五倍學院" scheme="http://adora-xu.com/tags/%E4%BA%94%E5%80%8D%E5%AD%B8%E9%99%A2/"/>
+    
+    <category term="React" scheme="http://adora-xu.com/tags/React/"/>
+    
+  </entry>
   
   <entry>
     <title>Django : 7 - 增加評論功能</title>
@@ -254,11 +284,11 @@ border:2px #d4a373 s</summary>
     <category term="Ruby on Rails" scheme="http://adora-xu.com/categories/Ruby-on-Rails/"/>
     
     
-    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
-    
     <category term="abstraction layer" scheme="http://adora-xu.com/tags/abstraction-layer/"/>
     
     <category term="ruby" scheme="http://adora-xu.com/tags/ruby/"/>
+    
+    <category term="rails" scheme="http://adora-xu.com/tags/rails/"/>
     
     <category term="layered design" scheme="http://adora-xu.com/tags/layered-design/"/>
     
@@ -288,9 +318,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
-    
     <category term="Rails" scheme="http://adora-xu.com/tags/Rails/"/>
+    
+    <category term="Ruby on Rails" scheme="http://adora-xu.com/tags/Ruby-on-Rails/"/>
     
     <category term="AMAZON IVS" scheme="http://adora-xu.com/tags/AMAZON-IVS/"/>
     
@@ -468,9 +498,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -500,9 +530,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -532,9 +562,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -564,9 +594,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -602,9 +632,9 @@ border:2px #d4a373 s</summary>
     
     <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
     
-    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
-    
     <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
+    
+    <category term="codewars" scheme="http://adora-xu.com/tags/codewars/"/>
     
     <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
     
@@ -642,39 +672,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="excel sheet column title" scheme="http://adora-xu.com/tags/excel-sheet-column-title/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day14 sqrtx</title>
-    <link href="http://adora-xu.com/2024/02/12/leetcode-sqrtx/"/>
-    <id>http://adora-xu.com/2024/02/12/leetcode-sqrtx/</id>
-    <published>2024-02-12T14:36:08.000Z</published>
-    <updated>2024-02-12T14:43:24.573Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十四天，讓我們開始吧！</p><img src="/images/sqrtx/1.png"><p>題目來源：<a href="https://leetcode.com/problems/sqrtx/">leetcode</a></p><p>今天的題目是尋找平方根，但是不能用內建的數學方法來找，題目解釋如下：</p><p>在给定一个非負整數 x 的情况下，返回四捨五入到最接近整数的 x 的平方根。返回的整數也應為非負整数。</p><p>不得使用任何内置指数函数或运算符。<br>例如，請勿在 c++ 中使用 pow(x, 0.5) 或在 python 中使用 x ** 0.5。</p><p>題目還算單純，因為僅要四捨五入到整數位即可，也可以使用昨天用到的<code>二分法</code>，從中間切一半開始測試，這樣很快就可以找到了！</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_sqrt</span>(<span class="hljs-params">x</span>)<br>  <span class="hljs-comment"># 左右邊界為0...x</span><br>  left, right = <span class="hljs-number">0</span>, x<br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span>  <span class="hljs-comment"># 計算中間值</span><br>    mid_squared = mid * mid  <span class="hljs-comment"># 計算中間值的平方</span><br><br>    <span class="hljs-keyword">if</span> mid_squared == x<br>      <span class="hljs-keyword">return</span> mid.to_i  <span class="hljs-comment"># 如果中間值的平方等於 x，返回中間值（轉換為整數形式）</span><br>    <span class="hljs-keyword">elsif</span> mid_squared &lt; x<br>      left = mid + <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方小於 x，就使用mid+1...x來比較，因此調整left的值</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方大於 x，就使用left...mid-1來比較，因此調整right的值</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> right.to_i  <span class="hljs-comment"># 當 left &gt; right 時，right 就是小於或等於平方根的整數值，因此要向下取整，所以返回右邊界（轉換為整數形式）</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-comment"># 左右邊界為0...x</span><br>        left, right = <span class="hljs-number">0</span>, x<br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span>  <span class="hljs-comment"># 計算中間值</span><br>            mid_squared = mid * mid  <span class="hljs-comment"># 計算中間值的平方</span><br><br>            <span class="hljs-keyword">if</span> mid_squared == x:<br>                <span class="hljs-keyword">return</span> mid  <span class="hljs-comment"># 如果中間值的平方等於 x，返回中間值</span><br>            <span class="hljs-keyword">elif</span> mid_squared &lt; x:<br>                left = mid + <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方小於 x，調整左邊界</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span>  <span class="hljs-comment"># 如果中間值的平方大於 x，調整右邊界</span><br><br>        <span class="hljs-keyword">return</span> right  <span class="hljs-comment"># 因為要向下取整，所以返回右邊界</span><br></code></pre></td></tr></table></figure><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">x</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> right = x;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">const</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">const</span> midSquared = mid * mid;<br>  <br>      <span class="hljs-keyword">if</span> (midSquared === x) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (midSquared &lt; x) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> right;<br>  &#125;<br></code></pre></td></tr></table></figure><p>雖然如果使用內建的方法超快就可以解出來了，但學習使用二分法也能夠在其他的條件下應用！</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第十四天，讓我們開始吧！&lt;/p&gt;
-&lt;img src=&quot;</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="sqrtx" scheme="http://adora-xu.com/tags/sqrtx/"/>
     
   </entry>
   
