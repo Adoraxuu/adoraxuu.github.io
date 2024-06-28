@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Django : 從零開始學 4 — URLS 路徑 | Adora&#39;s Blog</title>
+<title>Django : 4 — URLS 路徑 | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Python, Django, URL">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Django : 從零開始學 4 — URLS 路徑</h1>
+  <h1 class="post-title__text">Django : 4 — URLS 路徑</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/04/" class="post-meta__date button">2024-04-25</a> 
     <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
@@ -146,15 +146,15 @@
     
   </div>
 
-  <div class="post__content"><h2 id="資料夾"><a href="#資料夾" class="headerlink" title="資料夾"></a>資料夾</h2><p>這是目前my_project內的資料夾結構：</p>
+  <div class="post__content"><h2 id="資料夾"><a href="#資料夾" class="headerlink" title="資料夾"></a>資料夾</h2><p>這是目前 my_project 內的資料夾結構：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">.<br>└── project<br>    ├── blog<br>    │   ├── __pycache__<br>    │   ├── migrations<br>    │   │   └── __pycache__<br>    │   └── templates<br>    │       └── blog<br>    └── project<br>        └── __pycache__<br></code></pre></td></tr></table></figure>
 
 <h2 id="ROOT-URLCONF"><a href="#ROOT-URLCONF" class="headerlink" title="ROOT_URLCONF"></a>ROOT_URLCONF</h2><p>可以在<code>settings.py</code> 看到我們將<code>ROOT_URLCONF</code>設定在<code>project.urls</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/project/settings.py</span><br>ROOT_URLCONF = <span class="hljs-string">&#x27;project.urls&#x27;</span><br></code></pre></td></tr></table></figure>
 
-<p>也就代表Django在使用者拜訪路徑時會先去找<code>project.urls</code>（也像Rails的<code>routes.rb</code>）可以把<code>ROOT_URLCONF</code>想像成指路人，所有APP的路徑都要聽這個檔案指揮</p>
+<p>也就代表 Django 在使用者拜訪路徑時會先去找<code>project.urls</code>（也像 Rails 的<code>routes.rb</code>）可以把<code>ROOT_URLCONF</code>想像成指路人，所有 APP 的路徑都要聽這個檔案指揮</p>
 <p>接著我們開啟指路人：<code>project.urls</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin <br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include <span class="hljs-comment">#修改這行</span><br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    path(<span class="hljs-string">&#x27;blog/&#x27;</span>, include(<span class="hljs-string">&#x27;blog.urls&#x27;</span>)), <span class="hljs-comment">#新增這行</span><br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include <span class="hljs-comment">#修改這行</span><br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    path(<span class="hljs-string">&#x27;blog/&#x27;</span>, include(<span class="hljs-string">&#x27;blog.urls&#x27;</span>)), <span class="hljs-comment">#新增這行</span><br>]<br></code></pre></td></tr></table></figure>
 
 <p>這樣代表，在網址最後加上<code>/blog/</code>的時候，他會去找<code>blog/urls.py</code>去要資料。</p>
 <h3 id="blog-urls-py（URLconf）"><a href="#blog-urls-py（URLconf）" class="headerlink" title="blog&#x2F;urls.py（URLconf）"></a>blog&#x2F;urls.py（URLconf）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, views.<span class="hljs-built_in">list</span>, name=<span class="hljs-string">&#x27;list&#x27;</span>),<br>]<br></code></pre></td></tr></table></figure>
@@ -162,21 +162,21 @@
 <p>這樣代表在網址<code>/blog/</code>後面沒接任何東西時，會去找<code>view</code>的<code>list</code>方法</p>
 <h3 id="project-blog-views-py"><a href="#project-blog-views-py" class="headerlink" title="project&#x2F;blog&#x2F;views.py"></a>project&#x2F;blog&#x2F;views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">list</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;blog/list.html&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
-<p>這樣代表在lsit方法裡，他會發一個request請求，去render 同一個資料夾內 <code>/templates/blog/list.html</code> 檔案，如果原本沒有資料夾／檔案就在這裡新增吧～</p>
+<p>這樣代表在 lsit 方法裡，他會發一個 request 請求，去 render 同一個資料夾內 <code>/templates/blog/list.html</code> 檔案，如果原本沒有資料夾／檔案就在這裡新增吧～</p>
 <p>最後就可以看到成果：</p>
 <img src="/images/django-urls/01.png">
 
-<p>Template我只有寫了一行hello world (*°∀°)，下次來使用路徑轉換器&amp;裝飾Template吧～</p>
+<p>Template 我只有寫了一行 hello world (*°∀°)，下次來使用路徑轉換器&amp;裝飾 Template 吧～</p>
 <p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/topics/http/urls/">Django doc - Urls</a></p>
 </blockquote>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web 開發入門與實踐</a></p>
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2024-04-25</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/URL/" class="post-tags__link button"># URL</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-06-28</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/URL/" class="post-tags__link button"># URL</a></div>
 </article>
 
 
@@ -198,8 +198,8 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">上一篇</div>
-        <div class="nav__title">Django : 從零開始學 5 — Templates</div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django : 5 — Templates</div>
       </div>
     </a>
     
@@ -208,8 +208,8 @@
     
     <a href="/2024/04/24/django-orm/" class="nav__link">
       <div>
-        <div class="nav__label">下一篇</div>
-        <div class="nav__title">Django : 從零開始學 3 — ORM</div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Django : 3 — ORM</div>
       </div>
       <div>
         <svg
@@ -234,7 +234,7 @@
   id="comment"
 >
   
-    <h4>评论</h4>
+    <h4>Comments</h4>
     
     
     

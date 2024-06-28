@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Django : 從零開始學 3 — ORM | Adora&#39;s Blog</title>
+<title>Django : 3 — ORM | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Python, Django, ORM">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Django : 從零開始學 3 — ORM</h1>
+  <h1 class="post-title__text">Django : 3 — ORM</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/04/" class="post-meta__date button">2024-04-24</a> 
     <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
@@ -146,26 +146,25 @@
     
   </div>
 
-  <div class="post__content"><h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是Rails的<code>$rails c</code>指令)：</p>
+  <div class="post__content"><h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是 Rails 的<code>$rails c</code>指令)：</p>
 <p><em><code>$ python manage.py shell</code></em></p>
 <img src="/images/django-orm/1.png">
 
-
-<h2 id="載入Models"><a href="#載入Models" class="headerlink" title="載入Models"></a>載入Models</h2><p>首先會需要將建立的models import</p>
+<h2 id="載入-Models"><a href="#載入-Models" class="headerlink" title="載入 Models"></a>載入 Models</h2><p>首先會需要將建立的 models import</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> blog.models <span class="hljs-keyword">import</span> Post<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br></code></pre></td></tr></table></figure>
 
 <h2 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h2><p>可以先看一個簡單的範例：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user = User.objects.get(username=<span class="hljs-string">&#x27;admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user<br></code></pre></td></tr></table></figure>
 
-<p>使用get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果 <code>get()</code> 發現多個對象，會引發一個 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a> 異常：</p>
+<p>使用 get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果  <code>get()</code> 發現多個對象，會引發一個  <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a>  異常：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Entry.objects.get(name=<span class="hljs-string">&quot;A Duplicated Name&quot;</span>)  <span class="hljs-comment"># raises Entry.MultipleObjectsReturned</span><br></code></pre></td></tr></table></figure>
 
-<p>這個比較像是Ruby on Rails的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code> 例外訊息。</p>
-<p>另外一個也蠻像的，就是Rails的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習Rails？）。</p>
-<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的QuerySet</p>
+<p>這個比較像是 Ruby on Rails 的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code>  例外訊息。</p>
+<p>另外一個也蠻像的，就是 Rails 的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習 Rails？）。</p>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的  <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的 QuerySet</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
 
-<p>這就比較像Rails的<code>where()</code>，找到會返回 <code>ActiveRecord::Relation</code> 包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p>
+<p>這就比較像 Rails 的<code>where()</code>，找到會返回  <code>ActiveRecord::Relation</code>  包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p>
 <h3 id="filter-找不到的情況"><a href="#filter-找不到的情況" class="headerlink" title="filter()找不到的情況"></a>filter()找不到的情況</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;aaa&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet []&gt;<br></code></pre></td></tr></table></figure>
 
 <h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude()"></a>exclude()</h3><p>排除查找的參數</p>
@@ -174,8 +173,8 @@
 <h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><p>秀出所有東西：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
 
-<p>可以使用for迴圈將文章標題印出來：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br><span class="hljs-meta">... </span><br>second-post<br>hi<br></code></pre></td></tr></table></figure>
+<p>可以使用 for 迴圈將文章標題印出來：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br>...<br>second-post<br>hi<br></code></pre></td></tr></table></figure>
 
 <h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post(title=<span class="hljs-string">&#x27;created from shell&#x27;</span>, slug=<span class="hljs-string">&#x27;create-from-shell&#x27;</span>, body=<span class="hljs-string">&#x27;this is body&#x27;</span>, author=user, status= <span class="hljs-string">&#x27;draft&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
 
@@ -191,7 +190,7 @@
 
 <h2 id="order-by"><a href="#order-by" class="headerlink" title="order_by()"></a>order_by()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;, &lt;Post: second-post&gt;]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;-title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;, &lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
 
-<p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是QuerySet</p>
+<p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是 QuerySet</p>
 <p>也可以使用索引<code>[0]</code>，來返回指定的值：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br></code></pre></td></tr></table></figure>
 
@@ -206,11 +205,11 @@
 <p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#get">Django doc - QuerySet</a></p>
 </blockquote>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web 開發入門與實踐</a></p>
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2024-04-24</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/ORM/" class="post-tags__link button"># ORM</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-06-28</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/ORM/" class="post-tags__link button"># ORM</a></div>
 </article>
 
 
@@ -232,8 +231,8 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">上一篇</div>
-        <div class="nav__title">Django : 從零開始學 4 — URLS 路徑</div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django : 4 — URLS 路徑</div>
       </div>
     </a>
     
@@ -242,8 +241,8 @@
     
     <a href="/2024/04/23/django-admin-site/" class="nav__link">
       <div>
-        <div class="nav__label">下一篇</div>
-        <div class="nav__title">Django: 從零開始學 2 - admin site</div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Django: 2 - admin site</div>
       </div>
       <div>
         <svg
@@ -268,7 +267,7 @@
   id="comment"
 >
   
-    <h4>评论</h4>
+    <h4>Comments</h4>
     
     
     

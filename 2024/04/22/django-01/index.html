@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Django: 從零開始學 1 - 設計Table | Adora&#39;s Blog</title>
+<title>Django: 1 - 設計Table | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Python, Django, MTV">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Django: 從零開始學 1 - 設計Table</h1>
+  <h1 class="post-title__text">Django: 1 - 設計Table</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/04/" class="post-meta__date button">2024-04-22</a> 
     <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
@@ -151,12 +151,12 @@
 <blockquote>
 <p>圖片來源<a target="_blank" rel="noopener" href="https://unsplash.com/@brechtcorbeel">Usplash - Brecht Corbeel</a></p>
 </blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>學了Ruby on Rails之後，想說再繼續學其他的框架和語言，那就決定是最熱門的Python語言所以使用的網頁框架Django了 ٩(^ᴗ^)۶，本系列會是我以初階網頁工程師的角度所寫的學習筆記，歡迎不吝指教～</p>
-<h2 id="開啟新專案"><a href="#開啟新專案" class="headerlink" title="開啟新專案"></a>開啟新專案</h2><p>因為Django不像Rails有內建的套件管理工具，所以我使用Poetry做為套件管理工具，詳細下載教學可以參考：<a target="_blank" rel="noopener" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>學了 Ruby on Rails 之後，想說再繼續學其他的框架和語言，那就決定是最熱門的 Python 語言所以使用的網頁框架 Django 了 ٩(^ᴗ^)۶，本系列會是我以初階網頁工程師的角度所寫的學習筆記，歡迎不吝指教～</p>
+<h2 id="開啟新專案"><a href="#開啟新專案" class="headerlink" title="開啟新專案"></a>開啟新專案</h2><p>因為 Django 不像 Rails 有內建的套件管理工具，所以我使用 Poetry 做為套件管理工具，詳細下載教學可以參考：<a target="_blank" rel="noopener" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></p>
 <ul>
 <li>新增資料夾<code>$ mkdir my_project</code></li>
-<li>使用vscode開啟資料夾</li>
-<li>新增 pyproject.toml  <code>$ poetry init --no-interaction --dependency django</code></li>
+<li>使用 vscode 開啟資料夾</li>
+<li>新增  pyproject.toml  <code>$ poetry init --no-interaction --dependency django</code></li>
 <li>安裝依賴項目 <code>$ poetry install</code></li>
 <li>進入虛擬環境 <code>$ poetry shell</code></li>
 <li>初始化專案 <code>$ poetry run django-admin startproject project</code></li>
@@ -164,7 +164,7 @@
 <li>跑資料庫遷移 <code>$ python manage.py migrate</code></li>
 <li>開啟伺服器 <code>$ python manage.py runserver</code></li>
 </ul>
-<h3 id="MVC-v-s-MTV"><a href="#MVC-v-s-MTV" class="headerlink" title="MVC v.s. MTV?"></a>MVC v.s. MTV?</h3><p>在Django不是採用MVC架構，而是採用MTV，差別如下：</p>
+<h3 id="MVC-v-s-MTV"><a href="#MVC-v-s-MTV" class="headerlink" title="MVC v.s. MTV?"></a>MVC v.s. MTV?</h3><p>在 Django 不是採用 MVC 架構，而是採用 MTV，差別如下：</p>
 <table>
 <thead>
 <tr>
@@ -185,8 +185,8 @@
 <td>Controller</td>
 </tr>
 </tbody></table>
-<p>關於MVC，可以參考之前所寫的文章：<a href="https://adora-xu.com/2023/12/02/MVC/">Ruby on Rails: MVC是什麼?</a></p>
-<h2 id="APP"><a href="#APP" class="headerlink" title="APP?"></a>APP?</h2><p>Django將整個網站分成很多模塊，可以把不同模塊整理出來，稱為app，<br>像是如果要製作blog app，可以運用指令生成：<br><code>$ python manage.py startapp blog</code></p>
+<p>關於 MVC，可以參考之前所寫的文章：<a href="https://adora-xu.com/2023/12/02/MVC/">Ruby on Rails: MVC 是什麼?</a></p>
+<h2 id="APP"><a href="#APP" class="headerlink" title="APP?"></a>APP?</h2><p>Django 將整個網站分成很多模塊，可以把不同模塊整理出來，稱為 app，<br>像是如果要製作 blog app，可以運用指令生成：<br><code>$ python manage.py startapp blog</code></p>
 <p>運行指令後會長出很多資料夾：</p>
 <img src="/images/django-01/01.png">
 
@@ -204,7 +204,7 @@
 </tr>
 <tr>
 <td>admin.py</td>
-<td>內建的admin站點</td>
+<td>內建的 admin 站點</td>
 </tr>
 <tr>
 <td>models.py</td>
@@ -220,11 +220,11 @@
 </tr>
 </tbody></table>
 <p>看字面意思應該也不難猜裡面的內容～</p>
-<h2 id="設計Table"><a href="#設計Table" class="headerlink" title="設計Table"></a>設計Table</h2><ul>
-<li>每個model都是一個 Python class，繼承自 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/ref/models/instances/#django.db.models.Model">django.db.models.Model</a></li>
+<h2 id="設計-Table"><a href="#設計-Table" class="headerlink" title="設計 Table"></a>設計 Table</h2><ul>
+<li>每個 model 都是一個 Python class，繼承自  <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/ref/models/instances/#django.db.models.Model">django.db.models.Model</a></li>
 <li>模型的每個屬性代表一個資料庫欄位。</li>
 </ul>
-<p><strong><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/1.8/ref/models/fields/">Model fields</a></strong> 可為 Django Model 定義不同型態的屬性，比較常見的有：</p>
+<p><strong><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/1.8/ref/models/fields/">Model fields</a></strong>  可為 Django Model 定義不同型態的屬性，比較常見的有：</p>
 <table>
 <thead>
 <tr>
@@ -250,31 +250,36 @@
 </tr>
 </tbody></table>
 <p>當然不只以上這些屬性，還有更多屬性可以參考：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/topics/db/models/">Django docs</a></p>
-<p>理解基本觀念之後，就可以來設計我們的Table了～</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/models.py</span><br><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models <span class="hljs-comment"># 導入Django.db的model</span><br><span class="hljs-keyword">from</span> django.utils <span class="hljs-keyword">import</span> timezone <span class="hljs-comment"># 導入Django時區工具</span><br><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User <span class="hljs-comment">#導入Django默認的User Model</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Post</span>(models.Model): <span class="hljs-comment"># 定義一個Post的model class，繼承自(models.Model)</span><br><br>    STATS_OPTIONS = ( <br>        (<span class="hljs-string">&#x27;draft&#x27;</span>, <span class="hljs-string">&#x27;Draft&#x27;</span>), <br>        (<span class="hljs-string">&#x27;published&#x27;</span>, <span class="hljs-string">&#x27;Published&#x27;</span>), <br>    )<br>    <br>    title = models.CharField(max_length=<span class="hljs-number">200</span>)<br>    author = models.ForeignKey(<br>        User,<br>        on_delete=models.CASCADE,<br>        related_name=<span class="hljs-string">&#x27;blog_posts&#x27;</span>, <br>        )<br>    <br>    body = models.TextField()<br>    published_date = models.DateTimeField(default=timezone.now)<br>    created_date = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    updated_date = models.DateTimeField(auto_now=<span class="hljs-literal">True</span>)<br>    status = models.CharField(<br>        max_length=<span class="hljs-number">10</span>,<br>        choices=STATS_OPTIONS,<br>        default=<span class="hljs-string">&#x27;draft&#x27;</span>)<br>    <br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        ordering = (<span class="hljs-string">&#x27;-published_date&#x27;</span>,)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> self.title<br></code></pre></td></tr></table></figure>
+<p>理解基本觀念之後，就可以來設計我們的 Table 了～</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/models.py</span><br><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models <span class="hljs-comment"># 導入Django.db的model</span><br><span class="hljs-keyword">from</span> django.utils <span class="hljs-keyword">import</span> timezone <span class="hljs-comment"># 導入Django時區工具</span><br><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User <span class="hljs-comment">#導入Django默認的User Model</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Post</span>(models.Model): <span class="hljs-comment"># 定義一個Post的model class，繼承自(models.Model)</span><br><br>    STATS_OPTIONS = (<br>        (<span class="hljs-string">&#x27;draft&#x27;</span>, <span class="hljs-string">&#x27;Draft&#x27;</span>),<br>        (<span class="hljs-string">&#x27;published&#x27;</span>, <span class="hljs-string">&#x27;Published&#x27;</span>),<br>    )<br><br>    title = models.CharField(max_length=<span class="hljs-number">200</span>)<br>    author = models.ForeignKey(<br>        User,<br>        on_delete=models.CASCADE,<br>        related_name=<span class="hljs-string">&#x27;blog_posts&#x27;</span>,<br>        )<br><br>    body = models.TextField()<br>    published_date = models.DateTimeField(default=timezone.now)<br>    created_date = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    updated_date = models.DateTimeField(auto_now=<span class="hljs-literal">True</span>)<br>    status = models.CharField(<br>        max_length=<span class="hljs-number">10</span>,<br>        choices=STATS_OPTIONS,<br>        default=<span class="hljs-string">&#x27;draft&#x27;</span>)<br><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        ordering = (<span class="hljs-string">&#x27;-published_date&#x27;</span>,)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> self.title<br></code></pre></td></tr></table></figure>
 
 <p>上面內容所代表的意思：<br><img src="/images/django-01/03.png"></p>
-<p>數據庫設計好後，要和Django說，我們有一個blog的app，需要在數據庫進行初始化：</p>
+<p>數據庫設計好後，要和 Django 說，我們有一個 blog 的 app，需要在數據庫進行初始化：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/project/settings.py</span><br>INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;django.contrib.admin&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.contenttypes&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.staticfiles&#x27;</span>,<br>    <span class="hljs-string">&#x27;blog.apps.BlogConfig&#x27;</span>, <span class="hljs-comment"># 添加這行</span><br>]<br></code></pre></td></tr></table></figure>
-<p>添加完成之後就可以運行 <code>$ python manage.py makemigrations blog</code><br>生成我們的Table啦～</p>
+
+<p>添加完成之後就可以運行 <code>$ python manage.py makemigrations blog</code><br>生成我們的 Table 啦～</p>
 <p>輸入完成後會出現以下文字：</p>
 <blockquote>
-<p>blog&#x2F;migrations&#x2F;0001_initial.py<br>    - Create model Post</p>
+<p>blog&#x2F;migrations&#x2F;0001_initial.py</p>
 </blockquote>
-<p>blog&#x2F;migrations資料夾生成<code>0001_initial.py</code>文件，這個檔案到底是什麼東西呢？(´･ω･&#96;)  ？ 又做了什麼事呢？</p>
-<p>想知道的話，可以透過以下命令，查看這裡執行的SQL語法，這樣就更一目了然了٩(๑❛ᴗ❛๑)۶：</p>
+<pre><code>- Create model Post
+</code></pre>
+<blockquote>
+</blockquote>
+<p>blog&#x2F;migrations 資料夾生成<code>0001_initial.py</code>文件，這個檔案到底是什麼東西呢？(´･ω･&#96;) ？ 又做了什麼事呢？</p>
+<p>想知道的話，可以透過以下命令，查看這裡執行的 SQL 語法，這樣就更一目了然了 ٩(๑❛ᴗ❛๑)۶：</p>
 <p><code>$ python manage.py sqlmigrate blog 0001</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">BEGIN</span>;<br><span class="hljs-comment">--</span><br><span class="hljs-comment">-- Create model Post</span><br><span class="hljs-comment">--</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> &quot;blog_post&quot; (&quot;id&quot; <span class="hljs-type">integer</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">PRIMARY</span> KEY AUTOINCREMENT, &quot;title&quot; <span class="hljs-type">varchar</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, &quot;body&quot; text <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, &quot;published_date&quot; datetime <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, &quot;created_date&quot; datetime <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, &quot;updated_date&quot; datetime <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, &quot;status&quot; <span class="hljs-type">varchar</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, &quot;author_id&quot; <span class="hljs-type">integer</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">REFERENCES</span> &quot;auth_user&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED);<br><span class="hljs-keyword">CREATE</span> INDEX &quot;blog_post_author_id_dd7a8485&quot; <span class="hljs-keyword">ON</span> &quot;blog_post&quot; (&quot;author_id&quot;);<br><span class="hljs-keyword">COMMIT</span>;<br></code></pre></td></tr></table></figure>
 
-<p>可以從指令中看出，我們新增了一張名稱為<code>blog_post</code>的Table，另外也新建了我們在上面所填寫的欄位，而預設欄位都是<code>NOT NULL</code>。</p>
-<p>Django和Rails一樣都使用ORM，我們就不用特地使用SQL語法來操作資料庫了～</p>
-<p>最後可以執行<code>$ python manage.py migrate</code><br>就完成了Table的建立了！</p>
-<h2 id="添加新欄位"><a href="#添加新欄位" class="headerlink" title="添加新欄位"></a>添加新欄位</h2><p>做到後面發現忘記加slug，要怎麼增加呢？<br>一樣到建立Model的<code>blog/models.py</code> ，在剛剛新增的<code>Class Post</code>內新增：</p>
+<p>可以從指令中看出，我們新增了一張名稱為<code>blog_post</code>的 Table，另外也新建了我們在上面所填寫的欄位，而預設欄位都是<code>NOT NULL</code>。</p>
+<p>Django 和 Rails 一樣都使用 ORM，我們就不用特地使用 SQL 語法來操作資料庫了～</p>
+<p>最後可以執行<code>$ python manage.py migrate</code><br>就完成了 Table 的建立了！</p>
+<h2 id="添加新欄位"><a href="#添加新欄位" class="headerlink" title="添加新欄位"></a>添加新欄位</h2><p>做到後面發現忘記加 slug，要怎麼增加呢？<br>一樣到建立 Model 的<code>blog/models.py</code> ，在剛剛新增的<code>Class Post</code>內新增：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#my_project/project/blog/models.py</span><br>slug = models.SlugField(max_length=<span class="hljs-number">200</span>, unique=<span class="hljs-literal">True</span>, blank=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
 
-<p>接著運行 <code>$ python manage.py makemigrations blog</code>    </p>
+<p>接著運行 <code>$ python manage.py makemigrations blog</code></p>
 <p>最後運行<code>$ python manage.py migrate</code></p>
-<p>就完成了新增～沒想到光新增Table就寫了一大篇(´･ω･&#96;)，剩下的就留到下一次分享了～<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<p>就完成了新增～沒想到光新增 Table 就寫了一大篇(´･ω･&#96;)，剩下的就留到下一次分享了～<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/topics/db/models/">Django docs</a></p>
 </blockquote>
@@ -282,11 +287,11 @@
 <p><a href="%5Bhttps://djangogirlstaipei.gitbooks.io/django-girls-taipei-tutorial/content/django/models.html%5D(https://djangogirlstaipei.gitbooks.io/django-girls-taipei-tutorial/content/django/models.html)">Django Girl</a></p>
 </blockquote>
 <blockquote>
-<p><a href="%5Bhttps://www.udemy.com/course/django-2-web/learn/lecture/14381524#overview%5D(https://www.udemy.com/course/django-2-web/)">Udemy - Django 2 Web開發入門與實踐</a></p>
+<p><a href="%5Bhttps://www.udemy.com/course/django-2-web/learn/lecture/14381524#overview%5D(https://www.udemy.com/course/django-2-web/)">Udemy - Django 2 Web 開發入門與實踐</a></p>
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2024-04-22</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/MTV/" class="post-tags__link button"># MTV</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-06-28</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/MTV/" class="post-tags__link button"># MTV</a></div>
 </article>
 
 
@@ -308,8 +313,8 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">上一篇</div>
-        <div class="nav__title">Django: 從零開始學 2 - admin site</div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django: 2 - admin site</div>
       </div>
     </a>
     
@@ -318,7 +323,7 @@
     
     <a href="/2024/03/31/ruby-on-rails-abstraction-layer/" class="nav__link">
       <div>
-        <div class="nav__label">下一篇</div>
+        <div class="nav__label">Next Post</div>
         <div class="nav__title">Ruby on Rails: 什麼是Abstraction layer</div>
       </div>
       <div>
@@ -344,7 +349,7 @@
   id="comment"
 >
   
-    <h4>评论</h4>
+    <h4>Comments</h4>
     
     
     

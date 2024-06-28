@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Django : 從零開始學 5 — Templates | Adora&#39;s Blog</title>
+<title>Django : 5 — Templates | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Python, Django, Templates">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Django : 從零開始學 5 — Templates</h1>
+  <h1 class="post-title__text">Django : 5 — Templates</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/04/" class="post-meta__date button">2024-04-26</a> 
     <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
@@ -146,17 +146,15 @@
     
   </div>
 
-  <div class="post__content"><p>之前做完urls，今天就可以來處理前台顯示畫面Templates啦 ʕ •̀ o •́ ʔ</p>
+  <div class="post__content"><p>之前做完 urls，今天就可以來處理前台顯示畫面 Templates 啦 ʕ •̀ o •́ ʔ</p>
 <h2 id="blog-views"><a href="#blog-views" class="headerlink" title="blog&#x2F;views"></a>blog&#x2F;views</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">list</span>(<span class="hljs-params">request</span>):<br>    posts = Post.objects.<span class="hljs-built_in">all</span>()<br>    <span class="hljs-keyword">return</span> render(<br>        request,<br>        <span class="hljs-string">&#x27;blog/list.html&#x27;</span>,<br>        &#123;<span class="hljs-string">&#x27;posts&#x27;</span>: posts&#125;<br>    )<br></code></pre></td></tr></table></figure>
 
-<p>先改寫blog&#x2F;vies裡面的lsit，讓list頁面能有我們建好model的post</p>
+<p>先改寫 blog&#x2F;vies 裡面的 lsit，讓 list 頁面能有我們建好 model 的 post</p>
 <h2 id="project-blog-templates-blog-list-html"><a href="#project-blog-templates-blog-list-html" class="headerlink" title="project&#x2F;blog&#x2F;templates&#x2F;blog&#x2F;list.html"></a>project&#x2F;blog&#x2F;templates&#x2F;blog&#x2F;list.html</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% block content %&#125;<br>    &lt;h1&gt;My blog&lt;/h1&gt;<br>    &#123;% <span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts %&#125;<br>        &lt;h2&gt;<br>            &lt;a href=<span class="hljs-string">&quot;&#123;&#123; post.get_url &#125;&#125;&quot;</span>&gt;<br>                &#123;&#123; post.title &#125;&#125;<br>            &lt;/a&gt;<br>        &lt;/h2&gt;<br>        &lt;p&gt;<br>            Published &#123;&#123; post.published_date|date:<span class="hljs-string">&quot;SHORT_DATE_FORMAT&quot;</span> &#125;&#125; by &#123;&#123; post.author &#125;&#125;<br>        &lt;/p&gt;<br>        &#123;&#123; post.body|truncatewords:<span class="hljs-number">30</span>|linebreaks &#125;&#125;<br>    &#123;% endfor %&#125;<br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><p><strong>變數：</strong></p>
-</li>
-<li><p>過濾器：舉幾個比較常見的例子</p>
-<ul>
+<li><strong>變數：</strong></li>
+<li>過濾器：舉幾個比較常見的例子<ul>
 <li>default:<ul>
 <li><code>&#123;&#123; value|default:"nothing" &#125;&#125;</code></li>
 <li>如果變數為 false 或空，則使用給定的預設值。否則，使用變數的值。例如：</li>
@@ -176,38 +174,37 @@
 <li>可以參考：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#ref-templates-builtins-filters">Django Docs - 內建過濾參考</a></li>
 </ul>
 </li>
-<li><p>標籤：</p>
-<ul>
+<li>標籤：<ul>
 <li>for:<code>&#123;% for post in posts %&#125;….. &#123;% endfor %&#125;</code></li>
 <li>if..elif..else</li>
-<li>if 可以和過濾器一起使用</li>
+<li>if 可以和過濾器一起使用<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% <span class="hljs-keyword">if</span> athlete_list|length &gt; <span class="hljs-number">1</span> %&#125;<br>   Team: &#123;% <span class="hljs-keyword">for</span> athlete <span class="hljs-keyword">in</span> athlete_list %&#125; ... &#123;% endfor %&#125;<br>&#123;% <span class="hljs-keyword">else</span> %&#125;<br>   Athlete: &#123;&#123; athlete_list<span class="hljs-number">.0</span>.name &#125;&#125;<br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% <span class="hljs-keyword">if</span> athlete_list|length &gt; <span class="hljs-number">1</span> %&#125;<br>   Team: &#123;% <span class="hljs-keyword">for</span> athlete <span class="hljs-keyword">in</span> athlete_list %&#125; ... &#123;% endfor %&#125;<br>&#123;% <span class="hljs-keyword">else</span> %&#125;<br>   Athlete: &#123;&#123; athlete_list<span class="hljs-number">.0</span>.name &#125;&#125;<br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure></li>
+</li>
 </ul>
 <p>這時候前面看起來效果就會像：</p>
 <img src="/images/django-templates/1.png">
 
-<h2 id="模板繼承"><a href="#模板繼承" class="headerlink" title="模板繼承"></a>模板繼承</h2><p>模板繼承有點像是Rails的render，先把可以替換的地方挖空，變成base模板，子模板就可以自定義（覆蓋）挖空地方的內容</p>
-<h3 id="Base模板"><a href="#Base模板" class="headerlink" title="Base模板"></a>Base模板</h3><p>首先看我們的base模板</p>
+<h2 id="模板繼承"><a href="#模板繼承" class="headerlink" title="模板繼承"></a>模板繼承</h2><p>模板繼承有點像是 Rails 的 render，先把可以替換的地方挖空，變成 base 模板，子模板就可以自定義（覆蓋）挖空地方的內容</p>
+<h3 id="Base-模板"><a href="#Base-模板" class="headerlink" title="Base 模板"></a>Base 模板</h3><p>首先看我們的 base 模板</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># template.html</span><br>&lt;!DOCTYPE html&gt;<br>&lt;html lang=<span class="hljs-string">&quot;en&quot;</span>&gt;<br>&lt;head&gt;<br>    &lt;meta charset=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;<br>    &lt;meta name=<span class="hljs-string">&quot;viewport&quot;</span> content=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;<br>    &lt;title&gt;Welcome, Templates Page&lt;/title&gt;<br>    &lt;style&gt;<br>        header &#123;<br>            background-color: <span class="hljs-comment">#333;</span><br>            color: white;<br>            padding: 20px;<br>            text-align: center;<br>        &#125;<br>    &lt;/style&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br>&lt;header&gt;<br>    &lt;h2&gt;Welcome, Templates Page&lt;/h2&gt;<br>&lt;/header&gt;<br><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;<br>    &#123;% block mymessage %&#125;<br>    &#123;% endblock %&#125;<br>&lt;/div&gt;<br><br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
 
-<p>其實上面內容多半都是一般的html，只有一個地方比較特別</p>
+<p>其實上面內容多半都是一般的 html，只有一個地方比較特別</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;<br>    &#123;% block mymessage %&#125;<br>    &#123;% endblock %&#125;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
 
-<p>這裡的    <code>&#123;% block mymessage %&#125; &#123;% endblock %&#125;</code> 可以被子模板替換</p>
-<h3 id="子模板"><a href="#子模板" class="headerlink" title="子模板"></a>子模板</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% extends <span class="hljs-string">&#x27;template.html&#x27;</span> %&#125;<br><br>&#123;% block mymessage %&#125;<br>  &lt;p&gt;hihihi&lt;/p&gt;<br>&#123;% endblock %&#125; <br></code></pre></td></tr></table></figure>
+<p>這裡的 <code>&#123;% block mymessage %&#125; &#123;% endblock %&#125;</code> 可以被子模板替換</p>
+<h3 id="子模板"><a href="#子模板" class="headerlink" title="子模板"></a>子模板</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% extends <span class="hljs-string">&#x27;template.html&#x27;</span> %&#125;<br><br>&#123;% block mymessage %&#125;<br>  &lt;p&gt;hihihi&lt;/p&gt;<br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure>
 
 <p>最上面加上 <code>&#123;% extends 'template.html' %&#125;</code> 就可以把 <code>block mymessage</code>換掉</p>
 <img src="/images/django-templates/2.png">
 
-<p>其實就蠻像Rails的Render &#x2F; Component ٩(●ᴗ●)۶</p>
+<p>其實就蠻像 Rails 的 Render &#x2F; Component ٩(●ᴗ●)۶</p>
 <p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/ref/templates/">Django Docs - templates</a></p>
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2024-04-26</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/Templates/" class="post-tags__link button"># Templates</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-06-28</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/Templates/" class="post-tags__link button"># Templates</a></div>
 </article>
 
 
@@ -229,8 +226,8 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">上一篇</div>
-        <div class="nav__title">Django : 從零開始學 6 — 自定義URL &amp; 分頁</div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django : 6 — 自定義URL &amp; 分頁</div>
       </div>
     </a>
     
@@ -239,8 +236,8 @@
     
     <a href="/2024/04/25/django-urls/" class="nav__link">
       <div>
-        <div class="nav__label">下一篇</div>
-        <div class="nav__title">Django : 從零開始學 4 — URLS 路徑</div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Django : 4 — URLS 路徑</div>
       </div>
       <div>
         <svg
@@ -265,7 +262,7 @@
   id="comment"
 >
   
-    <h4>评论</h4>
+    <h4>Comments</h4>
     
     
     

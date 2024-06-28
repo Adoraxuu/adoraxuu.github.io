@@ -43,7 +43,7 @@
  <!-- meta -->
 
 
-<title>Django : 從零開始學 6 — 自定義URL &amp; 分頁 | Adora&#39;s Blog</title>
+<title>Django : 6 — 自定義URL &amp; 分頁 | Adora&#39;s Blog</title>
 
 
     <meta name="keywords" content="Python, Django, Templates">
@@ -121,7 +121,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">Django : 從零開始學 6 — 自定義URL &amp; 分頁</h1>
+  <h1 class="post-title__text">Django : 6 — 自定義URL &amp; 分頁</h1>
   <div class="post-title__meta">
     <a href="/archives/2024/05/" class="post-meta__date button">2024-05-09</a> 
     <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
@@ -146,10 +146,10 @@
     
   </div>
 
-  <div class="post__content"><h2 id="自定義url"><a href="#自定義url" class="headerlink" title="自定義url"></a>自定義url</h2><p>常常看到很多網址後面會接上年&#x2F;月&#x2F;日等等的資訊，在Django也是可以自定義URL的</p>
+  <div class="post__content"><h2 id="自定義-url"><a href="#自定義-url" class="headerlink" title="自定義 url"></a>自定義 url</h2><p>常常看到很多網址後面會接上年&#x2F;月&#x2F;日等等的資訊，在 Django 也是可以自定義 URL 的</p>
 <h2 id="urls-py"><a href="#urls-py" class="headerlink" title="urls.py"></a>urls.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">## project/blog/urls.py</span><br>app_name = <span class="hljs-string">&#x27;blog&#x27;</span><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, views.<span class="hljs-built_in">list</span>, name=<span class="hljs-string">&#x27;list&#x27;</span>),<br>    path(<span class="hljs-string">&#x27;author&#x27;</span>, views.author),<br>    path(<br>        <span class="hljs-string">&#x27;&lt;int:year&gt;/&lt;int:month&gt;/&lt;int:day&gt;/&lt;str:slug&gt;/&#x27;</span>,<br>        views.detail,<br>        name=<span class="hljs-string">&#x27;detail&#x27;</span><br>    ),<br>    path(<span class="hljs-string">&#x27;testing/&#x27;</span>, views.testing, name=<span class="hljs-string">&#x27;testing&#x27;</span>),<br><br>]<br></code></pre></td></tr></table></figure>
 
-<p>首先先到urls定義路徑的顯示方式，這裡定義為<code>&lt;int:year&gt;/&lt;int:month&gt;/&lt;int:day&gt;/&lt;str:slug&gt;/</code></p>
+<p>首先先到 urls 定義路徑的顯示方式，這裡定義為<code>&lt;int:year&gt;/&lt;int:month&gt;/&lt;int:day&gt;/&lt;str:slug&gt;/</code></p>
 <h2 id="model-py"><a href="#model-py" class="headerlink" title="model.py"></a>model.py</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-keyword">from</span> django.<span class="hljs-property">urls</span> <span class="hljs-keyword">import</span> reverse<br><br>    def <span class="hljs-title function_">get_url</span>(self):<br>        <span class="hljs-keyword">return</span> <span class="hljs-title function_">reverse</span>(<br>            <span class="hljs-string">&#x27;blog:detail&#x27;</span>,<br>            args=[<br>                self.<span class="hljs-property">published_date</span>.<span class="hljs-property">year</span>,<br>                self.<span class="hljs-property">published_date</span>.<span class="hljs-property">month</span>,<br>                self.<span class="hljs-property">published_date</span>.<span class="hljs-property">day</span>,<br>                self.<span class="hljs-property">slug</span><br>            ]<br>        )<br></code></pre></td></tr></table></figure>
 
 <p>在<code>urls.py</code>定義了好路徑，需要將資料傳入資料，此時可以使用<code>reverse</code> 將值傳給<code>urls.py</code>。</p>
@@ -166,7 +166,7 @@
 <h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/ref/paginator/">Django Docs - paginator</a></p>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2024-05-09</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/Templates/" class="post-tags__link button"># Templates</a></div>
+   <div class="post-footer__meta"><p>updated at 2024-06-28</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/Templates/" class="post-tags__link button"># Templates</a></div>
 </article>
 
 
@@ -188,8 +188,8 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">上一篇</div>
-        <div class="nav__title">Django : 從零開始學 7 - 增加評論功能</div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django : 7 - 增加評論功能</div>
       </div>
     </a>
     
@@ -198,8 +198,8 @@
     
     <a href="/2024/04/26/django-templates/" class="nav__link">
       <div>
-        <div class="nav__label">下一篇</div>
-        <div class="nav__title">Django : 從零開始學 5 — Templates</div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Django : 5 — Templates</div>
       </div>
       <div>
         <svg
@@ -224,7 +224,7 @@
   id="comment"
 >
   
-    <h4>评论</h4>
+    <h4>Comments</h4>
     
     
     
