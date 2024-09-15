@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>使用 Django REST Framework 和 React 建置開發環境 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Django, React, Django REST, Frontend, Backend, Python">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">使用 Django REST Framework 和 React 建置開發環境</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/09/" class="post-meta__date button">2024-09-15</a> 
+    <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
+
+    <span class="separate-dot"></span><a href="/categories/React/" class="button">React</a>
+
+    <span class="separate-dot"></span><a href="/categories/Django-REST/" class="button">Django REST</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/Main.webp">
+
+<p>圖片來源：套用 Canva 模板(@veronikagotovceva)</p>
+<p>使用 Django 的過程中，覺得 Django 亦適合採用前後端分離的開發模式，因此自己建了基礎 React 為前端、Django 為後端的網頁專案，建置的過程接下來會逐一解說 ( ˶’ᵕ’˶)</p>
+<p>也可以到<a target="_blank" rel="noopener" href="https://github.com/Adoraxuu/NoteWords">我的 GitHub</a> 看完成的程式碼</p>
+<h2 id="開始之前"><a href="#開始之前" class="headerlink" title="開始之前"></a>開始之前</h2><p>請確認安裝了以下項目：</p>
+<ul>
+<li>Python(version &gt;&#x3D;3.8)</li>
+<li><a target="_blank" rel="noopener" href="https://python-poetry.org/docs/">Poetry</a>(Django 套件管理工具)</li>
+<li>NPM(React 套件管理工具)</li>
+</ul>
+<h2 id="建立-React"><a href="#建立-React" class="headerlink" title="建立 React"></a>建立 React</h2><h3 id="1-到專案資料夾內，使用終端機輸入以下指令："><a href="#1-到專案資料夾內，使用終端機輸入以下指令：" class="headerlink" title="1. 到專案資料夾內，使用終端機輸入以下指令："></a>1. 到專案資料夾內，使用終端機輸入以下指令：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ npm create vite@latest frontend -- --template react<br></code></pre></td></tr></table></figure>
+
+<p>這條指令的作用是：</p>
+<ul>
+<li>使用 npm(套件管理工具)下載最新的 Vite（打包器），並建立一個名為 <code>frontend</code> 的 React 框架。（當然你也可以取別的名字）</li>
+<li>Vite 會根據 template(模板)產生基本的 React 項目。</li>
+</ul>
+<h3 id="2-安裝-npm-依賴項目："><a href="#2-安裝-npm-依賴項目：" class="headerlink" title="2. 安裝 npm 依賴項目："></a>2. 安裝 npm 依賴項目：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cd</span> frontend <span class="hljs-comment">#進入React框架資料夾</span><br>$ npm instal <span class="hljs-comment"># 使用npm安裝依賴項目</span><br>$ npm run dev <span class="hljs-comment"># 開啟服務器</span><br></code></pre></td></tr></table></figure>
+
+<p>更多內容可以參考:<a target="_blank" rel="noopener" href="https://cn.vitejs.dev/guide/">Vite 官方文檔</a></p>
+<h3 id="3-完成-React-安裝："><a href="#3-完成-React-安裝：" class="headerlink" title="3. 完成 React 安裝："></a>3. 完成 React 安裝：</h3><p>照著指示開啟網址<a target="_blank" rel="noopener" href="http://localhost:5173/">http://localhost:5173/</a>，沒意外的話就會看到以下畫面，React 基礎的安裝就完成了。</p>
+<img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/1.webp">
+
+<h2 id="建立-Django-專案"><a href="#建立-Django-專案" class="headerlink" title="建立 Django 專案"></a>建立 Django 專案</h2><h3 id="1-專案資料夾內使用終端機執行："><a href="#1-專案資料夾內使用終端機執行：" class="headerlink" title="1. 專案資料夾內使用終端機執行："></a>1. 專案資料夾內使用終端機執行：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ pip install django djangorestframework django-cors-headers<br></code></pre></td></tr></table></figure>
+
+<p>此指令使用 pip 安裝了三個套件：</p>
+<ul>
+<li>Django：後端網頁框架</li>
+<li><a target="_blank" rel="noopener" href="https://www.django-rest-framework.org/">Django REST framework</a>：用於建立 API 的擴充套件</li>
+<li>Django CORS headers：用於處理 CORS 跨域請求問題，讓 API 安全地可以被不同的網頁訪問。</li>
+</ul>
+<h3 id="2-調整專案架構："><a href="#2-調整專案架構：" class="headerlink" title="2. 調整專案架構："></a>2. 調整專案架構：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ django-admin startproject core <span class="hljs-comment"># 使用django安裝專案</span><br>$ <span class="hljs-built_in">mv</span> core backend <span class="hljs-comment"># 將外層的core改名為backend</span><br>$ <span class="hljs-built_in">cd</span> backend <span class="hljs-comment"># 進入後端資料夾</span><br>$ poetry init --no-interaction --dependency django <span class="hljs-comment"># 使用後湍套件管理工具</span><br>$ <span class="hljs-built_in">touch</span> [README.md](http://README.md) <span class="hljs-comment">#新增專案說明檔案（非必要）</span><br>$ poetry install <span class="hljs-comment"># 安裝依賴套件</span><br></code></pre></td></tr></table></figure>
+
+<p>完成以上步驟就可以使用文字編輯器開啟專案啦( ੭ ˙ᗜ˙ )੭</p>
+<p>另外可以在 poetry 管理套件的檔案：<code>pyproject.toml</code>加上<code>package-mode = false</code>。<br>因為 poetry 會協助建立虛擬環境，所以往後在專案內的終端機要下指令時都要記得使用<code>$ poetry shell</code>。</p>
+<p>這時候可以看到目前專案結構：</p>
+<img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/2.webp">
+
+<h3 id="3-進行資料-migrate"><a href="#3-進行資料-migrate" class="headerlink" title="3. 進行資料 migrate"></a>3. 進行資料 migrate</h3><ul>
+<li>跑資料庫遷移 ：<code>$ python manage.py migrate</code></li>
+<li>開啟伺服器：<code>$ python manage.py runserver</code></li>
+</ul>
+<p>這裡使用 Django 內建的 SQLite，也可以使用自己喜歡的資料庫（在 GitHub 我後來有改用 <a target="_blank" rel="noopener" href="https://www.postgresql.org/">PostgreSQL</a> 才上傳）</p>
+<h2 id="4-建立-superuser-＆-App"><a href="#4-建立-superuser-＆-App" class="headerlink" title="4.建立 superuser ＆ App"></a>4.建立 superuser ＆ App</h2><ul>
+<li>建立管理員，方便進入 Django 內建後台： <code>python manage.py createsuperuser</code></li>
+<li>建立一個名為 Word 的 APP：<code>python manage.py startapp word</code></li>
+</ul>
+<p>這時候基礎的 Django 就安裝完成了，不過還需要設定 API，才能搭起前端和後端的橋樑 ( ˶’ᵕ’˶)</p>
+<h2 id="設定後端-API-APP"><a href="#設定後端-API-APP" class="headerlink" title="設定後端 API &amp; APP"></a>設定後端 API &amp; APP</h2><p>基本上這裡的步驟都會是在 backend 資料夾內設定</p>
+<h3 id="1-Django-的環境設置"><a href="#1-Django-的環境設置" class="headerlink" title="1. Django 的環境設置"></a>1. Django 的環境設置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># backend.core.setting</span><br>INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;django.contrib.admin&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.contenttypes&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.staticfiles&#x27;</span>,<br>    <span class="hljs-string">&#x27;rest_framework&#x27;</span>, <span class="hljs-comment">#REST framework</span><br>    <span class="hljs-string">&#x27;corsheaders&#x27;</span>, <span class="hljs-comment"># CORS headers</span><br>    <span class="hljs-string">&#x27;words&#x27;</span> <span class="hljs-comment">#APP</span><br>]<br><br>CORS_ALLOW_ORIGINS = [<span class="hljs-string">&#x27;http://localhost:5173&#x27;</span>] <span class="hljs-comment">#讓django可以接受這個react打過來的api，亦可使用ENV代入</span><br><br>MIDDLEWARE = [<br>    <span class="hljs-string">&#x27;django.middleware.security.SecurityMiddleware&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions.middleware.SessionMiddleware&#x27;</span>, <span class="hljs-comment"># 建立session的middleware</span><br>    <span class="hljs-string">&#x27;corsheaders.middleware.CorsMiddleware&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.middleware.common.CommonMiddleware&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.middleware.csrf.CsrfViewMiddleware&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth.middleware.AuthenticationMiddleware&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages.middleware.MessageMiddleware&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.middleware.clickjacking.XFrameOptionsMiddleware&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+
+<p>這部的目的是將剛剛安裝的擴充工具、APP 都讓 Django 知道，並設定 CORS 來源網址。</p>
+<h2 id="新建-word-model"><a href="#新建-word-model" class="headerlink" title="新建 word model"></a>新建 word model</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># backend.words.models</span><br><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Word</span>(models.Model):<br>    word = models.CharField(max_length=<span class="hljs-number">200</span>, unique=<span class="hljs-literal">True</span>)<br>    pronunciation = models.CharField(max_length=<span class="hljs-number">100</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>新增 word model，使用這個是因為我想做一個單字卡網站，先使用最簡單的定義，你也可以使用任何您要 model 架構。</p>
+<h2 id="註冊-admin-py"><a href="#註冊-admin-py" class="headerlink" title="註冊 admin.py"></a>註冊 admin.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Word<br><br>admin.site.register(Word)<br></code></pre></td></tr></table></figure>
+
+<p>讓剛剛創的 model 能出現在 admin 內，這步驟非必要，主要是新增資料而已，也可以使用 Django 的 ORM 新增資料，我自己覺得內建的 admin 蠻方便的所以先新增。</p>
+<h2 id="設定-Django-REST-framework"><a href="#設定-Django-REST-framework" class="headerlink" title="設定 Django REST framework"></a>設定 Django REST framework</h2><h3 id="1-words-內新增-api-資料夾"><a href="#1-words-內新增-api-資料夾" class="headerlink" title="1. words 內新增 api 資料夾"></a>1. words 內新增 api 資料夾</h3><p>新增<code>serializers.py</code>、<code>urls.py</code>、<code>views.py</code>這三個檔案：</p>
+<img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/3.webp">
+
+<h3 id="2-序列化器（serializers）"><a href="#2-序列化器（serializers）" class="headerlink" title="2. 序列化器（serializers）"></a>2. <strong>序列化器（serializers）</strong></h3><p>這一步是 Django REST Framework（DRF）中非常重要的功能。<br><strong>序列化器（serializers）</strong>負責將數據轉換成其他格式來傳輸，例如我們常用的 JSON 格式。<br>它同時還能處理數據的驗證和「反序列化」（即接收 JSON 資料並轉換成 Django 的資料庫模型物件），讓建立 API 的過程更加簡單。</p>
+<p>簡單來說，序列化器就像是「翻譯」，它幫助使用不同語言的前端和後端進行溝通。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># backend.words.api.serializers.py</span><br><br><span class="hljs-keyword">from</span> rest_framework.serializers <span class="hljs-keyword">import</span> ModelSerializer<br><span class="hljs-keyword">from</span> ..models <span class="hljs-keyword">import</span> Word<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">WordSerializer</span>(<span class="hljs-title class_ inherited__">ModelSerializer</span>):<br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        model = Word<br>        fields = [<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;word&#x27;</span>, <span class="hljs-string">&#x27;pronunciation&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ModelSerializer</code> ：這是幫助將 Django 模型轉換為 API 格式的工具。</li>
+<li><code>class WordSerializer(ModelSerializer)</code> : 定義了一個名為 WordSerializer 的序列化器的 class</li>
+<li><code>fields = [&#39;id&#39;, &#39;word&#39;, &#39;pronunciation&#39;]</code>：當我們使用 <code>WordSerializer</code> 把 <code>Word</code> 模型的資料轉換為 JSON 時，輸出內容會包含這三個欄位。反過來，把 JSON 資料轉換回 Django 物件時，也只會處理這些欄位。如果你想處理所有欄位，也可以寫成：<code>fields = &#39;__all__&#39;</code>。</li>
+</ul>
+<h2 id="3-設定-WordViewSet，並指定-WordSerializer"><a href="#3-設定-WordViewSet，並指定-WordSerializer" class="headerlink" title="3. 設定 WordViewSet，並指定 WordSerializer"></a>3. 設定 WordViewSet，並指定 WordSerializer</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># backend.words.api.views.py</span><br><span class="hljs-keyword">from</span> rest_framework.viewsets <span class="hljs-keyword">import</span> ModelViewSet<br><span class="hljs-keyword">from</span> ..models <span class="hljs-keyword">import</span> Word<br><span class="hljs-keyword">from</span> .serializers <span class="hljs-keyword">import</span> WordSerializer<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">WordViewSet</span>(<span class="hljs-title class_ inherited__">ModelViewSet</span>):<br>    queryset = Word.objects.<span class="hljs-built_in">all</span>() <span class="hljs-comment"># 取得所有 Word 模型的資料</span><br>    serializer_class = WordSerializer <span class="hljs-comment"># 指定使用 WordSerializer</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ModelViewSet</code>：顧名思義，這是「視圖的集合」，專門用來幫我們處理視圖邏輯的。這是 DRF 內建的功能，能自動幫你搞定常見的 CRUD 操作。</li>
+<li><code>WordViewSet</code>：這是自定義的視圖集，專門負責處理 <code>Word</code> 模型的 API 請求。無論是查資料還是新增修改，它都能處理！</li>
+<li><code>serializer_class = WordSerializer</code>：這裡指定了序列化器，我們用剛剛創建的 <code>WordSerializer</code> 來處理資料的轉換和驗證，確保數據格式正確 (•̀ᴗ•́)و。</li>
+</ul>
+<p>總結一下，這段程式碼幫我們自動建立了一個可以處理 <code>Word</code> 模型資料的 API。你只需要發送請求，就能輕鬆完成查詢、新增、修改和刪除資料的操作，真是省時又省力！ヽ(✿ ﾟ ▽ ﾟ)ノ</p>
+<h3 id="4-設定-URLS-路徑"><a href="#4-設定-URLS-路徑" class="headerlink" title="4. 設定 URLS 路徑"></a>4. 設定 URLS 路徑</h3><p>在這個步驟中，我們將會透過 Django REST Framework 的 Routers 來輕鬆管理 URL，讓不同的 API 請求可以正確導向相應的處理邏輯。</p>
+<h4 id="4-1-api-urls-py："><a href="#4-1-api-urls-py：" class="headerlink" title="4-1 api.urls.py："></a>4-1 api.urls.py：</h4><p>首先，我們會在 <code>words</code> 相關的資料夾中新增一個 <code>urls.py</code> 檔案，並註冊 <code>WordViewSet</code> 路由：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># backend.words.api.urls.py</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include<br><span class="hljs-keyword">from</span> rest_framework.routers <span class="hljs-keyword">import</span> DefaultRouter<br><span class="hljs-keyword">from</span> .views <span class="hljs-keyword">import</span> WordViewSet<br><br>word_router = DefaultRouter()<br>word_router.register(<span class="hljs-string">r&#x27;words&#x27;</span>, WordViewSet)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>DefaultRouter()</code>：這是 Django REST Framework 提供的預設 Routers，它會幫你自動生成常用的 API 路徑，像是 <code>GET /words/</code>、<code>POST /words/</code>等。</li>
+<li><code>register()</code>：這裡我們將 <code>WordViewSet</code> 註冊到 Routers，讓 <code>/words/</code> 路徑和 <code>WordViewSet</code> 連結在一起。</li>
+</ul>
+<h4 id="4-2-core-api-urls-py"><a href="#4-2-core-api-urls-py" class="headerlink" title="4-2 core.api.urls.py"></a>4-2 core.api.urls.py</h4><p>接著，我們在 <code>core</code> 資料夾裡新增一個 <code>api</code> 資料夾，並在裡面新增一個 <code>urls.py</code> 檔案。<br>這一步的重點是將之前設定好的 <code>words</code> 路徑整合起來，讓所有的 API 路徑都統一由這個 <code>urls.py</code> 來管理。</p>
+<p>這裡就像是 API 路徑的「部門經理」，所有的 API URL 都要交給它來發號施令～</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># backend.core.api.urls.py</span><br><span class="hljs-keyword">from</span> rest_framework.routers <span class="hljs-keyword">import</span> DefaultRouter<br><span class="hljs-keyword">from</span> words.api.urls <span class="hljs-keyword">import</span> word_router<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include<br><br>router = DefaultRouter()<br><br><span class="hljs-comment"># words</span><br>router.registry.extend(word_router.registry)<br><br><span class="hljs-comment"># 定義主要的 API URL 路徑</span><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, include(router.urls)),<br>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>router.registry.extend()</code>：這行程式把之前在 <code>words.api.urls.py</code> 裡設定好的 Router 也「報到」給部門經理，讓 <code>/words/</code> 路徑與其他 API 一起被管理 (｡•̀ᴗ-)✧，就像是新員工報到一樣，讓部門經理知道有這個路徑在。</li>
+<li><code>path(&#39;&#39;, include(router.urls))</code>：這行定義了進入 API 的主要路徑。當有人來訪問這個網址時，部門經理會把任務交給相應的主管 router，讓它去發號施令。</li>
+</ul>
+<h4 id="4-4-core-urls-py"><a href="#4-4-core-urls-py" class="headerlink" title="4.4 core.urls.py"></a>4.4 core.urls.py</h4><p>這部分應該不難理解，主要是設定 API 的主要路徑。就像是 API 部門的經理跟 URL 的總經理報告：「我們的 API 部門已經建置完成，可以正式開始運作啦！」 (๑•̀ㅂ•́)و✧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># backend.core.urls.pu</span><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    path(<span class="hljs-string">&#x27;api/&#x27;</span>, include(<span class="hljs-string">&#x27;core.api.urls&#x27;</span>)),<br>]<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-執行-migrate-並啟動伺服器"><a href="#5-執行-migrate-並啟動伺服器" class="headerlink" title="5. 執行 migrate 並啟動伺服器"></a>5. 執行 <code>migrate</code> 並啟動伺服器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py makemigrations<br>python manage.py migrate<br>python manage.py runserver<br></code></pre></td></tr></table></figure>
+
+<p>經過以上步驟，我們的後端 API 介面終於建置完成啦！🎉<br>打開瀏覽器，輸入 <a target="_blank" rel="noopener" href="https://127.0.0.1:8000/api/words">https://127.0.0.1:8000/api/words</a>，你就能看到 API 介面！<br>在這裡，你可以直接新增資料，或者查看從後台 Admin 新增的 <code>Word</code> 資料。</p>
+<p>這代表後端的 API 已經正式建置完成，前端也可以透過這個 API 來獲取資料啦！(๑•̀ㅂ•́)و✧</p>
+<img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/4.webp">
+
+<h2 id="設定-React-環境"><a href="#設定-React-環境" class="headerlink" title="設定 React 環境"></a>設定 React 環境</h2><ul>
+<li>這裡的動作都會在<code>frontend</code> 進行</li>
+</ul>
+<h3 id="1-在-frontend-資料夾新增-env-檔案"><a href="#1-在-frontend-資料夾新增-env-檔案" class="headerlink" title="1. 在 frontend 資料夾新增 .env 檔案"></a>1. 在 <code>frontend</code> 資料夾新增 <code>.env</code> 檔案</h3><p>首先，我們要在 <code>frontend</code> 資料夾裡新增一個 <code>.env</code> 檔案，裡面設定 API 的網址，這樣之後我們在程式碼裡就可以透過環境變數來讀取 API 路徑了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">VITE_API_URL=http://localhost:<span class="hljs-number">8000</span>/api/<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-測試環境變數"><a href="#2-測試環境變數" class="headerlink" title="2. 測試環境變數"></a>2. 測試環境變數</h3><p>接下來，我們要確認環境變數是否設置成功。在 <code>src/app.jsx</code> 裡新增以下代碼，然後在瀏覽器的控制台中看看結果吧！✨</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># src.app.jsx</span><br><span class="hljs-keyword">import</span> &#123; useState, useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br>function App() &#123;<br><br>  useEffect(() =&gt; &#123;<br>    console.log(<span class="hljs-keyword">import</span>.meta.env.VITE_API_URL)<br>  &#125;, [])<br><br>  <span class="hljs-keyword">return</span> (<br>    &lt;div&gt;<br>      &lt;h1&gt;Hello World&lt;/h1&gt;<br>    &lt;/div&gt;<br>  )<br>&#125;<br><br>export default App<br><br></code></pre></td></tr></table></figure>
+
+<p>瀏覽器打開後，如果控制台成功輸出我們剛剛在 <code>.env</code> 檔案裡設定的 API URL，那就代表環境變數設置成功啦！٩(◕‿◕｡)۶</p>
+<img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/5.webp">
+
+<h3 id="3-從-API-抓取資料"><a href="#3-從-API-抓取資料" class="headerlink" title="3. 從 API 抓取資料"></a>3. 從 API 抓取資料</h3><p>現在，我們來讓 React 從 API 抓取資料，並在網頁上顯示結果。以下是更新後的 <code>App</code> 元件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># src.app.jsx</span><br><br><span class="hljs-keyword">import</span> &#123; useState, useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br>function App() &#123;<br>  const [data, setData] = useState([])<br><br>  useEffect(() =&gt; &#123;<br>    <span class="hljs-keyword">async</span> function fetchData() &#123;<br>      <span class="hljs-keyword">try</span> &#123;<br>        const response = <span class="hljs-keyword">await</span> fetch(`$&#123;<span class="hljs-keyword">import</span>.meta.env.VITE_API_URL&#125;/words/`);<br>        <span class="hljs-keyword">if</span> (!response.ok) &#123;<br>          throw new Error(<span class="hljs-string">&#x27;Network response was not ok&#x27;</span>);<br>        &#125;<br>        const data = <span class="hljs-keyword">await</span> response.json();<br>        setData(data);<br>        console.log(data)<br>      &#125; catch (error) &#123;<br>        console.error(<span class="hljs-string">&#x27;Error fetching data:&#x27;</span>, error);<br>      &#125;<br>    &#125;<br>    fetchData();<br>  &#125;, [])<br><br>  <span class="hljs-keyword">return</span> (<br>    &lt;div&gt;<br>      &lt;h1&gt;Hello World&lt;/h1&gt;<br>      &#123;data.<span class="hljs-built_in">map</span>((word) =&gt; (<br>        &lt;div key=&#123;word.<span class="hljs-built_in">id</span>&#125;&gt;<br>          &lt;h2&gt;&#123;word.word&#125;&lt;/h2&gt;<br>          &lt;p&gt;&#123;word.pronunciation&#125;&lt;/p&gt;<br>        &lt;/div&gt;<br>      ))&#125;<br>    &lt;/div&gt;<br>  )<br>&#125;<br><br>export default App<br><br></code></pre></td></tr></table></figure>
+
+<p>在這段程式碼中：</p>
+<ul>
+<li>我們用 <code>useState</code> 來存放從 API 取得的資料。</li>
+<li>使用 <code>useEffect</code> 來在元件載入時抓取 API 資料，並將資料顯示在畫面上。</li>
+<li>每個單字會顯示其 <code>word</code> 和 <code>pronunciation</code>。</li>
+</ul>
+<p>這樣一來，我們就能從後端 API 拿到資料並在前端網頁上動態顯示啦！ヾ(＾ ∇ ＾)</p>
+<img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/6.webp">
+
+<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://vitejs.dev/">Vite</a></li>
+<li><a target="_blank" rel="noopener" href="https://react.dev/learn">React</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/stable/">Django</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.django-rest-framework.org/">Django REST Framework</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/twtrubiks/django-rest-framework-tutorial">django-rest-framework-tutorial</a></li>
+</ul>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2024-09-15</p></div> <div class="post-entry__tags"><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/React/" class="post-tags__link button"># React</a><a href="/tags/Django-REST/" class="post-tags__link button"># Django REST</a><a href="/tags/Frontend/" class="post-tags__link button"># Frontend</a><a href="/tags/Backend/" class="post-tags__link button"># Backend</a><a href="/tags/Python/" class="post-tags__link button"># Python</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/06/28/react/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">React: 實體課程學習心得</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/giscus"
+                data-repo-id="R_kgDOKvDWIA"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKvDWIM4CbDvN"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2024 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
