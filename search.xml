@@ -404,31 +404,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>CodeWars: credit card mask</title>
-    <url>/2024/02/16/codewars-credit-card-mask/</url>
-    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
-<p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
-<p>如果沒有大於4碼，就直接顯示<code>cc</code>即可 ٩(^ᴗ^)۶</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;#&quot;</span> * (<span class="hljs-built_in">len</span>(cc)-<span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>:]<br></code></pre></td></tr></table></figure>
-<p>Python比較特別，如果字串<code>*</code>小於等於零的數字，會返還空值。<br>所以這裡不需要使用判斷式就可以完成o(^▽^)o</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>) &#123;<br>    <span class="hljs-keyword">return</span> cc.<span class="hljs-property">length</span> &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span>.<span class="hljs-title function_">repeat</span>(cc.<span class="hljs-property">length</span> - <span class="hljs-number">4</span>) + cc.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">4</span>) : cc<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>JS和Ruby的解法邏輯一樣，使用三元運算子判斷長度<code>cc.length</code>是否 &gt; 4，如果大於的話則返回扣掉4個長度的<code> &quot;#&quot;.repeat(cc.length - 4)</code>+最後四碼<code>cc.slice(-4)</code>，如果小於4直接返還<code>cc</code></p>
-<p>Codewars 7kyu的題目和leetcode easy相比稍微簡單一點，很適合練習不同程式的基本用法～很可惜前幾天的Leetcode挑戰斷在Day 15，接下來繼續努力o(^∀^*)o</p>
-]]></content>
-      <categories>
-        <category>codewars</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>codewars</tag>
-        <tag>JavaScript</tag>
-        <tag>credit card mask</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript: defer vs async</title>
     <url>/2023/11/18/async-vs-defer/</url>
     <content><![CDATA[<style>
@@ -539,6 +514,31 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>CodeWars: credit card mask</title>
+    <url>/2024/02/16/codewars-credit-card-mask/</url>
+    <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/5412509bd436bd33920011bc">Codewars</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewar-credit-card-mask/1.png"></p>
+<p>如果有像是銀行卡號、銀行帳號等等機密訊息需要加密，可以使用此方法，僅顯示最後四碼，如果總數小於四碼就顯示所有內容。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>)<br>  cc.size &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span> * (cc.size - <span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>..-<span class="hljs-number">1</span>] : cc<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>Ruby可以使用三元運算子來解，首先判斷數入的值長度<code>cc.size</code>是否大於4碼，因為最後面4碼要顯示，所以如果大於4碼，就將前面四碼的長度<code>cc.size</code>扣掉<code>4碼</code> * <code>#</code>，再使用<code>cc[-4..-1]</code>顯示倒數四位～倒數最後一位。</p>
+<p>如果沒有大於4碼，就直接顯示<code>cc</code>即可 ٩(^ᴗ^)۶</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;#&quot;</span> * (<span class="hljs-built_in">len</span>(cc)-<span class="hljs-number">4</span>) + cc[-<span class="hljs-number">4</span>:]<br></code></pre></td></tr></table></figure>
+<p>Python比較特別，如果字串<code>*</code>小於等於零的數字，會返還空值。<br>所以這裡不需要使用判斷式就可以完成o(^▽^)o</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maskify</span>(<span class="hljs-params">cc</span>) &#123;<br>    <span class="hljs-keyword">return</span> cc.<span class="hljs-property">length</span> &gt; <span class="hljs-number">4</span> ? <span class="hljs-string">&quot;#&quot;</span>.<span class="hljs-title function_">repeat</span>(cc.<span class="hljs-property">length</span> - <span class="hljs-number">4</span>) + cc.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">4</span>) : cc<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>JS和Ruby的解法邏輯一樣，使用三元運算子判斷長度<code>cc.length</code>是否 &gt; 4，如果大於的話則返回扣掉4個長度的<code> &quot;#&quot;.repeat(cc.length - 4)</code>+最後四碼<code>cc.slice(-4)</code>，如果小於4直接返還<code>cc</code></p>
+<p>Codewars 7kyu的題目和leetcode easy相比稍微簡單一點，很適合練習不同程式的基本用法～很可惜前幾天的Leetcode挑戰斷在Day 15，接下來繼續努力o(^∀^*)o</p>
+]]></content>
+      <categories>
+        <category>codewars</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>codewars</tag>
+        <tag>credit card mask</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CodeWars: highest and lowest</title>
     <url>/2024/02/21/codewars-highest-and-lowest/</url>
     <content><![CDATA[<p>這幾天遇到程式的面試題目，想說也可以一併將解法分享٩(^ᴗ^)۶<br>題目：<a href="https://www.codewars.com/kata/554b4ac871d6813a03000035">Codewars - Highest and Lowest</a><br>一樣會用<code>Ruby</code>、<code>Python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！<br><img src="/images/codewars-highest-and-lowest/0221.png"></p>
@@ -557,8 +557,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       <tags>
         <tag>Ruby</tag>
         <tag>Python</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>highest and lowest</tag>
       </tags>
   </entry>
@@ -579,8 +579,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       <tags>
         <tag>Ruby</tag>
         <tag>Python</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>square every digit</tag>
       </tags>
   </entry>
@@ -605,8 +605,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       <tags>
         <tag>Ruby</tag>
         <tag>Python</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>Sum of a sequence</tag>
       </tags>
   </entry>
@@ -646,8 +646,8 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       <tags>
         <tag>Ruby</tag>
         <tag>Python</tag>
-        <tag>codewars</tag>
         <tag>JavaScript</tag>
+        <tag>codewars</tag>
         <tag>sum of digits</tag>
         <tag>digital root</tag>
         <tag>遞迴</tag>
@@ -656,7 +656,7 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
   </entry>
   <entry>
     <title>Django: 1 - 設計Table</title>
-    <url>/2024/04/22/django-01/</url>
+    <url>/2024/09/15/django-01/</url>
     <content><![CDATA[<img src="/images/django-01/banner.png">
 
 <blockquote>
@@ -947,6 +947,80 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
+    <title>Django : 3 — ORM</title>
+    <url>/2024/04/24/django-orm/</url>
+    <content><![CDATA[<h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是 Rails 的<code>$rails c</code>指令)：</p>
+<p><em><code>$ python manage.py shell</code></em></p>
+<img src="/images/django-orm/1.png">
+
+<h2 id="載入-Models"><a href="#載入-Models" class="headerlink" title="載入 Models"></a>載入 Models</h2><p>首先會需要將建立的 models import</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> blog.models <span class="hljs-keyword">import</span> Post<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br></code></pre></td></tr></table></figure>
+
+<h2 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h2><p>可以先看一個簡單的範例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user = User.objects.get(username=<span class="hljs-string">&#x27;admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user<br></code></pre></td></tr></table></figure>
+
+<p>使用 get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果  <code>get()</code> 發現多個對象，會引發一個  <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a>  異常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Entry.objects.get(name=<span class="hljs-string">&quot;A Duplicated Name&quot;</span>)  <span class="hljs-comment"># raises Entry.MultipleObjectsReturned</span><br></code></pre></td></tr></table></figure>
+
+<p>這個比較像是 Ruby on Rails 的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code>  例外訊息。</p>
+<p>另外一個也蠻像的，就是 Rails 的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習 Rails？）。</p>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的  <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的 QuerySet</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這就比較像 Rails 的<code>where()</code>，找到會返回  <code>ActiveRecord::Relation</code>  包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p>
+<h3 id="filter-找不到的情況"><a href="#filter-找不到的情況" class="headerlink" title="filter()找不到的情況"></a>filter()找不到的情況</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;aaa&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet []&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude()"></a>exclude()</h3><p>排除查找的參數</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.exclude(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><p>秀出所有東西：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以使用 for 迴圈將文章標題印出來：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br>...<br>second-post<br>hi<br></code></pre></td></tr></table></figure>
+
+<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post(title=<span class="hljs-string">&#x27;created from shell&#x27;</span>, slug=<span class="hljs-string">&#x27;create-from-shell&#x27;</span>, body=<span class="hljs-string">&#x27;this is body&#x27;</span>, author=user, status= <span class="hljs-string">&#x27;draft&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這裡需要<code>.save()</code> 才會將資料儲存到資料庫裡</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post.title<br><span class="hljs-string">&#x27;created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post.title = <span class="hljs-string">&#x27;new created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: new created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
+
+<p>更新倒是蠻容易的，只要用個<code>=</code> 即可</p>
+<h2 id="first"><a href="#first" class="headerlink" title="first()"></a>first()</h2><p>第一個對象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="last"><a href="#last" class="headerlink" title="last()"></a>last()</h2><p>最後一個對象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().last()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="order-by"><a href="#order-by" class="headerlink" title="order_by()"></a>order_by()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;, &lt;Post: second-post&gt;]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;-title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;, &lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是 QuerySet</p>
+<p>也可以使用索引<code>[0]</code>，來返回指定的值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這時返回的就是單一值</p>
+<h2 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = post.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;second-post&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.delete()<br>(<span class="hljs-number">1</span>, &#123;<span class="hljs-string">&#x27;blog.Post&#x27;</span>: <span class="hljs-number">1</span>&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>Post.objects.<span class="hljs-built_in">all</span>()<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://docs.djangoproject.com/en/5.0/topics/db/queries/">Django doc - Making quries</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#get">Django doc - QuerySet</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web 開發入門與實踐</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Django</category>
+      </categories>
+      <tags>
+        <tag>Django</tag>
+        <tag>Python</tag>
+        <tag>ORM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django : 5 — Templates</title>
     <url>/2024/04/26/django-templates/</url>
     <content><![CDATA[<p>之前做完 urls，今天就可以來處理前台顯示畫面 Templates 啦 ʕ •̀ o •́ ʔ</p>
@@ -1047,77 +1121,43 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
       </tags>
   </entry>
   <entry>
-    <title>Django : 3 — ORM</title>
-    <url>/2024/04/24/django-orm/</url>
-    <content><![CDATA[<h2 id="Django-shell"><a href="#Django-shell" class="headerlink" title="Django shell"></a>Django shell</h2><p>在終端機執行以下指令會進入互動模式(像是 Rails 的<code>$rails c</code>指令)：</p>
-<p><em><code>$ python manage.py shell</code></em></p>
-<img src="/images/django-orm/1.png">
+    <title>職涯: 五倍學院轉職之旅</title>
+    <url>/2024/03/14/from-relationshop-manager-to-software-engineer/</url>
+    <content><![CDATA[<img src="/images/from-relationshop-manager-to-software-engineer/01.JPG">
 
-<h2 id="載入-Models"><a href="#載入-Models" class="headerlink" title="載入 Models"></a>載入 Models</h2><p>首先會需要將建立的 models import</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> blog.models <span class="hljs-keyword">import</span> Post<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br></code></pre></td></tr></table></figure>
-
-<h2 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h2><p>可以先看一個簡單的範例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user = User.objects.get(username=<span class="hljs-string">&#x27;admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user<br></code></pre></td></tr></table></figure>
-
-<p>使用 get()有些注意事項，像是僅能返回「唯一」的條件，如果有多個符合則會報錯，如果  <code>get()</code> 發現多個對象，會引發一個  <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/class/#django.db.models.Model.MultipleObjectsReturned">Model.MultipleObjectsReturned</a>  異常：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Entry.objects.get(name=<span class="hljs-string">&quot;A Duplicated Name&quot;</span>)  <span class="hljs-comment"># raises Entry.MultipleObjectsReturned</span><br></code></pre></td></tr></table></figure>
-
-<p>這個比較像是 Ruby on Rails 的<code>find()</code>，不過<code>find()</code>的參數為要查找的對象的 ID(這裡則可以選擇)，沒找到返還<code>ActiveRecord::RecordNotFound</code>  例外訊息。</p>
-<p>另外一個也蠻像的，就是 Rails 的<code>find_by()</code> 則會返回符合條件的第一筆資料，沒找到返回<code>nil</code>（順便複習 Rails？）。</p>
-<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>返回一个新的  <a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#django.db.models.query.QuerySet">QuerySet</a>，包含查詢的參數對象，如果沒找到會返回一個空的 QuerySet</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這就比較像 Rails 的<code>where()</code>，找到會返回  <code>ActiveRecord::Relation</code>  包含一個或多個與參數符合的對象，如果沒找到：會返回一個空的  <code>ActiveRecord::Relation</code>。</p>
-<h3 id="filter-找不到的情況"><a href="#filter-找不到的情況" class="headerlink" title="filter()找不到的情況"></a>filter()找不到的情況</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;aaa&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet []&gt;<br></code></pre></td></tr></table></figure>
-
-<h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude()"></a>exclude()</h3><p>排除查找的參數</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.exclude(title=<span class="hljs-string">&#x27;hi&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><p>秀出所有東西：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>可以使用 for 迴圈將文章標題印出來：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> post <span class="hljs-keyword">in</span> posts:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(post.title)<br>...<br>second-post<br>hi<br></code></pre></td></tr></table></figure>
-
-<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post(title=<span class="hljs-string">&#x27;created from shell&#x27;</span>, slug=<span class="hljs-string">&#x27;create-from-shell&#x27;</span>, body=<span class="hljs-string">&#x27;this is body&#x27;</span>, author=user, status= <span class="hljs-string">&#x27;draft&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這裡需要<code>.save()</code> 才會將資料儲存到資料庫裡</p>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post.title<br><span class="hljs-string">&#x27;created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post.title = <span class="hljs-string">&#x27;new created from shell&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: new created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
-
-<p>更新倒是蠻容易的，只要用個<code>=</code> 即可</p>
-<h2 id="first"><a href="#first" class="headerlink" title="first()"></a>first()</h2><p>第一個對象</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;<br></code></pre></td></tr></table></figure>
-
-<h2 id="last"><a href="#last" class="headerlink" title="last()"></a>last()</h2><p>最後一個對象</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">all</span>().last()<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts = Post.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span>posts<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<h2 id="order-by"><a href="#order-by" class="headerlink" title="order_by()"></a>order_by()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;, &lt;Post: second-post&gt;]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.order_by(<span class="hljs-string">&#x27;-title&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;QuerySet [&lt;Post: second-post&gt;, &lt;Post: hi&gt;, &lt;Post: created <span class="hljs-keyword">from</span> shell&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>可以用<code>-</code>去調整正序或是倒序，這時返回的會是 QuerySet</p>
-<p>也可以使用索引<code>[0]</code>，來返回指定的值：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = Post.objects.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;hi&#x27;</span>)[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>post<br>&lt;Post: hi&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這時返回的就是單一值</p>
-<h2 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>post = post.<span class="hljs-built_in">filter</span>(title=<span class="hljs-string">&#x27;second-post&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>post.delete()<br>(<span class="hljs-number">1</span>, &#123;<span class="hljs-string">&#x27;blog.Post&#x27;</span>: <span class="hljs-number">1</span>&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>Post.objects.<span class="hljs-built_in">all</span>()<br>&lt;QuerySet [&lt;Post: created <span class="hljs-keyword">from</span> shell&gt;, &lt;Post: hi&gt;]&gt;<br></code></pre></td></tr></table></figure>
-
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://docs.djangoproject.com/en/5.0/topics/db/queries/">Django doc - Making quries</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://docs.djangoproject.com/zh-hans/5.0/ref/models/querysets/#get">Django doc - QuerySet</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web 開發入門與實踐</a></p>
-</blockquote>
+<p>沒想到也輪到我分享轉職成功心得了！</p>
+<p>在做出轉職決定之前，我參考了許多人的轉職經驗，學長姐們分享的成功轉職故事，不僅鞏固了我的信心，也讓我受益匪淺。</p>
+<p>現在，我想分享我的轉職歷程，希望能幫助更多的人。</p>
+<p>轉職前的工作是外商銀行的客戶關係經理，感謝這份經歷讓我對金融環境有更多的認識、也增進了應對進退與溝通能力。也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，也發現自己對銷售金融商品始終無法產生熱情。</p>
+<p>因此在經過深思熟慮之後，我選擇了轉職軟體工程師。</p>
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>為了讓自己確定轉職的決心，我先給自己一個月的時間自習線上課程，每天規定自己進度和要完成的事項，最後也順利完成進度。</p>
+<p>不過僅靠線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題，並且希望有業界經驗的老師引路，提供正確的學習方法。</p>
+<p>諮詢過多個機構後，因為師資透明、教學內容貼近業界等因素，我最後選擇了ASTRO Camp、五倍學院全端工程師培訓課。</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><p>在報名完課程之後，五倍會寄送線上先修教材，為了在正式上課時能夠順利銜接，我在拿到先修課程後便規劃自己每日的進度、有時間的話也會跟著實作。</p>
+<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails, Git等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，每天課堂結束也有助教時間提供學生詢問，讓同學們不要帶著問題回家，因此這三個月的過程很精實。</p>
+<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯。</p>
+<p>另外，五倍學院也提供了許多軟性課程，如產品開發、簡報表達、職涯輔導和企業參訪等，這些課程讓我們了解業界實際的開發過程，為轉職之路奠定了堅實的基礎。</p>
+<p>在課程結束後，同學們會被分組進行實體專案的製作。從零開始與組員共同討論專題主題、內容和時程，這不僅讓我們通過實際操作來學習，還能夠培養團隊合作和解決問題的能力。<p></p>
+<h2 id="職涯輔導"><a href="#職涯輔導" class="headerlink" title="職涯輔導"></a>職涯輔導</h2><p>五倍提供的軟性課程中，讓我受益最深的就是職涯輔導課。老師會根據履歷提供有效的建議，並透過模擬面試，幫助面試者解決可能存在的盲點。</p>
+<p>在面試時，我也經常運用老師所教的「不管提到什麼，都要有實際的案例，如果能夠提供實際數字更好。」這個方法，使得我的履歷更具可信度。</p>
+<p>畢竟，工程師都講求實事求是，轉職成功並獲得offer也是大多數人參加課程的最終目標。我認為五倍在此提供的課程和建議都對我非常有幫助！</p>
+<h2 id="心態"><a href="#心態" class="headerlink" title="心態"></a>心態</h2><p>這次的轉職經驗讓我發現，正確的心態很重要，因為轉職的路上不免會遇到許多的挫折，除了可以多加利用五倍提供的資源（老師、助教、課務組等），我覺得最重要的還是要「相信自己並付諸行動」。</p>
+<p>我是一個很容易多想的人，因此在轉職時我時常鼓勵自己，只要一感到焦慮就去開電腦、寫code、寫部落格、刷leetcode、刷codewars、看教學影片，久而久之心中的焦慮會逐漸轉化為平靜和自信。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，因為有五倍的老師、助教、課務組的正確引導，讓我的轉職之路有了好的開始。</p>
+<p>在課程結束一個月左右，我拿到了多個軟體工程師offer，這是在轉職前我絕對想不到的。</p>
+<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>如果你還在猶豫不決，可以報名<a href="https://5xcampus.com/camp/">ASTRO Camp的說明會</a>，課務組不會推銷、都很親切，會詳細解答你的所有問題～</p>
 ]]></content>
       <categories>
-        <category>Django</category>
+        <category>職涯</category>
       </categories>
       <tags>
-        <tag>Django</tag>
-        <tag>Python</tag>
-        <tag>ORM</tag>
+        <tag>轉職</tag>
+        <tag>職涯</tag>
+        <tag>五倍學院</tag>
+        <tag>ASTRO</tag>
+        <tag>ASTRO Camp</tag>
+        <tag>五倍</tag>
       </tags>
   </entry>
   <entry>
@@ -1159,46 +1199,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>Django</tag>
         <tag>Python</tag>
         <tag>URL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>職涯: 五倍學院轉職之旅</title>
-    <url>/2024/03/14/from-relationshop-manager-to-software-engineer/</url>
-    <content><![CDATA[<img src="/images/from-relationshop-manager-to-software-engineer/01.JPG">
-
-<p>沒想到也輪到我分享轉職成功心得了！</p>
-<p>在做出轉職決定之前，我參考了許多人的轉職經驗，學長姐們分享的成功轉職故事，不僅鞏固了我的信心，也讓我受益匪淺。</p>
-<p>現在，我想分享我的轉職歷程，希望能幫助更多的人。</p>
-<p>轉職前的工作是外商銀行的客戶關係經理，感謝這份經歷讓我對金融環境有更多的認識、也增進了應對進退與溝通能力。也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，也發現自己對銷售金融商品始終無法產生熱情。</p>
-<p>因此在經過深思熟慮之後，我選擇了轉職軟體工程師。</p>
-<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>為了讓自己確定轉職的決心，我先給自己一個月的時間自習線上課程，每天規定自己進度和要完成的事項，最後也順利完成進度。</p>
-<p>不過僅靠線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題，並且希望有業界經驗的老師引路，提供正確的學習方法。</p>
-<p>諮詢過多個機構後，因為師資透明、教學內容貼近業界等因素，我最後選擇了ASTRO Camp、五倍學院全端工程師培訓課。</p>
-<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><p>在報名完課程之後，五倍會寄送線上先修教材，為了在正式上課時能夠順利銜接，我在拿到先修課程後便規劃自己每日的進度、有時間的話也會跟著實作。</p>
-<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails, Git等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，每天課堂結束也有助教時間提供學生詢問，讓同學們不要帶著問題回家，因此這三個月的過程很精實。</p>
-<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯。</p>
-<p>另外，五倍學院也提供了許多軟性課程，如產品開發、簡報表達、職涯輔導和企業參訪等，這些課程讓我們了解業界實際的開發過程，為轉職之路奠定了堅實的基礎。</p>
-<p>在課程結束後，同學們會被分組進行實體專案的製作。從零開始與組員共同討論專題主題、內容和時程，這不僅讓我們通過實際操作來學習，還能夠培養團隊合作和解決問題的能力。<p></p>
-<h2 id="職涯輔導"><a href="#職涯輔導" class="headerlink" title="職涯輔導"></a>職涯輔導</h2><p>五倍提供的軟性課程中，讓我受益最深的就是職涯輔導課。老師會根據履歷提供有效的建議，並透過模擬面試，幫助面試者解決可能存在的盲點。</p>
-<p>在面試時，我也經常運用老師所教的「不管提到什麼，都要有實際的案例，如果能夠提供實際數字更好。」這個方法，使得我的履歷更具可信度。</p>
-<p>畢竟，工程師都講求實事求是，轉職成功並獲得offer也是大多數人參加課程的最終目標。我認為五倍在此提供的課程和建議都對我非常有幫助！</p>
-<h2 id="心態"><a href="#心態" class="headerlink" title="心態"></a>心態</h2><p>這次的轉職經驗讓我發現，正確的心態很重要，因為轉職的路上不免會遇到許多的挫折，除了可以多加利用五倍提供的資源（老師、助教、課務組等），我覺得最重要的還是要「相信自己並付諸行動」。</p>
-<p>我是一個很容易多想的人，因此在轉職時我時常鼓勵自己，只要一感到焦慮就去開電腦、寫code、寫部落格、刷leetcode、刷codewars、看教學影片，久而久之心中的焦慮會逐漸轉化為平靜和自信。</p>
-<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，因為有五倍的老師、助教、課務組的正確引導，讓我的轉職之路有了好的開始。</p>
-<p>在課程結束一個月左右，我拿到了多個軟體工程師offer，這是在轉職前我絕對想不到的。</p>
-<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
-<p>如果你還在猶豫不決，可以報名<a href="https://5xcampus.com/camp/">ASTRO Camp的說明會</a>，課務組不會推銷、都很親切，會詳細解答你的所有問題～</p>
-]]></content>
-      <categories>
-        <category>職涯</category>
-      </categories>
-      <tags>
-        <tag>轉職</tag>
-        <tag>職涯</tag>
-        <tag>五倍學院</tag>
-        <tag>ASTRO</tag>
-        <tag>ASTRO Camp</tag>
-        <tag>五倍</tag>
       </tags>
   </entry>
   <entry>
@@ -1877,33 +1877,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day10 valid palindrome</title>
-    <url>/2024/02/08/leetcode-valid-palindrome/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十天，終於完成1&#x2F;3了，讓我們開始吧！</p>
-<img src="/images/leetcode-valid-palindrome/banner.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/valid-palindrome">leetcode</a></p>
-<p>這個問題要求判斷句子是否為回文。在進行比較時，會需要先將所有字母轉換為小寫，並去除所有非字母和數字。然後，比較處理過的字串是否和它的反轉相等。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>)<br>  clean_s = s.downcase.gsub(<span class="hljs-regexp">/[^a-z0-9]/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>  clean_s == clean_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>使用<code>downcase</code>將字符轉換為小寫，再使用<code>gsub</code>去除非字母和數字的字，最後比較反轉是否相同就完成了～</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 將字符轉換為小寫，去除非字母和數字的字</span><br>    clean_s = <span class="hljs-string">&#x27;&#x27;</span>.join(char.lower() <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s <span class="hljs-keyword">if</span> char.isalnum())<br>    <span class="hljs-comment"># 比較處理過的字串和它的反轉是否相等</span><br>    <span class="hljs-keyword">return</span> clean_s == clean_s[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
-
-<p><code>isalnum()</code>方法用於檢查字符串中的所有字是否都是字母和數字。如果是，該方法返回 True，表示所有字符均為字母（a-z、A-Z）和數字（0-9）。反之，如果字符串中包含非字母和非數字的字符，例如空格、驚嘆號、井號、百分號、和問號等，該方法將返回 False。</p>
-<p>使用這個方法就不用使用<code>gsub</code>取代了，因為只有是字母和數字才會放進<code>clean_s</code>裡</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">s</span>) &#123;<br>  <span class="hljs-comment">// 將字串轉換為小寫，去除非字母和數字</span><br>  <span class="hljs-keyword">const</span> cleanS = s.<span class="hljs-title function_">toLowerCase</span>().<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[^a-z0-9]/g</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>  <span class="hljs-comment">// 比較處理過的字串和它的反轉是否相等</span><br>  <span class="hljs-keyword">return</span> cleanS === cleanS.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>valid palindrome</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day06 valid parentheses</title>
     <url>/2024/02/04/leetcode-valid-parentheses/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第六天，讓我們繼續吧！</p>
@@ -1929,6 +1902,33 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>longest common prefix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day10 valid palindrome</title>
+    <url>/2024/02/08/leetcode-valid-palindrome/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十天，終於完成1&#x2F;3了，讓我們開始吧！</p>
+<img src="/images/leetcode-valid-palindrome/banner.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/valid-palindrome">leetcode</a></p>
+<p>這個問題要求判斷句子是否為回文。在進行比較時，會需要先將所有字母轉換為小寫，並去除所有非字母和數字。然後，比較處理過的字串是否和它的反轉相等。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>)<br>  clean_s = s.downcase.gsub(<span class="hljs-regexp">/[^a-z0-9]/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>  clean_s == clean_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>使用<code>downcase</code>將字符轉換為小寫，再使用<code>gsub</code>去除非字母和數字的字，最後比較反轉是否相同就完成了～</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 將字符轉換為小寫，去除非字母和數字的字</span><br>    clean_s = <span class="hljs-string">&#x27;&#x27;</span>.join(char.lower() <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s <span class="hljs-keyword">if</span> char.isalnum())<br>    <span class="hljs-comment"># 比較處理過的字串和它的反轉是否相等</span><br>    <span class="hljs-keyword">return</span> clean_s == clean_s[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+
+<p><code>isalnum()</code>方法用於檢查字符串中的所有字是否都是字母和數字。如果是，該方法返回 True，表示所有字符均為字母（a-z、A-Z）和數字（0-9）。反之，如果字符串中包含非字母和非數字的字符，例如空格、驚嘆號、井號、百分號、和問號等，該方法將返回 False。</p>
+<p>使用這個方法就不用使用<code>gsub</code>取代了，因為只有是字母和數字才會放進<code>clean_s</code>裡</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">s</span>) &#123;<br>  <span class="hljs-comment">// 將字串轉換為小寫，去除非字母和數字</span><br>  <span class="hljs-keyword">const</span> cleanS = s.<span class="hljs-title function_">toLowerCase</span>().<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[^a-z0-9]/g</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>  <span class="hljs-comment">// 比較處理過的字串和它的反轉是否相等</span><br>  <span class="hljs-keyword">return</span> cleanS === cleanS.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>valid palindrome</tag>
       </tags>
   </entry>
   <entry>
@@ -2637,6 +2637,39 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day13 search insert position</title>
+    <url>/2024/02/11/search-insert-position/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
+<img src="/images/search-insert-position/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
+<p>一開始看到題目原本想說，把數字插入陣列中排序後再返還索引值就好，但實際執行卻發現效率很差ʘ‿ʘ。</p>
+<p>後來想到可以使用二分法，先取中間的數字與target比較，分成兩邊，這樣最多就只要比較陣列一半的數量就好，會比較有效率，就像是猜數字，如果一開始就對半猜，猜到數字的機率也會快很多。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">search_insert</span>(<span class="hljs-params">nums, target</span>)<br>  left, right = <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span><br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">if</span> nums[mid] == target<br>      <span class="hljs-keyword">return</span> mid<br>    <span class="hljs-keyword">elsif</span> nums[mid] &lt; target<br>      left = mid + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> left<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>這裡的<code>left</code>是指陣列的起始索引值，為<code>0</code>，<code>right</code>是陣列的結束值，為<code>nums.length - 1</code>，<code>mid</code>就是中間的索引值<code>(left+right)/2</code></p>
+<p>如果照排序看可以這樣理解：<br><code>left</code>,<code>mid</code>,<code>right</code></p>
+<p>一開始先猜中間，如果運氣好就是中間值，可直接返還<code>mid</code>。</p>
+<p>如果<code>target</code>比較大，即縮小<code>left</code>的範圍為<code>mid + 1</code>，比較數字的範圍也到了右半邊，接著會繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
+<p>如果<code>target</code>比較小，則縮小<code>right</code>的範圍為<code>mid - 1</code>，比較數字在左半邊，繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
+<p>直到<code>nums[mid] = target</code>，即會返還<code>mid</code>，也就是索引值。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">searchInsert</span>(<span class="hljs-params">self, nums, target</span>):<br>        left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> nums[mid] == target:<br>                <span class="hljs-keyword">return</span> mid<br>            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:<br>                left = mid + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">return</span> left<br></code></pre></td></tr></table></figure>
+<p><code>python</code>也是一樣邏輯，只是部分寫法不同</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> searchInsert = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">let</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (nums[mid] == target) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> left;<br>  &#125;;<br></code></pre></td></tr></table></figure>
+<p><code>js</code>也是相同，不過需要添加<code>Math.floor</code>讓<code>mid</code>值為無條件捨去</p>
+<p>這就是今天的解題了～其實不管什麼題目都可以用最笨的方法解，但是如果在讀題目時多想一點，就能讓程式碼效率更高！接下來幾天繼續加油🙌</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>search insert position</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
     <url>/2024/01/14/simple-calendar/</url>
     <content><![CDATA[<style>
@@ -3058,39 +3091,6 @@ border-style:dashed;
       <tags>
         <tag>轉職</tag>
         <tag>職涯</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day13 search insert position</title>
-    <url>/2024/02/11/search-insert-position/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
-<img src="/images/search-insert-position/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/search-insert-position/description/">leetcode</a></p>
-<p>一開始看到題目原本想說，把數字插入陣列中排序後再返還索引值就好，但實際執行卻發現效率很差ʘ‿ʘ。</p>
-<p>後來想到可以使用二分法，先取中間的數字與target比較，分成兩邊，這樣最多就只要比較陣列一半的數量就好，會比較有效率，就像是猜數字，如果一開始就對半猜，猜到數字的機率也會快很多。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">search_insert</span>(<span class="hljs-params">nums, target</span>)<br>  left, right = <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span><br><br>  <span class="hljs-keyword">while</span> left &lt;= right<br>    mid = (left + right) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">if</span> nums[mid] == target<br>      <span class="hljs-keyword">return</span> mid<br>    <span class="hljs-keyword">elsif</span> nums[mid] &lt; target<br>      left = mid + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span><br>      right = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-keyword">return</span> left<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<p>這裡的<code>left</code>是指陣列的起始索引值，為<code>0</code>，<code>right</code>是陣列的結束值，為<code>nums.length - 1</code>，<code>mid</code>就是中間的索引值<code>(left+right)/2</code></p>
-<p>如果照排序看可以這樣理解：<br><code>left</code>,<code>mid</code>,<code>right</code></p>
-<p>一開始先猜中間，如果運氣好就是中間值，可直接返還<code>mid</code>。</p>
-<p>如果<code>target</code>比較大，即縮小<code>left</code>的範圍為<code>mid + 1</code>，比較數字的範圍也到了右半邊，接著會繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
-<p>如果<code>target</code>比較小，則縮小<code>right</code>的範圍為<code>mid - 1</code>，比較數字在左半邊，繼續新的迴圈，再繼續對半切取新的<code>mid</code>值比較。</p>
-<p>直到<code>nums[mid] = target</code>，即會返還<code>mid</code>，也就是索引值。</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">searchInsert</span>(<span class="hljs-params">self, nums, target</span>):<br>        left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left + right) // <span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> nums[mid] == target:<br>                <span class="hljs-keyword">return</span> mid<br>            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:<br>                left = mid + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid - <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">return</span> left<br></code></pre></td></tr></table></figure>
-<p><code>python</code>也是一樣邏輯，只是部分寫法不同</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> searchInsert = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>  <br>    <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>      <span class="hljs-keyword">let</span> mid = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((left + right) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (nums[mid] == target) &#123;<br>        <span class="hljs-keyword">return</span> mid;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>        left = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        right = mid - <span class="hljs-number">1</span>;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> left;<br>  &#125;;<br></code></pre></td></tr></table></figure>
-<p><code>js</code>也是相同，不過需要添加<code>Math.floor</code>讓<code>mid</code>值為無條件捨去</p>
-<p>這就是今天的解題了～其實不管什麼題目都可以用最笨的方法解，但是如果在讀題目時多想一點，就能讓程式碼效率更高！接下來幾天繼續加油🙌</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>search insert position</tag>
       </tags>
   </entry>
 </search>
