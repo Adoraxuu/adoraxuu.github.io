@@ -129,6 +129,8 @@ border-style:dashed;
 <p>使用 CBV，我們可以將上面的範例改寫成這樣的 TempalteView：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># views.py</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">HomeView</span>(<span class="hljs-title class_ inherited__">TemplateView</span>):<br>    template_name = <span class="hljs-string">&quot;blog/index.html&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_context_data</span>(<span class="hljs-params">self, arg, **kwargs</span>):<br>        context = <span class="hljs-built_in">super</span>().get_context_data(**kwargs)<br>        context[<span class="hljs-string">&#x27;today&#x27;</span>] = date.today()<br>        context[<span class="hljs-string">&#x27;arg&#x27;</span>] = arg<br>        <span class="hljs-keyword">return</span> context<br></code></pre></td></tr></table></figure>
 
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># urls.py</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&lt;str:arg&gt;/&#x27;</span>, views.HomeView.as_view(), name=<span class="hljs-string">&#x27;index&#x27;</span>),<br></code></pre></td></tr></table></figure>
+
 <p>雖然乍看之下，CBV 和 FBV 寫起來好像差不多，但實際上，CBV 的<strong>重用性</strong>更強，代碼更加結構化。當開始寫更多的邏輯時，CBV 的優勢就會變得明顯，尤其是它的「固定寫法」，讓我們不必去糾結於到底該用哪種 <code>HttpResponse</code>。這對習慣了 Ruby on Rails 的「convention over configuration」的人來說，會更有親切感。</p>
 <p>Django 提供了許多內建的 CBV，例如 <code>TemplateView</code>、<code>ListView</code>、<code>DetailView</code> 等，詳細內容可以見文章一開始的表格，這些內建的視圖可以幫助我們快速完成常見功能，省去不少麻煩，今天先分享到這裡，後續會帶大家深入介紹更多的 CBV 內建視圖，敬請期待～</p>
 <p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
@@ -1072,6 +1074,38 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day05 longest common prefix</title>
+    <url>/2024/02/03/leetcode-longest-common-prefix/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
+<img src="/images/leetcode-longest-common-prefix/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/longest-common-prefix/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longest_common_prefix</span>(<span class="hljs-params">strs</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">if</span> strs.empty?<br><br>  common_prefix = <span class="hljs-string">&quot;&quot;</span><br>  first_str = strs.first<br><br>  first_str.chars.each_with_index <span class="hljs-keyword">do</span> |<span class="hljs-params">char, i</span>|<br>    <span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> strs.all? &#123; |<span class="hljs-params">str</span>| str[i] == char &#125;<br>    common_prefix += char<br>  <span class="hljs-keyword">end</span><br><br>  common_prefix<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先從陣列中取出第一個數為<code>first_str</code>，作為比較的基準，接著使用<code>.chars.each_with_index</code>對第一個詞每個字母做迭代，並返回索引值<code>i</code>。</p>
+<p><code>.all</code>是來檢查<code>array</code>中的所有元素是否都符合给定的條件，這裡的條件就是<code>str[i] == char</code>，如果有不同即停止。</p>
+<p><code>common_prefix</code>即記錄<code>array</code>中相同的字</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> strs:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br><br>        common_prefix = <span class="hljs-string">&quot;&quot;</span><br>        first_str = strs[<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i, char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(first_str):<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(i &gt;= <span class="hljs-built_in">len</span>(s) <span class="hljs-keyword">or</span> s[i] != char <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs):<br>                <span class="hljs-keyword">break</span><br>            common_prefix += char<br><br>        <span class="hljs-keyword">return</span> common_prefix<br></code></pre></td></tr></table></figure>
+<p><code>enumerate</code>會回傳字串的<code>index</code>，以下是範例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br>[(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Spring&#x27;</span>), (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>)]<br></code></pre></td></tr></table></figure>
+<p><code>s[i]</code>則是代表<code>str</code>內的<code>i</code>位置的字母，基本上和ruby邏輯一樣，只是寫法不同而已！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">strs</span>) &#123;<br>    <span class="hljs-keyword">if</span> (strs.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">let</span> commonPrefix = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">const</span> firstStr = strs[<span class="hljs-number">0</span>];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; firstStr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">const</span> char = firstStr[i];<br>        <span class="hljs-keyword">if</span> (!strs.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> str[i] === char)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        commonPrefix += char;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> commonPrefix;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>JS</code>的寫法和<code>Ruby</code>差不多，可以使用<code>.every</code>來確保是否為相同字母，其他解法就和<code>Ruby</code>和<code>Python</code>類似，差別在使用<code>for (let i = 0; i &lt; firstStr.length; i++)</code>迴圈，並使用<code>str[i]</code>來比對文字是否相符，最後也完成解答！</p>
+<p>這幾天寫下來Ruby看起來還是最簡潔優雅٩(●˙▿˙●)۶，看起來好舒服</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>longest common prefix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day08 majority element</title>
     <url>/2024/02/06/leetcode-majority-element/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
@@ -1164,38 +1198,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>merge sorted array</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day05 longest common prefix</title>
-    <url>/2024/02/03/leetcode-longest-common-prefix/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
-<img src="/images/leetcode-longest-common-prefix/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/longest-common-prefix/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longest_common_prefix</span>(<span class="hljs-params">strs</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">if</span> strs.empty?<br><br>  common_prefix = <span class="hljs-string">&quot;&quot;</span><br>  first_str = strs.first<br><br>  first_str.chars.each_with_index <span class="hljs-keyword">do</span> |<span class="hljs-params">char, i</span>|<br>    <span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> strs.all? &#123; |<span class="hljs-params">str</span>| str[i] == char &#125;<br>    common_prefix += char<br>  <span class="hljs-keyword">end</span><br><br>  common_prefix<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>先從陣列中取出第一個數為<code>first_str</code>，作為比較的基準，接著使用<code>.chars.each_with_index</code>對第一個詞每個字母做迭代，並返回索引值<code>i</code>。</p>
-<p><code>.all</code>是來檢查<code>array</code>中的所有元素是否都符合给定的條件，這裡的條件就是<code>str[i] == char</code>，如果有不同即停止。</p>
-<p><code>common_prefix</code>即記錄<code>array</code>中相同的字</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> strs:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br><br>        common_prefix = <span class="hljs-string">&quot;&quot;</span><br>        first_str = strs[<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i, char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(first_str):<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(i &gt;= <span class="hljs-built_in">len</span>(s) <span class="hljs-keyword">or</span> s[i] != char <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs):<br>                <span class="hljs-keyword">break</span><br>            common_prefix += char<br><br>        <span class="hljs-keyword">return</span> common_prefix<br></code></pre></td></tr></table></figure>
-<p><code>enumerate</code>會回傳字串的<code>index</code>，以下是範例</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br>[(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Spring&#x27;</span>), (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>)]<br></code></pre></td></tr></table></figure>
-<p><code>s[i]</code>則是代表<code>str</code>內的<code>i</code>位置的字母，基本上和ruby邏輯一樣，只是寫法不同而已！</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">strs</span>) &#123;<br>    <span class="hljs-keyword">if</span> (strs.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">let</span> commonPrefix = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">const</span> firstStr = strs[<span class="hljs-number">0</span>];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; firstStr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">const</span> char = firstStr[i];<br>        <span class="hljs-keyword">if</span> (!strs.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> str[i] === char)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        commonPrefix += char;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> commonPrefix;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><code>JS</code>的寫法和<code>Ruby</code>差不多，可以使用<code>.every</code>來確保是否為相同字母，其他解法就和<code>Ruby</code>和<code>Python</code>類似，差別在使用<code>for (let i = 0; i &lt; firstStr.length; i++)</code>迴圈，並使用<code>str[i]</code>來比對文字是否相符，最後也完成解答！</p>
-<p>這幾天寫下來Ruby看起來還是最簡潔優雅٩(●˙▿˙●)۶，看起來好舒服</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>longest common prefix</tag>
       </tags>
   </entry>
   <entry>
@@ -1293,41 +1295,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
-    <title>Leetcode挑戰: Day04 roman to integer</title>
-    <url>/2024/02/02/leetcode-roman-to-integer/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
-<img src="/images/leetcode-roman-to-integer/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p>
-<p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p>
-<p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p>
-<p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure>
-<p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p>
-<p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p>
-<h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
-
-<p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p>
-<p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>roman to integer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode挑戰: Day07 remove duplicates from sorted array</title>
     <url>/2024/02/05/leetcode-remove-duplicates-from-sorted-array/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第七天，讓我們開始吧！</p>
@@ -1361,6 +1328,41 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>remove duplicates from sorted array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode挑戰: Day04 roman to integer</title>
+    <url>/2024/02/02/leetcode-roman-to-integer/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第四天，讓我們繼續吧！</p>
+<img src="/images/leetcode-roman-to-integer/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/roman-to-integer">leetcode</a></p>
+<p>羅馬數字的解釋:<a href="https://zh.wikipedia.org/zh-tw/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97">羅馬數字</a></p>
+<p>羅馬數字共有7個，即Ⅰ（1）、Ⅴ（5）、Ⅹ（10）、Ⅼ（50）、Ⅽ（100）、Ⅾ（500）和Ⅿ（1000）。另外因為羅馬數字有<code>左加右減</code>的特性，代表說大的數字在左邊就往右加，大的數字在右邊就往左減。</p>
+<p>像是<code>MCMXCIV</code>的羅馬數字為何？可以依序先把他們變成阿拉伯數字，再從個位數開始往左邊遵循左加右減的規則，就可以得到答案了：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">M</span>(<span class="hljs-number">1000</span>),C(<span class="hljs-number">100</span>),M(<span class="hljs-number">1000</span>),X(<span class="hljs-number">10</span>),C(<span class="hljs-number">100</span>),I(<span class="hljs-number">1</span>),V(<span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4</span>(-<span class="hljs-number">1</span> + <span class="hljs-number">5</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>, <span class="hljs-number">104</span>(<span class="hljs-number">100</span> + <span class="hljs-number">4</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">94</span>(-<span class="hljs-number">10</span> + <span class="hljs-number">104</span>)<br><span class="hljs-attribute">1000</span>,<span class="hljs-number">100</span>,<span class="hljs-number">1094</span> (<span class="hljs-number">1000</span> + <span class="hljs-number">94</span>)<br><span class="hljs-attribute">1000</span>, <span class="hljs-number">994</span>(-<span class="hljs-number">100</span> + <span class="hljs-number">1094</span>) <br><span class="hljs-attribute">1994</span> (<span class="hljs-number">1000</span>+<span class="hljs-number">994</span>)<br></code></pre></td></tr></table></figure>
+<p>其實規則蠻單純的，遵循左加右減即可，這樣就可以把它改寫成程式了：</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">roman_to_int</span>(<span class="hljs-params">s</span>)<br>  roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>=&gt;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>=&gt;<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>=&gt;<span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>=&gt;<span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>=&gt;<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>=&gt;<span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>=&gt;<span class="hljs-number">1000</span>&#125;<br>  result = <span class="hljs-number">0</span><br>  prev_value = <span class="hljs-number">0</span><br><br>  s.chars.reverse_each <span class="hljs-keyword">do</span> |<span class="hljs-params">char</span>|<br>    value = roman_num[char]<br>    result += (value &lt; prev_value) ? -value : value<br>    prev_value = value<br>  <span class="hljs-keyword">end</span><br><br>  result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先把羅馬數字的七個數做成<code>hash</code>，接著設定<code>result</code> <code>pre_value</code>為<code>0</code>，再使用<code>reverse_each</code>，把值從個位數丟進去，轉換為阿拉伯數字後，比較<code>prev_value</code>，因為<code>prev_value</code>恆在右邊，所以如果<code>value</code>比較小，<code>value</code>則為<code>-</code></p>
+<p>這邊要特別注意，因為每次比較的值是要比較原始的<code>value</code>，所以會需要<code>prev_value</code>來儲存上一次的值，而不是和<code>result</code>比較。</p>
+<h2 id="Pyton"><a href="#Pyton" class="headerlink" title="Pyton"></a>Pyton</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        roman_num = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;<br>        result = <span class="hljs-number">0</span><br>        prev_value = <span class="hljs-number">0</span><br><br>        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(s):<br>            value = roman_num[char]<br>            result += -value <span class="hljs-keyword">if</span> value &lt; prev_value <span class="hljs-keyword">else</span> value<br>            prev_value = value<br><br>        <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+
+<p>因為基本的邏輯架構和<code>Ruby</code>一樣，這邊只有改變寫法而已</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">romanToInt</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">const</span> romanNum = &#123;<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-number">500</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-number">1000</span>&#125;;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> prevValue = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = s.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>        <span class="hljs-keyword">const</span> char = s[i];<br>        <span class="hljs-keyword">const</span> value = romanNum[char];<br>        result += (value &lt; prevValue) ? -value : value;<br>        prevValue = value;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因為JS沒有<code>reverse</code>，所以我使用最原始的方法，利用<code>索引值</code>，<code>i</code>起始值設為<code>s.length - 1</code>，就可以反向丟入羅馬字，再利用<code>hash</code>轉換為數字即可，接下來的邏輯都和<code>Ruby</code>一樣，只不過變數慣例寫不一樣而已！</p>
+<p>今天的題目比較難的在前面轉換的邏輯，理清之後轉換成程式碼就簡單多了！</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>roman to integer</tag>
       </tags>
   </entry>
   <entry>
@@ -1664,365 +1666,6 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
-    <url>/2023/12/24/rails-admin-layout-devise/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-
-.image-container {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
-  border-radius: 10px; /* 圓角效果 */
-  overflow: hidden; /* 超出部分隱藏 */
-  margin: 5px; /* 留白效果 */
-}
-</style>
-
-
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
-<img src="/images/rails_admin_layout_devise/banner.png">
-</div>
-
-<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
-<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
-<blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
-</blockquote>
-<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
-<p>以下為實作步驟：</p>
-<ul>
-<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>新增pages_controller＆home.html.erb</li>
-</ul>
-<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>利用scaffold做CRUD的流程</li>
-</ul>
-<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/01.png">
-</div>
-
-<ul>
-<li>設定routes</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>安裝Devise &amp; 生成使用者</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
-
-<p>devise會自動幫你增加檔案，真的很方便</p>
-<ul>
-<li>生一個migration，增加role欄位到User資料表</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p><code>current_user&amp;.admin?</code></p>
-<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
-<p>可以用 &amp;. 簡化</p>
-<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
-<p>如果不是的話， layout就使用預設導入application</p>
-<ul>
-<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
-<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
-<p>接著就大功告成了！！</p>
-<p>這是剛剛步驟做出的首頁</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/03.png">
-</div>
-
-<p>登入頁面</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/04.png">
-</div>
-
-<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
-<p>搭配指令，來快速指定某使用者的role</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/05.png">
-</div>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
-
-<p>登入成功後，就有管理者的介面了！！</p>
-<div class="image-container">
-<img src="/images/rails_admin_layout_devise/06.png">
-</div>
-
-<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
-<p>讓他的介面看起來和一般使用者有區隔</p>
-<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
-<p>這整個步驟大約10分鐘就可以完成了！！</p>
-<p>有興趣也可以試看看～～</p>
-<hr>
-<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>devise</tag>
-        <tag>rails7</tag>
-        <tag>rails</tag>
-        <tag>layout</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React: 實體課程學習心得</title>
-    <url>/2024/06/28/react/</url>
-    <content><![CDATA[<img src="/images/react/React.webp">
-
-<p>作為一名剛起步的 Junior 全端工程師，我過去大多是用 JavaScript 撰寫前端程式。為了提升自己的技能，我決定報名五倍學院開設的<a href="https://5xcampus.com/courses/react.html">《React 全攻略 - 入門到進階》</a>課程，目標是深入學習時下熱門的前端框架：React，並朝著 Senior 工程師的方向邁進。</p>
-<p>在學習 React 的過程中，收穫了好多寶貴的經驗。奶綠茶老師是一位業界資深的工程師主管，他從底層邏輯開始講解 React 的基礎知識，並用程式碼作為範例，分享了許多業界的實戰經驗和在工作中實際會用到的 React 寫法。這些內容不僅讓我理解得更深入，也讓我在應用 React 時更加得心應手。</p>
-<p>而且老師上課風格幽默有趣，課程中會穿插工作上與 React 或是工程師相關的趣事，也讓課程內容變得更活潑及生活化，每次上課完都覺得除了學習 React 之外，也透過課程內容讓自己開眼界、學習資深工程師的思考方式，每次上課完都覺得收穫滿滿。</p>
-<h2 id="課程簡介"><a href="#課程簡介" class="headerlink" title="課程簡介"></a>課程簡介</h2><p>《React 全攻略 - 入門到進階》課程是為了幫助學員打好 React 的基礎，成為更加扎實的 React 前端工程師而設計的。課程內容涵蓋了從基礎到進階的各個方面，老師還會分享許多實際開發中的團隊協作經驗和技巧，這些都是書籍和一般線上課程中難以見到的寶貴內容。</p>
-<p>奶綠茶老師透過 50+ 份示範程式檔案，從最基礎的 React Components 如何撰寫 、Props 傳遞機制等，分享 React 核心語法；還有 Typescript 、styled-components 、Tailwind CSS、Redux 等更進階的實戰應用。</p>
-<p>這門課特別適合以下的人：</p>
-<ul>
-<li>前端工程師：希望透過學習 React 來精進 JavaScript 技術。</li>
-<li>有 Vue.js 或 Angular 開發經驗者：想快速上手 React。</li>
-<li>有 React 自學經驗的開發者：希望鞏固基礎觀念。</li>
-<li>想了解 React 開發團隊合作與管理的開發者：尋求更高效的團隊協作方法。</li>
-</ul>
-<h2 id="React-的基礎知識"><a href="#React-的基礎知識" class="headerlink" title="React 的基礎知識"></a>React 的基礎知識</h2><p>在課堂上，老師詳細講解了 JSX、組件（Components）、屬性（Props）、狀態（State）等基礎知識。這些是學習 React 的核心基礎，了解了核心的底層邏輯後，更能進一步學習和應用。</p>
-<h3 id="Components-Props"><a href="#Components-Props" class="headerlink" title="Components &amp; Props"></a>Components &amp; Props</h3><p>在 React 中，component 是讓程式重複利用的重要基礎。<br>奶綠茶老師教我們如何創建 component 並使用 props 傳遞數據，並教導了我們幾個重要的概念：</p>
-<ul>
-<li>compnent 要獲取變數，一定會從 props 拿</li>
-<li>React component 的第一個參數就是 props，其型別一定是物件</li>
-</ul>
-<p>實際的程式碼範例：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">PropTypes</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">FunctionalCard01</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> &#123; img, name, children, price &#125; = props;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__img&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#123;img&#125;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&#123;name&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__name&quot;</span>&gt;</span>&#123;name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__price&quot;</span>&gt;</span>&#123;price&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__quote&quot;</span>&gt;</span>&#123;children&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;;<br><br><span class="hljs-title class_">FunctionalCard01</span>.<span class="hljs-property">propTypes</span> = &#123;<br>  <span class="hljs-attr">price</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">number</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">img</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">name</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">children</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">node</span>,<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">FunctionalCard01</span>;<br></code></pre></td></tr></table></figure>
-
-<p>這是一段簡單的 Functional Component，它接收 props 並在 JSX 中渲染。這種方式讓 component 變得更為靈活和可重複使用。</p>
-<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><ul>
-<li>每個 component 除了可以從 props 拿值外，本身還可以儲存變數。就像物件可以儲存自己的屬性一樣，React component 也可以有自己的狀態。</li>
-<li>函數沒有 this 概念，它在呼叫完後就被釋放，無法在函數內部儲存變數的結果。要如何在函數中儲存變數的狀態呢？可以使用 useState 來實現。</li>
-</ul>
-<p>實際的程式碼範例：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">atClick</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-title function_">setCount</span>(count + <span class="hljs-number">1</span>);<br>&#125;;<br><br><span class="hljs-keyword">return</span> (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;border p-2 border-black&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span>count: &#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;atClick&#125;</span>&gt;</span></span><br><span class="language-xml">      increment</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
-
-<p>這段程式碼表示使用 useState 來管理計數器的狀態，並在按鈕點擊時更新狀態。</p>
-<p>另外 React 的 useState 還有一個重要的觀念：</p>
-<ul>
-<li>useState 儲存狀態，只有第一次傳入的值會被使用。所以，React 的 useState 允許你傳入一個函式來回傳初始值，這個函式只會被執行一次。是否需要使用這個函式取決於初始化的成本是否昂貴。</li>
-</ul>
-<p>實際的程式碼範例：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// <span class="hljs-doctag">FIXME:</span> Bad</span><br><span class="hljs-comment">// 這裡會被執行好多次</span><br><span class="hljs-keyword">const</span> [countBad, setCountBad] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;bad&#x27;</span>));<br><br><span class="hljs-comment">// [x]: Correct</span><br><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// 這裡的 function 只會被執行一次</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;correct&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
-<h3 id="從入門到進階"><a href="#從入門到進階" class="headerlink" title="從入門到進階"></a>從入門到進階</h3><p>除了以上的範例，奶綠茶老師的 React 課程緊扣課程的標題「從入門到進階」，讓我印象深刻的內容還有：useEffect 第二個參數的差異、深入理解 useRef 幫助我們獲取 DOM 元素，使用 useState 和 useEffect 來處理表單輸入和驗證、使用 React.memo 來優化 component 性能，避免不必要的重渲染、自定義 Fetch Hook 將邏輯提取到可重用的函式使組件更加簡潔，並且更易於測試和維護、使用 Redux Thunk 進行異步操作、使用 testing library 進行單元測試等等，這些都讓我對 React 有了更全面的了解。</p>
-<p>如果你在自學 React 的路上，但總覺得卡卡的，或是不懂使用 A 方法或 B 方法哪個比較好、效率比較高、不懂哪個方法在工作上比較常使用，都推薦你來上奶綠茶老師的《React 全攻略 - 入門到進階》課程，除了能解決你以上的問題，更能夠讓你在 React 的學習上有全面的提升、少走很多彎路！</p>
-]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-        <tag>JavaScript</tag>
-        <tag>五倍學院</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</title>
-    <url>/2024/03/17/ruby-aws-ivs-obs-livestream/</url>
-    <content><![CDATA[<img src="/images/ruby-aws-ivs-obs-stream-live/cover.avif">
-
-<p>圖片來源：<a href="https://unsplash.com/photos/black-smartphone-taking-photo-of-yellow-round-fruits-8zsBofKrhP8">Usplash</a></p>
-<h2 id="AMAZON-IVS"><a href="#AMAZON-IVS" class="headerlink" title="AMAZON IVS"></a>AMAZON IVS</h2><p><a href="https://aws.amazon.com/tw/ivs/">Amazon IVS</a>是AMAZON的互動式影片服務，可以利用此構建即時串流和互動影片體驗。</p>
-<p>本篇文章主要參考 <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> ＆ <a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
-<h2 id="建立IVS-Channel"><a href="#建立IVS-Channel" class="headerlink" title="建立IVS Channel"></a>建立IVS Channel</h2><p>AWS IVS的服務超過一定額度會需要收費，收費標準可以參考這裡：<a href="https://aws.amazon.com/tw/ivs/pricing/">Amazon 互動式影片服務定價</a>，這次使用的範圍在免費額度內。</p>
-<img src="/images/ruby-aws-ivs-obs-stream-live/1.png">
-
-<p>打上Channel name即可，下方亦有可以將直播影片儲存至S3等選項，可依照個人需要調整</p>
-<p>建置完成就會看到這個畫面：<br><img src="/images/ruby-aws-ivs-obs-stream-live/2.png"></p>
-<h2 id="建置Ruby-on-Rails專案"><a href="#建置Ruby-on-Rails專案" class="headerlink" title="建置Ruby on Rails專案"></a>建置Ruby on Rails專案</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new video<br><span class="hljs-variable">$ </span>rails g controller pages home<br><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
-
-<p>為了方便可以將<code>config/routes.rb</code> 增加  <code>root &#39;pages#home’</code></p>
-<h2 id="串接AWS-IVS直播"><a href="#串接AWS-IVS直播" class="headerlink" title="串接AWS IVS直播"></a>串接AWS IVS直播</h2><p>參考：<a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
-<p>最重要的部分就是這段，記得將PLAYBACK_URL替換成要載入的URL<br><img src="/images/ruby-aws-ivs-obs-stream-live/3.png"></p>
-<p>要載入的URL：<br><img src="/images/ruby-aws-ivs-obs-stream-live/4.png"></p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#app/views/pages/home.html.erb</span><br>&lt;h1&gt;<span class="hljs-title class_">Pages</span><span class="hljs-comment">#home&lt;/h1&gt;</span><br>&lt;p&gt;<span class="hljs-title class_">Find</span> me <span class="hljs-keyword">in</span> app/views/pages/home.html.erb&lt;<span class="hljs-regexp">/p&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;script src=&quot;https:/</span><span class="hljs-regexp">/player.live-video.net/</span><span class="hljs-number">1.26</span>.<span class="hljs-number">0</span>/amazon-ivs-player.min.js<span class="hljs-string">&quot;&gt;&lt;/script&gt;</span><br><span class="hljs-string">&lt;div id=&quot;</span>amazon-ivs<span class="hljs-string">&quot;&gt;</span><br><span class="hljs-string">    &lt;video id=&quot;</span>video-player<span class="hljs-string">&quot;</span><br><span class="hljs-string">        autoplay</span><br><span class="hljs-string">        controls</span><br><span class="hljs-string">        playsinline</span><br><span class="hljs-string">        style=&quot;</span>max-<span class="hljs-symbol">height:</span> 500px; max-<span class="hljs-symbol">width:</span> 500px<span class="hljs-string">&quot;</span><br><span class="hljs-string">    &gt;&lt;/video&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  if (IVSPlayer.isPlayerSupported) &#123;</span><br><span class="hljs-string">    const player = IVSPlayer.create();</span><br><span class="hljs-string">    player.attachHTMLVideoElement(document.getElementById(&#x27;video-player&#x27;));</span><br><span class="hljs-string">    player.load(&quot;</span><span class="hljs-title class_">Playback</span> <span class="hljs-variable constant_">URL</span><span class="hljs-string">&quot;);</span><br><span class="hljs-string">    player.play();</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&lt;/script&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="設定OBS"><a href="#設定OBS" class="headerlink" title="設定OBS"></a>設定OBS</h2><p>有在接觸直播的人應該蠻熟悉OBS的，OBS是一個<strong>用於錄影和直播的自由開源軟體，</strong>常見的Youtube, Twitch,FB, Instagram都可以接此直播，自訂的功能也很高，或是也可以像我們這次一樣，使用AWS IVS + OBS 放到自己的網頁專案裡，可以參考和下載：<a href="https://obsproject.com/">OBS</a></p>
-<p>OBS → Setting → Stream → 複製自己AWS Channel的server &amp; key貼上<br><img src="/images/ruby-aws-ivs-obs-stream-live/5.png"></p>
-<p>AWS IVS Server &amp; Key<br><img src="/images/ruby-aws-ivs-obs-stream-live/6.png"></p>
-<p>接著在OBS 按下Star Stream就大功告成了！</p>
-<p>AWS Channel:<br><img src="/images/ruby-aws-ivs-obs-stream-live/7.png"></p>
-<p>網頁：<br><img src="/images/ruby-aws-ivs-obs-stream-live/8.png"></p>
-<p>原本想說串接直播不知道會不會很難，看了<a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> 的教學發現透過AWS IVS變得簡單很多！</p>
-<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p> <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> </p>
-</blockquote>
-<blockquote>
-<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://obsproject.com/">OBS</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Rails</tag>
-        <tag>Ruby on Rails</tag>
-        <tag>AMAZON IVS</tag>
-        <tag>OBS</tag>
-        <tag>livestream</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails: 什麼是Abstraction layer</title>
-    <url>/2024/03/31/ruby-on-rails-abstraction-layer/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/ruby-on-rails-abstraction-layer/banner.jpg">
-
-<blockquote>
-<p>圖片來源: <a href="https://unsplash.com/photos/orange-pink-and-teal-illustration-Tk0B3Dfkf_4">Usplash - Clark Van Der Beken</a></p>
-</blockquote>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>首圖的layer好美٩(๑❛ᴗ❛๑)۶，不過對於程式的世界，Layer的意義非常地遼闊，來看下維基百科對於Layer的定義：</p>
-<div class="em-div2">
-
-<p><a href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">物件導向設計</a>中的<strong>層</strong>（layer）是一群和其他<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E6%A8%A1%E7%B5%84">模組</a>有類似<a href="https://zh.wikipedia.org/wiki/%E8%80%A6%E5%90%88%E6%80%A7_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">耦合性</a>的<a href="https://zh.wikipedia.org/wiki/%E7%B1%BB_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">類別</a>。層也可以說是一組可<a href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E7%94%A8">復用</a>的軟體組件，可以在類似的環境下復用。</p>
-<p>各層的模組會用<a href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">樹</a>狀的階級架構來規劃，各層模組之間的依賴關係會用連接來表示。各層之間的依賴關係可能是<a href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">繼承</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%E7%89%A9%E4%BB%B6%E8%A4%87%E5%90%88&action=edit&redlink=1">複合</a>或聚合（aggregation）關係，不過也有可能是其他的關係。</p>
-<p>分層是許多書籍中都會提到的<a href="https://zh.wikipedia.org/wiki/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F">架構模式</a>，例如《<a href="https://zh.wikipedia.org/w/index.php?title=Pattern-Oriented_Software_Architecture&action=edit&redlink=1">Pattern-Oriented Software Architecture</a>》書中就有提到。</p>
-</div>
-
-<p>看到了裡面的<code>類別</code>、<code>繼承</code>，好像很熟悉，在Ruby on Rails中有使用到，但是整個組起來，看懂一點點又好像沒看懂？</p>
-<p>接著來看看維基百科對於<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B1%A4">Abstraction layer</a>的定義：</p>
-<div class="em-div2">
-
-<p><strong>抽象層</strong>（英語：abstraction layer， abstraction level，或 a layer of abstraction）是一種隱藏獨特功能執行細節的方法。使用抽象層的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">軟體</a>模型包含<a href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI</a>網路協定七層模型、<a href="https://zh.wikipedia.org/wiki/OpenGL">OpenGL</a>繪圖函式庫及以Unix為原本的輸入輸出（I&#x2F;O）模型，並適用於大部分新一代的作業系統。</p>
-<p>在Unix作業系統中，大部分的輸入輸出形式被視為從裝置讀寫的串流值。而串流值模型為了提供獨立裝置被檔案及終端機I&#x2F;O所使用。為了在應用層讀寫裝置，程式呼叫<a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8">函式</a>開啟像是<a href="https://zh.wikipedia.org/wiki/%E7%B5%82%E7%AB%AF%E6%A9%9F">終端機</a>的實體裝置或是<a href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">網路</a>、<a href="https://zh.wikipedia.org/wiki/%E6%AA%94%E6%A1%88">檔案</a>系統的<a href="https://zh.wikipedia.org/wiki/%E8%99%9B%E6%93%AC">虛擬</a>裝置。裝置的<a href="https://zh.wikipedia.org/wiki/%E5%AF%A6%E9%AB%94">實體</a>特徵是被允許程式設計師讀寫資料的作業系統所調用。接著<a href="https://zh.wikipedia.org/wiki/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1">作業系統</a>操作正確的讀寫轉換。</p>
-<p>大部分的<a href="https://zh.wikipedia.org/wiki/%E5%9B%BE%E5%BD%A2%E5%BA%93">圖形庫</a>，像是OpenGL，提供抽象圖形裝置模型。這種函式庫的主要功能在於轉換<a href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB">程式設計師</a>的指令到<a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E5%BD%A2%E5%85%83%E4%BB%B6&action=edit&redlink=1">圖形元件</a>。這個特殊的繪圖指令與對傳統陰極射線管銀幕的指令不同，而是隱藏了抽象介面的細節。</p>
-<p>在<a href="https://zh.wikipedia.org/wiki/%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8">資訊學</a>，抽象層是<a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B_(%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8)">模型</a>或<a href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95">演算法</a>的推廣。</p>
-</div>
-
-<p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p>
-<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件。<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
-<p>網頁的生命週期分成兩個階段：</p>
-<ol>
-<li>bootstrap phase (configuration and initialization)</li>
-</ol>
-<ul>
-<li>載入應用程式碼</li>
-<li>初始化和配置框架元件</li>
-</ul>
-<ol start="2">
-<li>serving phase</li>
-</ol>
-<ul>
-<li>執行許多獨立的Web Request</li>
-</ul>
-<p>而我們先暫時聚焦在serving phase上，因為網頁請求(Web Request)是獨立的，因此服務階段可以被視為一條流水線，我們將請求資料（raw material）放在輸送帶上，中間通過許多工作站，並在最後得到回應</p>
-<p>試想像，要怎麼讓流水線提高效率呢？就要把工作站拉出來，看有什麼可以改進的，而抽象層，就可以想像成流水線上的工作站。把工作站拉出來的這個過程（extraction of abstraction layers），也可以稱作分層（layering），而這個架構模式可以提高軟體的品質。</p>
-<p>而一個抽象層應該要有什麼屬性呢？</p>
-<ul>
-<li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">單一職責</a>（職責可以很廣泛，但不應重複，遵循<a href="https://zh.wikipedia.org/wiki/%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">關注點分離</a>）</li>
-<li>各層應該是鬆散耦合的，並且沒有循環或反向依賴關係。<ul>
-<li>如果我們從上到下繪製請求處理流程，層間連接永遠不應該向上，並且我們應該盡量減少層間連接數。（可以想像成流水線，很少會流到一半倒回去做）</li>
-</ul>
-</li>
-<li>抽像不應洩漏其內部結構<ul>
-<li>提取抽象的主要想法是將介面與實作分離</li>
-</ul>
-</li>
-<li>應該可以單獨提取抽象層</li>
-</ul>
-<p>如果遵循以上的這些原則，可以讓開發者易於重構、debug和測試。</p>
-<p>在現實生活中，衡量效率的標準是速度； 在軟體開發中，速度也是關鍵——發布新功能的速度，而要怎麼能夠快速地發布新功能？這取決於許多因素，而最主要的因素就是程式碼的<strong>可維護性</strong>，其中包括：添加新功能和對現有功能進行更改、除錯的容易程度，應用軟體設計模式和提取抽象層是保持高可維護性的兩個主要工具。</p>
-<p>而抽象層不是越多越好，主要看整個應用程式的架構，基本的Rails僅包含了三個抽象層概念：Model、Controller、View(也就是我們所常說的MVC)</p>
-<p>至於要如何逐步引入新的抽象層呢？</p>
-<p>可以參考本書：<a href="https://www.packtpub.com/product/layered-design-for-ruby-on-rails-applications/9781801813785">Layered Design for Ruby on Rails Applications</a></p>
-<p>未來也會將本書提到的有趣的概念整理分享，今天就先到這裡٩(●˙▿˙●)۶<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.tenlong.com.tw/products/9781801813785">Layered Design for Ruby on Rails Applications</a>**</p>
-</blockquote>
-<blockquote>
-<p><a href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5">Wiki</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>rails</tag>
-        <tag>abstraction layer</tag>
-        <tag>ruby</tag>
-        <tag>layered design</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python: PEP 8 程式碼風格指南 </title>
     <url>/2024/03/01/python-pep8-style-guide-for-python-code/</url>
     <content><![CDATA[<img src="/images/python-pep8-style-guide-for-python-code/python-logo.png">
@@ -2212,6 +1855,365 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
+    <title>React: 實體課程學習心得</title>
+    <url>/2024/06/28/react/</url>
+    <content><![CDATA[<img src="/images/react/React.webp">
+
+<p>作為一名剛起步的 Junior 全端工程師，我過去大多是用 JavaScript 撰寫前端程式。為了提升自己的技能，我決定報名五倍學院開設的<a href="https://5xcampus.com/courses/react.html">《React 全攻略 - 入門到進階》</a>課程，目標是深入學習時下熱門的前端框架：React，並朝著 Senior 工程師的方向邁進。</p>
+<p>在學習 React 的過程中，收穫了好多寶貴的經驗。奶綠茶老師是一位業界資深的工程師主管，他從底層邏輯開始講解 React 的基礎知識，並用程式碼作為範例，分享了許多業界的實戰經驗和在工作中實際會用到的 React 寫法。這些內容不僅讓我理解得更深入，也讓我在應用 React 時更加得心應手。</p>
+<p>而且老師上課風格幽默有趣，課程中會穿插工作上與 React 或是工程師相關的趣事，也讓課程內容變得更活潑及生活化，每次上課完都覺得除了學習 React 之外，也透過課程內容讓自己開眼界、學習資深工程師的思考方式，每次上課完都覺得收穫滿滿。</p>
+<h2 id="課程簡介"><a href="#課程簡介" class="headerlink" title="課程簡介"></a>課程簡介</h2><p>《React 全攻略 - 入門到進階》課程是為了幫助學員打好 React 的基礎，成為更加扎實的 React 前端工程師而設計的。課程內容涵蓋了從基礎到進階的各個方面，老師還會分享許多實際開發中的團隊協作經驗和技巧，這些都是書籍和一般線上課程中難以見到的寶貴內容。</p>
+<p>奶綠茶老師透過 50+ 份示範程式檔案，從最基礎的 React Components 如何撰寫 、Props 傳遞機制等，分享 React 核心語法；還有 Typescript 、styled-components 、Tailwind CSS、Redux 等更進階的實戰應用。</p>
+<p>這門課特別適合以下的人：</p>
+<ul>
+<li>前端工程師：希望透過學習 React 來精進 JavaScript 技術。</li>
+<li>有 Vue.js 或 Angular 開發經驗者：想快速上手 React。</li>
+<li>有 React 自學經驗的開發者：希望鞏固基礎觀念。</li>
+<li>想了解 React 開發團隊合作與管理的開發者：尋求更高效的團隊協作方法。</li>
+</ul>
+<h2 id="React-的基礎知識"><a href="#React-的基礎知識" class="headerlink" title="React 的基礎知識"></a>React 的基礎知識</h2><p>在課堂上，老師詳細講解了 JSX、組件（Components）、屬性（Props）、狀態（State）等基礎知識。這些是學習 React 的核心基礎，了解了核心的底層邏輯後，更能進一步學習和應用。</p>
+<h3 id="Components-Props"><a href="#Components-Props" class="headerlink" title="Components &amp; Props"></a>Components &amp; Props</h3><p>在 React 中，component 是讓程式重複利用的重要基礎。<br>奶綠茶老師教我們如何創建 component 並使用 props 傳遞數據，並教導了我們幾個重要的概念：</p>
+<ul>
+<li>compnent 要獲取變數，一定會從 props 拿</li>
+<li>React component 的第一個參數就是 props，其型別一定是物件</li>
+</ul>
+<p>實際的程式碼範例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">PropTypes</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">FunctionalCard01</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> &#123; img, name, children, price &#125; = props;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__img&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#123;img&#125;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&#123;name&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__name&quot;</span>&gt;</span>&#123;name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__price&quot;</span>&gt;</span>&#123;price&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__quote&quot;</span>&gt;</span>&#123;children&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;;<br><br><span class="hljs-title class_">FunctionalCard01</span>.<span class="hljs-property">propTypes</span> = &#123;<br>  <span class="hljs-attr">price</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">number</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">img</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">name</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">children</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">node</span>,<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">FunctionalCard01</span>;<br></code></pre></td></tr></table></figure>
+
+<p>這是一段簡單的 Functional Component，它接收 props 並在 JSX 中渲染。這種方式讓 component 變得更為靈活和可重複使用。</p>
+<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><ul>
+<li>每個 component 除了可以從 props 拿值外，本身還可以儲存變數。就像物件可以儲存自己的屬性一樣，React component 也可以有自己的狀態。</li>
+<li>函數沒有 this 概念，它在呼叫完後就被釋放，無法在函數內部儲存變數的結果。要如何在函數中儲存變數的狀態呢？可以使用 useState 來實現。</li>
+</ul>
+<p>實際的程式碼範例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">atClick</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-title function_">setCount</span>(count + <span class="hljs-number">1</span>);<br>&#125;;<br><br><span class="hljs-keyword">return</span> (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;border p-2 border-black&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span>count: &#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;atClick&#125;</span>&gt;</span></span><br><span class="language-xml">      increment</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
+
+<p>這段程式碼表示使用 useState 來管理計數器的狀態，並在按鈕點擊時更新狀態。</p>
+<p>另外 React 的 useState 還有一個重要的觀念：</p>
+<ul>
+<li>useState 儲存狀態，只有第一次傳入的值會被使用。所以，React 的 useState 允許你傳入一個函式來回傳初始值，這個函式只會被執行一次。是否需要使用這個函式取決於初始化的成本是否昂貴。</li>
+</ul>
+<p>實際的程式碼範例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// <span class="hljs-doctag">FIXME:</span> Bad</span><br><span class="hljs-comment">// 這裡會被執行好多次</span><br><span class="hljs-keyword">const</span> [countBad, setCountBad] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;bad&#x27;</span>));<br><br><span class="hljs-comment">// [x]: Correct</span><br><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// 這裡的 function 只會被執行一次</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;correct&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="從入門到進階"><a href="#從入門到進階" class="headerlink" title="從入門到進階"></a>從入門到進階</h3><p>除了以上的範例，奶綠茶老師的 React 課程緊扣課程的標題「從入門到進階」，讓我印象深刻的內容還有：useEffect 第二個參數的差異、深入理解 useRef 幫助我們獲取 DOM 元素，使用 useState 和 useEffect 來處理表單輸入和驗證、使用 React.memo 來優化 component 性能，避免不必要的重渲染、自定義 Fetch Hook 將邏輯提取到可重用的函式使組件更加簡潔，並且更易於測試和維護、使用 Redux Thunk 進行異步操作、使用 testing library 進行單元測試等等，這些都讓我對 React 有了更全面的了解。</p>
+<p>如果你在自學 React 的路上，但總覺得卡卡的，或是不懂使用 A 方法或 B 方法哪個比較好、效率比較高、不懂哪個方法在工作上比較常使用，都推薦你來上奶綠茶老師的《React 全攻略 - 入門到進階》課程，除了能解決你以上的問題，更能夠讓你在 React 的學習上有全面的提升、少走很多彎路！</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>JavaScript</tag>
+        <tag>五倍學院</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Devise10分鐘製作管理者後台版面</title>
+    <url>/2023/12/24/rails-admin-layout-devise/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+
+.image-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+  border-radius: 10px; /* 圓角效果 */
+  overflow: hidden; /* 超出部分隱藏 */
+  margin: 5px; /* 留白效果 */
+}
+</style>
+
+
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><div class="image-container">
+<img src="/images/rails_admin_layout_devise/banner.png">
+</div>
+
+<p>這篇是個實作範例 ٩(●˙▿˙●)۶…⋆ฺ</p>
+<p>主要內容都是參考以下影片而成，如果要了解更多可以看：</p>
+<blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+<p>今天使用Rails來的<a href="https://rubygems.org/gems/devise/versions/4.2.0?locale=zh-TW">Devise</a>套件來製作管理者後台版面</p>
+<p>以下為實作步驟：</p>
+<ul>
+<li>new一個新專案，我名稱設為blog，也可以設定別的</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new blog<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在Gemfile資料夾安裝devise，並執行<code>bundle install</code></li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#Gemfile</span><br>gem <span class="hljs-string">&#x27;devise&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 4.2&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle install<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新增pages_controller＆home.html.erb</li>
+</ul>
+<p>這裡也可以設定別的主題，只不過為了示範所以選擇這個，<br><img src="/images/rails_admin_layout_devise/02.png"><br>這個指令會生出Pages的controller，裡面有home方法，view有home.html.erb頁面，routes也會幫忙長好pages&#x2F;home，蠻方便的٩(๑❛ᴗ❛๑)۶</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>利用scaffold做CRUD的流程</li>
+</ul>
+<p>用scaffold可以省掉好多步驟(´∀&#96;)懶人救星</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/01.png">
+</div>
+
+<ul>
+<li>設定routes</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#routes.rb</span><br>root <span class="hljs-string">&#x27;pages#home&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安裝Devise &amp; 生成使用者</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">devise:</span>install<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g devise user<br></code></pre></td></tr></table></figure>
+
+<p>devise會自動幫你增加檔案，真的很方便</p>
+<ul>
+<li>生一個migration，增加role欄位到User資料表</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g migration <span class="hljs-title class_">AddRoleToUsers</span> <span class="hljs-symbol">role:</span>integer<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>到User model增加角色，其中角色的名稱都可以自己定義，我使用admin</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#user.rb</span><br>enum <span class="hljs-symbol">role:</span>[<span class="hljs-symbol">:general</span>, <span class="hljs-symbol">:admin</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接著就可以到application_controller.rb，設置判斷使用者登入的layout頁面的<code>set_layout</code>方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#controller&gt;application_controller</span><br>layout <span class="hljs-symbol">:set_layout</span> <span class="hljs-comment"># 設置判斷登入的使用者layout頁面</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_layout</span><br>    <span class="hljs-keyword">if</span> current_user&amp;.admin?<br>      <span class="hljs-string">&#x27;admin&#x27;</span><br>    <span class="hljs-keyword">else</span><br>      <span class="hljs-string">&#x27;application&#x27;</span><br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><code>current_user&amp;.admin?</code></p>
+<p>這行原本是這樣寫：<code>if current_user &amp;&amp; current_user.admin == true</code></p>
+<p>可以用 &amp;. 簡化</p>
+<p>如果current_user存在（也就是有登入）以及 登入的角色是admin的話，layout就使用admin</p>
+<p>如果不是的話， layout就使用預設導入application</p>
+<ul>
+<li>接著到layout資料夾下，手動新增一個admin.html.erb，內容可以隨自己喜好調整</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#views&gt;layout</span><br>新增 <span class="hljs-comment">#admin.html.erb</span><br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;<span class="hljs-title class_">Blog</span>&lt;<span class="hljs-regexp">/title&gt;</span><br><span class="hljs-regexp">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</span><br><span class="hljs-regexp">    &lt;%= csrf_meta_tags %&gt;</span><br><span class="hljs-regexp">    &lt;%= csp_meta_tag %&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">    &lt;%= stylesheet_link_tag &quot;application&quot;, &quot;data-turbo-track&quot;: &quot;reload&quot; %&gt;</span><br><span class="hljs-regexp">    &lt;%= javascript_importmap_tags %&gt;</span><br><span class="hljs-regexp">  &lt;/head</span>&gt;<br><br>  &lt;body&gt;<br>    &lt;h2&gt;此為管理者介面&lt;<span class="hljs-regexp">/h2&gt;</span><br><span class="hljs-regexp">    &lt;%= yield %&gt;</span><br><span class="hljs-regexp">  &lt;/body</span>&gt;<br>&lt;<span class="hljs-regexp">/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>接著可以到home.html.erb頁面，寫跳轉的判斷</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>      &lt;%<span class="hljs-comment">#是否轉為店家後台判斷%&gt;</span><br>      &lt;% <span class="hljs-keyword">if</span> current_user %&gt;<br>        &lt;%= current_user.role %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;logout&quot;</span>, destroy_user_session_path, <span class="hljs-symbol">method:</span> <span class="hljs-symbol">:delete</span>, <span class="hljs-symbol">data:</span> &#123; <span class="hljs-symbol">turbo_method:</span> <span class="hljs-symbol">:delete</span>&#125; %&gt;<br>      &lt;% <span class="hljs-keyword">else</span> %&gt;<br>          &lt;%= link_to <span class="hljs-string">&quot;log_in&quot;</span>, new_user_session_path %&gt;<br>      &lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<p>這個寫的地方可以自由選擇，如果要做個網站有很多頁面的話，</p>
+<p>我也有嘗試放在_navbar.html.bar，讓整個網頁都可以套用此設定</p>
+<p>接著就大功告成了！！</p>
+<p>這是剛剛步驟做出的首頁</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/03.png">
+</div>
+
+<p>登入頁面</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/04.png">
+</div>
+
+<p>因為還沒設定current_user.role所以在html.erb頁面放<code>&lt;% console %&gt;</code>程式碼，</p>
+<p>搭配指令，來快速指定某使用者的role</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/05.png">
+</div>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">current_user<br><br>current_user.role = <span class="hljs-title class_">User</span>.roles[<span class="hljs-symbol">:admin</span>]<br><br>current_user.save<br><br>current_user.admin?<br></code></pre></td></tr></table></figure>
+
+<p>登入成功後，就有管理者的介面了！！</p>
+<div class="image-container">
+<img src="/images/rails_admin_layout_devise/06.png">
+</div>
+
+<p>實際應用的時候，可以把只有管理者知道的連結&amp;資訊放在這，</p>
+<p>讓他的介面看起來和一般使用者有區隔</p>
+<p>使用Devise套件真的好方便٩(●˙▿˙●)۶…⋆ฺ 我原本想說自己刻好麻煩，</p>
+<p>這整個步驟大約10分鐘就可以完成了！！</p>
+<p>有興趣也可以試看看～～</p>
+<hr>
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=SxwFyK9OtfY">Layouts For Admin Users with Devise in Ruby on Rails 7</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>devise</tag>
+        <tag>rails7</tag>
+        <tag>rails</tag>
+        <tag>layout</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</title>
+    <url>/2024/03/17/ruby-aws-ivs-obs-livestream/</url>
+    <content><![CDATA[<img src="/images/ruby-aws-ivs-obs-stream-live/cover.avif">
+
+<p>圖片來源：<a href="https://unsplash.com/photos/black-smartphone-taking-photo-of-yellow-round-fruits-8zsBofKrhP8">Usplash</a></p>
+<h2 id="AMAZON-IVS"><a href="#AMAZON-IVS" class="headerlink" title="AMAZON IVS"></a>AMAZON IVS</h2><p><a href="https://aws.amazon.com/tw/ivs/">Amazon IVS</a>是AMAZON的互動式影片服務，可以利用此構建即時串流和互動影片體驗。</p>
+<p>本篇文章主要參考 <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> ＆ <a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
+<h2 id="建立IVS-Channel"><a href="#建立IVS-Channel" class="headerlink" title="建立IVS Channel"></a>建立IVS Channel</h2><p>AWS IVS的服務超過一定額度會需要收費，收費標準可以參考這裡：<a href="https://aws.amazon.com/tw/ivs/pricing/">Amazon 互動式影片服務定價</a>，這次使用的範圍在免費額度內。</p>
+<img src="/images/ruby-aws-ivs-obs-stream-live/1.png">
+
+<p>打上Channel name即可，下方亦有可以將直播影片儲存至S3等選項，可依照個人需要調整</p>
+<p>建置完成就會看到這個畫面：<br><img src="/images/ruby-aws-ivs-obs-stream-live/2.png"></p>
+<h2 id="建置Ruby-on-Rails專案"><a href="#建置Ruby-on-Rails專案" class="headerlink" title="建置Ruby on Rails專案"></a>建置Ruby on Rails專案</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails new video<br><span class="hljs-variable">$ </span>rails g controller pages home<br><span class="hljs-variable">$ </span>rails g scaffold post title <span class="hljs-symbol">body:</span>text<br></code></pre></td></tr></table></figure>
+
+<p>為了方便可以將<code>config/routes.rb</code> 增加  <code>root &#39;pages#home’</code></p>
+<h2 id="串接AWS-IVS直播"><a href="#串接AWS-IVS直播" class="headerlink" title="串接AWS IVS直播"></a>串接AWS IVS直播</h2><p>參考：<a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
+<p>最重要的部分就是這段，記得將PLAYBACK_URL替換成要載入的URL<br><img src="/images/ruby-aws-ivs-obs-stream-live/3.png"></p>
+<p>要載入的URL：<br><img src="/images/ruby-aws-ivs-obs-stream-live/4.png"></p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#app/views/pages/home.html.erb</span><br>&lt;h1&gt;<span class="hljs-title class_">Pages</span><span class="hljs-comment">#home&lt;/h1&gt;</span><br>&lt;p&gt;<span class="hljs-title class_">Find</span> me <span class="hljs-keyword">in</span> app/views/pages/home.html.erb&lt;<span class="hljs-regexp">/p&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;script src=&quot;https:/</span><span class="hljs-regexp">/player.live-video.net/</span><span class="hljs-number">1.26</span>.<span class="hljs-number">0</span>/amazon-ivs-player.min.js<span class="hljs-string">&quot;&gt;&lt;/script&gt;</span><br><span class="hljs-string">&lt;div id=&quot;</span>amazon-ivs<span class="hljs-string">&quot;&gt;</span><br><span class="hljs-string">    &lt;video id=&quot;</span>video-player<span class="hljs-string">&quot;</span><br><span class="hljs-string">        autoplay</span><br><span class="hljs-string">        controls</span><br><span class="hljs-string">        playsinline</span><br><span class="hljs-string">        style=&quot;</span>max-<span class="hljs-symbol">height:</span> 500px; max-<span class="hljs-symbol">width:</span> 500px<span class="hljs-string">&quot;</span><br><span class="hljs-string">    &gt;&lt;/video&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  if (IVSPlayer.isPlayerSupported) &#123;</span><br><span class="hljs-string">    const player = IVSPlayer.create();</span><br><span class="hljs-string">    player.attachHTMLVideoElement(document.getElementById(&#x27;video-player&#x27;));</span><br><span class="hljs-string">    player.load(&quot;</span><span class="hljs-title class_">Playback</span> <span class="hljs-variable constant_">URL</span><span class="hljs-string">&quot;);</span><br><span class="hljs-string">    player.play();</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&lt;/script&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="設定OBS"><a href="#設定OBS" class="headerlink" title="設定OBS"></a>設定OBS</h2><p>有在接觸直播的人應該蠻熟悉OBS的，OBS是一個<strong>用於錄影和直播的自由開源軟體，</strong>常見的Youtube, Twitch,FB, Instagram都可以接此直播，自訂的功能也很高，或是也可以像我們這次一樣，使用AWS IVS + OBS 放到自己的網頁專案裡，可以參考和下載：<a href="https://obsproject.com/">OBS</a></p>
+<p>OBS → Setting → Stream → 複製自己AWS Channel的server &amp; key貼上<br><img src="/images/ruby-aws-ivs-obs-stream-live/5.png"></p>
+<p>AWS IVS Server &amp; Key<br><img src="/images/ruby-aws-ivs-obs-stream-live/6.png"></p>
+<p>接著在OBS 按下Star Stream就大功告成了！</p>
+<p>AWS Channel:<br><img src="/images/ruby-aws-ivs-obs-stream-live/7.png"></p>
+<p>網頁：<br><img src="/images/ruby-aws-ivs-obs-stream-live/8.png"></p>
+<p>原本想說串接直播不知道會不會很難，看了<a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> 的教學發現透過AWS IVS變得簡單很多！</p>
+<p>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p> <a href="https://www.youtube.com/watch?v=aY4d5kNKbGc">Deanin - Livestream to Your Rails App with Amazon IVS</a> </p>
+</blockquote>
+<blockquote>
+<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">Amazon Interactive Video Service</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html">AWS IVS Player SDK</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://obsproject.com/">OBS</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Rails</tag>
+        <tag>Ruby on Rails</tag>
+        <tag>AMAZON IVS</tag>
+        <tag>OBS</tag>
+        <tag>livestream</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 什麼是Abstraction layer</title>
+    <url>/2024/03/31/ruby-on-rails-abstraction-layer/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/ruby-on-rails-abstraction-layer/banner.jpg">
+
+<blockquote>
+<p>圖片來源: <a href="https://unsplash.com/photos/orange-pink-and-teal-illustration-Tk0B3Dfkf_4">Usplash - Clark Van Der Beken</a></p>
+</blockquote>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>首圖的layer好美٩(๑❛ᴗ❛๑)۶，不過對於程式的世界，Layer的意義非常地遼闊，來看下維基百科對於Layer的定義：</p>
+<div class="em-div2">
+
+<p><a href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">物件導向設計</a>中的<strong>層</strong>（layer）是一群和其他<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E6%A8%A1%E7%B5%84">模組</a>有類似<a href="https://zh.wikipedia.org/wiki/%E8%80%A6%E5%90%88%E6%80%A7_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">耦合性</a>的<a href="https://zh.wikipedia.org/wiki/%E7%B1%BB_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">類別</a>。層也可以說是一組可<a href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E7%94%A8">復用</a>的軟體組件，可以在類似的環境下復用。</p>
+<p>各層的模組會用<a href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">樹</a>狀的階級架構來規劃，各層模組之間的依賴關係會用連接來表示。各層之間的依賴關係可能是<a href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">繼承</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%E7%89%A9%E4%BB%B6%E8%A4%87%E5%90%88&action=edit&redlink=1">複合</a>或聚合（aggregation）關係，不過也有可能是其他的關係。</p>
+<p>分層是許多書籍中都會提到的<a href="https://zh.wikipedia.org/wiki/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F">架構模式</a>，例如《<a href="https://zh.wikipedia.org/w/index.php?title=Pattern-Oriented_Software_Architecture&action=edit&redlink=1">Pattern-Oriented Software Architecture</a>》書中就有提到。</p>
+</div>
+
+<p>看到了裡面的<code>類別</code>、<code>繼承</code>，好像很熟悉，在Ruby on Rails中有使用到，但是整個組起來，看懂一點點又好像沒看懂？</p>
+<p>接著來看看維基百科對於<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B1%A4">Abstraction layer</a>的定義：</p>
+<div class="em-div2">
+
+<p><strong>抽象層</strong>（英語：abstraction layer， abstraction level，或 a layer of abstraction）是一種隱藏獨特功能執行細節的方法。使用抽象層的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">軟體</a>模型包含<a href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI</a>網路協定七層模型、<a href="https://zh.wikipedia.org/wiki/OpenGL">OpenGL</a>繪圖函式庫及以Unix為原本的輸入輸出（I&#x2F;O）模型，並適用於大部分新一代的作業系統。</p>
+<p>在Unix作業系統中，大部分的輸入輸出形式被視為從裝置讀寫的串流值。而串流值模型為了提供獨立裝置被檔案及終端機I&#x2F;O所使用。為了在應用層讀寫裝置，程式呼叫<a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8">函式</a>開啟像是<a href="https://zh.wikipedia.org/wiki/%E7%B5%82%E7%AB%AF%E6%A9%9F">終端機</a>的實體裝置或是<a href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">網路</a>、<a href="https://zh.wikipedia.org/wiki/%E6%AA%94%E6%A1%88">檔案</a>系統的<a href="https://zh.wikipedia.org/wiki/%E8%99%9B%E6%93%AC">虛擬</a>裝置。裝置的<a href="https://zh.wikipedia.org/wiki/%E5%AF%A6%E9%AB%94">實體</a>特徵是被允許程式設計師讀寫資料的作業系統所調用。接著<a href="https://zh.wikipedia.org/wiki/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1">作業系統</a>操作正確的讀寫轉換。</p>
+<p>大部分的<a href="https://zh.wikipedia.org/wiki/%E5%9B%BE%E5%BD%A2%E5%BA%93">圖形庫</a>，像是OpenGL，提供抽象圖形裝置模型。這種函式庫的主要功能在於轉換<a href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB">程式設計師</a>的指令到<a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E5%BD%A2%E5%85%83%E4%BB%B6&action=edit&redlink=1">圖形元件</a>。這個特殊的繪圖指令與對傳統陰極射線管銀幕的指令不同，而是隱藏了抽象介面的細節。</p>
+<p>在<a href="https://zh.wikipedia.org/wiki/%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8">資訊學</a>，抽象層是<a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B_(%E8%B3%87%E8%A8%8A%E7%A7%91%E5%AD%B8)">模型</a>或<a href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95">演算法</a>的推廣。</p>
+</div>
+
+<p>完蛋了，完全看不懂 (ఠ్ఠ ˓̭ ఠ్ఠ)。</p>
+<p>其實抽象層很常出現在Ruby on Rails裡面，Ruby on Rails的所有的東西都是物件，而我們所熟悉的MVC，也是物件。<code>view object</code> &#x2F; <code>controller object</code> &#x2F; <code>model object</code> 彼此傳遞著訊息，<strong>這些物件在位階上都屬於抽象層。</strong></p>
+<p>網頁的生命週期分成兩個階段：</p>
+<ol>
+<li>bootstrap phase (configuration and initialization)</li>
+</ol>
+<ul>
+<li>載入應用程式碼</li>
+<li>初始化和配置框架元件</li>
+</ul>
+<ol start="2">
+<li>serving phase</li>
+</ol>
+<ul>
+<li>執行許多獨立的Web Request</li>
+</ul>
+<p>而我們先暫時聚焦在serving phase上，因為網頁請求(Web Request)是獨立的，因此服務階段可以被視為一條流水線，我們將請求資料（raw material）放在輸送帶上，中間通過許多工作站，並在最後得到回應</p>
+<p>試想像，要怎麼讓流水線提高效率呢？就要把工作站拉出來，看有什麼可以改進的，而抽象層，就可以想像成流水線上的工作站。把工作站拉出來的這個過程（extraction of abstraction layers），也可以稱作分層（layering），而這個架構模式可以提高軟體的品質。</p>
+<p>而一個抽象層應該要有什麼屬性呢？</p>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">單一職責</a>（職責可以很廣泛，但不應重複，遵循<a href="https://zh.wikipedia.org/wiki/%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">關注點分離</a>）</li>
+<li>各層應該是鬆散耦合的，並且沒有循環或反向依賴關係。<ul>
+<li>如果我們從上到下繪製請求處理流程，層間連接永遠不應該向上，並且我們應該盡量減少層間連接數。（可以想像成流水線，很少會流到一半倒回去做）</li>
+</ul>
+</li>
+<li>抽像不應洩漏其內部結構<ul>
+<li>提取抽象的主要想法是將介面與實作分離</li>
+</ul>
+</li>
+<li>應該可以單獨提取抽象層</li>
+</ul>
+<p>如果遵循以上的這些原則，可以讓開發者易於重構、debug和測試。</p>
+<p>在現實生活中，衡量效率的標準是速度； 在軟體開發中，速度也是關鍵——發布新功能的速度，而要怎麼能夠快速地發布新功能？這取決於許多因素，而最主要的因素就是程式碼的<strong>可維護性</strong>，其中包括：添加新功能和對現有功能進行更改、除錯的容易程度，應用軟體設計模式和提取抽象層是保持高可維護性的兩個主要工具。</p>
+<p>而抽象層不是越多越好，主要看整個應用程式的架構，基本的Rails僅包含了三個抽象層概念：Model、Controller、View(也就是我們所常說的MVC)</p>
+<p>至於要如何逐步引入新的抽象層呢？</p>
+<p>可以參考本書：<a href="https://www.packtpub.com/product/layered-design-for-ruby-on-rails-applications/9781801813785">Layered Design for Ruby on Rails Applications</a></p>
+<p>未來也會將本書提到的有趣的概念整理分享，今天就先到這裡٩(●˙▿˙●)۶<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.tenlong.com.tw/products/9781801813785">Layered Design for Ruby on Rails Applications</a>**</p>
+</blockquote>
+<blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5">Wiki</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>rails</tag>
+        <tag>abstraction layer</tag>
+        <tag>ruby</tag>
+        <tag>layered design</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day13 search insert position</title>
     <url>/2024/02/11/search-insert-position/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十三天，讓我們開始吧！</p>
@@ -2242,127 +2244,6 @@ border-style:dashed;
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>search insert position</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
-    <url>/2024/01/14/simple-calendar/</url>
-    <content><![CDATA[<style>
-
-
-.em-div{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-
-<img src="/images/simple-calendar/banner.avif">
-
-<p>圖片來源：<a href="https://unsplash.com/photos/black-marker-on-notebook-zni0zgb3bkQ">Unsplash-Estée Janssens</a><br>在製作專案的時候發現寶藏gem套件<a href="https://github.com/excid3/simple_calendar">simple_calendar</a>(ﾉ&gt;ω&lt;)ﾉ，<br>可以輕鬆地製作月曆，而且客製化程度高，可以自定義CSS樣式，<br>這是我這次做出來的月曆：<br><img src="/images/simple-calendar/5.png"></p>
-<ul>
-<li>本次選擇使用<a href="%5Bhttps://tailwindcss.com/%5D(https://tailwindcss.com/)">tailwind</a> CSS框架，安裝方法可以參考<a href="https://tailwindcss.com/docs/installation">tailwind installaion</a></li>
-<li>亦可以使用bootstrap，安裝請參考：<a href="%5Bhttps://getbootstrap.com/%5D(https://getbootstrap.com/)">bootstrap</a></li>
-</ul>
-<hr>
-<h3 id="安裝simple-calendar"><a href="#安裝simple-calendar" class="headerlink" title="安裝simple_calendar"></a>安裝<a href="https://github.com/excid3/simple_calendar">simple_calendar</a></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle add simple_calendar<br></code></pre></td></tr></table></figure>
-
-<p>貼上後執行bundle i即可</p>
-<h3 id="製作新增會議的CRUD"><a href="#製作新增會議的CRUD" class="headerlink" title="製作新增會議的CRUD"></a>製作新增會議的CRUD</h3><p>因為demo所以使用meeting，可以自由選擇名稱，meeting會有開始時間＆結束時間，所以也增加<code>start_time</code> &amp; <code>end_time</code>的column</p>
-<p>因為新增會議不是本次demo的重點🤣使用scaffold會幫忙製作CRUD</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#terminal</span><br>rails g scaffold <span class="hljs-title class_">Consultation</span> title <span class="hljs-symbol">description:</span>text <span class="hljs-symbol">start_time:</span>datetime e<br><span class="hljs-symbol">nd_time:</span>datetime<br></code></pre></td></tr></table></figure>
-
-<p>完成後執行<code>rails db:migrate</code></p>
-<h3 id="建立主頁"><a href="#建立主頁" class="headerlink" title="建立主頁"></a>建立主頁</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
-
-<h3 id="在主頁自定義方法"><a href="#在主頁自定義方法" class="headerlink" title="在主頁自定義方法"></a>在主頁自定義方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-<p>除了Month Calendar，另外還有Week Calendar、Custom Length Calendar<br>客製化程度很高，可以依自己需要選擇</p>
-<p>開啟 <code>rails s</code>就會出現月曆</p>
-<img src="/images/simple-calendar/2.png">
-
-<div class="em-div">
-補充：simple_calendar 預設開始時間的Model column是start_time，結束時間是end_time，
-如果是別的column名稱，有兩個方法可以改變：
-</div>
-
-<ol>
-<li><p>在程式碼中加入attribute：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>到model定義</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<h3 id="定義-meetings"><a href="#定義-meetings" class="headerlink" title="定義@meetings"></a>定義<code>@meetings</code></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#pages_controller.rb</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">home</span><br>    <span class="hljs-variable">@meetings</span> = <span class="hljs-title class_">Meeting</span>.where(<br>      <span class="hljs-symbol">star_time:</span> <span class="hljs-title class_">Time</span>.now.beginning_of_month.beginning_of_week..<span class="hljs-title class_">Time</span>.now.end_of_month.end_of_week<br>    )<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>來說明一下這段程式碼的意思：</p>
-<div class="em-div">
-
-
-<p>使用<code>where</code>方法來檢索符合特定條件對象，<br>條件為：指定會議的開始時間應該在本月的開始到結束之間，<br>並且是在一周的開始到結束之間，這樣就可以得到當前月份內的會議。</p>
-<p>簡單來說，我們使用<code>where</code>方法，獲取當前月份內的會議，並將這些會議存儲在 <code>@meetings</code> 變數中，以便在<code>view</code>中顯示。</p>
-</div>
-
-
-<div class="em-div">
-
-<p>如果使用SQL語法，，其實更好理解</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> meetings<br><span class="hljs-keyword">WHERE</span> start_time <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;開始時間&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;結束時間&#x27;</span>;<br></code></pre></td></tr></table></figure>
-
-<p>「開始時間」：<code>Time.now.beginning_of_month.beginning_of_week</code> 生成的日期時間，<br>「結束時間」  <code>Time.now.end_of_month.end_of_week</code> 生成的日期時間，<br>這個查詢找會檢索所有在當前月份的第一週的開始時間到當前月份的最後一週的結束時間之間的會議。</p>
-</div>
-
-
-<p>這時候網頁的畫面會像這樣：<br><img src="/images/simple-calendar/2.png"></p>
-<p>為什麼還是一樣？因為Meeting沒有任何資料d(&#96;･∀･)b</p>
-<h3 id="在Meeting裡增加一些資料"><a href="#在Meeting裡增加一些資料" class="headerlink" title="在Meeting裡增加一些資料"></a>在Meeting裡增加一些資料</h3><p>到<code>http://127.0.0.1:3000/meetings</code>，點選create新增<br>新增文完畢之後，回到<code>home.html.erb</code>，使用each do方法，將meetings顯示</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date, meetings</span>| %&gt;<br>  &lt;%= date %&gt;<br>  &lt;% meetings.each <span class="hljs-keyword">do</span> |<span class="hljs-params">meeting</span>| %&gt;<br>    &lt;%= link_to meeting.title, meeting %&gt;<br>    &lt;%= meeting.description %&gt;<br>  &lt;% <span class="hljs-keyword">end</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-
-<div class="em-div">
-
-<p>補充：這裡需要輸入兩個資料，<br><code>&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</code><br>simple_calendar已經幫忙寫好方法，meetings會塞到相對應的時間內，<br>如果沒有寫的話meeting會重複印到每一天的表格內</p>
-</div>
-
-<p>這時畫面就會像這樣：<br><img src="/images/simple-calendar/3.png"></p>
-<p>做到這裡，基本上沒有樣式🤣，除了可以在<code>home.html.erb</code>內編輯樣式外，<br>另外可以使用 <a href="https://github.com/excid3/simple_calendar">simple_calendar</a>內的客製化樣式</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">simple_calendar:</span>views<br></code></pre></td></tr></table></figure>
-
-<p>這會在 app&#x2F;views 中產生一個名為 simple_calendar 的資料夾，<br>可以根據自己的意願進行編輯。<br>執行之後可以看到他幫忙長出了這些資料：</p>
-<img src="/images/simple-calendar/4.png">
-
-<p>可以到application.css做一些自定義的編輯</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#application.css</span><br>.simple-calendar &#123;<br>  .day &#123;&#125;<br><br>  .wday-<span class="hljs-number">0</span> &#123;&#125;<br>  .wday-<span class="hljs-number">1</span> &#123;&#125;<br>  .wday-<span class="hljs-number">2</span> &#123;&#125;<br>  .wday-<span class="hljs-number">3</span> &#123;&#125;<br>  .wday-<span class="hljs-number">4</span> &#123;&#125;<br>  .wday-<span class="hljs-number">5</span> &#123;&#125;<br>  .wday-<span class="hljs-number">6</span> &#123;&#125;<br><br>  .today &#123;&#125;<br>  .past &#123;&#125;<br>  .future &#123;&#125;<br><br>  .start-date &#123;&#125;<br><br>  .prev-month &#123;&#125;<br>  .<span class="hljs-keyword">next</span>-month &#123; &#125;<br>  .current-month &#123;&#125;<br><br>  .has-events &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>也可以到simple_calendar幫忙長出來app&#x2F;views&#x2F;simple_calendar內調整預設的樣式<br>我是選擇直接到<code>_month_calendar.html.erb</code>修改，最後成果如下，應該有變得好看許多🤣<br><img src="/images/simple-calendar/5.png"><br>我做了這些修改：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#_month_calendar.html.erb</span><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;container mx-auto mt-10&quot;</span>&gt;<br>  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;wrapper bg-white rounded shadow w-full&quot;</span>&gt;<br>    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;simple-calendar&quot;</span>&gt;<br>      &lt;nav&gt;<br>        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;header flex justify-between border-b p-2&quot;</span>&gt;<br>          &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-lg font-bold&quot;</span>&gt;<br>            &lt;time datetime=<span class="hljs-string">&quot;&lt;%= start_date.strftime(&#x27;%Y-%m&#x27;) %&gt;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;calendar-title&quot;</span>&gt;&lt;%= t(<span class="hljs-string">&#x27;date.month_names&#x27;</span>)[start_date.month] %&gt; &lt;%= start_date.year %&gt;&lt;<span class="hljs-regexp">/time&gt;</span><br><span class="hljs-regexp">          &lt;/span</span>&gt;<br><br>          &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;<br>            &lt;%= link_to t(<span class="hljs-string">&#x27;simple_calendar.today&#x27;</span>, <span class="hljs-symbol">default:</span> <span class="hljs-string">&#x27;Today&#x27;</span>), calendar.url_for_today_view %&gt;<br><br>            &lt;%= link_to calendar.url_for_previous_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-left-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br><br>            &lt;%= link_to calendar.url_for_next_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-right-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br>          &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">        &lt;/div</span>&gt;<br>      &lt;<span class="hljs-regexp">/nav&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">      &lt;table class=&quot;table table-striped w-full&quot;&gt;</span><br><span class="hljs-regexp">        &lt;thead&gt;</span><br><span class="hljs-regexp">          &lt;tr&gt;</span><br><span class="hljs-regexp">            &lt;% date_range.slice(0, 7).each do |day| %&gt;</span><br><span class="hljs-regexp">              &lt;th class=&quot;p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs&quot;&gt;</span><br><span class="hljs-regexp">                &lt;span class=&quot;xl:block lg:block md:block sm:block hidden&quot;&gt;</span><br><span class="hljs-regexp">                  &lt;%= t(&#x27;date.abbr_day_names&#x27;)[day.wday] %&gt;</span><br><span class="hljs-regexp">                &lt;/span</span>&gt;<br>              &lt;<span class="hljs-regexp">/th&gt;</span><br><span class="hljs-regexp">            &lt;% end %&gt;</span><br><span class="hljs-regexp">          &lt;/tr</span>&gt;<br>        &lt;<span class="hljs-regexp">/thead&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">        &lt;tbody&gt;</span><br><span class="hljs-regexp">          &lt;% date_range.each_slice(7) do |week| %&gt;</span><br><span class="hljs-regexp">            &lt;tr class=&quot;text-center h-20&quot;&gt;</span><br><span class="hljs-regexp">                &lt;% week.each do |day| %&gt;</span><br><span class="hljs-regexp">                  &lt;%= content_tag :td, class: &quot;border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300&quot; do %&gt;</span><br><span class="hljs-regexp">                    &lt;% instance_exec(day, calendar.sorted_events_for(day), &amp;passed_block) %&gt;</span><br><span class="hljs-regexp">                  &lt;% end %&gt;</span><br><span class="hljs-regexp">                &lt;% end %&gt;</span><br><span class="hljs-regexp">            &lt;/tr</span>&gt;<br>          &lt;% <span class="hljs-keyword">end</span> %&gt;<br>        &lt;<span class="hljs-regexp">/tbody&gt;</span><br><span class="hljs-regexp">      &lt;/table</span>&gt;<br>    &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">  &lt;/div</span>&gt;<br>&lt;<span class="hljs-regexp">/div&gt;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-center m-5 text-xl&quot;</span>&gt;<span class="hljs-title class_">My</span> calendar&lt;<span class="hljs-regexp">/h1&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</span><br><span class="hljs-regexp">  &lt;div class=&quot;flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden&quot;&gt;</span><br><span class="hljs-regexp">    &lt;div class=&quot;top h-5 w-full&quot;&gt;</span><br><span class="hljs-regexp">      &lt;span class=&quot;text-gray-500&quot;&gt;</span><br><span class="hljs-regexp">        &lt;%= date.strftime(&#x27;%m/</span>%d<span class="hljs-string">&#x27;) %&gt;</span><br><span class="hljs-string">      &lt;/span&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;% meetings.each do |meeting| %&gt;</span><br><span class="hljs-string">      &lt;div class=&quot;bottom flex-grow py-1 w-full cursor-pointer&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;event bg-blue-400 text-white rounded p-1 text-sm mb-1&quot;&gt;</span><br><span class="hljs-string">          &lt;%= link_to &quot;<span class="hljs-subst">#&#123;meeting.start_time.strftime(<span class="hljs-string">&#x27;%k:%M&#x27;</span>)&#125;</span> <span class="hljs-subst">#&#123;meeting.title&#125;</span>&quot;, meeting %&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">      &lt;/div&gt;</span><br><span class="hljs-string">    &lt;% end %&gt;</span><br><span class="hljs-string">  &lt;/div&gt;</span><br><span class="hljs-string">&lt;% end %&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>simple_calendar其實也有把每個部份都定義了class名稱，<br>所以也可以到application.css檔案去更改套用，<br>但因為我使用tailwind，可以直接編輯html碼上的css，<br>後續優化可以再將重複的css樣式再放到application.css<br>或其他自定義的css即可，看個人習慣！</p>
-<p>這樣就完成啦！是不是客製化程度非常高呢！<br>本篇文章是我由以下參考資料整理+自己製作而成，如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://github.com/excid3/simple_calendar">simple_calendar</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://youtu.be/NhAGTL4ARfw?feature=shared">Create A Simple Calendar In Ruby On Rails 7</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://tailwindcomponents.com/component/calendar-table">Calendar Table Template</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby on Rails</category>
-      </categories>
-      <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>rails</tag>
-        <tag>ruby</tag>
-        <tag>simple calendar</tag>
-        <tag>gem</tag>
       </tags>
   </entry>
   <entry>
@@ -2666,6 +2547,127 @@ border-style:dashed;
       <tags>
         <tag>轉職</tag>
         <tag>職涯</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</title>
+    <url>/2024/01/14/simple-calendar/</url>
+    <content><![CDATA[<style>
+
+
+.em-div{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+
+<img src="/images/simple-calendar/banner.avif">
+
+<p>圖片來源：<a href="https://unsplash.com/photos/black-marker-on-notebook-zni0zgb3bkQ">Unsplash-Estée Janssens</a><br>在製作專案的時候發現寶藏gem套件<a href="https://github.com/excid3/simple_calendar">simple_calendar</a>(ﾉ&gt;ω&lt;)ﾉ，<br>可以輕鬆地製作月曆，而且客製化程度高，可以自定義CSS樣式，<br>這是我這次做出來的月曆：<br><img src="/images/simple-calendar/5.png"></p>
+<ul>
+<li>本次選擇使用<a href="%5Bhttps://tailwindcss.com/%5D(https://tailwindcss.com/)">tailwind</a> CSS框架，安裝方法可以參考<a href="https://tailwindcss.com/docs/installation">tailwind installaion</a></li>
+<li>亦可以使用bootstrap，安裝請參考：<a href="%5Bhttps://getbootstrap.com/%5D(https://getbootstrap.com/)">bootstrap</a></li>
+</ul>
+<hr>
+<h3 id="安裝simple-calendar"><a href="#安裝simple-calendar" class="headerlink" title="安裝simple_calendar"></a>安裝<a href="https://github.com/excid3/simple_calendar">simple_calendar</a></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>bundle add simple_calendar<br></code></pre></td></tr></table></figure>
+
+<p>貼上後執行bundle i即可</p>
+<h3 id="製作新增會議的CRUD"><a href="#製作新增會議的CRUD" class="headerlink" title="製作新增會議的CRUD"></a>製作新增會議的CRUD</h3><p>因為demo所以使用meeting，可以自由選擇名稱，meeting會有開始時間＆結束時間，所以也增加<code>start_time</code> &amp; <code>end_time</code>的column</p>
+<p>因為新增會議不是本次demo的重點🤣使用scaffold會幫忙製作CRUD</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#terminal</span><br>rails g scaffold <span class="hljs-title class_">Consultation</span> title <span class="hljs-symbol">description:</span>text <span class="hljs-symbol">start_time:</span>datetime e<br><span class="hljs-symbol">nd_time:</span>datetime<br></code></pre></td></tr></table></figure>
+
+<p>完成後執行<code>rails db:migrate</code></p>
+<h3 id="建立主頁"><a href="#建立主頁" class="headerlink" title="建立主頁"></a>建立主頁</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g controller pages home<br></code></pre></td></tr></table></figure>
+
+<h3 id="在主頁自定義方法"><a href="#在主頁自定義方法" class="headerlink" title="在主頁自定義方法"></a>在主頁自定義方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+<p>除了Month Calendar，另外還有Week Calendar、Custom Length Calendar<br>客製化程度很高，可以依自己需要選擇</p>
+<p>開啟 <code>rails s</code>就會出現月曆</p>
+<img src="/images/simple-calendar/2.png">
+
+<div class="em-div">
+補充：simple_calendar 預設開始時間的Model column是start_time，結束時間是end_time，
+如果是別的column名稱，有兩個方法可以改變：
+</div>
+
+<ol>
+<li><p>在程式碼中加入attribute：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>到model定義</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="定義-meetings"><a href="#定義-meetings" class="headerlink" title="定義@meetings"></a>定義<code>@meetings</code></h3><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#pages_controller.rb</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">home</span><br>    <span class="hljs-variable">@meetings</span> = <span class="hljs-title class_">Meeting</span>.where(<br>      <span class="hljs-symbol">star_time:</span> <span class="hljs-title class_">Time</span>.now.beginning_of_month.beginning_of_week..<span class="hljs-title class_">Time</span>.now.end_of_month.end_of_week<br>    )<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>來說明一下這段程式碼的意思：</p>
+<div class="em-div">
+
+
+<p>使用<code>where</code>方法來檢索符合特定條件對象，<br>條件為：指定會議的開始時間應該在本月的開始到結束之間，<br>並且是在一周的開始到結束之間，這樣就可以得到當前月份內的會議。</p>
+<p>簡單來說，我們使用<code>where</code>方法，獲取當前月份內的會議，並將這些會議存儲在 <code>@meetings</code> 變數中，以便在<code>view</code>中顯示。</p>
+</div>
+
+
+<div class="em-div">
+
+<p>如果使用SQL語法，，其實更好理解</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> meetings<br><span class="hljs-keyword">WHERE</span> start_time <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;開始時間&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;結束時間&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>「開始時間」：<code>Time.now.beginning_of_month.beginning_of_week</code> 生成的日期時間，<br>「結束時間」  <code>Time.now.end_of_month.end_of_week</code> 生成的日期時間，<br>這個查詢找會檢索所有在當前月份的第一週的開始時間到當前月份的最後一週的結束時間之間的會議。</p>
+</div>
+
+
+<p>這時候網頁的畫面會像這樣：<br><img src="/images/simple-calendar/2.png"></p>
+<p>為什麼還是一樣？因為Meeting沒有任何資料d(&#96;･∀･)b</p>
+<h3 id="在Meeting裡增加一些資料"><a href="#在Meeting裡增加一些資料" class="headerlink" title="在Meeting裡增加一些資料"></a>在Meeting裡增加一些資料</h3><p>到<code>http://127.0.0.1:3000/meetings</code>，點選create新增<br>新增文完畢之後，回到<code>home.html.erb</code>，使用each do方法，將meetings顯示</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date, meetings</span>| %&gt;<br>  &lt;%= date %&gt;<br>  &lt;% meetings.each <span class="hljs-keyword">do</span> |<span class="hljs-params">meeting</span>| %&gt;<br>    &lt;%= link_to meeting.title, meeting %&gt;<br>    &lt;%= meeting.description %&gt;<br>  &lt;% <span class="hljs-keyword">end</span> %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<div class="em-div">
+
+<p>補充：這裡需要輸入兩個資料，<br><code>&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</code><br>simple_calendar已經幫忙寫好方法，meetings會塞到相對應的時間內，<br>如果沒有寫的話meeting會重複印到每一天的表格內</p>
+</div>
+
+<p>這時畫面就會像這樣：<br><img src="/images/simple-calendar/3.png"></p>
+<p>做到這裡，基本上沒有樣式🤣，除了可以在<code>home.html.erb</code>內編輯樣式外，<br>另外可以使用 <a href="https://github.com/excid3/simple_calendar">simple_calendar</a>內的客製化樣式</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>rails g <span class="hljs-symbol">simple_calendar:</span>views<br></code></pre></td></tr></table></figure>
+
+<p>這會在 app&#x2F;views 中產生一個名為 simple_calendar 的資料夾，<br>可以根據自己的意願進行編輯。<br>執行之後可以看到他幫忙長出了這些資料：</p>
+<img src="/images/simple-calendar/4.png">
+
+<p>可以到application.css做一些自定義的編輯</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#application.css</span><br>.simple-calendar &#123;<br>  .day &#123;&#125;<br><br>  .wday-<span class="hljs-number">0</span> &#123;&#125;<br>  .wday-<span class="hljs-number">1</span> &#123;&#125;<br>  .wday-<span class="hljs-number">2</span> &#123;&#125;<br>  .wday-<span class="hljs-number">3</span> &#123;&#125;<br>  .wday-<span class="hljs-number">4</span> &#123;&#125;<br>  .wday-<span class="hljs-number">5</span> &#123;&#125;<br>  .wday-<span class="hljs-number">6</span> &#123;&#125;<br><br>  .today &#123;&#125;<br>  .past &#123;&#125;<br>  .future &#123;&#125;<br><br>  .start-date &#123;&#125;<br><br>  .prev-month &#123;&#125;<br>  .<span class="hljs-keyword">next</span>-month &#123; &#125;<br>  .current-month &#123;&#125;<br><br>  .has-events &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>也可以到simple_calendar幫忙長出來app&#x2F;views&#x2F;simple_calendar內調整預設的樣式<br>我是選擇直接到<code>_month_calendar.html.erb</code>修改，最後成果如下，應該有變得好看許多🤣<br><img src="/images/simple-calendar/5.png"><br>我做了這些修改：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#_month_calendar.html.erb</span><br>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;container mx-auto mt-10&quot;</span>&gt;<br>  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;wrapper bg-white rounded shadow w-full&quot;</span>&gt;<br>    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;simple-calendar&quot;</span>&gt;<br>      &lt;nav&gt;<br>        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;header flex justify-between border-b p-2&quot;</span>&gt;<br>          &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-lg font-bold&quot;</span>&gt;<br>            &lt;time datetime=<span class="hljs-string">&quot;&lt;%= start_date.strftime(&#x27;%Y-%m&#x27;) %&gt;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;calendar-title&quot;</span>&gt;&lt;%= t(<span class="hljs-string">&#x27;date.month_names&#x27;</span>)[start_date.month] %&gt; &lt;%= start_date.year %&gt;&lt;<span class="hljs-regexp">/time&gt;</span><br><span class="hljs-regexp">          &lt;/span</span>&gt;<br><br>          &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;<br>            &lt;%= link_to t(<span class="hljs-string">&#x27;simple_calendar.today&#x27;</span>, <span class="hljs-symbol">default:</span> <span class="hljs-string">&#x27;Today&#x27;</span>), calendar.url_for_today_view %&gt;<br><br>            &lt;%= link_to calendar.url_for_previous_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-left-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br><br>            &lt;%= link_to calendar.url_for_next_view <span class="hljs-keyword">do</span> %&gt;<br>              &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;p-1&quot;</span>&gt;<br>                &lt;svg width=<span class="hljs-string">&quot;1em&quot;</span> fill=<span class="hljs-string">&quot;gray&quot;</span> height=<span class="hljs-string">&quot;1em&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 16 16&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bi bi-arrow-right-circle&quot;</span> fill=<span class="hljs-string">&quot;currentColor&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z&quot;</span>/&gt;<br>                  &lt;path fill-rule=<span class="hljs-string">&quot;evenodd&quot;</span> d=<span class="hljs-string">&quot;M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z&quot;</span>/&gt;<br>                &lt;<span class="hljs-regexp">/svg&gt;</span><br><span class="hljs-regexp">              &lt;/button</span>&gt;<br>            &lt;% <span class="hljs-keyword">end</span> %&gt;<br>          &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">        &lt;/div</span>&gt;<br>      &lt;<span class="hljs-regexp">/nav&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">      &lt;table class=&quot;table table-striped w-full&quot;&gt;</span><br><span class="hljs-regexp">        &lt;thead&gt;</span><br><span class="hljs-regexp">          &lt;tr&gt;</span><br><span class="hljs-regexp">            &lt;% date_range.slice(0, 7).each do |day| %&gt;</span><br><span class="hljs-regexp">              &lt;th class=&quot;p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs&quot;&gt;</span><br><span class="hljs-regexp">                &lt;span class=&quot;xl:block lg:block md:block sm:block hidden&quot;&gt;</span><br><span class="hljs-regexp">                  &lt;%= t(&#x27;date.abbr_day_names&#x27;)[day.wday] %&gt;</span><br><span class="hljs-regexp">                &lt;/span</span>&gt;<br>              &lt;<span class="hljs-regexp">/th&gt;</span><br><span class="hljs-regexp">            &lt;% end %&gt;</span><br><span class="hljs-regexp">          &lt;/tr</span>&gt;<br>        &lt;<span class="hljs-regexp">/thead&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">        &lt;tbody&gt;</span><br><span class="hljs-regexp">          &lt;% date_range.each_slice(7) do |week| %&gt;</span><br><span class="hljs-regexp">            &lt;tr class=&quot;text-center h-20&quot;&gt;</span><br><span class="hljs-regexp">                &lt;% week.each do |day| %&gt;</span><br><span class="hljs-regexp">                  &lt;%= content_tag :td, class: &quot;border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300&quot; do %&gt;</span><br><span class="hljs-regexp">                    &lt;% instance_exec(day, calendar.sorted_events_for(day), &amp;passed_block) %&gt;</span><br><span class="hljs-regexp">                  &lt;% end %&gt;</span><br><span class="hljs-regexp">                &lt;% end %&gt;</span><br><span class="hljs-regexp">            &lt;/tr</span>&gt;<br>          &lt;% <span class="hljs-keyword">end</span> %&gt;<br>        &lt;<span class="hljs-regexp">/tbody&gt;</span><br><span class="hljs-regexp">      &lt;/table</span>&gt;<br>    &lt;<span class="hljs-regexp">/div&gt;</span><br><span class="hljs-regexp">  &lt;/div</span>&gt;<br>&lt;<span class="hljs-regexp">/div&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-center m-5 text-xl&quot;</span>&gt;<span class="hljs-title class_">My</span> calendar&lt;<span class="hljs-regexp">/h1&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;%= month_calendar(events: @meetings) do |date, meetings| %&gt;</span><br><span class="hljs-regexp">  &lt;div class=&quot;flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden&quot;&gt;</span><br><span class="hljs-regexp">    &lt;div class=&quot;top h-5 w-full&quot;&gt;</span><br><span class="hljs-regexp">      &lt;span class=&quot;text-gray-500&quot;&gt;</span><br><span class="hljs-regexp">        &lt;%= date.strftime(&#x27;%m/</span>%d<span class="hljs-string">&#x27;) %&gt;</span><br><span class="hljs-string">      &lt;/span&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;% meetings.each do |meeting| %&gt;</span><br><span class="hljs-string">      &lt;div class=&quot;bottom flex-grow py-1 w-full cursor-pointer&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;event bg-blue-400 text-white rounded p-1 text-sm mb-1&quot;&gt;</span><br><span class="hljs-string">          &lt;%= link_to &quot;<span class="hljs-subst">#&#123;meeting.start_time.strftime(<span class="hljs-string">&#x27;%k:%M&#x27;</span>)&#125;</span> <span class="hljs-subst">#&#123;meeting.title&#125;</span>&quot;, meeting %&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">      &lt;/div&gt;</span><br><span class="hljs-string">    &lt;% end %&gt;</span><br><span class="hljs-string">  &lt;/div&gt;</span><br><span class="hljs-string">&lt;% end %&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>simple_calendar其實也有把每個部份都定義了class名稱，<br>所以也可以到application.css檔案去更改套用，<br>但因為我使用tailwind，可以直接編輯html碼上的css，<br>後續優化可以再將重複的css樣式再放到application.css<br>或其他自定義的css即可，看個人習慣！</p>
+<p>這樣就完成啦！是不是客製化程度非常高呢！<br>本篇文章是我由以下參考資料整理+自己製作而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://github.com/excid3/simple_calendar">simple_calendar</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://youtu.be/NhAGTL4ARfw?feature=shared">Create A Simple Calendar In Ruby On Rails 7</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://tailwindcomponents.com/component/calendar-table">Calendar Table Template</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby on Rails</category>
+      </categories>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>rails</tag>
+        <tag>ruby</tag>
+        <tag>simple calendar</tag>
+        <tag>gem</tag>
       </tags>
   </entry>
 </search>
