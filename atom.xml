@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-10-06T09:58:17.397Z</updated>
+  <updated>2024-10-08T12:06:22.573Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Django: FBV &amp; CBV - DetailView</title>
+    <link href="http://adora-xu.com/2024/10/08/Django-FBV-CBV-DetailView/"/>
+    <id>http://adora-xu.com/2024/10/08/Django-FBV-CBV-DetailView/</id>
+    <published>2024-10-08T11:59:32.000Z</published>
+    <updated>2024-10-08T12:06:22.573Z</updated>
+    
+    <content type="html"><![CDATA[<style>.em-div{background-color: #d4a373;color: white;padding: 10px;margin: 10px;border-radius: 5px;}.em-div2{border:2px #d4a373 solid;margin:5px;padding:10px 2px 2px 2px;border-style:dashed;}</style><h3 id=""><a href="#" class="headerlink" title=""></a></h3><img src="/images/Django-FBV-CBV-DetailView/detail_view.webp"><p>關於 FBV 和 CBV 的比較，可以參考我上篇文章：<a href="https://adora-xu.com/2024/10/06/Django-FBV-CBV-TemplateView/">Django: FBV &amp; CBV - TemplateView</a></p><p>本篇的程式可以參考：<a href="https://github.com/Adoraxuu/myview/tree/DetailView">GitHub</a></p><h2 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h2><p>假設你我們要建立一個部落格，而其中部落格的文章的詳細頁面，使用 FBV 可以這樣子撰寫：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#urls.py</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&lt;slug:slug&gt;/&#x27;</span>, views.post_detail, name=<span class="hljs-string">&#x27;post_detail&#x27;</span>),<br>]<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> get_object_or_404<br><span class="hljs-keyword">from</span> django.template.response <span class="hljs-keyword">import</span> TemplateResponse<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">post_detail</span>(<span class="hljs-params">request, slug</span>):<br>    <span class="hljs-keyword">return</span> TemplateResponse(request, <span class="hljs-string">&#x27;blog/post_detail.html&#x27;</span>, &#123;<br>        <span class="hljs-string">&#x27;post&#x27;</span>: get_object_or_404(Post.objects.<span class="hljs-built_in">all</span>(), slug=slug),<br>    &#125;)<br></code></pre></td></tr></table></figure><h3 id="shortcuts-＆-get-object-or-404"><a href="#shortcuts-＆-get-object-or-404" class="headerlink" title="shortcuts ＆ get_object_or_404"></a>shortcuts ＆ get_object_or_404</h3><p>在 Django 框架中，get_object_or_404 是一個常用的「<a href="https://docs.djangoproject.com/zh-hans/5.1/topics/http/shortcuts/">shortcuts</a>」函數，用來簡化從資料庫查詢對象並處理找不到對象的情況。這個便捷函數屬於 django.shortcuts 套件。django.shortcuts 套件中的函數是跨越 MVC 層級的輔助工具，雖然這些工具引入了某種程度的耦合，但這種耦合是「受控的」，也就是說，這樣的設計不會對整個程式碼產生過大的影響。</p><p>設計這些「<a href="https://docs.djangoproject.com/zh-hans/5.1/topics/http/shortcuts/">shortcuts</a>」函數的核心是，雖然它們引入了控制層和模型層之間的耦合，但這種耦合是為了簡化程式碼且只會對局部產生影響。</p><p>例如，如果我們在視圖中使用 get_object_or_404，它幫助我們自動處理對象找不到的情況，並在需要時自動返回 HTTP 404 錯誤。而不是要求我們使用手動捕捉異常並引發<code>ObjectDoesNotExistHttp404ObjectDoesNotExist</code>。這樣，我們可以保持程式碼簡潔，不必每次都重複寫相同的錯誤處理邏輯，節省了時間和精力。</p><h3 id="為何不直接在模型層處理？"><a href="#為何不直接在模型層處理？" class="headerlink" title="為何不直接在模型層處理？"></a><strong>為何不直接在模型層處理？</strong></h3><p>如果我們選擇讓模型層自動引發 Http404 錯誤，這會導致模型層和視圖層之間的過度耦合，也就是說，模型層的設計會變得和視圖層綁定過緊。這違反了 Django 的設計原則之一——<strong>保持鬆散耦合</strong>。Django 的設計理念強調各個層級之間的相互獨立性，以便讓程式碼更具可維護性、可重用性和靈活性。</p><p>介紹完了 FBV，接下來看看 CBV，上面的 FBV 可以改寫成以下：</p><h2 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#urls.py</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&lt;slug:slug&gt;/&#x27;</span>, views.PostDetailView.as_view(), name=<span class="hljs-string">&#x27;post_detail&#x27;</span>),<br>]<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.views.generic <span class="hljs-keyword">import</span> DetailView<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostDetailView</span>(<span class="hljs-title class_ inherited__">DetailView</span>):<br>    model = Post<br>    template_name = <span class="hljs-string">&#x27;blog/post_detail.html&#x27;</span><br>    context_object_name = <span class="hljs-string">&#x27;post&#x27;</span><br>    slug_field = <span class="hljs-string">&#x27;slug&#x27;</span><br>    slug_url_kwarg = <span class="hljs-string">&#x27;slug&#x27;</span> <span class="hljs-comment"># 如果model欄位沒有設定SlugField就要加這行</span><br></code></pre></td></tr></table></figure><p>Python 的設計哲學為「Explicit is better than implicit」（明瞭優於隱晦），主要的意思為「<strong>當寫程式時，應該明確地表達意圖，而不是依賴隱晦或暗示的方式來達成目的</strong>。」，程式的結構和邏輯應該是清晰易懂的，讓其他開發者或未來的自己可以很快理解它，而不是透過隱含的規則或約定去猜測程式的意圖。</p><p>簡單來說，要讓人一看就懂，不過 CBV 比較像是 Ruby on Rails 的「convention over configuration」（約定優於配置），框架自動配置許多細節，這樣開發者可以專注於業務邏輯，而不需要花太多時間設定各種配置。CBV 的優勢在於其繼承性和可擴展性，能夠避免重複程式，以及提供統一的邏輯結構。不過這樣子也代表，初學者需要花費比較多時間才能夠理解框架的自動配置。</p><h3 id="應該選擇-CBV-還是-FBV-呢？"><a href="#應該選擇-CBV-還是-FBV-呢？" class="headerlink" title="應該選擇 CBV 還是 FBV 呢？"></a>應該選擇 CBV 還是 FBV 呢？</h3><p>這其實要取決於專案的需求。簡單總結一下兩者的特點：</p><div class="em-div2"><p><strong>FBV 更靈活，適合需要頻繁自定義的場景。</strong></p><p><strong>CBV 更簡潔，但可能隱藏太多邏輯，對於維護來說，增大了理解成本。</strong></p></div><p>這也是為什麼我想寫一系列 CBV 相關文章的原因之一。作為一個 Ruby on Rails 出身的開發者，CBV 的設計讓我感覺非常熟悉。</p><p>今天的分享就到這裡啦！下次我們再來探討更多 Django CBV 的使用細節～</p><p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p><h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote><p><a href="https://spookylukey.github.io/django-views-the-right-way/index.html">Django Views — The Right Way</a></p></blockquote><blockquote><p><a href="https://docs.djangoproject.com/en/5.1/ref/class-based-views/generic-display/">Django Docs - Generic display views</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;style&gt;
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 s</summary>
+      
+    
+    
+    
+    <category term="Django" scheme="http://adora-xu.com/categories/Django/"/>
+    
+    <category term="Django-CBV" scheme="http://adora-xu.com/categories/Django-CBV/"/>
+    
+    
+    <category term="Django" scheme="http://adora-xu.com/tags/Django/"/>
+    
+    <category term="FBV" scheme="http://adora-xu.com/tags/FBV/"/>
+    
+    <category term="CBV" scheme="http://adora-xu.com/tags/CBV/"/>
+    
+    <category term="DetailView" scheme="http://adora-xu.com/tags/DetailView/"/>
+    
+  </entry>
   
   <entry>
     <title>Django: FBV &amp; CBV - TemplateView</title>
@@ -678,38 +720,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="single number" scheme="http://adora-xu.com/tags/single-number/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day10 valid palindrome</title>
-    <link href="http://adora-xu.com/2024/02/08/leetcode-valid-palindrome/"/>
-    <id>http://adora-xu.com/2024/02/08/leetcode-valid-palindrome/</id>
-    <published>2024-02-08T15:03:06.000Z</published>
-    <updated>2024-09-20T07:07:57.159Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十天，終於完成1&#x2F;3了，讓我們開始吧！</p><img src="/images/leetcode-valid-palindrome/banner.png"><p>題目來源：<a href="https://leetcode.com/problems/valid-palindrome">leetcode</a></p><p>這個問題要求判斷句子是否為回文。在進行比較時，會需要先將所有字母轉換為小寫，並去除所有非字母和數字。然後，比較處理過的字串是否和它的反轉相等。</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>)<br>  clean_s = s.downcase.gsub(<span class="hljs-regexp">/[^a-z0-9]/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>  clean_s == clean_s.reverse<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>使用<code>downcase</code>將字符轉換為小寫，再使用<code>gsub</code>去除非字母和數字的字，最後比較反轉是否相同就完成了～</p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_palindrome</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 將字符轉換為小寫，去除非字母和數字的字</span><br>    clean_s = <span class="hljs-string">&#x27;&#x27;</span>.join(char.lower() <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s <span class="hljs-keyword">if</span> char.isalnum())<br>    <span class="hljs-comment"># 比較處理過的字串和它的反轉是否相等</span><br>    <span class="hljs-keyword">return</span> clean_s == clean_s[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure><p><code>isalnum()</code>方法用於檢查字符串中的所有字是否都是字母和數字。如果是，該方法返回 True，表示所有字符均為字母（a-z、A-Z）和數字（0-9）。反之，如果字符串中包含非字母和非數字的字符，例如空格、驚嘆號、井號、百分號、和問號等，該方法將返回 False。</p><p>使用這個方法就不用使用<code>gsub</code>取代了，因為只有是字母和數字才會放進<code>clean_s</code>裡</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">s</span>) &#123;<br>  <span class="hljs-comment">// 將字串轉換為小寫，去除非字母和數字</span><br>  <span class="hljs-keyword">const</span> cleanS = s.<span class="hljs-title function_">toLowerCase</span>().<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[^a-z0-9]/g</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>  <span class="hljs-comment">// 比較處理過的字串和它的反轉是否相等</span><br>  <span class="hljs-keyword">return</span> cleanS === cleanS.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第十天，終於完成1&amp;#x2F;3了，讓我們開始吧！&lt;/</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="valid palindrome" scheme="http://adora-xu.com/tags/valid-palindrome/"/>
     
   </entry>
   
