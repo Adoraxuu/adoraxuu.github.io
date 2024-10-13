@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Advent of code 2023 —Day 01</title>
+    <url>/2023/12/17/AOC-day01/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
+<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
+</blockquote>
+<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
+<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
+<p>這是第一天 Part 1的題目：</p>
+<img src="/images/AOC/01.png">
+
+<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
+<img src="/images/AOC/02.png">
+
+<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
+<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
+<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
+<div class="em-div2">
+
+<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
+</div>
+match會回傳符合內容的物件，看起來像這個樣子：
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
+
+<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
+<img src="/images/AOC/03.png">
+
+<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
+<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
+<p>如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ruby</category>
+      </categories>
+      <tags>
+        <tag>AOC</tag>
+        <tag>Advent of code</tag>
+        <tag>Ruby</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django: FBV &amp; CBV - DetailView</title>
     <url>/2024/10/08/Django-FBV-CBV-DetailView/</url>
     <content><![CDATA[<style>
@@ -155,8 +223,11 @@ border-style:dashed;
   <entry>
     <title>Django: ListView &amp; paginator</title>
     <url>/2024/10/13/Django-ListView-paginator/</url>
-    <content><![CDATA[<h2 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h2><p><a href="https://adora-xu.com/categories/Django-CBV/">上一篇文章</a>寫到部落格文章的詳細頁面，如果要顯示文章列表，我們可以這樣寫：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">post_list</span>(<span class="hljs-params">request</span>):<br>    posts = Post.objects.<span class="hljs-built_in">all</span>().order_by(<span class="hljs-string">&#x27;id&#x27;</span>)<br>    paginator = Paginator(posts, <span class="hljs-number">10</span>)<br>    page_number = request.GET.get(<span class="hljs-string">&#x27;page&#x27;</span>)<br>    page_obj = paginator.get_page(page_number)<br>    <span class="hljs-keyword">return</span> TemplateResponse(request, <span class="hljs-string">&#x27;blog/post_list.html&#x27;</span>, &#123;<br>        <span class="hljs-string">&#x27;page_obj&#x27;</span>: page_obj,<br>    &#125;)<br></code></pre></td></tr></table></figure>
+    <content><![CDATA[<img src="/images/Django-ListView-paginator/01.webp">
+
+<p><a href="%5BGitHub%5D(https://github.com/Adoraxuu/myview/tree/ListView)">GitHub 範例</a><br>這篇是<a href="https://adora-xu.com/categories/Django-CBV/">Django CBV, FBV 系列</a>的延續，如果還沒看過可以先看之前的文章 ٩(｡・ω・｡)</p>
+<h2 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h2><p>上一篇文章寫到部落格文章的詳細頁面，如果要顯示文章列表，我們可以這樣寫：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">post_list</span>(<span class="hljs-params">request</span>):<br>    posts = Post.objects.<span class="hljs-built_in">all</span>()<br>    paginator = Paginator(posts, <span class="hljs-number">10</span>)<br>    page_number = request.GET.get(<span class="hljs-string">&#x27;page&#x27;</span>)<br>    page_obj = paginator.get_page(page_number)<br>    <span class="hljs-keyword">return</span> TemplateResponse(request, <span class="hljs-string">&#x27;blog/post_list.html&#x27;</span>, &#123;<br>        <span class="hljs-string">&#x27;page_obj&#x27;</span>: page_obj,<br>    &#125;)<br></code></pre></td></tr></table></figure>
 
 <p>通常列表會分頁顯示，所以這裡我們使用了 Django 的<a href="https://docs.djangoproject.com/en/stable/topics/pagination/#using-paginator-in-a-view-function">Paginator</a>  類。其中<a href="https://docs.djangoproject.com/en/stable/ref/paginator/#django.core.paginator.Paginator.get_page">Paginator.get_page</a>方法會傳回一個<a href="https://docs.djangoproject.com/en/stable/ref/paginator/#page-class">Page</a>物件，其中包含所有與頁數相關的詳細信息，像是：</p>
 <figure class="highlight applescript"><table><tr><td class="code"><pre><code class="hljs applescript">•	page_obj.has_previous：是否有上一頁。<br>•	page_obj.has_next：是否有下一頁。<br>•	page_obj.paginator.num_pages：總頁數（從 page_obj 中可以訪問 paginator 的屬性）。<br>•	page_obj.<span class="hljs-built_in">number</span>：當前頁數。<br></code></pre></td></tr></table></figure>
@@ -272,74 +343,6 @@ MVC模式（Model–view–controller）是軟體工程中的一種軟體架構�
         <tag>Ruby</tag>
         <tag>Rails</tag>
         <tag>MVC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Advent of code 2023 —Day 01</title>
-    <url>/2023/12/17/AOC-day01/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<h3 id="關於Advent-of-code"><a href="#關於Advent-of-code" class="headerlink" title="關於Advent of code"></a>關於Advent of code</h3><blockquote>
-<p><a href="https://adventofcode.com/">“Advent of code”</a>是一年一度的以聖誕節為主題的計算機程式挑戰。自2015年以來一直在運行。程式難題涵蓋各種技能集和技能級別，可以使用任何編程語言來解決。參與者還可以在全球和私人排行榜上根據速度進行競爭。該活動由軟件工程師Eric Wastl創立並維護。</p>
-</blockquote>
-<p>來源：<a href="https://en.wikipedia.org/wiki/Advent_of_Code">維基百科</a></p>
-<h3 id="Day-1-part-1"><a href="#Day-1-part-1" class="headerlink" title="Day 1 - part.1"></a>Day 1 - part.1</h3><p>今年第一次來參與Advent of code，順便把我的解題過程也記錄下來٩(^ᴗ^)۶</p>
-<p>這是第一天 Part 1的題目：</p>
-<img src="/images/AOC/01.png">
-
-<p>第一部分比較簡單，只要透過gsub就可以解決！</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_input</span>(<span class="hljs-params">input_array</span>)<br>  results = []<br><span class="hljs-comment">#設定一個空陣列</span><br><br><span class="hljs-comment"># 使用each do將陣列裡的數丟出處理並替換</span><br>  input_array.each <span class="hljs-keyword">do</span> |<span class="hljs-params">input_string</span>|<br>    digits = input_string.gsub(<span class="hljs-regexp">/\D/</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    result = <span class="hljs-string">&quot;<span class="hljs-subst">#&#123;digits[<span class="hljs-number">0</span>]&#125;</span><span class="hljs-subst">#&#123;digits[-<span class="hljs-number">1</span>]&#125;</span>&quot;</span><br><span class="hljs-comment">#利用字串將首位數+尾數串起來，如果只有一個數字則重複</span><br>    results.push(result)<br><span class="hljs-comment">#將結果推進result裡</span><br>  <span class="hljs-keyword">end</span><br><br>  <span class="hljs-comment"># 計算結果陣列中數字的總和 #利用.map(&amp;:to_i)將陣列裡的字串轉為數字才可以相加</span><br>  sum_result = results.map(&amp;<span class="hljs-symbol">:to_i</span>).sum<br><br>  <span class="hljs-comment"># 輸出結果</span><br>  puts sum_result<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="Day1-Part-2"><a href="#Day1-Part-2" class="headerlink" title="Day1 Part.2"></a>Day1 Part.2</h3><p>第二部分我整個大卡關(ᗒᗣᗕ)՞</p>
-<img src="/images/AOC/02.png">
-
-<p>有想出說做出一個hash，將”one” &#x3D;&gt; “1”依序輸入進去，<br>接著使用each+gsub將將裡面的數字替換掉，<br>但遇到eightwothree，輸出的結果卻是eigh23….</p>
-<p>最後上網找了<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>分享的解法，<br>來源： <a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-<p>原來使用match方法就可以了ʕ •̀ o •́ ʔ</p>
-<p>關於match，<a href="https://rubyapi.org/3.2/o/s?q=match">Ruby API</a>是這樣解釋：<br><strong><strong><a href="https://rubyapi.org/3.2/o/string#method-i-match">String#match</a></strong></strong></p>
-<div class="em-div2">
-
-<p>Returns a MatchData object (or <code>nil</code>) based on <code>self</code> and the given <code>pattern</code>.<br>Note: also updates <a href="https://rubyapi.org/3.2/o/regexp#class-Regexp-label-Special+global+variables">Special global variables at <code>Regexp</code></a>.<br> Computes <code>regexp</code> by converting <code>pattern</code> (if not already a Regexp).</p>
-</div>
-match會回傳符合內容的物件，看起來像這個樣子：
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">&#x27;foo&#x27;</span>.match(<span class="hljs-string">&#x27;f&#x27;</span>) <span class="hljs-comment"># =&gt; #&lt;MatchData &quot;f&quot;&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>另外可以使用常規表達法轉換，所以解法可以這樣寫：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby">input = <span class="hljs-string">&lt;&lt;~INPUT</span><br><span class="hljs-string">two1nine</span><br><span class="hljs-string">eightwothree</span><br><span class="hljs-string">abcone2threexyz</span><br><span class="hljs-string">xtwone3four</span><br><span class="hljs-string">4nineeightseven2</span><br><span class="hljs-string">zoneight234</span><br><span class="hljs-string">7pqrstsixteen</span><br><span class="hljs-string">INPUT</span><br><br>replacement = &#123;<br>  <span class="hljs-string">&quot;one&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;two&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;three&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;four&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;five&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;six&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;seven&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;eight&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;nine&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;1&quot;</span> =&gt; <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;2&quot;</span> =&gt; <span class="hljs-string">&quot;2&quot;</span>,<br>  <span class="hljs-string">&quot;3&quot;</span> =&gt; <span class="hljs-string">&quot;3&quot;</span>,<br>  <span class="hljs-string">&quot;4&quot;</span> =&gt; <span class="hljs-string">&quot;4&quot;</span>,<br>  <span class="hljs-string">&quot;5&quot;</span> =&gt; <span class="hljs-string">&quot;5&quot;</span>,<br>  <span class="hljs-string">&quot;6&quot;</span> =&gt; <span class="hljs-string">&quot;6&quot;</span>,<br>  <span class="hljs-string">&quot;7&quot;</span> =&gt; <span class="hljs-string">&quot;7&quot;</span>,<br>  <span class="hljs-string">&quot;8&quot;</span> =&gt; <span class="hljs-string">&quot;8&quot;</span>,<br>  <span class="hljs-string">&quot;9&quot;</span> =&gt; <span class="hljs-string">&quot;9&quot;</span>,<br>  <span class="hljs-string">&quot;0&quot;</span> =&gt; <span class="hljs-string">&quot;0&quot;</span><br>&#125;<br>result = input.each_line.map <span class="hljs-keyword">do</span> |<span class="hljs-params">line</span>|<br>  digits = line.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br><span class="hljs-comment">#匹配hash的key，並將所有keys用|(or)隔開，一個符合即可，後面的0為從最左邊最一開始匹配</span><br>  first = replacement[digits[<span class="hljs-number">0</span>]]<br><br>  digits = line.reverse.match(<span class="hljs-regexp">/(<span class="hljs-subst">#&#123;replacement.keys.map(&amp;<span class="hljs-symbol">:reverse</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>)&#125;</span>)/</span>, <span class="hljs-number">0</span>)<br>  last = replacement[digits[<span class="hljs-number">0</span>].reverse]<br><span class="hljs-comment">#使用反轉搜索最後一個數</span><br><br>  (first+last).to_i<br><span class="hljs-keyword">end</span>.sum<br><br>p result<br></code></pre></td></tr></table></figure>
-
-<p>輸入結果最後拿到星星了(´∀&#96;)（有點心虛）</p>
-<img src="/images/AOC/03.png">
-
-<p>不過在挑戰的過程中，感覺自己又進步了一些ヾ(*´∇&#96;)ﾉ</p>
-<p>最後真的很感謝<a href="https://www.youtube.com/@cjav_dev">CJ Avilla</a>大神能夠提供解法！</p>
-<p>如果您有興趣了解更多，請參考：</p>
-<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
-<p><a href="https://www.youtube.com/watch?v=lrJfC2dF84k&list=PLS6F722u-R6KYlGyUv65EFpGKl2Esmurr&index=15">Match and Scan - Day 01 - Advent of Code 2023</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Ruby</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>AOC</tag>
-        <tag>Advent of code</tag>
       </tags>
   </entry>
   <entry>
@@ -1189,6 +1192,38 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
       </tags>
   </entry>
   <entry>
+    <title>Leetcode挑戰: Day05 longest common prefix</title>
+    <url>/2024/02/03/leetcode-longest-common-prefix/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
+<img src="/images/leetcode-longest-common-prefix/1.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/longest-common-prefix/">leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longest_common_prefix</span>(<span class="hljs-params">strs</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">if</span> strs.empty?<br><br>  common_prefix = <span class="hljs-string">&quot;&quot;</span><br>  first_str = strs.first<br><br>  first_str.chars.each_with_index <span class="hljs-keyword">do</span> |<span class="hljs-params">char, i</span>|<br>    <span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> strs.all? &#123; |<span class="hljs-params">str</span>| str[i] == char &#125;<br>    common_prefix += char<br>  <span class="hljs-keyword">end</span><br><br>  common_prefix<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>先從陣列中取出第一個數為<code>first_str</code>，作為比較的基準，接著使用<code>.chars.each_with_index</code>對第一個詞每個字母做迭代，並返回索引值<code>i</code>。</p>
+<p><code>.all</code>是來檢查<code>array</code>中的所有元素是否都符合给定的條件，這裡的條件就是<code>str[i] == char</code>，如果有不同即停止。</p>
+<p><code>common_prefix</code>即記錄<code>array</code>中相同的字</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> strs:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br><br>        common_prefix = <span class="hljs-string">&quot;&quot;</span><br>        first_str = strs[<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i, char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(first_str):<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(i &gt;= <span class="hljs-built_in">len</span>(s) <span class="hljs-keyword">or</span> s[i] != char <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs):<br>                <span class="hljs-keyword">break</span><br>            common_prefix += char<br><br>        <span class="hljs-keyword">return</span> common_prefix<br></code></pre></td></tr></table></figure>
+<p><code>enumerate</code>會回傳字串的<code>index</code>，以下是範例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br>[(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Spring&#x27;</span>), (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>)]<br></code></pre></td></tr></table></figure>
+<p><code>s[i]</code>則是代表<code>str</code>內的<code>i</code>位置的字母，基本上和ruby邏輯一樣，只是寫法不同而已！</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">strs</span>) &#123;<br>    <span class="hljs-keyword">if</span> (strs.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">let</span> commonPrefix = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">const</span> firstStr = strs[<span class="hljs-number">0</span>];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; firstStr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">const</span> char = firstStr[i];<br>        <span class="hljs-keyword">if</span> (!strs.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> str[i] === char)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        commonPrefix += char;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> commonPrefix;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>JS</code>的寫法和<code>Ruby</code>差不多，可以使用<code>.every</code>來確保是否為相同字母，其他解法就和<code>Ruby</code>和<code>Python</code>類似，差別在使用<code>for (let i = 0; i &lt; firstStr.length; i++)</code>迴圈，並使用<code>str[i]</code>來比對文字是否相符，最後也完成解答！</p>
+<p>這幾天寫下來Ruby看起來還是最簡潔優雅٩(●˙▿˙●)۶，看起來好舒服</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>longest common prefix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode挑戰: Day08 majority element</title>
     <url>/2024/02/06/leetcode-majority-element/</url>
     <content><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第八天，讓我們開始吧！</p>
@@ -1232,6 +1267,43 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>majority element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode: number of 1 bits</title>
+    <url>/2024/03/16/leetcode-number-of-1-bits/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p>
+<img src="/images/leetcode-number-of-1-bits/01.png">
+
+<p>題目來源：<a href="https://leetcode.com/problems/number-of-1-bits/description/">leetcode</a></p>
+<h2 id="漢明權重"><a href="#漢明權重" class="headerlink" title="漢明權重"></a>漢明權重</h2><p>此題提到了個特別的詞：<a href="https://zh.wikipedia.org/zh-tw/%E6%B1%89%E6%98%8E%E6%9D%83%E9%87%8D">漢明權重</a>，維基百科中解釋，漢明權重是一串符號中非零符號的個數。因此它等同於同樣長度的全零符號串的漢明距離。在最為常見的數據位符號串中，它是1的個數。</p>
+<p>漢明權重(Hamming weight)是以理察·衛斯里·漢明(Richard Wesley Hamming)的名字命名的，它在包括資訊理論、編碼理論、密碼學等多個領域都有應用。</p>
+<p>而這題的解法，就是將輸入的數字轉為二進位制的字串，接著計算<code>1</code>的數量即可。</p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">hamming_weight</span>(<span class="hljs-params">n</span>)<br>  n.to_s(<span class="hljs-number">2</span>).count(<span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-keyword">end</span><br><br>puts hamming_weight(<span class="hljs-number">0b00000000000000000000000000001011</span>) <span class="hljs-comment"># 3</span><br>puts hamming_weight(<span class="hljs-number">0b00000000000000000000000010000000</span>) <span class="hljs-comment"># 1</span><br>puts hamming_weight(<span class="hljs-number">0b11111111111111111111111111111101</span>) <span class="hljs-comment"># 31</span><br></code></pre></td></tr></table></figure>
+<p>在程式中經常使用<code>0b</code>開頭表示此為二進位制，而在Ruby中，前面有零的數字會被當作八進制數字解析，所以此題的傳入值前面可以加上<code>0b</code>，確保最後的結果會是正確的。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingWeight</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">bin</span>(n).count(<span class="hljs-string">&#x27;1&#x27;</span>)<br><br>solution = Solution()<br><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b00000000000000000000000000001011</span>)) <span class="hljs-comment">#3</span><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b00000000000000000000000010000000</span>)) <span class="hljs-comment">#1</span><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b11111111111111111111111111111101</span>)) <span class="hljs-comment">#31</span><br></code></pre></td></tr></table></figure>
+
+<p>Python的<code>bin(x)</code>將整數轉為帶前綴<code>0b</code>的二進制字串，因為<code>0b</code>並不會影響我們最後要計算<code>1</code>的數量的結果，因此不需要特別轉換。</p>
+<p>如果要控制是否顯示前缀<code>0b</code>，可以使用：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-built_in">format</span>(<span class="hljs-number">14</span>, <span class="hljs-string">&#x27;#b&#x27;</span>), <span class="hljs-built_in">format</span>(<span class="hljs-number">14</span>, <span class="hljs-string">&#x27;b&#x27;</span>)<br>(<span class="hljs-string">&#x27;0b1110&#x27;</span>, <span class="hljs-string">&#x27;1110&#x27;</span>)<br><span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-number">14</span>:#b&#125;</span>&#x27;</span>, <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-number">14</span>:b&#125;</span>&#x27;</span><br>(<span class="hljs-string">&#x27;0b1110&#x27;</span>, <span class="hljs-string">&#x27;1110&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>來源：<a href="https://docs.python.org/zh-cn/3/library/functions.html#bin">Python官方文件</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> hammingWeight = <span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n.<span class="hljs-title function_">toString</span>(<span class="hljs-number">2</span>).<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;1&#x27;</span>).<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>&#125;;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b00000000000000000000000000001011</span>)) <span class="hljs-comment">//3</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b00000000000000000000000010000000</span>)) <span class="hljs-comment">//1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b11111111111111111111111111111101</span>)) <span class="hljs-comment">//31</span><br></code></pre></td></tr></table></figure>
+
+<p>JS的使用<code>.split(&#39;1&#39;)</code>，將字串依據1分割為陣列，最後計算陣列的長度再<code>-1</code>就可以得到答案了！</p>
+<p>為什麼這裡要<code>-1</code>呢？可以想像一個蛋糕，如果切了一刀會變成兩塊，其中的那一刀，在這裡就是<code>1</code>的意思，我們最後要得到的是<code>切了幾刀</code>，而不是<code>蛋糕有幾塊</code>，所以為了校正最後會需要<code>-1</code>。</p>
+<p>以上就是今天的Leetcode刷題解釋٩(●˙▿˙●)۶</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Ruby</tag>
+        <tag>Python</tag>
+        <tag>JavaScript</tag>
+        <tag>leetcode</tag>
+        <tag>number of 1 bits</tag>
+        <tag>漢明權重</tag>
+        <tag>hamming weight</tag>
       </tags>
   </entry>
   <entry>
@@ -1281,75 +1353,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>merge sorted array</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode: number of 1 bits</title>
-    <url>/2024/03/16/leetcode-number-of-1-bits/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，讓我們開始吧！</p>
-<img src="/images/leetcode-number-of-1-bits/01.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/number-of-1-bits/description/">leetcode</a></p>
-<h2 id="漢明權重"><a href="#漢明權重" class="headerlink" title="漢明權重"></a>漢明權重</h2><p>此題提到了個特別的詞：<a href="https://zh.wikipedia.org/zh-tw/%E6%B1%89%E6%98%8E%E6%9D%83%E9%87%8D">漢明權重</a>，維基百科中解釋，漢明權重是一串符號中非零符號的個數。因此它等同於同樣長度的全零符號串的漢明距離。在最為常見的數據位符號串中，它是1的個數。</p>
-<p>漢明權重(Hamming weight)是以理察·衛斯里·漢明(Richard Wesley Hamming)的名字命名的，它在包括資訊理論、編碼理論、密碼學等多個領域都有應用。</p>
-<p>而這題的解法，就是將輸入的數字轉為二進位制的字串，接著計算<code>1</code>的數量即可。</p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">hamming_weight</span>(<span class="hljs-params">n</span>)<br>  n.to_s(<span class="hljs-number">2</span>).count(<span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-keyword">end</span><br><br>puts hamming_weight(<span class="hljs-number">0b00000000000000000000000000001011</span>) <span class="hljs-comment"># 3</span><br>puts hamming_weight(<span class="hljs-number">0b00000000000000000000000010000000</span>) <span class="hljs-comment"># 1</span><br>puts hamming_weight(<span class="hljs-number">0b11111111111111111111111111111101</span>) <span class="hljs-comment"># 31</span><br></code></pre></td></tr></table></figure>
-<p>在程式中經常使用<code>0b</code>開頭表示此為二進位制，而在Ruby中，前面有零的數字會被當作八進制數字解析，所以此題的傳入值前面可以加上<code>0b</code>，確保最後的結果會是正確的。</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingWeight</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">bin</span>(n).count(<span class="hljs-string">&#x27;1&#x27;</span>)<br><br>solution = Solution()<br><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b00000000000000000000000000001011</span>)) <span class="hljs-comment">#3</span><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b00000000000000000000000010000000</span>)) <span class="hljs-comment">#1</span><br><span class="hljs-built_in">print</span>(solution.hammingWeight(<span class="hljs-number">0b11111111111111111111111111111101</span>)) <span class="hljs-comment">#31</span><br></code></pre></td></tr></table></figure>
-
-<p>Python的<code>bin(x)</code>將整數轉為帶前綴<code>0b</code>的二進制字串，因為<code>0b</code>並不會影響我們最後要計算<code>1</code>的數量的結果，因此不需要特別轉換。</p>
-<p>如果要控制是否顯示前缀<code>0b</code>，可以使用：</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><code class="hljs py"><span class="hljs-built_in">format</span>(<span class="hljs-number">14</span>, <span class="hljs-string">&#x27;#b&#x27;</span>), <span class="hljs-built_in">format</span>(<span class="hljs-number">14</span>, <span class="hljs-string">&#x27;b&#x27;</span>)<br>(<span class="hljs-string">&#x27;0b1110&#x27;</span>, <span class="hljs-string">&#x27;1110&#x27;</span>)<br><span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-number">14</span>:#b&#125;</span>&#x27;</span>, <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-number">14</span>:b&#125;</span>&#x27;</span><br>(<span class="hljs-string">&#x27;0b1110&#x27;</span>, <span class="hljs-string">&#x27;1110&#x27;</span>)<br></code></pre></td></tr></table></figure>
-<p>來源：<a href="https://docs.python.org/zh-cn/3/library/functions.html#bin">Python官方文件</a></p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> hammingWeight = <span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>) &#123;<br>    <span class="hljs-keyword">return</span> n.<span class="hljs-title function_">toString</span>(<span class="hljs-number">2</span>).<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;1&#x27;</span>).<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>&#125;;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b00000000000000000000000000001011</span>)) <span class="hljs-comment">//3</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b00000000000000000000000010000000</span>)) <span class="hljs-comment">//1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">hammingWeight</span>(<span class="hljs-number">0b11111111111111111111111111111101</span>)) <span class="hljs-comment">//31</span><br></code></pre></td></tr></table></figure>
-
-<p>JS的使用<code>.split(&#39;1&#39;)</code>，將字串依據1分割為陣列，最後計算陣列的長度再<code>-1</code>就可以得到答案了！</p>
-<p>為什麼這裡要<code>-1</code>呢？可以想像一個蛋糕，如果切了一刀會變成兩塊，其中的那一刀，在這裡就是<code>1</code>的意思，我們最後要得到的是<code>切了幾刀</code>，而不是<code>蛋糕有幾塊</code>，所以為了校正最後會需要<code>-1</code>。</p>
-<p>以上就是今天的Leetcode刷題解釋٩(●˙▿˙●)۶</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>number of 1 bits</tag>
-        <tag>漢明權重</tag>
-        <tag>hamming weight</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day05 longest common prefix</title>
-    <url>/2024/02/03/leetcode-longest-common-prefix/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，今天會用<code>Ruby</code>、<code>Python</code>、<code>JavaScript</code>來解題，今天來到第五天，讓我們繼續吧！</p>
-<img src="/images/leetcode-longest-common-prefix/1.png">
-
-<p>題目來源：<a href="https://leetcode.com/problems/longest-common-prefix/">leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longest_common_prefix</span>(<span class="hljs-params">strs</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">if</span> strs.empty?<br><br>  common_prefix = <span class="hljs-string">&quot;&quot;</span><br>  first_str = strs.first<br><br>  first_str.chars.each_with_index <span class="hljs-keyword">do</span> |<span class="hljs-params">char, i</span>|<br>    <span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> strs.all? &#123; |<span class="hljs-params">str</span>| str[i] == char &#125;<br>    common_prefix += char<br>  <span class="hljs-keyword">end</span><br><br>  common_prefix<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<p>先從陣列中取出第一個數為<code>first_str</code>，作為比較的基準，接著使用<code>.chars.each_with_index</code>對第一個詞每個字母做迭代，並返回索引值<code>i</code>。</p>
-<p><code>.all</code>是來檢查<code>array</code>中的所有元素是否都符合给定的條件，這裡的條件就是<code>str[i] == char</code>，如果有不同即停止。</p>
-<p><code>common_prefix</code>即記錄<code>array</code>中相同的字</p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> strs:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br><br>        common_prefix = <span class="hljs-string">&quot;&quot;</span><br>        first_str = strs[<span class="hljs-number">0</span>]<br><br>        <span class="hljs-keyword">for</span> i, char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(first_str):<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(i &gt;= <span class="hljs-built_in">len</span>(s) <span class="hljs-keyword">or</span> s[i] != char <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs):<br>                <span class="hljs-keyword">break</span><br>            common_prefix += char<br><br>        <span class="hljs-keyword">return</span> common_prefix<br></code></pre></td></tr></table></figure>
-<p><code>enumerate</code>會回傳字串的<code>index</code>，以下是範例</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br>[(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Spring&#x27;</span>), (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>)]<br></code></pre></td></tr></table></figure>
-<p><code>s[i]</code>則是代表<code>str</code>內的<code>i</code>位置的字母，基本上和ruby邏輯一樣，只是寫法不同而已！</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">longestCommonPrefix</span>(<span class="hljs-params">strs</span>) &#123;<br>    <span class="hljs-keyword">if</span> (strs.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">let</span> commonPrefix = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">const</span> firstStr = strs[<span class="hljs-number">0</span>];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; firstStr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">const</span> char = firstStr[i];<br>        <span class="hljs-keyword">if</span> (!strs.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> str[i] === char)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        commonPrefix += char;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> commonPrefix;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><code>JS</code>的寫法和<code>Ruby</code>差不多，可以使用<code>.every</code>來確保是否為相同字母，其他解法就和<code>Ruby</code>和<code>Python</code>類似，差別在使用<code>for (let i = 0; i &lt; firstStr.length; i++)</code>迴圈，並使用<code>str[i]</code>來比對文字是否相符，最後也完成解答！</p>
-<p>這幾天寫下來Ruby看起來還是最簡潔優雅٩(●˙▿˙●)۶，看起來好舒服</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>Python</tag>
-        <tag>JavaScript</tag>
-        <tag>leetcode</tag>
-        <tag>longest common prefix</tag>
       </tags>
   </entry>
   <entry>
@@ -1565,34 +1568,6 @@ JavaScript 是單執行緒又稱為單線程（Single Thread）的設計，它�
         <tag>JavaScript</tag>
         <tag>leetcode</tag>
         <tag>valid palindrome</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode挑戰: Day02 two sum</title>
-    <url>/2024/01/31/leetcode-two-sum/</url>
-    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
-<img src="/images/leetcode-two-sum/1.png">
-
-<p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
-<ul>
-<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
-<li><code>nums</code>: 傳入的陣列</li>
-<li><code>target</code>:目標之和</li>
-<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
-<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
-<li><code>seen[target - num]</code>: 目標數字的索引值</li>
-<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
-</ul>
-<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Ruby</tag>
-        <tag>leetcode</tag>
-        <tag>two sum</tag>
       </tags>
   </entry>
   <entry>
@@ -2124,57 +2099,31 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
-    <title>React: 實體課程學習心得</title>
-    <url>/2024/06/28/react/</url>
-    <content><![CDATA[<img src="/images/react/React.webp">
+    <title>Leetcode挑戰: Day02 two sum</title>
+    <url>/2024/01/31/leetcode-two-sum/</url>
+    <content><![CDATA[<p>為了加強自己的程式能力，因此記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>來解題，今天來到第二天，讓我們繼續吧！</p>
+<img src="/images/leetcode-two-sum/1.png">
 
-<p>作為一名剛起步的 Junior 全端工程師，我過去大多是用 JavaScript 撰寫前端程式。為了提升自己的技能，我決定報名五倍學院開設的<a href="https://5xcampus.com/courses/react.html">《React 全攻略 - 入門到進階》</a>課程，目標是深入學習時下熱門的前端框架：React，並朝著 Senior 工程師的方向邁進。</p>
-<p>在學習 React 的過程中，收穫了好多寶貴的經驗。奶綠茶老師是一位業界資深的工程師主管，他從底層邏輯開始講解 React 的基礎知識，並用程式碼作為範例，分享了許多業界的實戰經驗和在工作中實際會用到的 React 寫法。這些內容不僅讓我理解得更深入，也讓我在應用 React 時更加得心應手。</p>
-<p>而且老師上課風格幽默有趣，課程中會穿插工作上與 React 或是工程師相關的趣事，也讓課程內容變得更活潑及生活化，每次上課完都覺得除了學習 React 之外，也透過課程內容讓自己開眼界、學習資深工程師的思考方式，每次上課完都覺得收穫滿滿。</p>
-<h2 id="課程簡介"><a href="#課程簡介" class="headerlink" title="課程簡介"></a>課程簡介</h2><p>《React 全攻略 - 入門到進階》課程是為了幫助學員打好 React 的基礎，成為更加扎實的 React 前端工程師而設計的。課程內容涵蓋了從基礎到進階的各個方面，老師還會分享許多實際開發中的團隊協作經驗和技巧，這些都是書籍和一般線上課程中難以見到的寶貴內容。</p>
-<p>奶綠茶老師透過 50+ 份示範程式檔案，從最基礎的 React Components 如何撰寫 、Props 傳遞機制等，分享 React 核心語法；還有 Typescript 、styled-components 、Tailwind CSS、Redux 等更進階的實戰應用。</p>
-<p>這門課特別適合以下的人：</p>
+<p>來源:<a href="https://leetcode.com/problems/two-sum/">Leetcode</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_sum</span>(<span class="hljs-params">nums, target</span>)<br>  seen = &#123;&#125;<br>  nums.each_with_index &#123; |<span class="hljs-params">num, i</span>| <span class="hljs-keyword">return</span> [seen[target - num], i] <span class="hljs-keyword">if</span> seen.key?(target - num); seen[num] = i &#125;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment"># Testing</span><br>puts two_sum([<span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>], <span class="hljs-number">9</span>)  <span class="hljs-comment"># Output: [0, 1]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>], <span class="hljs-number">6</span>)       <span class="hljs-comment"># Output: [1, 2]</span><br>puts two_sum([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-number">6</span>)          <span class="hljs-comment"># Output: [0, 1]</span><br></code></pre></td></tr></table></figure>
 <ul>
-<li>前端工程師：希望透過學習 React 來精進 JavaScript 技術。</li>
-<li>有 Vue.js 或 Angular 開發經驗者：想快速上手 React。</li>
-<li>有 React 自學經驗的開發者：希望鞏固基礎觀念。</li>
-<li>想了解 React 開發團隊合作與管理的開發者：尋求更高效的團隊協作方法。</li>
+<li><code>seen</code>: 空的hash，來記錄已經遍歷過的數字及其對應的索引</li>
+<li><code>nums</code>: 傳入的陣列</li>
+<li><code>target</code>:目標之和</li>
+<li><code>each_with_index</code>:迭代+索引，會得到<code>num</code>&amp; 索引值<code>i</code></li>
+<li><code>if seen.key?(target - num)</code>: target - num為第二個數，因為target &#x3D; a + b，target - a &#x3D; b，第一個數字為num時，第二個則為target - num</li>
+<li><code>seen[target - num]</code>: 目標數字的索引值</li>
+<li><code>seen[num] = i</code>: 如果沒有匹配的數對，就將當前數字<code>num</code>&amp;索引<code>i</code>加入<code>seen</code>當中，之後找比較快</li>
 </ul>
-<h2 id="React-的基礎知識"><a href="#React-的基礎知識" class="headerlink" title="React 的基礎知識"></a>React 的基礎知識</h2><p>在課堂上，老師詳細講解了 JSX、組件（Components）、屬性（Props）、狀態（State）等基礎知識。這些是學習 React 的核心基礎，了解了核心的底層邏輯後，更能進一步學習和應用。</p>
-<h3 id="Components-Props"><a href="#Components-Props" class="headerlink" title="Components &amp; Props"></a>Components &amp; Props</h3><p>在 React 中，component 是讓程式重複利用的重要基礎。<br>奶綠茶老師教我們如何創建 component 並使用 props 傳遞數據，並教導了我們幾個重要的概念：</p>
-<ul>
-<li>compnent 要獲取變數，一定會從 props 拿</li>
-<li>React component 的第一個參數就是 props，其型別一定是物件</li>
-</ul>
-<p>實際的程式碼範例：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">PropTypes</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">FunctionalCard01</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> &#123; img, name, children, price &#125; = props;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__img&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#123;img&#125;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&#123;name&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__name&quot;</span>&gt;</span>&#123;name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__price&quot;</span>&gt;</span>&#123;price&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__quote&quot;</span>&gt;</span>&#123;children&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;;<br><br><span class="hljs-title class_">FunctionalCard01</span>.<span class="hljs-property">propTypes</span> = &#123;<br>  <span class="hljs-attr">price</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">number</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">img</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">name</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">children</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">node</span>,<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">FunctionalCard01</span>;<br></code></pre></td></tr></table></figure>
-
-<p>這是一段簡單的 Functional Component，它接收 props 並在 JSX 中渲染。這種方式讓 component 變得更為靈活和可重複使用。</p>
-<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><ul>
-<li>每個 component 除了可以從 props 拿值外，本身還可以儲存變數。就像物件可以儲存自己的屬性一樣，React component 也可以有自己的狀態。</li>
-<li>函數沒有 this 概念，它在呼叫完後就被釋放，無法在函數內部儲存變數的結果。要如何在函數中儲存變數的狀態呢？可以使用 useState 來實現。</li>
-</ul>
-<p>實際的程式碼範例：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">atClick</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-title function_">setCount</span>(count + <span class="hljs-number">1</span>);<br>&#125;;<br><br><span class="hljs-keyword">return</span> (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;border p-2 border-black&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span>count: &#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;atClick&#125;</span>&gt;</span></span><br><span class="language-xml">      increment</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
-
-<p>這段程式碼表示使用 useState 來管理計數器的狀態，並在按鈕點擊時更新狀態。</p>
-<p>另外 React 的 useState 還有一個重要的觀念：</p>
-<ul>
-<li>useState 儲存狀態，只有第一次傳入的值會被使用。所以，React 的 useState 允許你傳入一個函式來回傳初始值，這個函式只會被執行一次。是否需要使用這個函式取決於初始化的成本是否昂貴。</li>
-</ul>
-<p>實際的程式碼範例：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// <span class="hljs-doctag">FIXME:</span> Bad</span><br><span class="hljs-comment">// 這裡會被執行好多次</span><br><span class="hljs-keyword">const</span> [countBad, setCountBad] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;bad&#x27;</span>));<br><br><span class="hljs-comment">// [x]: Correct</span><br><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// 這裡的 function 只會被執行一次</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;correct&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
-<h3 id="從入門到進階"><a href="#從入門到進階" class="headerlink" title="從入門到進階"></a>從入門到進階</h3><p>除了以上的範例，奶綠茶老師的 React 課程緊扣課程的標題「從入門到進階」，讓我印象深刻的內容還有：useEffect 第二個參數的差異、深入理解 useRef 幫助我們獲取 DOM 元素，使用 useState 和 useEffect 來處理表單輸入和驗證、使用 React.memo 來優化 component 性能，避免不必要的重渲染、自定義 Fetch Hook 將邏輯提取到可重用的函式使組件更加簡潔，並且更易於測試和維護、使用 Redux Thunk 進行異步操作、使用 testing library 進行單元測試等等，這些都讓我對 React 有了更全面的了解。</p>
-<p>如果你在自學 React 的路上，但總覺得卡卡的，或是不懂使用 A 方法或 B 方法哪個比較好、效率比較高、不懂哪個方法在工作上比較常使用，都推薦你來上奶綠茶老師的《React 全攻略 - 入門到進階》課程，除了能解決你以上的問題，更能夠讓你在 React 的學習上有全面的提升、少走很多彎路！</p>
+<p>今天的難度比昨天難好多！！不愧是面試常見的題目，但使用Ruby還是能夠很簡潔地寫出來！</p>
 ]]></content>
       <categories>
-        <category>React</category>
+        <category>leetcode</category>
       </categories>
       <tags>
-        <tag>React</tag>
-        <tag>JavaScript</tag>
-        <tag>五倍學院</tag>
+        <tag>Ruby</tag>
+        <tag>leetcode</tag>
+        <tag>two sum</tag>
       </tags>
   </entry>
   <entry>
@@ -2483,6 +2432,139 @@ border-style:dashed;
       </tags>
   </entry>
   <entry>
+    <title>React: 實體課程學習心得</title>
+    <url>/2024/06/28/react/</url>
+    <content><![CDATA[<img src="/images/react/React.webp">
+
+<p>作為一名剛起步的 Junior 全端工程師，我過去大多是用 JavaScript 撰寫前端程式。為了提升自己的技能，我決定報名五倍學院開設的<a href="https://5xcampus.com/courses/react.html">《React 全攻略 - 入門到進階》</a>課程，目標是深入學習時下熱門的前端框架：React，並朝著 Senior 工程師的方向邁進。</p>
+<p>在學習 React 的過程中，收穫了好多寶貴的經驗。奶綠茶老師是一位業界資深的工程師主管，他從底層邏輯開始講解 React 的基礎知識，並用程式碼作為範例，分享了許多業界的實戰經驗和在工作中實際會用到的 React 寫法。這些內容不僅讓我理解得更深入，也讓我在應用 React 時更加得心應手。</p>
+<p>而且老師上課風格幽默有趣，課程中會穿插工作上與 React 或是工程師相關的趣事，也讓課程內容變得更活潑及生活化，每次上課完都覺得除了學習 React 之外，也透過課程內容讓自己開眼界、學習資深工程師的思考方式，每次上課完都覺得收穫滿滿。</p>
+<h2 id="課程簡介"><a href="#課程簡介" class="headerlink" title="課程簡介"></a>課程簡介</h2><p>《React 全攻略 - 入門到進階》課程是為了幫助學員打好 React 的基礎，成為更加扎實的 React 前端工程師而設計的。課程內容涵蓋了從基礎到進階的各個方面，老師還會分享許多實際開發中的團隊協作經驗和技巧，這些都是書籍和一般線上課程中難以見到的寶貴內容。</p>
+<p>奶綠茶老師透過 50+ 份示範程式檔案，從最基礎的 React Components 如何撰寫 、Props 傳遞機制等，分享 React 核心語法；還有 Typescript 、styled-components 、Tailwind CSS、Redux 等更進階的實戰應用。</p>
+<p>這門課特別適合以下的人：</p>
+<ul>
+<li>前端工程師：希望透過學習 React 來精進 JavaScript 技術。</li>
+<li>有 Vue.js 或 Angular 開發經驗者：想快速上手 React。</li>
+<li>有 React 自學經驗的開發者：希望鞏固基礎觀念。</li>
+<li>想了解 React 開發團隊合作與管理的開發者：尋求更高效的團隊協作方法。</li>
+</ul>
+<h2 id="React-的基礎知識"><a href="#React-的基礎知識" class="headerlink" title="React 的基礎知識"></a>React 的基礎知識</h2><p>在課堂上，老師詳細講解了 JSX、組件（Components）、屬性（Props）、狀態（State）等基礎知識。這些是學習 React 的核心基礎，了解了核心的底層邏輯後，更能進一步學習和應用。</p>
+<h3 id="Components-Props"><a href="#Components-Props" class="headerlink" title="Components &amp; Props"></a>Components &amp; Props</h3><p>在 React 中，component 是讓程式重複利用的重要基礎。<br>奶綠茶老師教我們如何創建 component 並使用 props 傳遞數據，並教導了我們幾個重要的概念：</p>
+<ul>
+<li>compnent 要獲取變數，一定會從 props 拿</li>
+<li>React component 的第一個參數就是 props，其型別一定是物件</li>
+</ul>
+<p>實際的程式碼範例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">PropTypes</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">FunctionalCard01</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> &#123; img, name, children, price &#125; = props;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__img&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#123;img&#125;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&#123;name&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__name&quot;</span>&gt;</span>&#123;name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__price&quot;</span>&gt;</span>&#123;price&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;category-item__quote&quot;</span>&gt;</span>&#123;children&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;;<br><br><span class="hljs-title class_">FunctionalCard01</span>.<span class="hljs-property">propTypes</span> = &#123;<br>  <span class="hljs-attr">price</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">number</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">img</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">name</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,<br>  <span class="hljs-attr">children</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">node</span>,<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">FunctionalCard01</span>;<br></code></pre></td></tr></table></figure>
+
+<p>這是一段簡單的 Functional Component，它接收 props 並在 JSX 中渲染。這種方式讓 component 變得更為靈活和可重複使用。</p>
+<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><ul>
+<li>每個 component 除了可以從 props 拿值外，本身還可以儲存變數。就像物件可以儲存自己的屬性一樣，React component 也可以有自己的狀態。</li>
+<li>函數沒有 this 概念，它在呼叫完後就被釋放，無法在函數內部儲存變數的結果。要如何在函數中儲存變數的狀態呢？可以使用 useState 來實現。</li>
+</ul>
+<p>實際的程式碼範例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">atClick</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-title function_">setCount</span>(count + <span class="hljs-number">1</span>);<br>&#125;;<br><br><span class="hljs-keyword">return</span> (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;border p-2 border-black&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span>count: &#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;atClick&#125;</span>&gt;</span></span><br><span class="language-xml">      increment</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
+
+<p>這段程式碼表示使用 useState 來管理計數器的狀態，並在按鈕點擊時更新狀態。</p>
+<p>另外 React 的 useState 還有一個重要的觀念：</p>
+<ul>
+<li>useState 儲存狀態，只有第一次傳入的值會被使用。所以，React 的 useState 允許你傳入一個函式來回傳初始值，這個函式只會被執行一次。是否需要使用這個函式取決於初始化的成本是否昂貴。</li>
+</ul>
+<p>實際的程式碼範例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// <span class="hljs-doctag">FIXME:</span> Bad</span><br><span class="hljs-comment">// 這裡會被執行好多次</span><br><span class="hljs-keyword">const</span> [countBad, setCountBad] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;bad&#x27;</span>));<br><br><span class="hljs-comment">// [x]: Correct</span><br><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useState</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// 這裡的 function 只會被執行一次</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getInitialState</span>(<span class="hljs-string">&#x27;correct&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="從入門到進階"><a href="#從入門到進階" class="headerlink" title="從入門到進階"></a>從入門到進階</h3><p>除了以上的範例，奶綠茶老師的 React 課程緊扣課程的標題「從入門到進階」，讓我印象深刻的內容還有：useEffect 第二個參數的差異、深入理解 useRef 幫助我們獲取 DOM 元素，使用 useState 和 useEffect 來處理表單輸入和驗證、使用 React.memo 來優化 component 性能，避免不必要的重渲染、自定義 Fetch Hook 將邏輯提取到可重用的函式使組件更加簡潔，並且更易於測試和維護、使用 Redux Thunk 進行異步操作、使用 testing library 進行單元測試等等，這些都讓我對 React 有了更全面的了解。</p>
+<p>如果你在自學 React 的路上，但總覺得卡卡的，或是不懂使用 A 方法或 B 方法哪個比較好、效率比較高、不懂哪個方法在工作上比較常使用，都推薦你來上奶綠茶老師的《React 全攻略 - 入門到進階》課程，除了能解決你以上的問題，更能夠讓你在 React 的學習上有全面的提升、少走很多彎路！</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>JavaScript</tag>
+        <tag>五倍學院</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>職涯: 為什麼要轉職工程師?</title>
+    <url>/2024/01/28/why-choose-to-be-a-software-developer/</url>
+    <content><![CDATA[<style>
+.em-div{
+background-color: #d4a373;
+color: white;
+padding: 10px;
+margin: 10px;
+border-radius: 5px;
+}
+
+.em-div2{
+border:2px #d4a373 solid;
+margin:5px;
+padding:10px 2px 2px 2px;
+border-style:dashed;
+}
+</style>
+
+<p>「要不要當工程師？」<br>其實這這問題在我心中出現了很多次，第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
+<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，那時候智慧型手機、youtube不普及、沒有社群網站，也沒有現在隨處可見的教學。</p>
+<img src="/images/Transition/2.jpeg">
+
+<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
+<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。記得同學傳給我一個留言板的網址，可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
+<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
+<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
+<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
+<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
+<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，不過這段時間是我一段很美好的回憶，我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
+<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
+
+<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
+<p>第一次接觸正式的程式是高中時，當時唸資料處理科，每週都有6堂的計算機概論課、會到電腦教室上課。</p>
+<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。當時只覺得，程式真的好方便，過程好有趣！</p>
+<p>我很喜歡計算機概論這門課，記得當時有很多同學選擇資管系作爲大學升學的科系，但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，因此當時也沒有把工程師當作就業的選項。</p>
+<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
+
+<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
+<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，當初因為善於和人溝通、想要領到更多的薪水，所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
+<p>感謝金融業的經歷讓我對於財經市場有更多的認識，也在此時因為每日面對變化多端的金融市場和業績目標的要求，大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、說服客戶調整帳上資產、如何找到新的目標客戶、如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
+<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，只能夠根據當下的市場環境判斷並隨時調整，我發現自己沒有辦法對賣「不確定」的東西產生熱情。</p>
+<p>但這個時候該放棄嗎？<br>換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
+<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」，這時候我想起國小時做的第一個網頁，想起自己花了許多時間自已拼湊、實作到忘記時間，最後成功完成成品的時刻。</p>
+<div class="em-div">
+「想了這麼多年，要不這次就給自己一個機會呢？」
+</div>
+
+<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，這次我不想要再中途放棄，因為轉職要花費的成本很大，也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
+<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
+<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，報名了某平台的「程式設計入門」新手村萬元挑戰，這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，最後也順利完成了，每天學習的時候都很快樂。</p>
+<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課。</p>
+<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
+
+<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，因此這三個月的過程很精實。</p>
+<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，透過寫文章搜集資料的過程也能學習很多，這個部落格也是因此而產生出來的～</p>
+<img src="/images/7-2.jpeg">
+另外五倍還有許軟軟性課程，透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，昨天剛剛Demo Day結束。<p>
+
+
+<p>學習的過程中也發現：自己很喜歡和電腦溝通，因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
+<p>解決後還能夠再多想想，能有其他更好的作法嗎？也許是過往的工作經驗，已經讓我習慣面對挫折、解決挫折了，途中一定有遇到困難，但只要找出解決辦法就好，也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
+<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，常常寫到進入心流忘記時間，剛抬頭是白天，再次抬頭就是黑夜，更常常寫到忘記喝水、上廁所，但每一天都很開心。</p>
+<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
+<p>最想，如果能用一句話概括我轉職的原因：</p>
+<div class="em-div2">
+因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式；因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
+</div>
+
+]]></content>
+      <categories>
+        <category>職涯</category>
+      </categories>
+      <tags>
+        <tag>轉職</tag>
+        <tag>職涯</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</title>
     <url>/2023/11/15/var-let-const/</url>
     <content><![CDATA[<style>
@@ -2704,85 +2786,6 @@ output: TypeError: Assignment to constant variable.
         <tag>var</tag>
         <tag>let</tag>
         <tag>const</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>職涯: 為什麼要轉職工程師?</title>
-    <url>/2024/01/28/why-choose-to-be-a-software-developer/</url>
-    <content><![CDATA[<style>
-.em-div{
-background-color: #d4a373;
-color: white;
-padding: 10px;
-margin: 10px;
-border-radius: 5px;
-}
-
-.em-div2{
-border:2px #d4a373 solid;
-margin:5px;
-padding:10px 2px 2px 2px;
-border-style:dashed;
-}
-</style>
-
-<p>「要不要當工程師？」<br>其實這這問題在我心中出現了很多次，第一次是高中升大學的時候、第二次是大學畢業的時候、第三四五六次是我畢業後工作時，中間一直有嘗試接觸相關課程，但一直都沒有勇氣跨出第一步。</p>
-<h2 id="興趣"><a href="#興趣" class="headerlink" title="興趣"></a>興趣</h2><p>記得第一次接觸製作網頁，是在我國小三、四年級的時候，那時候智慧型手機、youtube不普及、沒有社群網站，也沒有現在隨處可見的教學。</p>
-<img src="/images/Transition/2.jpeg">
-
-<p><a href="https://www.ettoday.net/news/20180609/1187360.htm">圖片來源</a></p>
-<p>當時是2007年，最流行的是Yahoo即時通和各大論壇。記得同學傳給我一個留言板的網址，可以使用HTML&#x2F;CSS自定義留言板上的樣式。</p>
-<p>我把這個留言板當作我的個人網站，為了讓它變得更好看，我開始搜尋網路上的資料，學會怎麼使用HTML&#x2F;CSS、學會顏色色碼裝飾、學著使用PhotoShop製作漂亮圖片，學會找到上傳圖片的空間上傳圖片（為了在留言板上放圖片）。</p>
-<p>後來自己學著使用記事本，編寫HTML&#x2F;CSS，右鍵儲存為.html格式，上傳到雲端空間，製作簡易的入口網站，也是我的第一個網頁。</p>
-<p>當時才國小，不知道有個職業叫做網頁工程師、更不知道前後端是什麼，只是在下課補完習回家後，打開電腦想說要裝飾我的網頁而已。</p>
-<p>後來升上國中因為要唸書，因此也沒有再繼續。</p>
-<p>當時製作的網頁很簡單，換作現在應該一個小時內就可以完成🤣，不過這段時間是我一段很美好的回憶，我很享受那段「看到別人有我也想要學會」的學習過程、自己動手製作到完成成品的時候。</p>
-<h2 id="第一次接觸程式"><a href="#第一次接觸程式" class="headerlink" title="第一次接觸程式"></a>第一次接觸程式</h2><img src="/images/Transition/4.jpeg">
-
-<p><a href="https://technews.tw/2020/03/19/visual-basic-support-planned-for-net-5-0/">圖片來源</a></p>
-<p>第一次接觸正式的程式是高中時，當時唸資料處理科，每週都有6堂的計算機概論課、會到電腦教室上課。</p>
-<p>記得當時有學期教了Visual Basic，教了基本的迴圈到製作計算機、點菜單。當時只覺得，程式真的好方便，過程好有趣！</p>
-<p>我很喜歡計算機概論這門課，記得當時有很多同學選擇資管系作爲大學升學的科系，但我卻選擇了企管系😂，大學有參加過資訊系統訓練班的前端入門實戰班，也有查詢過轉職的課程，身邊也有轉職成功的經驗，但因為糾結在自己非本科系，因此當時也沒有把工程師當作就業的選項。</p>
-<h2 id="決定轉職"><a href="#決定轉職" class="headerlink" title="決定轉職"></a>決定轉職</h2><img src="/images/Transition/5.avif">
-
-<p><a href="https://unsplash.com/photos/a-computer-screen-with-a-chart-on-it-w9coDxtsfts">圖片來源</a></p>
-<p>大學畢業後先後到了電商、新媒體、金融業工作，轉職前的工作是外商銀行的客戶關係經理，當初因為善於和人溝通、想要領到更多的薪水，所以考了證照進了銀行，薪資也如我所願提升到預期的狀況。</p>
-<p>感謝金融業的經歷讓我對於財經市場有更多的認識，也在此時因為每日面對變化多端的金融市場和業績目標的要求，大幅提升我的解決困難的能力，像是：因應市場變動而隨時和客戶溝通、說服客戶調整帳上資產、如何找到新的目標客戶、如何讓現有客戶匯入更多資金來達到業績目標等等。</p>
-<p>也許是金融經驗的增加，對市場瞭解得愈多，愈發現金融市場的變化莫測，沒有任何一個投信、機構或是任何人能夠精確的預測未來金融的走勢，只能夠根據當下的市場環境判斷並隨時調整，我發現自己沒有辦法對賣「不確定」的東西產生熱情。</p>
-<p>但這個時候該放棄嗎？<br>換到其他的產業又能確定自己能一輩子有熱情嗎?</p>
-<p>這時候我心裡又出現了我多年來的疑問，「要轉職當工程師嗎？」，這時候我想起國小時做的第一個網頁，想起自己花了許多時間自已拼湊、實作到忘記時間，最後成功完成成品的時刻。</p>
-<div class="em-div">
-「想了這麼多年，要不這次就給自己一個機會呢？」
-</div>
-
-<h2 id="轉職前準備"><a href="#轉職前準備" class="headerlink" title="轉職前準備"></a>轉職前準備</h2><p>決定轉職後，我開始搜集各大轉職的機構、課程，這次我不想要再中途放棄，因為轉職要花費的成本很大，也知道這次自己轉職後要再追回之前的薪資水平，勢必要再累積2-3年的經驗。</p>
-<p>但就長遠來看，工程師的職涯和是沒有上限的，而能力和薪資也會隨著學習而提升。</p>
-<p>為了讓自己確定轉職的決心，我先給自己一個月的時間，報名了某平台的「程式設計入門」新手村萬元挑戰，這個線上課程必須要在一個月內完成30小時的線上課及實作六個作業通過助教批改，最後也順利完成了，每天學習的時候都很快樂。</p>
-<p>不過線上課程並不完全適合我，我還是希望能有同伴能夠一起討論、製作專題。諮詢過多個機構後，我最後選擇了ASTRO X 五倍紅寶石・五倍學院全端工程師培訓課。</p>
-<h2 id="踏上轉職之路"><a href="#踏上轉職之路" class="headerlink" title="踏上轉職之路"></a>踏上轉職之路</h2><img src="/images/Transition/6.jpg">
-
-<p>在五倍上課，學了HTML, CSS, JS, Ruby on Rails等課程，五倍的師資很優秀，能夠從原理講解，能更清楚地講解<strong>為什麼做？這樣做有什麼好處？還有什麼其他的做法？利弊又是什麼？</strong>，而不是僅是單純地教「做出東西來」，也秉持著「有問題盡量問」，因此這三個月的過程很精實。</p>
-<p>龍哥也很鼓勵同學們寫部落格，因為新的知識理解吸收後，再透過自己整理、寫成文章，能夠加深印象並梳理邏輯，透過寫文章搜集資料的過程也能學習很多，這個部落格也是因此而產生出來的～</p>
-<img src="/images/7-2.jpeg">
-另外五倍還有許軟軟性課程，透過產品開發課、簡報表達課、企業參訪課以及組員協作製作實體專案，了解業界實體的開發過程，完成後也和組員們一同製作出服務預訂平台，昨天剛剛Demo Day結束。<p>
-
-
-<p>學習的過程中也發現：自己很喜歡和電腦溝通，因為電腦很誠實，對就是對、錯就是錯，錯了再想法辦解決就好，一定有解決辦法，只是現在的自己還不知道，透過查找資料並實作解決就可以了。</p>
-<p>解決後還能夠再多想想，能有其他更好的作法嗎？也許是過往的工作經驗，已經讓我習慣面對挫折、解決挫折了，途中一定有遇到困難，但只要找出解決辦法就好，也很感謝這三個月來五倍的老師、助教、同學、課務們的協助。</p>
-<h2 id="未來"><a href="#未來" class="headerlink" title="未來"></a>未來</h2><p>完成五倍的課程還不是轉職之路的結束，只是開始而已，但透過這三個月的課程，也讓我確信自己真的喜歡寫程式，常常寫到進入心流忘記時間，剛抬頭是白天，再次抬頭就是黑夜，更常常寫到忘記喝水、上廁所，但每一天都很開心。</p>
-<p>目前的自己還有很多的不足，但就像學習程式的過程一樣，知道自己哪裡不足就加強哪裡，終究會離自己的目標更進一步。</p>
-<p>最想，如果能用一句話概括我轉職的原因：</p>
-<div class="em-div2">
-因為我喜歡替任何人包括自己解決問題，同時，我也喜歡寫程式；因此想透過程式替更多人解決問題，也想透過程式替創造自己更好的職涯。
-</div>
-
-]]></content>
-      <categories>
-        <category>職涯</category>
-      </categories>
-      <tags>
-        <tag>轉職</tag>
-        <tag>職涯</tag>
       </tags>
   </entry>
 </search>
