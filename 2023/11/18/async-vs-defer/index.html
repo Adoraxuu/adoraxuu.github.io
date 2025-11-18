@@ -60,8 +60,7 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -188,7 +187,7 @@
 <h2 id="JavaScript-是怎麼被引入到網頁呢？"><a href="#JavaScript-是怎麼被引入到網頁呢？" class="headerlink" title="JavaScript 是怎麼被引入到網頁呢？"></a>JavaScript 是怎麼被引入到網頁呢？</h2><p>如果任意把<code>&lt;script&gt;</code>放到 html 檔案內會發生什麼事？大家都知道，網頁很有可能會出問題( ͡° ͜ʖ ͡°)，不過究竟是為什麼呢？</p>
 <p>在<strong>建立 DOM 結構的過程中</strong>，瀏覽器將發送請求，以獲取網站連結到的任何相關資源。（包括 JavaScript 在內）</p>
 <p>為了更好地理解，這裡準備了一個範例，將<code>&lt;script&gt;</code>放在<code>&lt;head&gt;</code>內：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-scale=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;container&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;!DOCTYPE <span class="hljs-selector-tag">html</span>&gt;<br>&lt;<span class="hljs-selector-tag">html</span> lang=&quot;en&quot;&gt;<br>&lt;head&gt;<br>    &lt;meta charset=&quot;UTF-<span class="hljs-number">8</span>&quot;&gt;<br>    &lt;meta name=&quot;viewport&quot; <span class="hljs-attribute">content</span>=&quot;<span class="hljs-attribute">width</span>=device-<span class="hljs-attribute">width</span>, initial-<span class="hljs-attribute">scale</span>=<span class="hljs-number">1.0</span>&quot;&gt;<br>    &lt;title&gt;Document&lt;/title&gt;<br>    &lt;script <span class="hljs-attribute">src</span>=&quot;demo<span class="hljs-selector-class">.js</span>&quot;&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;<span class="hljs-selector-tag">body</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=&quot;<span class="hljs-attribute">container</span>&quot;&gt;網頁內容&lt;/<span class="hljs-selector-tag">div</span>&gt;<br>&lt;/<span class="hljs-selector-tag">body</span>&gt;<br>&lt;/<span class="hljs-selector-tag">html</span>&gt;<br></code></pre></td></tr></table></figure>
 
 <p>這時建構的時間圖如下： <img src="/images/async_vs_defer/2rendering-time.png"></p>
 <p>這會造成什麼樣的問題？因為 DOM 尚未建置好，所以 JavaScript 抓不到 DOM，進而無法進行操作。（辛苦寫的 JavaScript 無法發揮作用 இдஇ）</p>
@@ -243,7 +242,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-09-20</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/defer/" class="post-tags__link button"># defer</a><a href="/tags/async/" class="post-tags__link button"># async</a><a href="/tags/Web/" class="post-tags__link button"># Web</a><a href="/tags/rendering/" class="post-tags__link button"># rendering</a></div>
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/defer/" class="post-tags__link button"># defer</a><a href="/tags/async/" class="post-tags__link button"># async</a><a href="/tags/Web/" class="post-tags__link button"># Web</a><a href="/tags/rendering/" class="post-tags__link button"># rendering</a></div>
 </article>
 
 

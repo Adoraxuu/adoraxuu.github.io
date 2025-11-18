@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Django: 從零開始學 2 - admin site | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Python, Django, MTV, admin, admin site">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Django: 從零開始學 2 - admin site</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/04/" class="post-meta__date button">2024-04-23</a> 
+    <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><h2 id="admin站點使用"><a href="#admin站點使用" class="headerlink" title="admin站點使用"></a>admin站點使用</h2><p>Django有內建Admin Site，讓開發者可以輕鬆管理資料。<br>原本新建專案的時候還在疑惑，為什麼DB裡面已經有這麼多Table，原來是給內建的admin使用的。</p>
+<p>要怎麼進去admin呢？<br>執行<code>$ python manage.py runserver</code>時，在網址最後面輸入<code>/admin</code>就能夠看到登入介面：</p>
+<img src="/images/django-admin-site/0.png">
+
+<h2 id="創建帳號密碼"><a href="#創建帳號密碼" class="headerlink" title="創建帳號密碼"></a>創建帳號密碼</h2><p>在終端機輸入就可以設定admin的帳號密碼：<br><code>$ python manage.py createsuperuser</code></p>
+<h2 id="登入帳號密碼"><a href="#登入帳號密碼" class="headerlink" title="登入帳號密碼"></a>登入帳號密碼</h2><p>回到剛剛的 <code>/admin</code> 就可以看到預設的Table了</p>
+<img src="/images/django-admin-site/1.png">
+
+<p>咦，那昨天做的POST呢？需要手動加入</p>
+<h2 id="把POST加進去admin裡"><a href="#把POST加進去admin裡" class="headerlink" title="把POST加進去admin裡"></a>把POST加進去admin裡</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    <span class="hljs-keyword">pass</span><br><br></code></pre></td></tr></table></figure>
+
+<p>這時就能看到POST</p>
+<img src="/images/django-admin-site/2.png">
+
+<p>點擊Posts，可以看到文章列表</p>
+<img src="/images/django-admin-site/3.png">
+
+<p>可以按右上角的ADD POST增加資料</p>
+<img src="/images/django-admin-site/4.png">
+
+<h2 id="自定義admin顯示資料"><a href="#自定義admin顯示資料" class="headerlink" title="自定義admin顯示資料"></a>自定義admin顯示資料</h2><p>Django也提供了很多自定義</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># project/blog/admin.py</span><br><br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Post<br><br><span class="hljs-meta">@admin.register(<span class="hljs-params">Post</span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PostAdmin</span>(admin.ModelAdmin):<br>    list_display = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;slug&#x27;</span>,<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 顯示欄位</span><br>    list_filter = (<span class="hljs-string">&#x27;author&#x27;</span>, <span class="hljs-string">&#x27;published_date&#x27;</span>) <span class="hljs-comment"># 按照作者 or 發佈日期篩選文章</span><br>    search_fields = (<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;body&#x27;</span>) <span class="hljs-comment"># 搜尋</span><br>    prepopulated_fields = &#123;<span class="hljs-string">&#x27;slug&#x27;</span>: (<span class="hljs-string">&#x27;title&#x27;</span>,)&#125; <span class="hljs-comment"># 自動填寫：輸入title時自動填寫slug</span><br><br></code></pre></td></tr></table></figure>
+
+<p>關於更多客製化，可以參考：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/5.0/ref/contrib/admin/">django docs - admin</a></p>
+<p>這時看我們的POST就更豐富了：</p>
+<img src="/images/django-admin-site/5.png">
+也可以手動新增資料
+
+<img src="/images/django-admin-site/6.png">
+
+<p>記得在學習Ruby on Rails的時候，對於ORM和資料庫都不熟悉，操作起來不免有點礙手礙腳，Djang內建Admin站點蠻貼心的，一開始安裝就自動內建了٩(^ᴗ^)۶</p>
+<p>不過Django的ORM使用方法也是需要熟悉，就留到下篇來說明！<br>本篇文章是我由以下參考資料整理而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/5.0/ref/contrib/admin/">Django docs - admin</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Admin_site">MDN - Admin_site</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Udemy - Django 2 Web開發入門與實踐</a></p>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/MTV/" class="post-tags__link button"># MTV</a><a href="/tags/admin/" class="post-tags__link button"># admin</a><a href="/tags/admin-site/" class="post-tags__link button"># admin site</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+    <a href="/2024/04/24/django-orm/" class="nav__link">
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+      <div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django : 從零開始學 3 — ORM</div>
+      </div>
+    </a>
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/03/31/ruby-on-rails-abstraction-layer/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Ruby on Rails: 什麼是Abstraction layer</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/adoraxuu.github.io"
+                data-repo-id="R_kgDOKmz3GQ"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKmz3Gc4CifiX"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2025 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>

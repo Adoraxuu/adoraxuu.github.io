@@ -60,8 +60,7 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -187,12 +186,16 @@ border-style:dashed;
 </div>
 
 <ol>
-<li><p>在程式碼中加入attribute：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>到model定義</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
+<li>在程式碼中加入attribute：</li>
 </ol>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">&lt;%= month_calendar(<span class="hljs-symbol">attribute:</span> <span class="hljs-symbol">:</span>你的column名稱, <span class="hljs-symbol">end_attribute:</span> <span class="hljs-symbol">:</span>你的column名稱) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>  &lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>到model定義</li>
+</ol>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">start_time</span><br>  start_date <span class="hljs-comment">#假如你的結束時間名稱為start_date</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">end_time</span><br>  end_date <span class="hljs-comment">#假如你的結束時間名稱為end_date</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+
 <h3 id="將Meeting加入月曆裡"><a href="#將Meeting加入月曆裡" class="headerlink" title="將Meeting加入月曆裡"></a>將<code>Meeting</code>加入月曆裡</h3><p>只要改寫剛剛的程式碼即可</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#home.html.erb</span><br>&lt;%= month_calendar(<span class="hljs-symbol">events:</span> <span class="hljs-variable">@meetings</span>) <span class="hljs-keyword">do</span> |<span class="hljs-params">date</span>| %&gt;<br>&lt;%= date %&gt;<br>&lt;% <span class="hljs-keyword">end</span> %&gt;<br></code></pre></td></tr></table></figure>
 
@@ -254,7 +257,7 @@ border-style:dashed;
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-09-20</p></div> <div class="post-entry__tags"><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/rails/" class="post-tags__link button"># rails</a><a href="/tags/ruby/" class="post-tags__link button"># ruby</a><a href="/tags/simple-calendar/" class="post-tags__link button"># simple calendar</a><a href="/tags/gem/" class="post-tags__link button"># gem</a></div>
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/rails/" class="post-tags__link button"># rails</a><a href="/tags/ruby/" class="post-tags__link button"># ruby</a><a href="/tags/simple-calendar/" class="post-tags__link button"># simple calendar</a><a href="/tags/gem/" class="post-tags__link button"># gem</a></div>
 </article>
 
 

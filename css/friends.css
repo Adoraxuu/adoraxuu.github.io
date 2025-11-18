@@ -67,9 +67,11 @@
 }
 .tile .tile-icon,
 .tile .tile-action {
+  -ms-flex: 0 0 auto;
   flex: 0 0 auto;
 }
 .tile .tile-content {
+  -ms-flex: 1 1 auto;
   flex: 1 1 auto;
 }
 .tile .tile-content:not(:first-child) {

@@ -60,8 +60,7 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -277,7 +276,7 @@
 <li><code>mixedCase</code>（與 CatalizedWords 的區別在於首字母小寫）</li>
 </ul>
 <h3 id="Class-Name"><a href="#Class-Name" class="headerlink" title="Class Name"></a><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0008/#class-names">Class Name</a></h3><p>使用駝峰命名法，範例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCar</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, make, model, year</span>):<br>        self.make, self.model, self.year, self.odometer_reading = make, model, year, <span class="hljs-number">0</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">full_name</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.year&#125;</span> <span class="hljs-subst">&#123;self.make&#125;</span> <span class="hljs-subst">&#123;self.model&#125;</span>&quot;</span><br><br>my_car = MyCar(<span class="hljs-string">&quot;Toyota&quot;</span>, <span class="hljs-string">&quot;Camry&quot;</span>, <span class="hljs-number">2022</span>)<br><span class="hljs-built_in">print</span>(my_car.full_name())<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCar</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, make, model, year</span>):<br>        <span class="hljs-variable language_">self</span>.make, <span class="hljs-variable language_">self</span>.model, <span class="hljs-variable language_">self</span>.year, <span class="hljs-variable language_">self</span>.odometer_reading = make, model, year, <span class="hljs-number">0</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">full_name</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.year&#125;</span> <span class="hljs-subst">&#123;self.make&#125;</span> <span class="hljs-subst">&#123;self.model&#125;</span>&quot;</span><br><br>my_car = MyCar(<span class="hljs-string">&quot;Toyota&quot;</span>, <span class="hljs-string">&quot;Camry&quot;</span>, <span class="hljs-number">2022</span>)<br><span class="hljs-built_in">print</span>(my_car.full_name())<br></code></pre></td></tr></table></figure>
 
 <h3 id="Package-and-Module-Names"><a href="#Package-and-Module-Names" class="headerlink" title="Package and Module Names"></a><strong><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0008/#package-and-module-names">Package and Module Names</a></strong></h3><ul>
 <li>模組(Module)應該有短的、全小寫的名稱。如果可以提高可讀性，可以在模組名稱中使用底線 _</li>
@@ -324,7 +323,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-09-20</p></div> <div class="post-entry__tags"><a href="/tags/python/" class="post-tags__link button"># python</a><a href="/tags/pep8/" class="post-tags__link button"># pep8</a><a href="/tags/style-guide/" class="post-tags__link button"># style guide</a></div>
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/python/" class="post-tags__link button"># python</a><a href="/tags/pep8/" class="post-tags__link button"># pep8</a><a href="/tags/style-guide/" class="post-tags__link button"># style guide</a></div>
 </article>
 
 

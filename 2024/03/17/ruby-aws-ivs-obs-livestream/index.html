@@ -60,8 +60,7 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -164,7 +163,7 @@
 <p>要載入的URL：<br><img src="/images/ruby-aws-ivs-obs-stream-live/4.png"></p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#app/views/pages/home.html.erb</span><br>&lt;h1&gt;<span class="hljs-title class_">Pages</span><span class="hljs-comment">#home&lt;/h1&gt;</span><br>&lt;p&gt;<span class="hljs-title class_">Find</span> me <span class="hljs-keyword">in</span> app/views/pages/home.html.erb&lt;<span class="hljs-regexp">/p&gt;</span><br><span class="hljs-regexp"></span><br><span class="hljs-regexp">&lt;script src=&quot;https:/</span><span class="hljs-regexp">/player.live-video.net/</span><span class="hljs-number">1.26</span>.<span class="hljs-number">0</span>/amazon-ivs-player.min.js<span class="hljs-string">&quot;&gt;&lt;/script&gt;</span><br><span class="hljs-string">&lt;div id=&quot;</span>amazon-ivs<span class="hljs-string">&quot;&gt;</span><br><span class="hljs-string">    &lt;video id=&quot;</span>video-player<span class="hljs-string">&quot;</span><br><span class="hljs-string">        autoplay</span><br><span class="hljs-string">        controls</span><br><span class="hljs-string">        playsinline</span><br><span class="hljs-string">        style=&quot;</span>max-<span class="hljs-symbol">height:</span> 500px; max-<span class="hljs-symbol">width:</span> 500px<span class="hljs-string">&quot;</span><br><span class="hljs-string">    &gt;&lt;/video&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  if (IVSPlayer.isPlayerSupported) &#123;</span><br><span class="hljs-string">    const player = IVSPlayer.create();</span><br><span class="hljs-string">    player.attachHTMLVideoElement(document.getElementById(&#x27;video-player&#x27;));</span><br><span class="hljs-string">    player.load(&quot;</span><span class="hljs-title class_">Playback</span> <span class="hljs-variable constant_">URL</span><span class="hljs-string">&quot;);</span><br><span class="hljs-string">    player.play();</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&lt;/script&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="設定OBS"><a href="#設定OBS" class="headerlink" title="設定OBS"></a>設定OBS</h2><p>有在接觸直播的人應該蠻熟悉OBS的，OBS是一個<strong>用於錄影和直播的自由開源軟體，</strong>常見的Youtube, Twitch,FB, Instagram都可以接此直播，自訂的功能也很高，或是也可以像我們這次一樣，使用AWS IVS + OBS 放到自己的網頁專案裡，可以參考和下載：<a target="_blank" rel="noopener" href="https://obsproject.com/">OBS</a></p>
+<h2 id="設定OBS"><a href="#設定OBS" class="headerlink" title="設定OBS"></a>設定OBS</h2><p>有在接觸直播的人應該蠻熟悉OBS的，OBS是一個**用於錄影和直播的自由開源軟體，**常見的Youtube, Twitch,FB, Instagram都可以接此直播，自訂的功能也很高，或是也可以像我們這次一樣，使用AWS IVS + OBS 放到自己的網頁專案裡，可以參考和下載：<a target="_blank" rel="noopener" href="https://obsproject.com/">OBS</a></p>
 <p>OBS → Setting → Stream → 複製自己AWS Channel的server &amp; key貼上<br><img src="/images/ruby-aws-ivs-obs-stream-live/5.png"></p>
 <p>AWS IVS Server &amp; Key<br><img src="/images/ruby-aws-ivs-obs-stream-live/6.png"></p>
 <p>接著在OBS 按下Star Stream就大功告成了！</p>
@@ -186,7 +185,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-09-20</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Rails/" class="post-tags__link button"># Rails</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/AMAZON-IVS/" class="post-tags__link button"># AMAZON IVS</a><a href="/tags/OBS/" class="post-tags__link button"># OBS</a><a href="/tags/livestream/" class="post-tags__link button"># livestream</a></div>
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Rails/" class="post-tags__link button"># Rails</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/AMAZON-IVS/" class="post-tags__link button"># AMAZON IVS</a><a href="/tags/OBS/" class="post-tags__link button"># OBS</a><a href="/tags/livestream/" class="post-tags__link button"># livestream</a></div>
 </article>
 
 

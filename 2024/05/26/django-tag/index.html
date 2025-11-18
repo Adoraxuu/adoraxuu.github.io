@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>Django: 從零開始學8 - 使用django-taggit 增加標籤 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Python, Django, form, taggit, tag">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">Django: 從零開始學8 - 使用django-taggit 增加標籤</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/05/" class="post-meta__date button">2024-05-26</a> 
+    <span class="separate-dot"></span><a href="/categories/Django/" class="button">Django</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><h2 id="安裝Django-taggit"><a href="#安裝Django-taggit" class="headerlink" title="安裝Django-taggit"></a>安裝Django-taggit</h2><p><code>poetry add django-taggit</code></p>
+<h2 id="到Blog-model裡引入-使用"><a href="#到Blog-model裡引入-使用" class="headerlink" title="到Blog.model裡引入&amp;使用"></a>到Blog.model裡引入&amp;使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">from django.db import models<br><br>from taggit.managers import TaggableManager<br><br>class Post(models.Model):<br>    <span class="hljs-comment"># ... 其他程式</span><br>    tags = TaggableManager()<br></code></pre></td></tr></table></figure>
+
+<p>執行 <code>poetry run python manage.py makemigrations blog</code></p>
+<p>會出現以下結果：</p>
+<img src="/images/django-tag/0.png">
+
+<p>執行<code>poetry run python manage.py migrate</code></p>
+<p>可以看到增加了兩張表：</p>
+<img src="/images/django-tag/1.png">
+
+
+<h2 id="使用ORM新增tag"><a href="#使用ORM新增tag" class="headerlink" title="使用ORM新增tag"></a>使用ORM新增tag</h2><h3 id="進到shell操作看看"><a href="#進到shell操作看看" class="headerlink" title="進到shell操作看看"></a>進到shell操作看看</h3><p><code>python manage.py shell</code></p>
+<p><code>from blog.models import Post</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post = Post.objects.all().first()<br>&gt;&gt;&gt; post.tags<br>&lt;taggit.managers._TaggableManager object at 0x1049a3ef0&gt;<br>&gt;&gt;&gt; post.tags.add(<span class="hljs-string">&#x27;python&#x27;</span>, <span class="hljs-string">&#x27;django&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>到資料庫裡面就能看到剛剛新增的tag</p>
+<img src="/images/django-tag/2.png">
+
+
+<p>另外一個<code>taggit_taggeditem</code>則是紀錄了關聯，到shell也可以查到剛剛增加的tag：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt;&gt; post.tags.all()<br>&lt;QuerySet [&lt;Tag: python&gt;, &lt;Tag: django&gt;]&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如果想要刪除則可以使用<code>post.tags.remove(’python’)</code> 刪除(僅刪掉關聯)</p>
+<h2 id="將tag加到頁面"><a href="#將tag加到頁面" class="headerlink" title="將tag加到頁面"></a>將tag加到頁面</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/templates/blog/list.html</span><br>&lt;p&gt;<br>	Tags &#123;&#123; post.tags.all | <span class="hljs-built_in">join</span>:<span class="hljs-string">&#x27;, &#x27;</span> &#125;&#125;<br>&lt;/p&gt;<br></code></pre></td></tr></table></figure>
+
+<p>就可以看到tags了：</p>
+<img src="/images/django-tag/3.png">
+
+
+<p>也可以再加上判斷句，有tags才顯示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&#123;% <span class="hljs-keyword">if</span> post.tags.count %&#125;<br>	&lt;p&gt;<br>		Tags &#123;&#123; post.tags.all | <span class="hljs-built_in">join</span>:<span class="hljs-string">&#x27;, &#x27;</span> &#125;&#125;<br>	&lt;/p&gt;<br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="/images/django-tag/4.png">
+
+<h2 id="增加標籤連結"><a href="#增加標籤連結" class="headerlink" title="增加標籤連結"></a>增加標籤連結</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/urls.py</span><br>from django.urls import path<br>from . import views<br><br>app_name = <span class="hljs-string">&#x27;blog&#x27;</span><br>urlpatterns = [<br><span class="hljs-comment"># ...其他連結設定</span><br><span class="hljs-comment"># 新增tag連結</span><br>    path(<span class="hljs-string">&#x27;tag/&lt;str:tag_slug&gt;/&#x27;</span>,<br>         views.list, name=<span class="hljs-string">&#x27;posts_by_tag&#x27;</span>),<br><br>]<br></code></pre></td></tr></table></figure>
+
+<h2 id="views新增過濾"><a href="#views新增過濾" class="headerlink" title="views新增過濾"></a>views新增過濾</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/views.py</span><br>from taggit.models import Tag<br><br>def list(request, tag_slug=None):<br>    <span class="hljs-keyword">if</span> tag_slug:<br>        tag = Tag.objects.filter(slug=tag_slug).first()<br>        posts = Post.objects.filter(tags__in=[tag]) <span class="hljs-comment">#只要包含我們搜尋的tag就列出來</span><br>    <span class="hljs-keyword">else</span>:<br>        posts = Post.objects.all() <span class="hljs-comment">#原本放在外面，要放到else，指如果沒有tag_slug參數就顯示所有文章</span><br><span class="hljs-comment">#....其他</span><br></code></pre></td></tr></table></figure>
+
+<p>修改網址加上tag&#x2F;python，就會出現依照tag過濾的文章列表：</p>
+<img src="/images/django-tag/5.png">
+
+<h2 id="前台畫面加上連結"><a href="#前台畫面加上連結" class="headerlink" title="前台畫面加上連結"></a>前台畫面加上連結</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/templates/blog/list.html</span><br><br><span class="hljs-comment">#...其他程式</span><br>        &#123;% <span class="hljs-keyword">if</span> post.tags.count %&#125;<br>        &lt;p&gt;<br>            Tags:<br>            &#123;% <span class="hljs-keyword">for</span> tag <span class="hljs-keyword">in</span> post.tags.all %&#125;<br>            &lt;a href=<span class="hljs-string">&quot;&#123;% url &quot;</span>blog:posts_by_tag<span class="hljs-string">&quot; tag.slug %&#125;&quot;</span>&gt;<br>                &#123;&#123; tag.name &#125;&#125;<br>            &lt;/a&gt;<br>            &#123;% <span class="hljs-keyword">if</span> not forloop.last %&#125;, &#123;% endif %&#125;<br>            &#123;% endfor %&#125;<br>        &lt;/p&gt;<br>        &#123;% endif %&#125;<br><span class="hljs-comment">#...其他程式</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;a href=&quot;&#123;% url "blog:posts_by_tag" tag.slug %&#125;&quot;&gt;</code><ul>
+<li>連結可以使用<code>&#123;% url “app_name:path_name” 參數 %&#125;</code></li>
+<li>參考project&#x2F;blog&#x2F;urls.py 寫的設定，<code>app_name:path_name = blog:posts_by_tag</code></li>
+</ul>
+</li>
+</ul>
+<p>前台就可以看到tag有連結可以點擊：</p>
+<img src="/images/django-tag/6.png">
+
+<p>點擊後就可以過濾顯示的文章（也就是轉換連結到&#x2F;tag&#x2F;tag.slug）：</p>
+<img src="/images/django-tag/7.png">
+
+<h2 id="做Tag-list的清單"><a href="#做Tag-list的清單" class="headerlink" title="做Tag list的清單"></a>做Tag list的清單</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/views.py</span><br>def list(request, tag_slug=None):<br><span class="hljs-comment"># 其他程式...</span><br>    tag_list = Tag.objects.all()<br><span class="hljs-comment"># 其他程式...</span><br>    <span class="hljs-built_in">return</span> render(<br>        request,<br>        <span class="hljs-string">&#x27;blog/list.html&#x27;</span>,<br>        &#123;<span class="hljs-string">&#x27;posts&#x27;</span>: posts, <span class="hljs-string">&#x27;tag_list&#x27;</span>: tag_list&#125; <span class="hljs-comment">#把tag_list傳遞給Template</span><br>    )<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#project/blog/templates/blog/list.html    </span><br>    &lt;hr&gt;<br>    &lt;div&gt;<br>        &lt;ul&gt;<br>            &#123;% <span class="hljs-keyword">for</span> tag <span class="hljs-keyword">in</span> tag_list %&#125;<br>            &lt;li&gt;<br>                &lt;a href=<span class="hljs-string">&quot;&#123;% url &quot;</span>blog:posts_by_tag<span class="hljs-string">&quot; tag.slug %&#125;&quot;</span>&gt;&#123;&#123; tag.name &#125;&#125;&lt;/a&gt;<br>                (&#123;&#123; tag.taggit_taggeditem_items.count &#125;&#125;) <span class="hljs-comment">#顯示 taggit_taggeditem_items table內的數量</span><br>            &lt;/li&gt;<br>            &#123;% endfor %&#125;<br>        &lt;/ul&gt;<br>    &lt;/div&gt;<br></code></pre></td></tr></table></figure>
+
+<p>前台就會長這樣：</p>
+<img src="/images/django-tag/8.png">
+
+
+<p>本篇文章是我由以下參考資料整理+自己繪圖而成，如果您有興趣了解更多，請參考：</p>
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://django-taggit.readthedocs.io/en/latest/#">django-taggit</a></li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/django-2-web/">Django 2 Web开发入门与实战</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/form/" class="post-tags__link button"># form</a><a href="/tags/taggit/" class="post-tags__link button"># taggit</a><a href="/tags/tag/" class="post-tags__link button"># tag</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+    <a href="/2025/11/18/django-01/" class="nav__link">
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+      <div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django: 從零開始學 1 - 設計Table</div>
+      </div>
+    </a>
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/05/15/django-add-comment/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Django : 從零開始學 7 - 增加評論功能</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/adoraxuu.github.io"
+                data-repo-id="R_kgDOKmz3GQ"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKmz3Gc4CifiX"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2025 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>

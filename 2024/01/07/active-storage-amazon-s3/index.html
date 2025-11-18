@@ -60,8 +60,7 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -160,14 +159,16 @@
 
 <p>本篇文章也會參考此影片來編寫，好的就讓我們開始吧 (^・ω・^ )</p>
 <ul>
-<li><p>先到<a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</p>
-</li>
-<li><p>接著到S3 創建存放資料的地方，點選Create Bucket</p>
-<img src="/images/active-storage-amazon-s3/03.png">
-</li>
-<li><p>選擇Bucket的所在地＆Bucket Name</p>
-<img src="/images/active-storage-amazon-s3/04.png"></li>
+<li>先到<a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/pm/serv-s3/">AWS S3</a>註冊帳號</li>
+<li>接著到S3 創建存放資料的地方，點選Create Bucket</li>
 </ul>
+<img src="/images/active-storage-amazon-s3/03.png">
+
+<ul>
+<li>選擇Bucket的所在地＆Bucket Name</li>
+</ul>
+<img src="/images/active-storage-amazon-s3/04.png">
+
 <p>依個人喜好而定，通常選離大部分使用者較近的位置，讀取速度會快一咪咪</p>
 <ul>
 <li><p>ACLs enabled<br>這個視需求而定而勾選，意思是說此Bucket的物件可以被其他 AWS 帳戶所擁有，並且可以透過 ACLs 來指定對該Bucket及其內部物件的訪問權限。<br>這意味著可以使用 ACLs 來管理誰可以讀取、寫入或刪除該儲存桶中的檔案，以及這些權限的具體配置。</p>
@@ -179,9 +180,12 @@
 
 <p>這部分是寫入資料的還有訪問的權限，因為能夠開放讓使用者上傳圖片，<br>所以我只勾選了下面兩項。</p>
 <ul>
-<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡<img src="/images/active-storage-amazon-s3/CORS.png"></li>
-<li>接著到<a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/iam/">I AM</a> 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰<img src="/images/active-storage-amazon-s3/07.png"></li>
+<li>設定CORS<br>在Bucket的頁面點選Permission拉到最下面<br>可以直接複製Rails Guids上面的資料，並將網址改成本次測試的網址，<br>如果你有正式發佈的網址，也能講網址填寫在這裡</li>
 </ul>
+<img src="/images/active-storage-amazon-s3/CORS.png">
+- 接著到[I AM](https://aws.amazon.com/tw/iam/) 建造使用者並新增Policy，為了設置訪問的權限及得到密鑰
+<img src="/images/active-storage-amazon-s3/07.png">
+
 <p>選擇S3，並在下面勾選</p>
 <ul>
 <li>List : ListBucket</li>
@@ -199,16 +203,19 @@
 <ul>
 <li>創建使用者，並選擇剛剛選好的Policy</li>
 <li>進入使用者頁面，點選Security credential，創建Access Key，讓我們的網站能夠透過此密鑰上傳圖片到S3</li>
-<li>選擇可以在AWS以外使用<img src="/images/active-storage-amazon-s3/09.png"></li>
-<li>進入金鑰頁面</li>
+<li>選擇可以在AWS以外使用</li>
 </ul>
+<img src="/images/active-storage-amazon-s3/09.png">
+- 進入金鑰頁面
+
 <p>把金鑰儲存起來（id和secret_key都要），之後就不能訪問這個頁面，<br>所以很重要一定要存，接著前置步驟就大公告成了🤗</p>
 <ul>
-<li><p>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</p>
+<li>回到我們的專案，將storage.yml內，關於amazon的註解解掉，並輸入你的資料</li>
+</ul>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-comment">#storage.yml</span><br><span class="hljs-symbol">amazon:</span><br>  <span class="hljs-symbol">service:</span> <span class="hljs-variable constant_">S3</span><br>  <span class="hljs-symbol">access_key_id:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:access_key_id</span>) %&gt;<br>  <span class="hljs-symbol">secret_access_key:</span> &lt;%= <span class="hljs-title class_">Rails</span>.application.credentials.dig(<span class="hljs-symbol">:aws</span>, <span class="hljs-symbol">:secret_access_key</span>) %&gt;<br>  <span class="hljs-symbol">region:</span> us-east-<span class="hljs-number">1</span>&lt;替換成你的區域&gt;<br>  <span class="hljs-symbol">bucket:</span> adora-bucket&lt;替換成的你的名稱&gt;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>接著在終端機輸入</p>
-</li>
+
+<ul>
+<li>接著在終端機輸入</li>
 </ul>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">EDITOR</span>=<span class="hljs-string">&quot;code --wait&quot;</span> rails <span class="hljs-symbol">credentials:</span>edit<br></code></pre></td></tr></table></figure>
 
@@ -239,7 +246,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2024-09-20</p></div> <div class="post-entry__tags"><a href="/tags/AWS/" class="post-tags__link button"># AWS</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/active-stroage/" class="post-tags__link button"># active stroage</a><a href="/tags/amazon/" class="post-tags__link button"># amazon</a><a href="/tags/s3/" class="post-tags__link button"># s3</a></div>
+   <div class="post-footer__meta"><p>updated at 2025-11-18</p></div> <div class="post-entry__tags"><a href="/tags/AWS/" class="post-tags__link button"># AWS</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/active-stroage/" class="post-tags__link button"># active stroage</a><a href="/tags/amazon/" class="post-tags__link button"># amazon</a><a href="/tags/s3/" class="post-tags__link button"># s3</a></div>
 </article>
 
 
