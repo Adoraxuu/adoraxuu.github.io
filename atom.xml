@@ -6,7 +6,7 @@
   <link href="http://adora-xu.com/atom.xml" rel="self"/>
   
   <link href="http://adora-xu.com/"/>
-  <updated>2024-10-13T11:31:07.585Z</updated>
+  <updated>2025-11-18T09:08:52.777Z</updated>
   <id>http://adora-xu.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWS SAA 學習筆記：IAM</title>
+    <link href="http://adora-xu.com/2025/11/18/SAA-Exam-Notes-I-AM/"/>
+    <id>http://adora-xu.com/2025/11/18/SAA-Exam-Notes-I-AM/</id>
+    <published>2025-11-18T12:00:00.000Z</published>
+    <updated>2025-11-18T09:08:52.777Z</updated>
+    
+    <content type="html"><![CDATA[<p>AWS Solutions Architect Associate (SAA-C03) 考試準備筆記，聚焦於 IAM 相關的考點與易混淆概念。</p><h2 id="IAM-Security-Tools"><a href="#IAM-Security-Tools" class="headerlink" title="IAM Security Tools"></a>IAM Security Tools</h2><h3 id="題目：Which-of-the-following-is-an-IAM-Security-Tool"><a href="#題目：Which-of-the-following-is-an-IAM-Security-Tool" class="headerlink" title="題目：Which of the following is an IAM Security Tool?"></a>題目：Which of the following is an IAM Security Tool?</h3><p><strong>錯誤選項：</strong> <code>IAM Security Advisor</code><br><strong>正確答案：</strong> <code>IAM Access Analyzer</code></p><h3 id="AWS-官方-IAM-Security-Tools（共-4-個）"><a href="#AWS-官方-IAM-Security-Tools（共-4-個）" class="headerlink" title="AWS 官方 IAM Security Tools（共 4 個）"></a>AWS 官方 IAM Security Tools（共 4 個）</h3><table><thead><tr><th>工具</th><th>功能</th><th>考試重點</th></tr></thead><tbody><tr><td><strong>IAM Credentials Report</strong></td><td>帳號層級的使用者憑證狀態報告</td><td>審計密碼、Access Key、MFA 啟用狀態</td></tr><tr><td><strong>IAM Access Advisor</strong></td><td>顯示使用者&#x2F;角色最近存取的服務</td><td>識別並移除過度授權（Least Privilege）</td></tr><tr><td><strong>IAM Policy Simulator</strong></td><td>模擬策略執行結果</td><td>驗證特定 Action 是否被允許</td></tr><tr><td><strong>IAM Access Analyzer</strong></td><td>分析資源共用與跨帳號存取</td><td><strong>高頻考點</strong>：識別 public、cross-account 資源風險</td></tr></tbody></table><p><strong>注意事項：</strong></p><ul><li>AWS 不存在 <code>IAM Security Advisor</code>、<code>IAM Resource Inspector</code>、<code>IAM Admin Assistant</code> 等服務</li><li>SAA 考試常使用類似命名的干擾選項</li></ul><hr><h2 id="IAM-Policy-Statement-結構"><a href="#IAM-Policy-Statement-結構" class="headerlink" title="IAM Policy Statement 結構"></a>IAM Policy Statement 結構</h2><h3 id="題目：Statement-consists-of-the-following-EXCEPT"><a href="#題目：Statement-consists-of-the-following-EXCEPT" class="headerlink" title="題目：Statement consists of the following, EXCEPT:"></a>題目：Statement consists of the following, EXCEPT:</h3><p><strong>錯誤選項：</strong> <code>Action</code><br><strong>正確答案：</strong> <code>Version</code>（或其他 Policy 層級的 metadata）</p><h3 id="Statement-必要與選填欄位"><a href="#Statement-必要與選填欄位" class="headerlink" title="Statement 必要與選填欄位"></a>Statement 必要與選填欄位</h3><table><thead><tr><th>欄位</th><th>必要性</th><th>說明</th></tr></thead><tbody><tr><td><strong>Effect</strong></td><td>必須</td><td><code>Allow</code> 或 <code>Deny</code></td></tr><tr><td><strong>Action &#x2F; NotAction</strong></td><td>必須</td><td>指定允許或拒絕的 API 操作</td></tr><tr><td><strong>Resource &#x2F; NotResource</strong></td><td>必須</td><td>指定受影響的 ARN</td></tr><tr><td><strong>Condition</strong></td><td>選填</td><td>條件限制（IP、MFA、時間等）</td></tr><tr><td><strong>Principal</strong></td><td>特定情境</td><td>僅用於 Trust Policy（資源型策略）</td></tr></tbody></table><h3 id="關鍵概念"><a href="#關鍵概念" class="headerlink" title="關鍵概念"></a>關鍵概念</h3><p><code>Version</code> 是 <strong>Policy 層級</strong> 的 metadata，<strong>不屬於 Statement</strong> 的組成部分。</p><p>IAM Policy 結構範例：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;Version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2012-10-17&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;Statement&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;Effect&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Allow&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;Action&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;s3:*&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;Resource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><hr><h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><ol><li><strong>IAM Security Tools 僅有 4 個官方工具</strong>，其他類似命名皆為干擾選項</li><li><strong>IAM Access Analyzer</strong> 是 SAA 高頻考點，用於識別資源外部存取風險</li><li><strong>Policy 與 Statement 結構需明確區分</strong>：<code>Version</code> 位於 Policy 層級，非 Statement 內部欄位</li><li><strong>Statement 核心三要素</strong>：Effect + Action + Resource</li></ol><hr><blockquote><p><strong>學習資源：</strong> Udemy - <a href="https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/">Ultimate AWS Certified Solutions Architect Associate SAA-C03</a> by Stephane Maarek</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;AWS Solutions Architect Associate (SAA-C03) 考試準備筆記，聚焦於 IAM 相關的考點與易混淆概念。&lt;/p&gt;
+&lt;h2 id=&quot;IAM-Security-Tools&quot;&gt;&lt;a href=&quot;#IAM-Security-Tools&quot; cla</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="http://adora-xu.com/categories/AWS/"/>
+    
+    
+    <category term="AWS" scheme="http://adora-xu.com/tags/AWS/"/>
+    
+    <category term="SAA" scheme="http://adora-xu.com/tags/SAA/"/>
+    
+    <category term="IAM" scheme="http://adora-xu.com/tags/IAM/"/>
+    
+  </entry>
   
   <entry>
     <title>Django: ListView &amp; paginator</title>
@@ -688,39 +717,6 @@ border:2px #d4a373 s</summary>
     <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
     
     <category term="search insert position" scheme="http://adora-xu.com/tags/search-insert-position/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode挑戰: Day12 plus one</title>
-    <link href="http://adora-xu.com/2024/02/10/leetcode-plus-one/"/>
-    <id>http://adora-xu.com/2024/02/10/leetcode-plus-one/</id>
-    <published>2024-02-10T12:05:07.000Z</published>
-    <updated>2024-09-20T07:07:57.157Z</updated>
-    
-    <content type="html"><![CDATA[<p>為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用<code>Ruby</code>、<code>python</code>和<code>JavaScript</code>三個語言來解題，今天是第十二天，讓我們開始吧！</p><img src="/images/leetcode-plus-one/0210.png"><p>題目來源：<a href="https://leetcode.com/problems/plus-one/">leetcode</a></p><p>這題題目很簡單，只要會使用將數字陣列轉為整數再加一，接著再轉回數字陣列就可以得到答案～</p><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">def</span> <span class="hljs-title function_">plus_one</span>(<span class="hljs-params">digits</span>)<br>  (digits.join(<span class="hljs-string">&#x27;&#x27;</span>).to_i + <span class="hljs-number">1</span>).to_s.chars.map(&amp;<span class="hljs-symbol">:to_i</span>)<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p><code>.map(&amp;:to_i)</code>原始的寫法為<code>.map&#123; |num| num.to_i &#125;</code></p><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits</span>):<br>        <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(digit) <span class="hljs-keyword">for</span> digit <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>, digits))) + <span class="hljs-number">1</span>)]<br></code></pre></td></tr></table></figure><p>Python轉換型態都是包一個括號在外面，<code>int(&#39;&#39;.join(map(str, digits)))</code>為將陣列內每一字連接為字串最後轉為整數，而後<code>+1</code>，再利用<code>str()</code>轉為字串。</p><p>最後將每一字轉為整數陣列回傳。</p><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> plusOne = <span class="hljs-keyword">function</span>(<span class="hljs-params">digits</span>) &#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-title class_">BigInt</span>(digits.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)) + <span class="hljs-number">1n</span>).<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Number</span>);<br>  &#125;;<br></code></pre></td></tr></table></figure><p>在<code>js</code>比較特別，使用<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</a>，BigInt 是一個內建的物件，提供了表示大於 2^53 的整數的功能 (2^53 是 JavaScript 原生的Number能夠表示的最大值)，因為使用<code>BigInt</code>型態，所以<code>+1</code>要使用<code>+1n</code>，才能得到加一後的結果。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;python&lt;/code&gt;和&lt;code&gt;JavaScript&lt;/code&gt;三個語言來解題，今天是第十二天，讓我們開始吧！&lt;/p&gt;
-&lt;img src=&quot;</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://adora-xu.com/categories/leetcode/"/>
-    
-    
-    <category term="Ruby" scheme="http://adora-xu.com/tags/Ruby/"/>
-    
-    <category term="Python" scheme="http://adora-xu.com/tags/Python/"/>
-    
-    <category term="JavaScript" scheme="http://adora-xu.com/tags/JavaScript/"/>
-    
-    <category term="leetcode" scheme="http://adora-xu.com/tags/leetcode/"/>
-    
-    <category term="plus one" scheme="http://adora-xu.com/tags/plus-one/"/>
     
   </entry>
   
