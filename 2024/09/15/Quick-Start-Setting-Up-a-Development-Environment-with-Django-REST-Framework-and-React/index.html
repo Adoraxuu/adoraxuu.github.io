@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+  <meta charset="utf-8" />
+
+  
+
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-PJMXLZWPCV"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-PJMXLZWPCV");
+  </script>
+
+  <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/favicon2.ico">
+    
+    
+    
+    
+    
+ <!-- meta -->
+
+
+<title>使用 Django REST Framework 和 React 建置開發環境 | Adora&#39;s Blog</title>
+
+
+    <meta name="keywords" content="Django, React, Django-REST, Frontend, Backend, Python">
+
+
+ <!-- OpenGraph -->
+ 
+<link rel="stylesheet" href="/css/style/main.css">
+   
+    
+        <link rel="stylesheet" id="hl-default-theme" href="https://cdn.jsdelivr.net/npm/highlight.js@10.1.2/styles/default.min.css" media="none" onload="this.media='all'">
+        
+    
+     <!-- custom head -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Adora&#39;s Blog</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">Home</a>
+                
+                    <a href="/tags/" class="navbar-menu button">Tags</a>
+                
+                    <a href="/categories/" class="navbar-menu button">Categories</a>
+                
+                    <a href="/archives/" class="navbar-menu button">Archives</a>
+                
+                    <a href="/about/" class="navbar-menu button">About</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">Home</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">Tags</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">Categories</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">Archives</a>
+                
+                    <a href="/about/" class="dropdown-menu button">About</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+  <h1 class="post-title__text">使用 Django REST Framework 和 React 建置開發環境</h1>
+  <div class="post-title__meta">
+    <a href="/archives/2024/09/" class="post-meta__date button">2024-09-15</a> 
+    <span class="separate-dot"></span><a href="/categories/Django-REST/" class="button">Django-REST</a>
+
+ 
+    
+    
+
+
+ 
+
+
+  </div>
+</div>
+
+
+
+<article
+  class="post content-card"
+>
+  <div class="post__header">
+    
+  </div>
+
+  <div class="post__content"><img src="/images/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/Main.webp">
+
+<h2 id="開始之前"><a href="#開始之前" class="headerlink" title="開始之前"></a>開始之前</h2><p>需要準備：Python (&gt;&#x3D;3.8)、Poetry（Django 套件管理）、NPM（React 套件管理）</p>
+<h2 id="建立-React"><a href="#建立-React" class="headerlink" title="建立 React"></a>建立 React</h2><p>使用 Vite 建立 React 專案：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm create vite@latest frontend -- --template react<br><span class="hljs-built_in">cd</span> frontend<br>npm install<br>npm run dev<br></code></pre></td></tr></table></figure>
+
+<p>前往 <code>http://localhost:5173/</code> 確認安裝成功。</p>
+<h2 id="建立-Django-專案"><a href="#建立-Django-專案" class="headerlink" title="建立 Django 專案"></a>建立 Django 專案</h2><ol>
+<li>安裝套件：Django、Django REST framework、django-cors-headers</li>
+<li>建立專案 <code>django-admin startproject core</code>，重新命名為 <code>backend</code></li>
+<li>初始化 Poetry 環境並安裝依賴</li>
+<li>執行資料庫遷移：<code>python manage.py migrate</code></li>
+<li>建立超級使用者，並建立一個 “Word” app</li>
+</ol>
+<h2 id="設定後端-API-APP"><a href="#設定後端-API-APP" class="headerlink" title="設定後端 API &amp; APP"></a>設定後端 API &amp; APP</h2><h3 id="1-Django-Settings"><a href="#1-Django-Settings" class="headerlink" title="1. Django Settings"></a>1. Django Settings</h3><p>在 <code>settings.py</code> 中，將 <code>rest_framework</code>、<code>corsheaders</code> 和 <code>words</code> 加入 <code>INSTALLED_APPS</code>。設定 <code>CORS_ALLOW_ORIGINS</code> 允許 React 前端（<code>http://localhost:5173</code>）。</p>
+<h3 id="2-Word-Model"><a href="#2-Word-Model" class="headerlink" title="2. Word Model"></a>2. Word Model</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Word</span>(models.Model):<br>    word = models.CharField(max_length=<span class="hljs-number">200</span>, unique=<span class="hljs-literal">True</span>)<br>    pronunciation = models.CharField(max_length=<span class="hljs-number">100</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Admin-Registration"><a href="#3-Admin-Registration" class="headerlink" title="3. Admin Registration"></a>3. Admin Registration</h3><p>在 <code>admin.py</code> 中註冊 <code>Word</code> model。</p>
+<h3 id="4-Django-REST-Framework-設定"><a href="#4-Django-REST-Framework-設定" class="headerlink" title="4. Django REST Framework 設定"></a>4. Django REST Framework 設定</h3><p>在 <code>words</code> app 中建立 <code>api</code> 資料夾，包含 <code>serializers.py</code>、<code>urls.py</code> 和 <code>views.py</code>。</p>
+<p><strong>Serializers</strong>（資料轉 JSON）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.serializers <span class="hljs-keyword">import</span> ModelSerializer<br><span class="hljs-keyword">from</span> ..models <span class="hljs-keyword">import</span> Word<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">WordSerializer</span>(<span class="hljs-title class_ inherited__">ModelSerializer</span>):<br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Meta</span>:<br>        model = Word<br>        fields = [<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;word&#x27;</span>, <span class="hljs-string">&#x27;pronunciation&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p><strong>Views</strong>（透過 ModelViewSet 實現 CRUD）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.viewsets <span class="hljs-keyword">import</span> ModelViewSet<br><span class="hljs-keyword">from</span> ..models <span class="hljs-keyword">import</span> Word<br><span class="hljs-keyword">from</span> .serializers <span class="hljs-keyword">import</span> WordSerializer<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">WordViewSet</span>(<span class="hljs-title class_ inherited__">ModelViewSet</span>):<br>    queryset = Word.objects.<span class="hljs-built_in">all</span>()<br>    serializer_class = WordSerializer<br></code></pre></td></tr></table></figure>
+
+<p><strong>URLs</strong> — <code>words/api/urls.py</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include<br><span class="hljs-keyword">from</span> rest_framework.routers <span class="hljs-keyword">import</span> DefaultRouter<br><span class="hljs-keyword">from</span> .views <span class="hljs-keyword">import</span> WordViewSet<br><br>word_router = DefaultRouter()<br>word_router.register(<span class="hljs-string">r&#x27;words&#x27;</span>, WordViewSet)<br></code></pre></td></tr></table></figure>
+
+<p><code>core/api/urls.py</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.routers <span class="hljs-keyword">import</span> DefaultRouter<br><span class="hljs-keyword">from</span> words.api.urls <span class="hljs-keyword">import</span> word_router<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include<br><br>router = DefaultRouter()<br>router.registry.extend(word_router.registry)<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, include(router.urls)),<br>]<br></code></pre></td></tr></table></figure>
+
+<p><code>core/urls.py</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, include<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    path(<span class="hljs-string">&#x27;api/&#x27;</span>, include(<span class="hljs-string">&#x27;core.api.urls&#x27;</span>)),<br>]<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-執行-Migrations-並啟動-Server"><a href="#5-執行-Migrations-並啟動-Server" class="headerlink" title="5. 執行 Migrations 並啟動 Server"></a>5. 執行 Migrations 並啟動 Server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">python manage.py makemigrations<br>python manage.py migrate<br>python manage.py runserver<br></code></pre></td></tr></table></figure>
+
+<p>前往 <code>http://127.0.0.1:8000/api/words</code> 查看 browsable API。</p>
+<h2 id="設定-React-環境"><a href="#設定-React-環境" class="headerlink" title="設定 React 環境"></a>設定 React 環境</h2><h3 id="1-建立-env-檔案"><a href="#1-建立-env-檔案" class="headerlink" title="1. 建立 .env 檔案"></a>1. 建立 <code>.env</code> 檔案</h3><p>在 <code>frontend</code> 資料夾中建立：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">VITE_API_URL=http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8000</span><span class="hljs-regexp">/api/</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-使用環境變數"><a href="#2-使用環境變數" class="headerlink" title="2. 使用環境變數"></a>2. 使用環境變數</h3><p>透過 <code>import.meta.env.VITE_API_URL</code> 在 <code>src/app.jsx</code> 中使用。</p>
+<h3 id="3-從-API-取得資料"><a href="#3-從-API-取得資料" class="headerlink" title="3. 從 API 取得資料"></a>3. 從 API 取得資料</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; useState, useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [data, setData] = <span class="hljs-title function_">useState</span>([])<br><br>  <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">fetchData</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-keyword">import</span>.meta.env.VITE_API_URL&#125;</span>/words/`</span>);<br>        <span class="hljs-keyword">if</span> (!response.<span class="hljs-property">ok</span>) &#123;<br>          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Network response was not ok&#x27;</span>);<br>        &#125;<br>        <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>();<br>        <span class="hljs-title function_">setData</span>(data);<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)<br>      &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&#x27;Error fetching data:&#x27;</span>, error);<br>      &#125;<br>    &#125;<br>    <span class="hljs-title function_">fetchData</span>();<br>  &#125;, [])<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">      &#123;data.map((word) =&gt; (</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;word.id&#125;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;word.word&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;word.pronunciation&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      ))&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://vitejs.dev/">Vite</a><br><a target="_blank" rel="noopener" href="https://react.dev/">React</a><br><a target="_blank" rel="noopener" href="https://www.djangoproject.com/">Django</a><br><a target="_blank" rel="noopener" href="https://www.django-rest-framework.org/">Django REST Framework</a></p>
+</blockquote>
+</div>
+
+   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/React/" class="post-tags__link button"># React</a><a href="/tags/Django-REST/" class="post-tags__link button"># Django-REST</a><a href="/tags/Frontend/" class="post-tags__link button"># Frontend</a><a href="/tags/Backend/" class="post-tags__link button"># Backend</a><a href="/tags/Python/" class="post-tags__link button"># Python</a></div>
+</article>
+
+
+<div class="nav">
+  <div class="nav__prev">
+    
+    <a href="/2024/10/08/Django-FBV-CBV-DetailView/" class="nav__link">
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+      <div>
+        <div class="nav__label">Previous Post</div>
+        <div class="nav__title">Django: FBV &amp; CBV — DetailView</div>
+      </div>
+    </a>
+    
+  </div>
+  <div class="nav__next">
+    
+    <a href="/2024/03/31/ruby-on-rails-abstraction-layer/" class="nav__link">
+      <div>
+        <div class="nav__label">Next Post</div>
+        <div class="nav__title">Ruby on Rails: 什麼是Abstraction layer</div>
+      </div>
+      <div>
+        <svg
+          viewBox="0 0 1024 1024"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+        >
+          <path
+            d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z"
+            fill="#808080"
+          ></path>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+ 
+<div
+  class="post__comments content-card"
+  id="comment"
+>
+  
+    <h4>Comments</h4>
+    
+    
+    
+    
+    
+    <div id="giscus_container">
+        <script src="https://giscus.app/client.js"
+                data-repo="Adoraxuu/adoraxuu.github.io"
+                data-repo-id="R_kgDOKmz3GQ"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOKmz3Gc4CifiX"
+                data-mapping="url"
+                data-strict="1"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="zh-TW"
+                data-loading="lazy"
+                crossorigin="anonymous" async></script>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+
+
+</div>
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2023&nbsp;-&nbsp;2026 <a href="/">Adora&#39;s Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+<!-- 
+<script>
+  window.ga =
+    window.ga ||
+    function () {
+      (ga.q = ga.q || []).push(arguments);
+    };
+  ga.l = +new Date();
+  ga("create", "GTM-57KDD978", "auto");
+  ga("send", "pageview");
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+ -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-57KDD978");
+</script>
+<!-- End Google Tag Manager -->
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
