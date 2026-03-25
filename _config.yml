@@ -5,15 +5,15 @@
 # Site
 title: "Adora's Blog"
 subtitle: ""
-description: ""
-keywords:
+description: "Adora 的技術部落格，分享 Ruby on Rails、Django、JavaScript、AWS 和職涯轉職心得"
+keywords: "Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師"
 author: Adora Xu
-language:
+language: zh-TW
 timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://adora-xu.com
+url: https://adora-xu.com
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:

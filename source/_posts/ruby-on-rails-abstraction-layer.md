@@ -12,6 +12,7 @@ tags:
 categories:
 - [Ruby on Rails]
 
+description: '介紹 Ruby on Rails 中 Abstraction Layer（抽象層）的概念與分層設計原則，說明如何透過職責分離提升程式碼可維護性與可測試性。'
 ---
 
 <style>

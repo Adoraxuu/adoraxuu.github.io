@@ -4,6 +4,7 @@ title: '閱讀筆記 — 軟體公司只剩兩條路：Grow 10 or Earn 40'
 date: 2026-03-25 12:00:00
 tags: [閱讀筆記, 軟體產業, AI, SaaS]
 categories: AI
+description: '閱讀筆記：a16z David George 分析 AI 時代軟體公司的生存法則——要嘛用 AI 加速成長 10%，要嘛重構成高獲利機器，中間帶的公司將面臨最大壓力。'
 ---
 
 原文：[There Are Only Two Paths Left for Software](https://a16z.com/there-are-only-two-paths-left-for-software) by David George（a16z）

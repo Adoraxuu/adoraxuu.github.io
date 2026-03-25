@@ -15,6 +15,7 @@ tags:
 categories:
 - [Ruby on Rails]
 
+description: '教你如何在 Ruby on Rails 中整合 Amazon IVS 與 OBS，快速建立低延遲直播功能，涵蓋 IVS Channel 設定、串流金鑰配置與前端播放器嵌入。'
 ---
 <img src="/images/ruby-aws-ivs-obs-stream-live/cover.avif">
 

@@ -17,6 +17,7 @@ tags:
 
 categories:
 - [Ruby on Rails]
+description: '完整教學如何在 Ruby on Rails 中串接 LINE Pay API v3 金流，使用 Faraday 發送請求，涵蓋 sandbox 測試到正式環境的完整流程。'
 ---
 
 <style>

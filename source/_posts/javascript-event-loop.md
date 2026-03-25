@@ -7,6 +7,7 @@ tags:
 categories:
   - [JavaScript]
 date: 2023-11-08 11:22:00
+description: '深入解析 JavaScript 的 Event Loop 機制，介紹 Call Stack、Callback Queue 與非同步處理原理，幫助你理解單執行緒語言如何高效處理多個任務。'
 ---
 
 <style>

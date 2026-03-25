@@ -8,7 +8,7 @@ tags:
 - [Ruby]
 - [JavaScript]
 - [Python]
-- [longest common prefix]
+- [valid parentheses]
 
 categories:
 - [leetcode]

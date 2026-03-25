@@ -1,4 +1,4 @@
-layout: draft
+layout: post
 title: 'JavaScript: 變數提升 hoisting 到底是什麼？'
 author: Adora Xu
 tags:
@@ -10,6 +10,7 @@ categories:
 - [JavaScript]
 
 date: 2023-11-18 21:58:00
+description: '完整解析 JavaScript 變數提升（Hoisting）的概念與運作機制，說明 var、let、const 在 hoisting 行為上的差異，避免常見的宣告陷阱。'
 
 ---
 

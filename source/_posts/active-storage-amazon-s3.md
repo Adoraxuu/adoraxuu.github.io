@@ -6,7 +6,7 @@ date: 2024-01-07 15:12:39
 tags:
 - [AWS]
 - [Ruby on Rails]
-- [active stroage]
+- [active storage]
 - [amazon]
 - [s3]
 categories:

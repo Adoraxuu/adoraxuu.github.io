@@ -4,6 +4,7 @@ title: '用手機遙控電腦開發？我用 Claude Dispatch 試了一把 🚀'
 date: 2026-03-24 15:00:00
 tags: [AI, Claude, Dispatch, Workflow, AI-Assisted Development, GitHub, Productivity]
 categories: AI
+description: '實測用手機透過 Claude Dispatch 遠端操控電腦執行開發任務，介紹 orchestrator 模式的 AI 代理框架如何實現任務隔離、調度與 permission gate 機制。'
 ---
 
 今天使用 Claude Dispatch 用手機遙控電腦跑整個開發流程٩(●ᴗ●)۶

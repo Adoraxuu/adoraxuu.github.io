@@ -10,6 +10,7 @@ tags:
 categories:
   - [JavaScript]
 date: 2023-11-18 22:00:00
+description: '詳解 HTML script 標籤的 defer 與 async 屬性差異，說明各自的載入順序與執行時機，協助你優化網頁渲染效能並避免阻塞問題。'
 ---
 
 <style>

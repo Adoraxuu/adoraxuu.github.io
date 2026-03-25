@@ -8,6 +8,7 @@ tags:
 categories:
 - [JavaScript]
 date: 2023-11-15 15:29:55
+description: '比較 JavaScript 的 var、let、const 宣告方式，深入解析 scope、hoisting、重新賦值等關鍵差異，選對變數宣告讓程式碼更安全清晰。'
 
 ---
 
