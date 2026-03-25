@@ -6,11 +6,9 @@ tags: [AI, Claude, Dispatch, Workflow, AI-Assisted Development, GitHub, Producti
 categories: AI
 ---
 
-今天做了一件以前覺得「幹嘛這樣搞」、現在覺得「超香」的事——**用手機遙控電腦跑整個開發流程**。
+今天使用 Claude Dispatch 用手機遙控電腦跑整個開發流程٩(●ᴗ●)۶
 
-工具：Claude Dispatch。體驗：出乎意料地順。
-
-![Dispatch 手機操作截圖](/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg)
+<img src="/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg" width="500" alt="Dispatch 手機操作截圖">
 
 <!-- more -->
 
@@ -26,6 +24,14 @@ categories: AI
 
 這個設計其實很符合現代軟體開發的思路——**關注點分離 + 最小權限原則**，只是搬到 AI workflow 上了。
 
+## 等等，我坐在電腦前直接用 Claude Code 不也差不多？
+
+說實話，一開始我也這樣想。搞什麼手機遙控，我人都在電腦前了，開個 terminal 直接跑不就好了？
+
+但用了之後才發現——差別在**多工**。
+
+當 Dispatch 在背景跑任務的時候，我可以繼續用電腦做自己的事。手機負責下指令、確認進度，電腦那邊 Claude Dispatch 默默把 issue 開好、把 code 寫好，我的主力工作完全不用中斷。兩條線同時走，效率真的不一樣。
+
 ## 從構想到 PR，全程用手機完成
 
 今天的實驗是在我的 side project [vocabot](https://github.com/Adoraxuu/vocabot) 上開了一個 issue 和一個 PR。
@@ -40,6 +46,12 @@ categories: AI
 6. 📤 審核 diff，確認沒問題後發 PR：[vocabot#2](https://github.com/Adoraxuu/vocabot/pull/2)
 
 以前這一套流程至少要打開電腦、切視窗、開 terminal、手動下一堆指令。現在坐在沙發上滑手機就完成了，而且每一個有影響的動作都有確認機制，不用擔心 AI 亂做事。
+
+## 說沒擔心是騙人的
+
+過程中還是有那麼一刻在想：Token 會不會就這樣被燒光？有些指令跑超久，會不會其實自己動手做還比較快？
+
+但「解放雙手、只需要下命令」這個感覺實在太爽了，擔心歸擔心，手還是沒停下來繼續下指令 😆
 
 ## 技術棧觀察
 
