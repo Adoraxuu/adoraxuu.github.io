@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,43 @@
 <title>Ruby on Rails : ActiveStorage連線Amazon S3 | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="AWS, Ruby on Rails, active stroage, amazon, s3">
+    <meta name="keywords" content="AWS, Ruby on Rails, amazon, s3, active storage, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="Adora 的技術部落格，分享 Ruby on Rails、Django、JavaScript、AWS 和職涯轉職心得">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="圖片來源Usplash  在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 Active Storage來儲存圖片，讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 Rails Guide的介紹 本篇主要介紹如何把Active Storage的資料儲存在Amazon S3， 因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。因為檔案很多很複雜">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ruby on Rails : ActiveStorage連線Amazon S3">
+<meta property="og:url" content="https://adora-xu.com/2024/01/07/active-storage-amazon-s3/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="圖片來源Usplash  在使用Ruby on Rails製作網頁的時候，常常會使用Rails的 Active Storage來儲存圖片，讓網頁內容更加豐富٩(●˙▿˙●)۶…⋆ฺ主要使用方法可以參考 Rails Guide的介紹 本篇主要介紹如何把Active Storage的資料儲存在Amazon S3， 因為網站常常有許多動態增長的檔案，最常見的就是使用者上傳的照片。因為檔案很多很複雜">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/01.avif">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/03.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/04.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/05.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/CORS.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/07.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/08.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/09.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/12.png">
+<meta property="og:image" content="https://adora-xu.com/images/active-storage-amazon-s3/11.png">
+<meta property="article:published_time" content="2024-01-07T07:12:39.000Z">
+<meta property="article:modified_time" content="2026-03-25T06:03:21.150Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="Ruby on Rails">
+<meta property="article:tag" content="amazon">
+<meta property="article:tag" content="s3">
+<meta property="article:tag" content="active storage">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/active-storage-amazon-s3/01.avif">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +93,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -246,7 +280,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/AWS/" class="post-tags__link button"># AWS</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/active-stroage/" class="post-tags__link button"># active stroage</a><a href="/tags/amazon/" class="post-tags__link button"># amazon</a><a href="/tags/s3/" class="post-tags__link button"># s3</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-25</p></div> <div class="post-entry__tags"><a href="/tags/AWS/" class="post-tags__link button"># AWS</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/amazon/" class="post-tags__link button"># amazon</a><a href="/tags/s3/" class="post-tags__link button"># s3</a><a href="/tags/active-storage/" class="post-tags__link button"># active storage</a></div>
 </article>
 
 
@@ -268,7 +302,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">Ruby on Rails: 用Simple Calendar輕鬆打造客製化月曆</div>
       </div>
     </a>
@@ -278,7 +312,7 @@
     
     <a href="/2023/12/24/rails-admin-layout-devise/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">Ruby on Rails: 用Devise10分鐘製作管理者後台版面</div>
       </div>
       <div>
@@ -304,7 +338,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

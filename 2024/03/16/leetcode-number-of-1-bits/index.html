@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,36 @@
 <title>Leetcode: number of 1 bits | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, Python, JavaScript, leetcode, number of 1 bits, 漢明權重, hamming weight">
+    <meta name="keywords" content="Ruby, Python, JavaScript, leetcode, number of 1 bits, 漢明權重, hamming weight, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="Adora 的技術部落格，分享 Ruby on Rails、Django、JavaScript、AWS 和職涯轉職心得">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用Ruby、python和JavaScript三個語言來解題，讓我們開始吧！   題目來源：leetcode 漢明權重此題提到了個特別的詞：漢明權重，維基百科中解釋，漢明權重是一串符號中非零符號的個數。因此它等同於同樣長度的全零符號串的漢明距離。在最為常見的數據位符號串中，它是1的個數。 漢明權重(Hamming weight)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode: number of 1 bits">
+<meta property="og:url" content="https://adora-xu.com/2024/03/16/leetcode-number-of-1-bits/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="為了加強自己的程式能力，會記錄刷leetcode的解法+說明，這次也會用Ruby、python和JavaScript三個語言來解題，讓我們開始吧！   題目來源：leetcode 漢明權重此題提到了個特別的詞：漢明權重，維基百科中解釋，漢明權重是一串符號中非零符號的個數。因此它等同於同樣長度的全零符號串的漢明距離。在最為常見的數據位符號串中，它是1的個數。 漢明權重(Hamming weight)">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/leetcode-number-of-1-bits/01.png">
+<meta property="article:published_time" content="2024-03-16T12:55:48.000Z">
+<meta property="article:modified_time" content="2026-03-24T02:22:25.978Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="Ruby">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="number of 1 bits">
+<meta property="article:tag" content="漢明權重">
+<meta property="article:tag" content="hamming weight">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/leetcode-number-of-1-bits/01.png">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +86,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -167,7 +194,7 @@
 <p>以上就是今天的Leetcode刷題解釋٩(●˙▿˙●)۶</p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/number-of-1-bits/" class="post-tags__link button"># number of 1 bits</a><a href="/tags/%E6%BC%A2%E6%98%8E%E6%AC%8A%E9%87%8D/" class="post-tags__link button"># 漢明權重</a><a href="/tags/hamming-weight/" class="post-tags__link button"># hamming weight</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/number-of-1-bits/" class="post-tags__link button"># number of 1 bits</a><a href="/tags/%E6%BC%A2%E6%98%8E%E6%AC%8A%E9%87%8D/" class="post-tags__link button"># 漢明權重</a><a href="/tags/hamming-weight/" class="post-tags__link button"># hamming weight</a></div>
 </article>
 
 
@@ -189,7 +216,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播</div>
       </div>
     </a>
@@ -199,7 +226,7 @@
     
     <a href="/2024/03/14/from-relationshop-manager-to-software-engineer/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">職涯: 五倍學院轉職之旅</div>
       </div>
       <div>
@@ -225,7 +252,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

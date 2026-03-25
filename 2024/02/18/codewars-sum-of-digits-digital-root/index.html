@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,37 @@
 <title>CodeWars: sum of digits / digital root（02/21更新） | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, Python, JavaScript, codewars, sum of digits, digital root, 遞迴, recursion">
+    <meta name="keywords" content="Ruby, Python, JavaScript, codewars, sum of digits, digital root, 遞迴, recursion, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="Adora 的技術部落格，分享 Ruby on Rails、Django、JavaScript、AWS 和職涯轉職心得">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="這也是這幾天遇到程式的面試題目，一併將解法分享٩(^ᴗ^)۶題目：Codewars一樣會用Ruby、Python和JavaScript三個語言來解題，讓我們開始吧！   今天解的是6kyu的難度，做這個題目前想到生命靈數也是這樣取的，把自己的西元出生年月日依序加起來，得到的個位數就是自己的生命靈數。 可以使用兩種方法來解，一種是遞迴，一種經由公式推導計算式，解法如下： Ruby1234#解法一de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodeWars: sum of digits &#x2F; digital root（02&#x2F;21更新）">
+<meta property="og:url" content="https://adora-xu.com/2024/02/18/codewars-sum-of-digits-digital-root/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="這也是這幾天遇到程式的面試題目，一併將解法分享٩(^ᴗ^)۶題目：Codewars一樣會用Ruby、Python和JavaScript三個語言來解題，讓我們開始吧！   今天解的是6kyu的難度，做這個題目前想到生命靈數也是這樣取的，把自己的西元出生年月日依序加起來，得到的個位數就是自己的生命靈數。 可以使用兩種方法來解，一種是遞迴，一種經由公式推導計算式，解法如下： Ruby1234#解法一de">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/codewars-digital-root/0218.png">
+<meta property="article:published_time" content="2024-02-18T08:33:13.000Z">
+<meta property="article:modified_time" content="2026-03-24T02:22:25.969Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="Ruby">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="codewars">
+<meta property="article:tag" content="sum of digits">
+<meta property="article:tag" content="digital root">
+<meta property="article:tag" content="遞迴">
+<meta property="article:tag" content="recursion">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/codewars-digital-root/0218.png">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +87,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -173,7 +201,7 @@
 
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">digitalRoot</span>(<span class="hljs-params">n</span>) &#123;<br>  <span class="hljs-keyword">switch</span> (<span class="hljs-literal">true</span>) &#123;<br>    <span class="hljs-keyword">case</span> n === <span class="hljs-number">0</span>:<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">case</span> n % <span class="hljs-number">9</span> === <span class="hljs-number">0</span>:<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">9</span>;<br>    <span class="hljs-attr">default</span>:<br>      <span class="hljs-keyword">return</span> n % <span class="hljs-number">9</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure></div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/sum-of-digits/" class="post-tags__link button"># sum of digits</a><a href="/tags/digital-root/" class="post-tags__link button"># digital root</a><a href="/tags/%E9%81%9E%E8%BF%B4/" class="post-tags__link button"># 遞迴</a><a href="/tags/recursion/" class="post-tags__link button"># recursion</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/codewars/" class="post-tags__link button"># codewars</a><a href="/tags/sum-of-digits/" class="post-tags__link button"># sum of digits</a><a href="/tags/digital-root/" class="post-tags__link button"># digital root</a><a href="/tags/%E9%81%9E%E8%BF%B4/" class="post-tags__link button"># 遞迴</a><a href="/tags/recursion/" class="post-tags__link button"># recursion</a></div>
 </article>
 
 
@@ -195,7 +223,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">CodeWars: sum of a sequence</div>
       </div>
     </a>
@@ -205,7 +233,7 @@
     
     <a href="/2024/02/16/codewars-credit-card-mask/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">CodeWars: credit card mask</div>
       </div>
       <div>
@@ -231,7 +259,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

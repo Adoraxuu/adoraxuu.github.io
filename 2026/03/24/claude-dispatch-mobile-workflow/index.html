@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,36 @@
 <title>用手機遙控電腦開發？我用 Claude Dispatch 試了一把 🚀 | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="AI, Workflow, Claude, Dispatch, AI-Assisted Development, GitHub, Productivity">
+    <meta name="keywords" content="AI, Workflow, Claude, Dispatch, AI-Assisted Development, GitHub, Productivity, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="實測用手機透過 Claude Dispatch 遠端操控電腦執行開發任務，介紹 orchestrator 模式的 AI 代理框架如何實現任務隔離、調度與 permission gate 機制。">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="實測用手機透過 Claude Dispatch 遠端操控電腦執行開發任務，介紹 orchestrator 模式的 AI 代理框架如何實現任務隔離、調度與 permission gate 機制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用手機遙控電腦開發？我用 Claude Dispatch 試了一把 🚀">
+<meta property="og:url" content="https://adora-xu.com/2026/03/24/claude-dispatch-mobile-workflow/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="實測用手機透過 Claude Dispatch 遠端操控電腦執行開發任務，介紹 orchestrator 模式的 AI 代理框架如何實現任務隔離、調度與 permission gate 機制。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg">
+<meta property="article:published_time" content="2026-03-24T07:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-25T06:09:12.115Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Workflow">
+<meta property="article:tag" content="Claude">
+<meta property="article:tag" content="Dispatch">
+<meta property="article:tag" content="AI-Assisted Development">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Productivity">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +86,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -198,7 +225,7 @@
 <p>這項「電腦控制」功能可以和 Anthropic 的 Dispatch 搭配，用手機就能指派電腦上的任務，像是每天幫你看 email、幫你開啟 Claude Cowork 或 Claude Code session，甚至幫你產出早晨簡報或跑測試。不過因為都還在初期，較複雜的任務可能會失敗，Anthropic 也藉由這次預覽版收集回饋來改進。</p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-25</p></div> <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/Workflow/" class="post-tags__link button"># Workflow</a><a href="/tags/Claude/" class="post-tags__link button"># Claude</a><a href="/tags/Dispatch/" class="post-tags__link button"># Dispatch</a><a href="/tags/AI-Assisted-Development/" class="post-tags__link button"># AI-Assisted Development</a><a href="/tags/GitHub/" class="post-tags__link button"># GitHub</a><a href="/tags/Productivity/" class="post-tags__link button"># Productivity</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-25</p></div> <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/Workflow/" class="post-tags__link button"># Workflow</a><a href="/tags/Claude/" class="post-tags__link button"># Claude</a><a href="/tags/Dispatch/" class="post-tags__link button"># Dispatch</a><a href="/tags/AI-Assisted-Development/" class="post-tags__link button"># AI-Assisted Development</a><a href="/tags/GitHub/" class="post-tags__link button"># GitHub</a><a href="/tags/Productivity/" class="post-tags__link button"># Productivity</a></div>
 </article>
 
 
@@ -220,7 +247,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">閱讀筆記 — 軟體公司只剩兩條路：Grow 10 or Earn 40</div>
       </div>
     </a>
@@ -230,7 +257,7 @@
     
     <a href="/2026/03/24/ai-assisted-engineering-reading-notes/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">閱讀筆記：How to Do AI-Assisted Engineering</div>
       </div>
       <div>
@@ -256,7 +283,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

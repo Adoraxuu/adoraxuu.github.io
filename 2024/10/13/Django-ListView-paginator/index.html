@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,33 @@
 <title>Django: ListView &amp; paginator | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Django, FBV, CBV, ListView">
+    <meta name="keywords" content="Django, FBV, CBV, ListView, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="Adora 的技術部落格，分享 Ruby on Rails、Django、JavaScript、AWS 和職涯轉職心得">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="FBV要顯示部落格文章列表，使用 FBV 可以這樣寫： 12345678def post_list(request):    posts &#x3D; Post.objects.all()    paginator &#x3D; Paginator(posts, 10)    page_number &#x3D; request.GET.get(&#x27;page&#x27;)    page_obj &#x3D; paginat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django: ListView &amp; paginator">
+<meta property="og:url" content="https://adora-xu.com/2024/10/13/Django-ListView-paginator/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="FBV要顯示部落格文章列表，使用 FBV 可以這樣寫： 12345678def post_list(request):    posts &#x3D; Post.objects.all()    paginator &#x3D; Paginator(posts, 10)    page_number &#x3D; request.GET.get(&#x27;page&#x27;)    page_obj &#x3D; paginat">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/Django-ListView-paginator/01.webp">
+<meta property="article:published_time" content="2024-10-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-24T02:47:23.761Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="FBV">
+<meta property="article:tag" content="CBV">
+<meta property="article:tag" content="ListView">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/Django-ListView-paginator/01.webp">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +83,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -181,7 +205,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/FBV/" class="post-tags__link button"># FBV</a><a href="/tags/CBV/" class="post-tags__link button"># CBV</a><a href="/tags/ListView/" class="post-tags__link button"># ListView</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/FBV/" class="post-tags__link button"># FBV</a><a href="/tags/CBV/" class="post-tags__link button"># CBV</a><a href="/tags/ListView/" class="post-tags__link button"># ListView</a></div>
 </article>
 
 
@@ -203,7 +227,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">AWS SAA 學習筆記：IAM</div>
       </div>
     </a>
@@ -213,7 +237,7 @@
     
     <a href="/2024/10/08/Django-FBV-CBV-DetailView/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">Django: FBV &amp; CBV — DetailView</div>
       </div>
       <div>
@@ -239,7 +263,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

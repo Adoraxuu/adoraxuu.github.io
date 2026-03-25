@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,43 @@
 <title>Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播 | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, Rails, Ruby on Rails, AMAZON IVS, OBS, livestream">
+    <meta name="keywords" content="Ruby, Rails, Ruby on Rails, AMAZON IVS, OBS, livestream, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="教你如何在 Ruby on Rails 中整合 Amazon IVS 與 OBS，快速建立低延遲直播功能，涵蓋 IVS Channel 設定、串流金鑰配置與前端播放器嵌入。">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="教你如何在 Ruby on Rails 中整合 Amazon IVS 與 OBS，快速建立低延遲直播功能，涵蓋 IVS Channel 設定、串流金鑰配置與前端播放器嵌入。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ruby on Rails: 使用AWS IVS &amp; OBS 輕鬆開始直播">
+<meta property="og:url" content="https://adora-xu.com/2024/03/17/ruby-aws-ivs-obs-livestream/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="教你如何在 Ruby on Rails 中整合 Amazon IVS 與 OBS，快速建立低延遲直播功能，涵蓋 IVS Channel 設定、串流金鑰配置與前端播放器嵌入。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/cover.avif">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/1.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/2.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/3.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/4.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/5.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/6.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/7.png">
+<meta property="og:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/8.png">
+<meta property="article:published_time" content="2024-03-17T04:34:04.000Z">
+<meta property="article:modified_time" content="2026-03-25T06:09:44.242Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="Ruby">
+<meta property="article:tag" content="Rails">
+<meta property="article:tag" content="Ruby on Rails">
+<meta property="article:tag" content="AMAZON IVS">
+<meta property="article:tag" content="OBS">
+<meta property="article:tag" content="livestream">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/ruby-aws-ivs-obs-stream-live/cover.avif">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +93,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -185,7 +219,7 @@
 </blockquote>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Rails/" class="post-tags__link button"># Rails</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/AMAZON-IVS/" class="post-tags__link button"># AMAZON IVS</a><a href="/tags/OBS/" class="post-tags__link button"># OBS</a><a href="/tags/livestream/" class="post-tags__link button"># livestream</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-25</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Rails/" class="post-tags__link button"># Rails</a><a href="/tags/Ruby-on-Rails/" class="post-tags__link button"># Ruby on Rails</a><a href="/tags/AMAZON-IVS/" class="post-tags__link button"># AMAZON IVS</a><a href="/tags/OBS/" class="post-tags__link button"># OBS</a><a href="/tags/livestream/" class="post-tags__link button"># livestream</a></div>
 </article>
 
 
@@ -207,7 +241,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">Ruby on Rails: 什麼是Abstraction layer</div>
       </div>
     </a>
@@ -217,7 +251,7 @@
     
     <a href="/2024/03/16/leetcode-number-of-1-bits/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">Leetcode: number of 1 bits</div>
       </div>
       <div>
@@ -243,7 +277,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

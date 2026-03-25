@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,35 @@
 <title>JavaScript: 變數提升 hoisting 到底是什麼？ | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="JavaScript, hoisting, 變數提升">
+    <meta name="keywords" content="JavaScript, hoisting, 變數提升, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="完整解析 JavaScript 變數提升（Hoisting）的概念與運作機制，說明 var、let、const 在 hoisting 行為上的差異，避免常見的宣告陷阱。">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="完整解析 JavaScript 變數提升（Hoisting）的概念與運作機制，說明 var、let、const 在 hoisting 行為上的差異，避免常見的宣告陷阱。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript: 變數提升 hoisting 到底是什麼？">
+<meta property="og:url" content="https://adora-xu.com/2023/11/18/hoisting/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="完整解析 JavaScript 變數提升（Hoisting）的概念與運作機制，說明 var、let、const 在 hoisting 行為上的差異，避免常見的宣告陷阱。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/hoisting/banner.png">
+<meta property="og:image" content="https://adora-xu.com/images/hoisting/01.png">
+<meta property="og:image" content="https://adora-xu.com/images/hoisting/02.png">
+<meta property="og:image" content="https://adora-xu.com/images/hoisting/03.png">
+<meta property="article:published_time" content="2023-11-18T13:58:00.000Z">
+<meta property="article:modified_time" content="2026-03-25T06:09:18.619Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="hoisting">
+<meta property="article:tag" content="變數提升">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/hoisting/banner.png">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +85,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -240,7 +266,7 @@ ReferenceError: Cannot access 'a' before initialization
 </div>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/hoisting/" class="post-tags__link button"># hoisting</a><a href="/tags/%E8%AE%8A%E6%95%B8%E6%8F%90%E5%8D%87/" class="post-tags__link button"># 變數提升</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-25</p></div> <div class="post-entry__tags"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/hoisting/" class="post-tags__link button"># hoisting</a><a href="/tags/%E8%AE%8A%E6%95%B8%E6%8F%90%E5%8D%87/" class="post-tags__link button"># 變數提升</a></div>
 </article>
 
 
@@ -262,7 +288,7 @@ ReferenceError: Cannot access 'a' before initialization
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">JavaScript: defer vs async</div>
       </div>
     </a>
@@ -272,7 +298,7 @@ ReferenceError: Cannot access 'a' before initialization
     
     <a href="/2023/11/15/var-let-const/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">JavaScript: 使用 var, let, const 宣告究竟差在哪呢？</div>
       </div>
       <div>
@@ -298,7 +324,7 @@ ReferenceError: Cannot access 'a' before initialization
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     

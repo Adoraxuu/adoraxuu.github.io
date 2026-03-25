@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-TW">
     <head>
   <meta charset="utf-8" />
 
@@ -46,10 +46,34 @@
 <title>Leetcode挑戰: Day09 length of last word | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="Ruby, Python, JavaScript, leetcode, length of last word">
+    <meta name="keywords" content="Ruby, Python, JavaScript, leetcode, length of last word, Ruby on Rails, Django, JavaScript, AWS, 轉職, 軟體工程師">
+
+
+
+
+    <meta name="description" content="Adora 的技術部落格，分享 Ruby on Rails、Django、JavaScript、AWS 和職涯轉職心得">
 
 
  <!-- OpenGraph -->
+ 
+    <meta name="description" content="為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用Ruby、python和JavaScript三個語言來解題，今天是第九天，讓我們開始吧！   題目來源：leetcode 因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。 這個題目不會再取用原始給予的input值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode挑戰: Day09 length of last word">
+<meta property="og:url" content="https://adora-xu.com/2024/02/07/leetcode-length-of-last-word/index.html">
+<meta property="og:site_name" content="Adora&#39;s Blog">
+<meta property="og:description" content="為了加強自己的程式能力，因此開始記錄每天刷leetcode的解法+說明，會用Ruby、python和JavaScript三個語言來解題，今天是第九天，讓我們開始吧！   題目來源：leetcode 因為題目前後會有空格，所以會需要刪除頭尾的空白後，再依據內容拆分為陣列，取出陣列最後一個的長度即可。 這個題目不會再取用原始給予的input值，所以不需要考慮使否會回傳新的值或是更改原值，就變得比較單純">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://adora-xu.com/images/leetcode-length-of-last-word/1.png">
+<meta property="article:published_time" content="2024-02-07T11:23:24.000Z">
+<meta property="article:modified_time" content="2026-03-24T02:22:25.974Z">
+<meta property="article:author" content="Adora Xu">
+<meta property="article:tag" content="Ruby">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="length of last word">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adora-xu.com/images/leetcode-length-of-last-word/1.png">
  
 <link rel="stylesheet" href="/css/style/main.css">
    
@@ -60,7 +84,8 @@
      <!-- custom head -->
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Adora's Blog" type="application/atom+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -159,7 +184,7 @@
 <p>JS去除前後的空格使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/trim">trim()</a>，接著一樣使用<code>split(&#39; &#39;)</code>拆分為陣列，並使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop">pop()</a>取出陣列最後一位數，再使用<code>lenght</code>取長度即可～</p>
 </div>
 
-   <div class="post-footer__meta"><p>updated at 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/length-of-last-word/" class="post-tags__link button"># length of last word</a></div>
+   <div class="post-footer__meta"><p>更新於 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/Ruby/" class="post-tags__link button"># Ruby</a><a href="/tags/Python/" class="post-tags__link button"># Python</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/leetcode/" class="post-tags__link button"># leetcode</a><a href="/tags/length-of-last-word/" class="post-tags__link button"># length of last word</a></div>
 </article>
 
 
@@ -181,7 +206,7 @@
         </svg>
       </div>
       <div>
-        <div class="nav__label">Previous Post</div>
+        <div class="nav__label">上一篇</div>
         <div class="nav__title">Leetcode挑戰: Day10 valid palindrome</div>
       </div>
     </a>
@@ -191,7 +216,7 @@
     
     <a href="/2024/02/06/leetcode-majority-element/" class="nav__link">
       <div>
-        <div class="nav__label">Next Post</div>
+        <div class="nav__label">下一篇</div>
         <div class="nav__title">Leetcode挑戰: Day08 majority element</div>
       </div>
       <div>
@@ -217,7 +242,7 @@
   id="comment"
 >
   
-    <h4>Comments</h4>
+    <h4>評論</h4>
     
     
     
