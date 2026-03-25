@@ -10,6 +10,8 @@ categories: AI
 
 工具：Claude Dispatch。體驗：出乎意料地順。
 
+![Dispatch 手機操作截圖](/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg)
+
 <!-- more -->
 
 ## Dispatch 是什麼？
