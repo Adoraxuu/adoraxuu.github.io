@@ -145,9 +145,9 @@
     
   </div>
 
-  <div class="post__content"><p>今天做了一件以前覺得「幹嘛這樣搞」、現在覺得「超香」的事——<strong>用手機遙控電腦跑整個開發流程</strong>。</p>
-<p>工具：Claude Dispatch。體驗：出乎意料地順。</p>
-<p><img src="/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg" alt="Dispatch 手機操作截圖"></p>
+  <div class="post__content"><p>今天使用 Claude Dispatch 用手機遙控電腦跑整個開發流程٩(●ᴗ●)۶</p>
+<img src="/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg" width="500" alt="Dispatch 手機操作截圖">
+
 <span id="more"></span>
 
 <h2 id="Dispatch-是什麼？"><a href="#Dispatch-是什麼？" class="headerlink" title="Dispatch 是什麼？"></a>Dispatch 是什麼？</h2><p>簡單說，Claude Dispatch 是一個 <strong>orchestrator 模式</strong>的 AI 代理框架。你下指令，它負責把任務分解、派發給不同的子 session 執行，每個 task 都在隔離的 worktree 環境中跑，不會互相污染。</p>
@@ -158,6 +158,9 @@
 <li><strong>Permission gate</strong>：每個有副作用的動作（push code、開 issue、建 PR）都會先問你確不確定，不會偷偷幫你做危險的事</li>
 </ul>
 <p>這個設計其實很符合現代軟體開發的思路——<strong>關注點分離 + 最小權限原則</strong>，只是搬到 AI workflow 上了。</p>
+<h2 id="等等，我坐在電腦前直接用-Claude-Code-不也差不多？"><a href="#等等，我坐在電腦前直接用-Claude-Code-不也差不多？" class="headerlink" title="等等，我坐在電腦前直接用 Claude Code 不也差不多？"></a>等等，我坐在電腦前直接用 Claude Code 不也差不多？</h2><p>說實話，一開始我也這樣想。搞什麼手機遙控，我人都在電腦前了，開個 terminal 直接跑不就好了？</p>
+<p>但用了之後才發現——差別在<strong>多工</strong>。</p>
+<p>當 Dispatch 在背景跑任務的時候，我可以繼續用電腦做自己的事。手機負責下指令、確認進度，電腦那邊 Claude Dispatch 默默把 issue 開好、把 code 寫好，我的主力工作完全不用中斷。兩條線同時走，效率真的不一樣。</p>
 <h2 id="從構想到-PR，全程用手機完成"><a href="#從構想到-PR，全程用手機完成" class="headerlink" title="從構想到 PR，全程用手機完成"></a>從構想到 PR，全程用手機完成</h2><p>今天的實驗是在我的 side project <a target="_blank" rel="noopener" href="https://github.com/Adoraxuu/vocabot">vocabot</a> 上開了一個 issue 和一個 PR。</p>
 <p>整個流程大概是：</p>
 <ol>
@@ -169,6 +172,8 @@
 <li>📤 審核 diff，確認沒問題後發 PR：<a target="_blank" rel="noopener" href="https://github.com/Adoraxuu/vocabot/pull/2">vocabot#2</a></li>
 </ol>
 <p>以前這一套流程至少要打開電腦、切視窗、開 terminal、手動下一堆指令。現在坐在沙發上滑手機就完成了，而且每一個有影響的動作都有確認機制，不用擔心 AI 亂做事。</p>
+<h2 id="說沒擔心是騙人的"><a href="#說沒擔心是騙人的" class="headerlink" title="說沒擔心是騙人的"></a>說沒擔心是騙人的</h2><p>過程中還是有那麼一刻在想：Token 會不會就這樣被燒光？有些指令跑超久，會不會其實自己動手做還比較快？</p>
+<p>但「解放雙手、只需要下命令」這個感覺實在太爽了，擔心歸擔心，手還是沒停下來繼續下指令 😆</p>
 <h2 id="技術棧觀察"><a href="#技術棧觀察" class="headerlink" title="技術棧觀察"></a>技術棧觀察</h2><p>Dispatch 底層用到的工具鏈挺有趣的：</p>
 <ul>
 <li><strong>GitHub CLI (<code>gh</code>)</strong>：開 issue、建 PR 都走 <code>gh</code> 指令，不是直接打 API</li>
