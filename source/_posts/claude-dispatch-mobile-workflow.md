@@ -8,7 +8,9 @@ categories: AI
 
 今天使用 Claude Dispatch 用手機遙控電腦跑整個開發流程٩(●ᴗ●)۶
 
-<img src="/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg" width="500" alt="Dispatch 手機操作截圖">
+<p align="center">
+  <img src="/images/claude-dispatch-mobile-workflow/dispatch-screenshot.jpg" width="500" alt="Dispatch 手機操作截圖">
+</p>
 
 <!-- more -->
 
@@ -74,3 +76,15 @@ Dispatch 底層用到的工具鏈挺有趣的：
 老實說，我對「AI 幫你想功能」這件事一開始有點抗拒——感覺像在偷懶。但今天實驗下來，我覺得更準確的描述是：**AI 幫你快速把模糊的想法轉成結構化的規格**，你還是要判斷方向對不對、內容合不合理。創意和判斷還是在你身上，AI 只是幫你省掉「把想法寫清楚」這個耗時的步驟。
 
 這個工具目前還很新，但已經讓我看到一些有趣的可能性。繼續觀察中。🔍
+
+## 延伸閱讀
+
+想知道更多可以參考 Claude 的介紹影片：https://youtu.be/NAauIR6JFps
+
+Anthropic 現在讓 Claude 可以「直接控制你的電腦」，幫你做事，例如：打開你硬碟上的檔案、用瀏覽器或開發工具操作、甚至透過像 Google Calendar、Slack 這類連動的 app 來完成任務。若沒有現成的 connector，它會直接模擬鍵盤滑鼠，自己點來點去、打字操作。
+
+這功能目前是「研究預覽版」，只開放給 Claude Pro 和 Claude Max，用 macOS 的電腦才可以用。Claude 在執行前都會先跟你確認，你也可以隨時中止。
+
+因為這類「agentic AI」可以很快做出大動作，也可能被惡意人士入侵利用，所以安全風險是重點。Anthropic 表示有做安全防護，比如掃描提示注入（prompt injection）等攻擊，不過也自己提醒使用者：功能還很新，可能有錯，建議不要拿來操作敏感資料，某些敏感 app 也預設是關掉的。
+
+這項「電腦控制」功能可以和 Anthropic 的 Dispatch 搭配，用手機就能指派電腦上的任務，像是每天幫你看 email、幫你開啟 Claude Cowork 或 Claude Code session，甚至幫你產出早晨簡報或跑測試。不過因為都還在初期，較複雜的任務可能會失敗，Anthropic 也藉由這次預覽版收集回饋來改進。
