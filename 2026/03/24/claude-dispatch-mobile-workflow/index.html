@@ -43,10 +43,10 @@
  <!-- meta -->
 
 
-<title>閱讀筆記：How to Do AI-Assisted Engineering | Adora&#39;s Blog</title>
+<title>用手機遙控電腦開發？我用 Claude Dispatch 試了一把 🚀 | Adora&#39;s Blog</title>
 
 
-    <meta name="keywords" content="AI, AI-Assisted Engineering, Software Engineering, Code Review, Workflow, Reading Notes">
+    <meta name="keywords" content="AI, Workflow, Claude, Dispatch, AI-Assisted Development, GitHub, Productivity">
 
 
  <!-- OpenGraph -->
@@ -120,7 +120,7 @@
     
 
 <div class="post-title">
-  <h1 class="post-title__text">閱讀筆記：How to Do AI-Assisted Engineering</h1>
+  <h1 class="post-title__text">用手機遙控電腦開發？我用 Claude Dispatch 試了一把 🚀</h1>
   <div class="post-title__meta">
     <a href="/archives/2026/03/" class="post-meta__date button">2026-03-24</a> 
     <span class="separate-dot"></span><a href="/categories/AI/" class="button">AI</a>
@@ -145,77 +145,60 @@
     
   </div>
 
-  <div class="post__content"><p><img src="/2026/03/24/ai-assisted-engineering-reading-notes/cover.png" alt="cover"></p>
-<p>整理自 <a target="_blank" rel="noopener" href="https://newsletter.eng-leadership.com/p/how-to-do-ai-assisted-engineering">How to Do AI-Assisted Engineering</a> 一文，這篇文章訪問了 15 位工程師與技術主管，分享他們實際在工作中如何運用 AI 輔助工程，從構想到上線的完整流程。</p>
-<h2 id="最大效益不在「寫程式更快」"><a href="#最大效益不在「寫程式更快」" class="headerlink" title="最大效益不在「寫程式更快」"></a>最大效益不在「寫程式更快」</h2><p>多位工程師強調，AI 帶來的最大價值不是加速打字，而是讓你能花更多時間在<strong>設計、規格與規劃</strong>上。他們會先用 AI 產生架構設計、資料模型、API 規格，再反覆質疑、修正設計，確認取捨與邊界條件後才開始寫程式。</p>
-<p>實作階段則讓 AI 依照明確規格產生程式碼、測試與文件，工程師專注在<strong>判斷方向對不對、實作是否合理</strong>，而不是每一行都自己打。</p>
-<h2 id="把-AI-當「專家團隊」"><a href="#把-AI-當「專家團隊」" class="headerlink" title="把 AI 當「專家團隊」"></a>把 AI 當「專家團隊」</h2><p>許多人不把 AI 當單一助手，而是當作一個專家團隊來使用：</p>
+  <div class="post__content"><p>今天做了一件以前覺得「幹嘛這樣搞」、現在覺得「超香」的事——<strong>用手機遙控電腦跑整個開發流程</strong>。</p>
+<p>工具：Claude Dispatch。體驗：出乎意料地順。</p>
+<span id="more"></span>
+
+<h2 id="Dispatch-是什麼？"><a href="#Dispatch-是什麼？" class="headerlink" title="Dispatch 是什麼？"></a>Dispatch 是什麼？</h2><p>簡單說，Claude Dispatch 是一個 <strong>orchestrator 模式</strong>的 AI 代理框架。你下指令，它負責把任務分解、派發給不同的子 session 執行，每個 task 都在隔離的 worktree 環境中跑，不會互相污染。</p>
+<p>架構上有幾個特點讓我印象深刻：</p>
 <ul>
-<li>TypeScript 問題 → 找 TS 專家</li>
-<li>React 架構 → 找前端專家</li>
-<li>Infra 問題 → 找 DevOps 專家</li>
+<li><strong>Task session 隔離</strong>：每個任務都跑在獨立的 git worktree，改壞了也不怕影響主線</li>
+<li><strong>Orchestrator 調度</strong>：主 session 負責協調，子 agent 負責執行，分工清楚</li>
+<li><strong>Permission gate</strong>：每個有副作用的動作（push code、開 issue、建 PR）都會先問你確不確定，不會偷偷幫你做危險的事</li>
 </ul>
-<p>生成與驗證由不同「專家」負責，避免同一個 AI 自己寫、自己審。測試也常由另一個 agent 負責設計 edge cases、找出壞的處理流程，並將發現的 bug 轉成回歸測試。</p>
-<h2 id="標準化工作流程"><a href="#標準化工作流程" class="headerlink" title="標準化工作流程"></a>標準化工作流程</h2><p>很多人不再臨時亂 prompt，而是建立固定的工作流程：</p>
-<ul>
-<li>標準化的 PR review 流程</li>
-<li>需求拆解模板</li>
-<li>規格產生與規劃步驟</li>
-<li>用 <code>AGENTS.md</code>、<code>CLAUDE.md</code> 等檔案，把開發風格、命名規則、測試要求、PR 模板都寫死</li>
-</ul>
-<p>有人用 AI 自動幫 PR 寫摘要、測試計畫、風險說明；有人用 AI 做 nightly scan，自動找 bug、開 ticket 與 PR。</p>
-<h2 id="工具選擇與搭配"><a href="#工具選擇與搭配" class="headerlink" title="工具選擇與搭配"></a>工具選擇與搭配</h2><p>受訪者會依情境分工使用不同工具：</p>
-<ul>
-<li><strong>Claude Code</strong>：互動式工程夥伴</li>
-<li><strong>OpenAI Codex</strong>：背景掃描與自動修正</li>
-<li><strong>Cursor &#x2F; Windsurf</strong>：IDE 整合開發</li>
-<li>搭配 GitHub Actions、Figma、Jira、Slack 等，把 AI 深度嵌進 CI&#x2F;CD 與工作流程</li>
-</ul>
-<h2 id="四個共通結論"><a href="#四個共通結論" class="headerlink" title="四個共通結論"></a>四個共通結論</h2><ol>
-<li><strong>AI 是倍增器</strong>：會放大你原本的流程好壞，流程混亂的話，技術債只會長更快。</li>
-<li><strong>設計文件與規格是最重要的產出</strong>：AI 會直接依照這些東西生成程式，品質取決於規格的品質。</li>
-<li><strong>AI 不會把菜鳥變成老手</strong>：它讓有經驗的工程師產能暴增，但仍需要深厚的工程判斷力。</li>
-<li><strong>最大風險是缺乏嚴格 review</strong>：太快接受第一版輸出，會迅速累積大量技術債。</li>
+<p>這個設計其實很符合現代軟體開發的思路——<strong>關注點分離 + 最小權限原則</strong>，只是搬到 AI workflow 上了。</p>
+<h2 id="從構想到-PR，全程用手機完成"><a href="#從構想到-PR，全程用手機完成" class="headerlink" title="從構想到 PR，全程用手機完成"></a>從構想到 PR，全程用手機完成</h2><p>今天的實驗是在我的 side project <a target="_blank" rel="noopener" href="https://github.com/Adoraxuu/vocabot">vocabot</a> 上開了一個 issue 和一個 PR。</p>
+<p>整個流程大概是：</p>
+<ol>
+<li>📱 手機打開 Claude，連到已開著的電腦</li>
+<li>🧠 跟 AI 說「幫我想這個功能要解決什麼問題」→ 讓 AI 發想 issue 內容</li>
+<li>✅ 確認 issue 描述沒問題</li>
+<li>🚀 Dispatch 呼叫 GitHub CLI 開 issue：<a target="_blank" rel="noopener" href="https://github.com/Adoraxuu/vocabot/issues/1">vocabot#1</a></li>
+<li>💻 繼續指示開發，Dispatch 在隔離 worktree 裡寫 code</li>
+<li>📤 審核 diff，確認沒問題後發 PR：<a target="_blank" rel="noopener" href="https://github.com/Adoraxuu/vocabot/pull/2">vocabot#2</a></li>
 </ol>
-<h2 id="一句話總結"><a href="#一句話總結" class="headerlink" title="一句話總結"></a>一句話總結</h2><blockquote>
-<p>先用嚴謹的設計和規格把問題框好，讓 AI 負責大量實作與檢查，再用人類的經驗做多輪嚴格審查，這樣才能又快又穩地產出高品質軟體。</p>
-</blockquote>
+<p>以前這一套流程至少要打開電腦、切視窗、開 terminal、手動下一堆指令。現在坐在沙發上滑手機就完成了，而且每一個有影響的動作都有確認機制，不用擔心 AI 亂做事。</p>
+<h2 id="技術棧觀察"><a href="#技術棧觀察" class="headerlink" title="技術棧觀察"></a>技術棧觀察</h2><p>Dispatch 底層用到的工具鏈挺有趣的：</p>
+<ul>
+<li><strong>GitHub CLI (<code>gh</code>)</strong>：開 issue、建 PR 都走 <code>gh</code> 指令，不是直接打 API</li>
+<li><strong>Git worktree</strong>：隔離環境的核心，每個任務跑在獨立分支和目錄</li>
+<li><strong>MCP servers</strong>：擴充 AI 能操作的工具範圍，例如 Notion MCP 可以讓 AI 直接讀寫你的筆記</li>
+</ul>
+<p>這讓我想到最近 AI-assisted development 的趨勢：不是「AI 幫你寫更快」，而是<strong>把 AI 嵌進整個 dev workflow 的節點</strong>——設計、規格、實作、review、部署都有 AI 參與，工程師的角色更像是在做<strong>方向把關和品質審核</strong>。</p>
+<h2 id="想再試的功能"><a href="#想再試的功能" class="headerlink" title="想再試的功能"></a>想再試的功能</h2><p>這次只碰到了皮毛，後面想繼續實驗的：</p>
+<ul>
+<li><strong>開發工作流自動化</strong>：從 issue 到 PR 到 merge 的完整流程，看能自動化到什麼程度</li>
+<li><strong>跨工具協調</strong>：讓 AI 同時操作 GitHub + Notion + Slack，跨平台資訊同步</li>
+<li><strong>排程任務</strong>：定時跑測試、更新依賴、生成報告之類的</li>
+</ul>
+<p>老實說，我對「AI 幫你想功能」這件事一開始有點抗拒——感覺像在偷懶。但今天實驗下來，我覺得更準確的描述是：<strong>AI 幫你快速把模糊的想法轉成結構化的規格</strong>，你還是要判斷方向對不對、內容合不合理。創意和判斷還是在你身上，AI 只是幫你省掉「把想法寫清楚」這個耗時的步驟。</p>
+<p>這個工具目前還很新，但已經讓我看到一些有趣的可能性。繼續觀察中。🔍</p>
 </div>
 
-   <div class="post-footer__meta"><p>更新于 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/AI-Assisted-Engineering/" class="post-tags__link button"># AI-Assisted Engineering</a><a href="/tags/Software-Engineering/" class="post-tags__link button"># Software Engineering</a><a href="/tags/Code-Review/" class="post-tags__link button"># Code Review</a><a href="/tags/Workflow/" class="post-tags__link button"># Workflow</a><a href="/tags/Reading-Notes/" class="post-tags__link button"># Reading Notes</a></div>
+   <div class="post-footer__meta"><p>更新于 2026-03-24</p></div> <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/Workflow/" class="post-tags__link button"># Workflow</a><a href="/tags/Claude/" class="post-tags__link button"># Claude</a><a href="/tags/Dispatch/" class="post-tags__link button"># Dispatch</a><a href="/tags/AI-Assisted-Development/" class="post-tags__link button"># AI-Assisted Development</a><a href="/tags/GitHub/" class="post-tags__link button"># GitHub</a><a href="/tags/Productivity/" class="post-tags__link button"># Productivity</a></div>
 </article>
 
 
 <div class="nav">
   <div class="nav__prev">
     
-    <a href="/2026/03/24/claude-dispatch-mobile-workflow/" class="nav__link">
-      <div>
-        <svg
-          viewBox="0 0 1024 1024"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z"
-            fill="#808080"
-          ></path>
-        </svg>
-      </div>
-      <div>
-        <div class="nav__label">上一篇</div>
-        <div class="nav__title">用手機遙控電腦開發？我用 Claude Dispatch 試了一把 🚀</div>
-      </div>
-    </a>
-    
   </div>
   <div class="nav__next">
     
-    <a href="/2025/11/18/SAA-Exam-Notes-IAM/" class="nav__link">
+    <a href="/2026/03/24/ai-assisted-engineering-reading-notes/" class="nav__link">
       <div>
         <div class="nav__label">下一篇</div>
-        <div class="nav__title">AWS SAA 學習筆記：IAM</div>
+        <div class="nav__title">閱讀筆記：How to Do AI-Assisted Engineering</div>
       </div>
       <div>
         <svg
