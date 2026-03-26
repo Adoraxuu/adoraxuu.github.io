@@ -65,7 +65,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://adora-xu.com/images/Reading-note-How-Agentic-RAG-Works/reading-notes-how-Agentic-RAG-Works.png">
 <meta property="article:published_time" content="2026-03-26T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-26T03:46:56.094Z">
+<meta property="article:modified_time" content="2026-03-26T04:21:57.841Z">
 <meta property="article:author" content="Adora Xu">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="閱讀筆記">
@@ -173,7 +173,7 @@
   </div>
 
   <div class="post__content"><p>原文：<a target="_blank" rel="noopener" href="https://blog.bytebytego.com/p/how-agentic-rag-works">How Agentic RAG Works</a>（ByteByteGo）</p>
-<p>你有沒有遇過這種情況：明明 RAG 系統看起來在跑、向量搜尋在搜、LLM 在回答——但給出的答案就是不對，或是答非所問？這篇文章就是在拆解這個問題的根源，以及為什麼在查詢和回答之間，加一層「會思考、評估、重試的代理人」可以從根本解決這件事。</p>
+<p>你有沒有遇過這種情況：RAG 系統看起來運作正常，向量搜尋在搜、LLM 在回答——但給出的答案就是不對，或是答非所問？這篇文章正是在拆解這個問題的根源，以及為什麼在查詢和回答之間加一層「會思考、評估、重試的代理人」，可以從根本解決這件事。</p>
 <p align="center">
   <img src="/images/Reading-note-How-Agentic-RAG-Works/reading-notes-how-Agentic-RAG-Works.png" width="500" alt="Agentic RAG Reading Note Cover">
 </p>
@@ -182,17 +182,17 @@
 
 <h2 id="標準-RAG-的問題：沒有人在反省"><a href="#標準-RAG-的問題：沒有人在反省" class="headerlink" title="標準 RAG 的問題：沒有人在反省"></a>標準 RAG 的問題：沒有人在反省</h2><p>標準 RAG 是個單向流水線，流程很乾淨：使用者問問題 → 嵌入成向量 → 從向量庫撈前幾個 chunk → 丟給 LLM 生成回答。聽起來很合理，但它在以下三種情境會直接失靈：</p>
 <p><strong>1. 問題含糊</strong>：像「How do I handle taxes?」，到底是個人稅、公司稅還是非營利組織稅？標準 RAG 不會問你、不會猜你，只會照字面去搜，搜到什麼算什麼。</p>
-<p><strong>2. 答案散落在多份文件</strong>：例如「遠端工作承攬商政策」同時涉及 remote policy 和 contractor agreement 兩份文件，但普通 RAG 通常只從一個最相似的來源拿資料，拼圖只有一半。</p>
-<p><strong>3. 撈到看起來相關但其實錯的東西</strong>：相似度高不等於正確，可能是過期資訊、可能是沒真正回答問題的段落——但系統還是會很有自信地把它包進回答裡。</p>
+<p><strong>2. 答案散落在多份文件</strong>：例如「遠端工作承攬商政策」同時涉及 remote policy 和 contractor agreement 兩份文件，但普通 RAG 通常只從最相似的一個來源拿資料，拼圖只有一半。</p>
+<p><strong>3. 撈到看起來相關但其實錯的東西</strong>：相似度高不等於正確，可能是過期資訊，可能是沒真正回答問題的段落——但系統還是會很有自信地把它包進回答裡。</p>
 <p>根本原因是：整個流程中間沒有一個節點在問「我剛才拿到的東西夠好嗎？」😮‍💨</p>
 <hr>
 <h2 id="Agentic-RAG-的核心概念：把流水線變成控制迴圈"><a href="#Agentic-RAG-的核心概念：把流水線變成控制迴圈" class="headerlink" title="Agentic RAG 的核心概念：把流水線變成控制迴圈"></a>Agentic RAG 的核心概念：把流水線變成控制迴圈</h2><p>Agentic RAG 的核心概念是：把線性管線改成帶有決策點的控制迴圈。</p>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">檢索 → 評估 → 夠好？ → 是：回答 <span class="hljs-symbol">/</span> 否：重試（換查詢、換來源）<br></code></pre></td></tr></table></figure>
 
-<p>文章把「agent」定義為一個<strong>不只是生成文字、還能做決策與呼叫工具的 LLM</strong>。這個 agent 可以改寫查詢、切換資料源、再次搜尋、查新版文件——總之就是在「一次射門就結束」之前，多一層判斷。</p>
+<p>文章把「agent」定義為一個<strong>不只是生成文字、還能做決策與呼叫工具的 LLM</strong>。這個 agent 可以改寫查詢、切換資料源、再次搜尋、查新版文件——在「一次射門就結束」之前，多一層判斷。</p>
 <p>相比標準 RAG，Agentic RAG 多了三個關鍵能力：</p>
-<h3 id="🗺️-工具使用與路由（Routing）"><a href="#🗺️-工具使用與路由（Routing）" class="headerlink" title="🗺️ 工具使用與路由（Routing）"></a>🗺️ 工具使用與路由（Routing）</h3><p>問題可以被導向不同知識源（SQL 資料庫、文件庫、產品 DB……），或者一次查多個來源，最後再整合答案。問題屬於哪個 domain，就路由到哪個「專家來源」。</p>
-<h3 id="✏️-查詢精煉（Query-Refinement）"><a href="#✏️-查詢精煉（Query-Refinement）" class="headerlink" title="✏️ 查詢精煉（Query Refinement）"></a>✏️ 查詢精煉（Query Refinement）</h3><p>在檢索之前先改寫模糊的問題成更具體的版本；如果第一次搜尋結果很弱，就再重寫查詢、重新搜。這相當於把 “問問題的方式” 也納入自動優化的範圍。</p>
+<h3 id="🗺️-工具使用與路由（Routing）"><a href="#🗺️-工具使用與路由（Routing）" class="headerlink" title="🗺️ 工具使用與路由（Routing）"></a>🗺️ 工具使用與路由（Routing）</h3><p>問題可以被導向不同知識源（SQL 資料庫、文件庫、產品 DB……），或者一次查多個來源再整合答案。問題屬於哪個 domain，就路由到哪個「專家來源」。</p>
+<h3 id="✏️-查詢精煉（Query-Refinement）"><a href="#✏️-查詢精煉（Query-Refinement）" class="headerlink" title="✏️ 查詢精煉（Query Refinement）"></a>✏️ 查詢精煉（Query Refinement）</h3><p>在檢索之前先把模糊的問題改寫成更具體的版本；如果第一次搜尋結果很弱，就再重寫查詢、重新搜。這相當於把「問問題的方式」也納入自動優化的範圍。</p>
 <h3 id="🔍-自我評估（Self-Evaluation）"><a href="#🔍-自我評估（Self-Evaluation）" class="headerlink" title="🔍 自我評估（Self-Evaluation）"></a>🔍 自我評估（Self-Evaluation）</h3><p>取回結果後，agent 會檢查：相關嗎？完整嗎？有沒有矛盾？是不是過期版本？如果不夠好，就換查詢或換來源，而不是直接吐出去。</p>
 <p>文章也強調這是一個<strong>光譜</strong>：從最簡單的「只負責路由到不同知識庫」，到 ReAct 那種 Reasoning + Acting 反覆交替，再到多 agent、由 orchestrator 協調的複雜系統。你不一定需要最複雜的版本。</p>
 <hr>
@@ -239,7 +239,8 @@
 <p>如果查詢很簡單、知識庫乾淨單一——老實用標準 RAG，反而是最合理的選擇。</p>
 <hr>
 <h2 id="作為軟體工程師的反思"><a href="#作為軟體工程師的反思" class="headerlink" title="作為軟體工程師的反思"></a>作為軟體工程師的反思</h2><p>讀完這篇，我腦海裡冒出的第一個念頭是：<strong>這個架構，其實可以直接搬到日常的工程開發流程上。</strong></p>
-<p>Agentic RAG 的核心是「每個 agent 是某個領域的專家，搭配自己的知識來源，做完決策再傳給下一個節點」。換個場景想：如果你把產品開發的前期流程也做成這樣呢？</p>
+<p>其實這個「每個 agent 是某個領域的專家，搭配自己的知識來源，做完決策再傳給下一個節點」的概念，在我之前寫的<a href="/2026/03/24/ai-assisted-engineering-reading-notes/">那篇 AI 輔助工程閱讀筆記</a>裡就有提到——把 AI 當作一個<strong>專家團隊</strong>來使用：TypeScript 問題找 TS 專家、架構問題找前端專家、Infra 問題找 DevOps 專家，生成與驗證由不同「專家」負責。而 Agentic RAG 就是把這個想法具體化了，給每個 agent 配上自己的知識庫，讓它在自己的 domain 裡做判斷，再把結果往下傳。</p>
+<p>把這個概念帶到產品開發流程上，可以這樣想：</p>
 <ul>
 <li>一個<strong>寫 Spec 的專家 agent</strong>：整理需求、補問關鍵問題、產出結構化 spec（user story、edge cases、non-functional requirements……）</li>
 <li>一個<strong>流程架構設計的專家 agent</strong>：根據 spec 出 API 設計、資料流、boundary 切分，甚至建議 event 流或 schema</li>
@@ -249,11 +250,11 @@
 <p>你站在最上層當 orchestrator，agents 先把「粗糙的版本」鋪好，你再用判斷力去取捨、改寫、合併——這就是把 Agentic RAG 的「decision points」放大到整個開發流程。</p>
 <p>當然，文章的警告也完全適用到這個場景：<strong>延遲、可預測性、評估悖論</strong>——agent 的輸出品質取決於你給它的輸入品質，以及你怎麼定義「夠好」。幾個落地建議：</p>
 <ul>
-<li><strong>從最痛的兩個環節開始</strong>，不要一口氣把全部流程都 agent 化。先做「規格常漏東西」或「架構設計常回頭重改」，體感差異最大。</li>
+<li><strong>從最痛的兩個環節開始</strong>，不要一口氣把全部流程都 agent 化。先從「規格常漏東西」或「架構設計常回頭重改」下手，體感差異最大。</li>
 <li><strong>強制每個 agent 有固定的輸入和輸出格式</strong>，不然它會變成很會講廢話的聊天夥伴。spec agent 的輸出一定要有固定 sections；design agent 一定要有明確的 API 列表或資料表設計。格式穩定，才有辦法串起來用。</li>
 <li><strong>在人類審查最貴的地方讓 agent 先擋一輪</strong>：把 lead 或架構師的時間壓縮在真正的 trade-off 判斷，而不是 basic 漏洞。</li>
 </ul>
-<p>把 Agentic RAG 的控制迴圈概念帶到工程流程，是一件讓我覺得「欸，這真的值得試試看」的事情。🚀</p>
+<p>從「AI 專家團隊」到「Agentic RAG」，其實是同一個概念在不斷具體化的過程——而這篇文章讓我更清楚地看到，這個控制迴圈的架構，可以延伸到遠比 RAG 更廣的地方。🚀</p>
 </div>
 
    <div class="post-footer__meta"><p>更新於 2026-03-26</p></div> <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/%E9%96%B1%E8%AE%80%E7%AD%86%E8%A8%98/" class="post-tags__link button"># 閱讀筆記</a><a href="/tags/RAG/" class="post-tags__link button"># RAG</a><a href="/tags/Agentic-RAG/" class="post-tags__link button"># Agentic RAG</a><a href="/tags/LLM/" class="post-tags__link button"># LLM</a><a href="/tags/Vector-Database/" class="post-tags__link button"># Vector Database</a><a href="/tags/Multi-Agent/" class="post-tags__link button"># Multi-Agent</a></div>
