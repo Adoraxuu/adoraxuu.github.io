@@ -11,144 +11,9 @@
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/03/17/ruby-aws-ivs-obs-livestream/</loc>
+    <loc>https://adora-xu.com/search/index.html</loc>
     
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/01/21/linepay/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/03/31/ruby-on-rails-abstraction-layer/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2023/11/18/async-vs-defer/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2023/11/15/var-let-const/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2023/11/18/hoisting/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2026/03/24/claude-dispatch-mobile-workflow/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2026/03/25/Reading-note-There-are-only-two-paths-left-for-software/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/03/14/from-relationshop-manager-to-software-engineer/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2023/11/08/javascript-event-loop/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/01/07/active-storage-amazon-s3/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/04/leetcode-valid-parentheses/</loc>
-    
-    <lastmod>2026-03-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/10/13/Django-ListView-paginator/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/10/08/Django-FBV-CBV-DetailView/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/09/15/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2026/03/24/ai-assisted-engineering-reading-notes/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -157,88 +22,7 @@
   <url>
     <loc>https://adora-xu.com/tags/index.html</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/search/index.html</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/ringo.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/search.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/tags.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/custom.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/friends.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/extend.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/header.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/layout.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -247,7 +31,7 @@
   <url>
     <loc>https://adora-xu.com/css/index.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -256,7 +40,7 @@
   <url>
     <loc>https://adora-xu.com/css/paginator.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -265,52 +49,43 @@
   <url>
     <loc>https://adora-xu.com/css/post.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/css/grid.css</loc>
+    <loc>https://adora-xu.com/css/ringo.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/archive.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/css/comment.css</loc>
+    <loc>https://adora-xu.com/css/layout.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/css/common.css</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/about/index.html</loc>
+    <loc>https://adora-xu.com/css/search.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/tags.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -319,7 +94,7 @@
   <url>
     <loc>https://adora-xu.com/categories/index.html</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -328,34 +103,79 @@
   <url>
     <loc>https://adora-xu.com/archives/index.html</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/11/search-insert-position/</loc>
+    <loc>https://adora-xu.com/css/archive.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/01/14/simple-calendar/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/01/28/why-choose-to-be-a-software-developer/</loc>
+    <loc>https://adora-xu.com/css/comment.css</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/common.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/custom.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/extend.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/friends.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/grid.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/css/header.css</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -364,7 +184,7 @@
   <url>
     <loc>https://adora-xu.com/2024/03/01/python-pep8-style-guide-for-python-code/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -373,88 +193,70 @@
   <url>
     <loc>https://adora-xu.com/2023/12/24/rails-admin-layout-devise/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/01/31/leetcode-two-sum/</loc>
+    <loc>https://adora-xu.com/2024/03/17/ruby-aws-ivs-obs-livestream/</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/08/leetcode-valid-palindrome/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/12/leetcode-sqrtx/</loc>
+    <loc>https://adora-xu.com/2024/03/31/ruby-on-rails-abstraction-layer/</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/02/leetcode-roman-to-integer/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/09/leetcode-single-number/</loc>
+    <loc>https://adora-xu.com/2024/02/11/search-insert-position/</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/01/leetcode-palindrome-number/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/10/leetcode-plus-one/</loc>
+    <loc>https://adora-xu.com/2024/01/14/simple-calendar/</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/05/leetcode-remove-duplicates-from-sorted-array/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/06/leetcode-majority-element/</loc>
+    <loc>https://adora-xu.com/2023/11/15/var-let-const/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/01/28/why-choose-to-be-a-software-developer/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/about/index.html</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -463,34 +265,97 @@
   <url>
     <loc>https://adora-xu.com/2024/03/16/leetcode-number-of-1-bits/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/01/30/leetcode-merge-sorted-array/</loc>
+    <loc>https://adora-xu.com/2024/02/01/leetcode-palindrome-number/</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/07/leetcode-length-of-last-word/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/03/leetcode-longest-common-prefix/</loc>
+    <loc>https://adora-xu.com/2024/02/10/leetcode-plus-one/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/05/leetcode-remove-duplicates-from-sorted-array/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/02/leetcode-roman-to-integer/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/09/leetcode-single-number/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/12/leetcode-sqrtx/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/01/31/leetcode-two-sum/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/08/leetcode-valid-palindrome/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/04/leetcode-valid-parentheses/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/01/21/linepay/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -499,7 +364,7 @@
   <url>
     <loc>https://adora-xu.com/2024/02/13/leetcode-excel-sheet-column-title/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -508,43 +373,52 @@
   <url>
     <loc>https://adora-xu.com/2024/02/26/leetcode-happy-number/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/18/codewars-sum-of-digits-digital-root/</loc>
+    <loc>https://adora-xu.com/2024/02/07/leetcode-length-of-last-word/</loc>
     
-    <lastmod>2026-03-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/2024/02/21/codewars-highest-and-lowest/</loc>
-    
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/20/codewars-sum-of-a-sequence/</loc>
+    <loc>https://adora-xu.com/2024/02/03/leetcode-longest-common-prefix/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2024/02/20/codewars-square-every-digit/</loc>
+    <loc>https://adora-xu.com/2024/02/06/leetcode-majority-element/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/01/30/leetcode-merge-sorted-array/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2026/03/24/claude-dispatch-mobile-workflow/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -553,16 +427,106 @@
   <url>
     <loc>https://adora-xu.com/2024/02/16/codewars-credit-card-mask/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/2023/12/02/MVC/</loc>
+    <loc>https://adora-xu.com/2024/02/21/codewars-highest-and-lowest/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/20/codewars-square-every-digit/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/20/codewars-sum-of-a-sequence/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/02/18/codewars-sum-of-digits-digital-root/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2023/11/18/async-vs-defer/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/03/14/from-relationshop-manager-to-software-engineer/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2023/11/18/hoisting/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2023/11/08/javascript-event-loop/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/01/07/active-storage-amazon-s3/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2026/03/24/ai-assisted-engineering-reading-notes/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2026/03/25/Reading-note-There-are-only-two-paths-left-for-software/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -571,7 +535,7 @@
   <url>
     <loc>https://adora-xu.com/2025/11/18/SAA-Exam-Notes-IAM/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -580,7 +544,43 @@
   <url>
     <loc>https://adora-xu.com/2023/12/17/AOC-day01/</loc>
     
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/10/08/Django-FBV-CBV-DetailView/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/10/13/Django-ListView-paginator/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2023/12/02/MVC/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/2024/09/15/Quick-Start-Setting-Up-a-Development-Environment-with-Django-REST-Framework-and-React/</loc>
+    
+    <lastmod>2026-03-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -701,6 +701,69 @@
   </url>
   
   <url>
+    <loc>https://adora-xu.com/tags/%E9%96%B1%E8%AE%80%E7%AD%86%E8%A8%98/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/RAG/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/Agentic-RAG/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/LLM/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/AI/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/Vector-Database/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/Multi-Agent/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/%E8%BB%9F%E9%AB%94%E7%94%A2%E6%A5%AD/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/SaaS/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://adora-xu.com/tags/AWS/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -729,6 +792,13 @@
   </url>
   
   <url>
+    <loc>https://adora-xu.com/tags/active-storage/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://adora-xu.com/tags/amazon/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -737,13 +807,6 @@
   
   <url>
     <loc>https://adora-xu.com/tags/s3/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/AI/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -785,35 +848,35 @@
   </url>
   
   <url>
-    <loc>https://adora-xu.com/tags/JavaScript/</loc>
+    <loc>https://adora-xu.com/tags/Claude/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/tags/defer/</loc>
+    <loc>https://adora-xu.com/tags/Dispatch/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/tags/async/</loc>
+    <loc>https://adora-xu.com/tags/AI-Assisted-Development/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/tags/Web/</loc>
+    <loc>https://adora-xu.com/tags/GitHub/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://adora-xu.com/tags/rendering/</loc>
+    <loc>https://adora-xu.com/tags/Productivity/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -821,6 +884,13 @@
   
   <url>
     <loc>https://adora-xu.com/tags/codewars/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/JavaScript/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -835,6 +905,13 @@
   
   <url>
     <loc>https://adora-xu.com/tags/highest-and-lowest/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/square-every-digit/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -870,6 +947,34 @@
   
   <url>
     <loc>https://adora-xu.com/tags/recursion/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/defer/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/async/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/Web/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/tags/rendering/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -912,13 +1017,6 @@
   
   <url>
     <loc>https://adora-xu.com/tags/%E4%BA%94%E5%80%8D/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/square-every-digit/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -988,6 +1086,13 @@
   </url>
   
   <url>
+    <loc>https://adora-xu.com/tags/merge-sorted-array/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://adora-xu.com/tags/number-of-1-bits/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -1003,13 +1108,6 @@
   
   <url>
     <loc>https://adora-xu.com/tags/hamming-weight/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/merge-sorted-array/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1051,6 +1149,13 @@
   </url>
   
   <url>
+    <loc>https://adora-xu.com/tags/sqrtx/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://adora-xu.com/tags/two-sum/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -1065,7 +1170,7 @@
   </url>
   
   <url>
-    <loc>https://adora-xu.com/tags/sqrtx/</loc>
+    <loc>https://adora-xu.com/tags/valid-parentheses/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1253,111 +1358,6 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://adora-xu.com/tags/Claude/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/Dispatch/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/AI-Assisted-Development/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/GitHub/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/Productivity/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/%E9%96%B1%E8%AE%80%E7%AD%86%E8%A8%98/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/%E8%BB%9F%E9%AB%94%E7%94%A2%E6%A5%AD/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/SaaS/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/active-storage/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/valid-parentheses/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/RAG/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/Agentic-RAG/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/LLM/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/Vector-Database/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://adora-xu.com/tags/Multi-Agent/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
@@ -1389,13 +1389,6 @@
   </url>
   
   <url>
-    <loc>https://adora-xu.com/categories/AWS/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://adora-xu.com/categories/AI/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -1403,7 +1396,7 @@
   </url>
   
   <url>
-    <loc>https://adora-xu.com/categories/JavaScript/</loc>
+    <loc>https://adora-xu.com/categories/AWS/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1411,6 +1404,13 @@
   
   <url>
     <loc>https://adora-xu.com/categories/codewars/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://adora-xu.com/categories/JavaScript/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
