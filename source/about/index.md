@@ -16,7 +16,7 @@ tags:
 }
 </style>
 <div class="ava-block">
-<img class="avatar" src="/img/avatar6.jpeg" alt="">
+<img class="avatar" src="/images/avatar.jpg" alt="">
 </div>
 
 ## 關於我
