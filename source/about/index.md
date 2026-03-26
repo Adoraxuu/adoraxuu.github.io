@@ -21,7 +21,7 @@ tags:
 
 ## 關於我
 
-嗨，我是 **Adora**，一位 Full Stack Engineer。
+嗨，我是 **Adora**，一位 Software Engineer。
 
 從金融業的 Relationship Manager 轉職到工程師這條路，是我做過最有趣的決定。這段跨界的經歷讓我習慣從使用者的角度思考問題，不只是寫出能跑的程式，而是真正解決問題的程式。
 
