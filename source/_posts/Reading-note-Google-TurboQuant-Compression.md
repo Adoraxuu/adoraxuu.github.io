@@ -16,6 +16,10 @@ Google Research 最近發表了一篇 pre-print，提出的壓縮演算法叫 **
 
 原文：[Google's TurboQuant AI-compression algorithm can reduce LLM memory usage by 6x](https://arstechnica.com/ai/2026/03/google-says-new-turboquant-compression-can-lower-ai-memory-usage-without-sacrificing-quality)（Ars Technica，作者 Ryan Whitwam，2026-03-26）
 
+<p align="center">
+  <img src="/images/Reading-note-Google-TurboQuant-Compression/Reading-Notes-Googles-TurboQuant-AI-compression-algorithm-can-reduce-LLM-memory-usage-by-6x.webp" width="500" alt="Google TurboQuant 壓縮技術">
+</p>
+
 <!-- more -->
 
 ## KV Cache 是什麼，為什麼這麼貴？
