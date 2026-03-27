@@ -161,6 +161,9 @@
         <p>你有沒有遇過這個情況：跑一個還算普通的 LLM，GPU 記憶體就已經快爆表，根本沒辦法跑長一點的對話，更別說同時跑多個 session？這不是你的機器太爛，而是 LLM 架構本身的痛點——<strong>key-value cache 太吃記憶體了</strong>。</p>
 <p>Google Research 最近發表了一篇 pre-print，提出的壓縮演算法叫 <strong>TurboQuant</strong>，測試結果是記憶體用量減 6 倍、注意力計算速度快 8 倍，而且幾乎不犧牲輸出品質。這種「又快又省又不爛」的組合在 ML 優化裡並不常見，值得好好拆解一下。</p>
 <p>原文：<a target="_blank" rel="noopener" href="https://arstechnica.com/ai/2026/03/google-says-new-turboquant-compression-can-lower-ai-memory-usage-without-sacrificing-quality">Google’s TurboQuant AI-compression algorithm can reduce LLM memory usage by 6x</a>（Ars Technica，作者 Ryan Whitwam，2026-03-26）</p>
+<p align="center">
+  <img src="/images/Reading-note-Google-TurboQuant-Compression/Reading-Notes-Googles-TurboQuant-AI-compression-algorithm-can-reduce-LLM-memory-usage-by-6x.webp" width="500" alt="Google TurboQuant 壓縮技術">
+</p>
     
 </div>
 <div class="post-entry__meta">
